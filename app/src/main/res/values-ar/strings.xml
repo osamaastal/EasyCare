@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">EasyCare</string>
+    <string name="login">تسجيل الدخول</string>
+    <string name="login_sub">تطبيق العناية السهلة يلبي احتياجاتك المنزلية من مشاكل تحتاج لمهنيىن محترفين</string>
+    <string name="phone">رقم الهاتف</string>
+    <string name="password">كلمة المرور</string>
+    <string name="forget_password"><u> استرجاع كلمة المرور ؟</u></string>
+    <string name="create_new_account"> يمكنك انشاء حساب جديد من </string>
+    <string name="here"> هنـــا </string>
+    <string name="sign_up">انشاء حساب </string>
+    <string name="name">الاسم بالكامل</string>
+    <string name="email">البريد الالكتروني</string>
+    <string name="sign_up_new">انشاء حساب جديد</string>
+    <string name="accept">أوافق على</string>
+    <string name="terms">الشروط والاحكام</string>
+    <string name="have_an_acoount">"هل لديك حساب يمكنك تسجيل الدخول من "</string>
+    <string name="conf_phone">تاكيد رقم الهاتف</string>
+    <string name="conf_phone_sub">"سيتم ارسال رمز التأكيد على رقم هاتفك "</string>
+    <string name="conf_now">تأكيد الان</string>
+    <string name="resend_conf_code">إعادة ارسال رمز التأكيد</string>
+    <string name="welcome1_sub">تطبيق العناية السهلة يلبي احتياجاتك المنزلية من مشاكل تحتاج لمهنيين محترفين</string>
+    <string name="welcome1_main">ابحث عن الخدمة المطلوبة</string>
+    <string name="ar">AR</string>
+    <string name="en">EN</string>
+    <string name="skip">تخطـــــــي</string>
+    <string name="welcome2_sub">تطبيق العناية السهلة يلبي احتياجاتك المنزلية من مشاكل تحتاج لمهنيىن محترفين</string>
+    <string name="welcome3_sub">تطبيق العناية السهلة يلبي احتياجاتك المنزلية من مشاكل تحتاج لمهنيىن محترفين</string>
+    <string name="welcome3_main">يصل لك تنبيه بتطورات الخدمة</string>
+    <string name="welcome2_main">تواصل مع مزود الخدمة</string>
+    <string name="home">الرئيسية</string>
+    <string name="my_orders">طلباتي</string>
+    <string name="my_place">مكاني</string>
+    <string name="basket">السلة</string>
+    <string name="profile">ملف الشخصي</string>
+    <string name="edit_profile">تعديل الملف الشخصي</string>
+    <string name="open">open</string>
+    <string name="close">close</string>
+</resources>

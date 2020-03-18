@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.osamayastal.easycare">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/app_icon_no_text"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/app_icon_no_text"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".activities.WelcomeActivity">
+
+        </activity>
+        <activity android:name=".activities.ConfCode" />
+        <activity android:name=".activities.Logo" />
+        <activity android:name=".activities.LoginActivity" />
+        <activity android:name=".activities.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

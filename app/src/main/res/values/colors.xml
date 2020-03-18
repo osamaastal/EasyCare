@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="white_op50">#80FFFFFF</color>
+    <color name="white_op17">#2BFFFFFF</color>
+    <color name="white_fcfcfc">#FCFCFC</color>
+    <color name="white_bg">#F6F9FA</color>
+    <color name="light_gray">#DCDBDB</color>
+    <color name="light_gray_ee">#EEF4F6</color>
+    <color name="light_gray_stroke">#D8E2E5</color>
+    <color name="black">#000000</color>
+    <color name="black_op7">#12000000</color>
+    <color name="black_op30">#4D000000</color>
+
+    <color name="blue_start">#41A6F3</color>
+    <color name="blue_end">#342DEC</color>
+    <color name="green_start">#2DC9EB</color>
+    <color name="green_end">#14D2B8</color>
+    <color name="pink_end">#E83F94</color>
+    <color name="pink_start">#F54E5E</color>
+    <color name="orange_end">#FDA218</color>
+    <color name="orange_start">#FF7206</color>
+
+    <color name="blue">#342DEC</color>
+    <color name="darkblue">#043D80</color>
+    <color name="darkblue_op10">#1A043D80</color>
+    <color name="darkblue_1">#4B6787</color>
+    <color name="midblue">#417ABD</color>
+    <color name="midblue_pressed">#396BA5</color>
+    <color name="blue_op20">#33342DEC</color>
+
+    <color name="gray_menu">#818181</color>
+    <color name="blue_menu">#395DEF</color>
+    <color name="gray_e1">#E1E1E1</color>
+    <color name="gray_8F">#8F8F8F</color>
+
+</resources>
