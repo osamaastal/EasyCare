@@ -29,6 +29,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
@@ -47,6 +48,8 @@ dependencies {
     //Image Slider
     implementation 'com.nineoldandroids:library:2.4.0'
     implementation 'com.daimajia.slider:library:1.1.5@aar'
+    // card slider
+    implementation 'com.github.IslamKhSh:CardSlider:1.0.1'
     //auto image slider
     implementation 'com.github.smarteist:autoimageslider:1.2.0'
     //Circle Image view
@@ -55,14 +58,16 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:29.0.0'
     //CircleIndicator
     implementation 'me.relex:circleindicator:1.2.2@aar'
+    // BottomNav style new
+    implementation 'com.ismaeldivita.chipnavigation:chip-navigation-bar:1.2.0'
     // BottomNav style
-    implementation 'com.gauravk.bubblenavigation:bubblenavigation:1.0.7'
+//    implementation 'com.gauravk.bubblenavigation:bubblenavigation:1.0.7'
     // drawer
     implementation 'com.yarolegovich:sliding-root-nav:1.1.0'
     implementation 'com.google.android.material:material:1.1.0'
 //    implementation 'nl.psdcompany:duo-navigation-drawer:3.0.0'
 
 //    implementation 'com.google.android.material:material:1.1.0'
-//    //TODO > KOTLIN
-//    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.3.50"
+    //TODO > KOTLIN
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.3.50"
 }

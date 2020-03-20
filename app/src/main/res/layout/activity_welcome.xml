@@ -100,7 +100,7 @@
             android:paddingEnd="30dp"
             android:gravity="center_vertical"
             android:paddingBottom="5dp"
-            android:background="@drawable/bg_blue_gradiant_26_0_0_26"
+            android:background="@drawable/bg_blue_gradiant_26dp_left"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -232,7 +232,7 @@
 <!--                    android:id="@+id/userImage"-->
 <!--                    android:layout_width="100dp"-->
 <!--                    android:layout_height="100dp"-->
-<!--                    android:src="@drawable/ic_m_user_white"-->
+<!--                    android:src="@drawable/ic_user_white"-->
 <!--                    android:elevation="3dp"-->
 <!--                    android:layout_margin="3dp"-->
 <!--                    app:layout_constraintTop_toTopOf="parent"-->

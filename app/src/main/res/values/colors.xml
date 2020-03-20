@@ -6,6 +6,7 @@
 
     <color name="white">#FFFFFF</color>
     <color name="white_op50">#80FFFFFF</color>
+    <color name="white_op85">#D9FFFFFF</color>
     <color name="white_op17">#2BFFFFFF</color>
     <color name="white_fcfcfc">#FCFCFC</color>
     <color name="white_bg">#F6F9FA</color>
@@ -30,12 +31,14 @@
     <color name="darkblue_op10">#1A043D80</color>
     <color name="darkblue_1">#4B6787</color>
     <color name="midblue">#417ABD</color>
-    <color name="midblue_pressed">#396BA5</color>
+    <color name="midblue_pressed">#2F598B</color>
     <color name="blue_op20">#33342DEC</color>
 
     <color name="gray_menu">#818181</color>
     <color name="blue_menu">#395DEF</color>
     <color name="gray_e1">#E1E1E1</color>
     <color name="gray_8F">#8F8F8F</color>
+    <color name="mid_blue_1">#1E65A1</color>
+    <color name="line_lightgray">#F5F5F5</color>
 
 </resources>
