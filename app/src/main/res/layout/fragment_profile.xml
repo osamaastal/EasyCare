@@ -26,6 +26,7 @@
         <!--            app:layout_constraintTop_toTopOf="parent" />-->
 
         <ImageButton
+            android:id="@+id/edit_btn"
             android:layout_width="46dp"
             android:layout_height="46dp"
             android:layout_marginEnd="18dp"
@@ -132,6 +133,7 @@
                         app:layout_constraintTop_toTopOf="@+id/img1">
 
                         <TextView
+                            android:id="@+id/order_nb"
                             style="@style/text_white_bold_20"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -175,6 +177,7 @@
                         app:layout_constraintTop_toTopOf="@+id/img2">
 
                         <TextView
+                            android:id="@+id/favorit_nb"
                             style="@style/text_white_bold_20"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -207,6 +210,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
+                    android:id="@+id/emial_tv"
                     style="@style/text_darkblue_roman_14"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -230,7 +234,7 @@
                 android:layout_marginStart="30dp">
 
                 <TextView
-                    android:id="@+id/phone_tv"
+                    android:id="@+id/phone"
                     style="@style/text_darkblue_bold_18"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -239,6 +243,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
+                    android:id="@+id/phone_tv"
                     style="@style/text_darkblue_roman_14"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -246,7 +251,7 @@
                     android:drawablePadding="10dp"
                     android:text="+966 595689576"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/phone_tv" />
+                    app:layout_constraintTop_toBottomOf="@+id/phone" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <View
@@ -271,6 +276,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
+                    android:id="@+id/city_tv"
                     style="@style/text_darkblue_roman_14"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -305,6 +311,7 @@
                 app:neomorph_view_type="rectangular">
 
                 <Button
+                    android:id="@+id/logout_btn"
                     style="@style/text_white_roman_18"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"

@@ -65,12 +65,21 @@ private PinView cod;
             case R.id.resend:
                 break;
                 case R.id.conf_btn:
-                    Conferme_fun();
+                    user user=new user();
+                    final User_info user_info=new User_info(this);
+                    user_info.DO_CONF_phone(ConfCode.this);
+                    startActivity(new Intent(ConfCode.this,MainActivity.class));
+
+//                    Conferme_fun();
+
                 break;
         }
     }
 
     private void Conferme_fun() {
+
+
+
         user user=new user();
         final User_info user_info=new User_info(this);
         String tokenFCM = FirebaseInstanceId.getInstance().getToken();
