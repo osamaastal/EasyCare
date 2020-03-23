@@ -76,6 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp">
             <TextView
+                android:id="@+id/timer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="30"
@@ -119,7 +120,7 @@
             app:itemWidth="63dp"
             app:itemRadius="16dp"
             app:itemSpacing="20dp"
-            android:text="7"
+            android:text="1234"
             android:itemBackground="@drawable/bg_req_darkblue_16dp_gradiant"
             app:lineColor="@color/blue"
             app:lineWidth="0dp"
@@ -143,6 +144,7 @@
             tools:ignore="NestedWeights" />
 
         <Button
+            android:id="@+id/conf_btn"
             style="@style/text_white_roman_18"
             android:layout_width="match_parent"
             android:layout_height="60dp"
@@ -174,7 +176,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:id="@+id/resend">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

@@ -55,4 +55,7 @@
     <string name="num_units">عدد الوحدات</string>
     <string name="conf_order">تأكيد الطلب</string>
     <string name="rial">ريال سعودي</string>
+    <string name="Execus">عذرا  ....!</string>
+    <string name="open_gps">قم بفتح ال GPS من الإعدادات</string>
+    <string name="go_to_sitting">الذهاب الى الإعدادات</string>
 </resources>
