@@ -16,6 +16,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.osamayastal.easycare.R;
@@ -28,20 +30,23 @@ import com.yarolegovich.slidingrootnav.SlideGravity;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MainActivity extends AppCompatActivity {
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private BottomNavigationView bottom_navigation;
     private static FragmentManager fragmentManager;
     private Fragment fragment;
     private Fragment home_frag, myOrders_frag, myPlace_frag, basket_frag, profile_frag;
     private Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         /************************* Drawer*******************/
-         toolbar = findViewById(R.id.toolBar);
+        toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
 //        toolbar.setNavigationIcon(R.drawable.ic_menu_);
 //        toolbar.setOverflowIcon(ContextCompat.getDrawable(this, R.drawable.ic_menu_));
@@ -52,6 +57,31 @@ public class MainActivity extends AppCompatActivity {
                 .withMenuOpened(false)
                 .withMenuLayout(R.layout.navigation_content)
                 .inject();
+        View navigation = findViewById(R.id.nav_view);
+        TextView drawer_offers_tv = navigation.findViewById(R.id.drawer_offers_tv);
+        TextView drawer_points_tv = navigation.findViewById(R.id.drawer_points_tv);
+        TextView drawer_chat_tv = navigation.findViewById(R.id.drawer_chat_tv);
+        TextView drawer_notification_tv = navigation.findViewById(R.id.drawer_notification_tv);
+        TextView drawer_settings_tv = navigation.findViewById(R.id.drawer_settings_tv);
+        TextView drawer_about_tv = navigation.findViewById(R.id.drawer_about_tv);
+        TextView drawer_report_tv = navigation.findViewById(R.id.drawer_report_tv);
+        TextView drawer_call_tv = navigation.findViewById(R.id.drawer_call_tv);
+        TextView drawer_wallet_tv = navigation.findViewById(R.id.drawer_wallet_tv);
+        TextView edit_profile_tv = navigation.findViewById(R.id.edit_profile_tv);
+        TextView user_name_tv = navigation.findViewById(R.id.user_name_tv);
+        CircleImageView user_img = navigation.findViewById(R.id.user_img);
+        drawer_offers_tv.setOnClickListener(this);
+        drawer_points_tv.setOnClickListener(this);
+        drawer_chat_tv.setOnClickListener(this);
+        drawer_notification_tv.setOnClickListener(this);
+        drawer_settings_tv.setOnClickListener(this);
+        drawer_about_tv.setOnClickListener(this);
+        drawer_report_tv.setOnClickListener(this);
+        drawer_call_tv.setOnClickListener(this);
+        drawer_wallet_tv.setOnClickListener(this);
+        edit_profile_tv.setOnClickListener(this);
+        user_name_tv.setOnClickListener(this);
+        user_img.setOnClickListener(this);
         /********************Bottom nav view**********************/
         bottom_navigation = findViewById(R.id.bottom_navigation);
         fragmentManager = getSupportFragmentManager();
@@ -99,5 +129,50 @@ public class MainActivity extends AppCompatActivity {
         bottom_navigation.setSelectedItemId(R.id.home);
 
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+
+            case R.id.drawer_offers_tv:
+
+                break;
+            case R.id.drawer_points_tv:
+
+                break;
+            case R.id.drawer_chat_tv:
+
+                break;
+            case R.id.drawer_notification_tv:
+
+                break;
+            case R.id.drawer_settings_tv:
+
+                break;
+            case R.id.drawer_about_tv:
+
+                break;
+            case R.id.drawer_report_tv:
+
+                break;
+            case R.id.drawer_call_tv:
+
+                break;
+            case R.id.drawer_wallet_tv:
+
+                break;
+            case R.id.edit_profile_tv:
+
+                break;
+            case R.id.user_img:
+
+                break;
+            case R.id.user_name_tv:
+
+                break;
+
+
+        }
     }
 }

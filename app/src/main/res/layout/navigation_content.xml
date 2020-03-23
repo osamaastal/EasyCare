@@ -37,6 +37,7 @@
                 android:layout_gravity="center_horizontal"
                 style="@style/text_darkblue_bold_18"/>
             <TextView
+                android:id="@+id/edit_profile_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:text="@string/edit_profile"
@@ -71,7 +72,7 @@
                         android:paddingTop="5dp"
                         android:paddingEnd="20dp"
                         android:paddingBottom="5dp"
-                        android:text="محفظتي"
+                        android:text="@string/menu_wallet"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"/>
                     <TextView
@@ -95,7 +96,7 @@
                     android:id="@+id/drawer_offers_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="اجدد العروض"
+                    android:text="@string/menu_last_offers"
                     style="@style/text_white_roman_14"
                     android:background="@drawable/bg_menu_item"
                     android:drawableStart="@drawable/ic_drawer_newoffers"
@@ -118,7 +119,7 @@
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp"
                     android:background="@drawable/bg_menu_item"
-                    android:text="العوائد والنقاط"
+                    android:text="@string/menu_points"
                     style="@style/text_white_roman_14"/>
                 <TextView
                     android:id="@+id/drawer_chat_tv"
@@ -132,7 +133,7 @@
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp"
                     android:background="@drawable/bg_menu_item"
-                    android:text="المحادثة"
+                    android:text="@string/menu_chat"
                     style="@style/text_white_roman_14"/>
                 <TextView
                     android:id="@+id/drawer_notification_tv"
@@ -146,7 +147,7 @@
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp"
                     android:background="@drawable/bg_menu_item"
-                    android:text="الاشعارات"
+                    android:text="@string/notification"
                     style="@style/text_white_roman_14"/>
                 <TextView
                     android:id="@+id/drawer_settings_tv"
@@ -160,7 +161,7 @@
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp"
                     android:background="@drawable/bg_menu_item"
-                    android:text="الاعدادات"
+                    android:text="@string/menu_settings"
                     style="@style/text_white_roman_14"/>
                 <TextView
                     android:id="@+id/drawer_about_tv"
@@ -174,7 +175,7 @@
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp"
                     android:background="@drawable/bg_menu_item"
-                    android:text="عن التطبيق"
+                    android:text="@string/menu_about_us"
                     style="@style/text_white_roman_14"/>
                 <TextView
                     android:id="@+id/drawer_report_tv"
@@ -188,7 +189,7 @@
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp"
                     android:background="@drawable/bg_menu_item"
-                    android:text="تقرير عن مشكلة"
+                    android:text="@string/menu_report"
                     style="@style/text_white_roman_14"/>
                 <TextView
                     android:id="@+id/drawer_call_tv"
@@ -202,7 +203,7 @@
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp"
                     android:background="@drawable/bg_menu_item"
-                    android:text="اتصل بنا"
+                    android:text="@string/menu_contact_us"
                     style="@style/text_white_roman_14"/>
 
             </LinearLayout>
