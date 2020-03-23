@@ -11,7 +11,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chaos.view.PinView;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.osamayastal.easycare.Model.Const.User_info;
+import com.osamayastal.easycare.Model.Controle.users;
+import com.osamayastal.easycare.Model.Rootes.user;
 import com.osamayastal.easycare.R;
 
 public class ConfCode extends AppCompatActivity implements View.OnClickListener {
@@ -68,9 +71,30 @@ private PinView cod;
     }
 
     private void Conferme_fun() {
-        User_info user_info=new User_info();
-        user_info.DO_CONF_phone(this);
-        startActivity(new Intent(ConfCode.this,MainActivity.class));
-        finish();
+        user user=new user();
+        final User_info user_info=new User_info(this);
+        String tokenFCM = FirebaseInstanceId.getInstance().getToken();
+        user.Put_ActvitPhone_user(this, user_info.getId(), cod.getText().toString(), tokenFCM
+                , new user.user_Listener() {
+                    @Override
+                    public void onSuccess(users new_account) {
+                        if (new_account.isStatus()){
+                            user_info.DO_CONF_phone(ConfCode.this);
+                            startActivity(new Intent(ConfCode.this,MainActivity.class));
+                            finish();
+                        }
+
+                    }
+
+                    @Override
+                    public void onStart() {
+
+                    }
+
+                    @Override
+                    public void onFailure(String msg) {
+
+                    }
+                });
     }
 }
