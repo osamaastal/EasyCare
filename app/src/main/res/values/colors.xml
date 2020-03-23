@@ -21,6 +21,7 @@
     <color name="blue_end">#342DEC</color>
     <color name="green_start">#2DC9EB</color>
     <color name="green_end">#14D2B8</color>
+    <color name="green_special">#1CD0C7</color>
     <color name="pink_end">#E83F94</color>
     <color name="pink_start">#F54E5E</color>
     <color name="orange_end">#FDA218</color>
@@ -28,6 +29,7 @@
 
     <color name="blue">#342DEC</color>
     <color name="darkblue">#043D80</color>
+    <color name="darkblue_pressed">#033064</color>
     <color name="darkblue_op10">#1A043D80</color>
     <color name="darkblue_1">#4B6787</color>
     <color name="midblue">#417ABD</color>
@@ -38,7 +40,17 @@
     <color name="blue_menu">#395DEF</color>
     <color name="gray_e1">#E1E1E1</color>
     <color name="gray_8F">#8F8F8F</color>
+    <color name="gray_9F">#9F9F9F</color>
+    <color name="gray_AA">#BBBBBB</color>
     <color name="mid_blue_1">#1E65A1</color>
     <color name="line_lightgray">#F5F5F5</color>
+
+
+    <color name="dark_purple">#55348F</color>
+    <color name="dark_red">#9C4261</color>
+    <color name="dark_green">#357B80</color>
+    <color name="purple">#A573FF</color>
+    <color name="red">#EE467E</color>
+    <color name="green">#22CDD5</color>
 
 </resources>

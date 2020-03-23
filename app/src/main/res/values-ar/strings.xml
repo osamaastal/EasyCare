@@ -52,4 +52,16 @@
     <string name="num_units">عدد الوحدات</string>
     <string name="conf_order">تأكيد الطلب</string>
     <string name="rial">ريال سعودي</string>
+    <string name="about_us">من نحن</string>
+    <string name="notification">الاشعارات</string>
+    <string name="about_us_main">حتياجاتك المنزلية من مشاكل تحتاج لمهنيىن محترفين هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها. ولذلك يتم استخدام طريقة لوريم إيبسوم لأنها</string>
+    <string name="my_messages">محادثاتي</string>
+    <string name="menu_last_offers">اجدد العروض</string>
+    <string name="menu_points">العوائد والنقاط</string>
+    <string name="menu_chat">المحادثة</string>
+    <string name="menu_settings">الاعدادات</string>
+    <string name="menu_about_us">عن التطبيق</string>
+    <string name="menu_report">تقرير عن مشكلة</string>
+    <string name="menu_contact_us">اتصل بنا</string>
+    <string name="menu_wallet">محفظتي</string>
 </resources>

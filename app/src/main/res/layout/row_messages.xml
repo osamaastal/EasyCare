@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.chinodev.androidneomorphframelayout.NeomorphFrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/neom_frame"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:neomorph_shadow_type="outer"
+    app:neomorph_layer_type="software"
+    app:neomorph_background_color="@color/white_fcfcfc"
+    app:neomorph_corner_radius="35dp"
+    app:neomorph_elevation="@dimen/neomorph_view_elevation"
+    app:neomorph_view_type="rectangular"
+    app:neomorph_shadow_color="#E1E1E1"
+    app:neomorph_highlight_color="@color/neomorph_highlight_color"
+    android:layout_marginTop="0dp"
+    android:layout_marginEnd="5dp"
+    android:layout_marginStart="5dp">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="15dp"
+        android:paddingEnd="18dp"
+        android:paddingStart="18dp"
+        android:background="@drawable/bg_req_white_30dp">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/user_img"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/ic_user_gray_big"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+        <TextView
+            android:id="@+id/user_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Osama yousef"
+            style="@style/text_darkblue_bold_18"
+            android:layout_marginStart="15dp"
+            android:maxLength="20"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/user_img"/>
+
+        <!--    TODO programmatically >> if length > 40   content + ... -->
+        <TextView
+            android:id="@+id/main_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="6dp"
+            android:text="..مرحبا .. هل بالإمكان تحديد موعد قدوم"
+            style="@style/text_darkblue_roman_14"
+            app:layout_constraintStart_toEndOf="@+id/user_img"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/user_name_tv"
+            android:maxLength="40"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="3dp"
+            android:text="‏20 مايو 2020"
+            style="@style/text_gray_9F_roman_10"
+            android:drawableStart="@drawable/ic_calendar_gray"
+            android:drawablePadding="5dp"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toEndOf="@+id/user_img"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/main_tv"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.chinodev.androidneomorphframelayout.NeomorphFrameLayout>
+
+
+
