@@ -35,7 +35,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private BottomNavigationView bottom_navigation;
     private static FragmentManager fragmentManager;
     private Fragment fragment;
     private Fragment home_frag, myOrders_frag, myPlace_frag, basket_frag, profile_frag;
@@ -83,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         user_name_tv.setOnClickListener(this);
         user_img.setOnClickListener(this);
         /********************Bottom nav view**********************/
-        bottom_navigation = findViewById(R.id.bottom_navigation);
+        BottomNavigationView bottom_navigation = findViewById(R.id.bottom_navigation);
         fragmentManager = getSupportFragmentManager();
         home_frag = new Home();
         myOrders_frag = new MyOrders();
