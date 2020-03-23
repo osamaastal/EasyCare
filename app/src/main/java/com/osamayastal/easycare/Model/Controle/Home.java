@@ -1,5 +1,7 @@
 package com.osamayastal.easycare.Model.Controle;
 
+import android.util.Log;
+
 import com.osamayastal.easycare.Model.Classes.Categorie;
 import com.osamayastal.easycare.Model.Classes.Provider;
 import com.osamayastal.easycare.Model.Classes.TopRatedProviders;
@@ -20,7 +22,7 @@ public class Home {
     private List<Categorie> categories;
 
     public Home(JSONObject jsonObject) {
-        if (jsonObject!=null){
+        if (jsonObject==null){
             return;
         }
         topRequestedProviders=new ArrayList<>();
@@ -28,6 +30,7 @@ public class Home {
         categories=new ArrayList<>();
         try {
             message=jsonObject.getString("message");
+            Log.d("message",message);
             status_code=jsonObject.getInt("status_code");
             JSONArray jsonArray=jsonObject.getJSONArray("topRequestedProviders");
             JSONArray jsonArray1=jsonObject.getJSONArray("topRatedProviders");

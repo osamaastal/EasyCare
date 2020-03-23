@@ -8,7 +8,7 @@ public class Categorie {
     private boolean isActive;
 
     public Categorie(JSONObject jsonObject) {
-        if (jsonObject!=null){
+        if (jsonObject==null){
             return;
         }
         try {

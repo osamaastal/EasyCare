@@ -85,8 +85,8 @@ public class Home extends Fragment implements View.OnClickListener {
         more_rat.setOnClickListener(this);
         /********************************List****************************************/
         categories=new ArrayList<>();
-        top_rate_list=new ArrayList<TopRequestedProviders>();
-        top_req_list=new ArrayList<com.osamayastal.easycare.Model.Classes.TopRequestedProviders>();
+        top_rate_list=new ArrayList<>();
+        top_req_list=new ArrayList<>();
         /********************************adapters****************************************/
         adapter_rate=new Provider_adapter(getContext(),top_rate_list,null);
         adapter_req=new Provider_adapter(getContext(),top_req_list,null);

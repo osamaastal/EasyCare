@@ -1,21 +1,30 @@
 package com.osamayastal.easycare.Model.Classes;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TopRequestedProviders {
     private String _id;
     private int count;
-    private Provider provider;
+    private List<Provider> provider;
 
     public TopRequestedProviders(JSONObject jsonObject) {
-        if (jsonObject!=null){
+        if (jsonObject==null){
             return;
         }
+        provider=new ArrayList<>();
         try {
             _id=jsonObject.getString("_id");
             count=jsonObject.getInt("count");
-            provider=new Provider(jsonObject.getJSONObject("providers"));
+            JSONArray jsonArray=jsonObject.getJSONArray("Providers");
+            for (int i=0;i<jsonArray.length();i++){
+                provider.add(new Provider(jsonArray.getJSONObject(i)));
+            }
+
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -39,11 +48,11 @@ public class TopRequestedProviders {
         this.count = count;
     }
 
-    public Provider getProvider() {
+    public List<Provider> getProvider() {
         return provider;
     }
 
-    public void setProvider(Provider provider) {
+    public void setProvider(List<Provider> provider) {
         this.provider = provider;
     }
 }

@@ -20,7 +20,7 @@ import java.util.Map;
 
 public class Home_root {
     public interface homeListener{
-        void onSuccess(Home show_notif);
+        void onSuccess(Home home);
         void onStart();
         void onFailure(String msg);
     }
