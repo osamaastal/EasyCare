@@ -12,6 +12,10 @@
         <item name="colorControlNormal">#E3E3E3</item>
         <item name="colorControlActivated">#FFE600</item>
     </style>
+    <!--        **************************Spinner***************-->
+    <style name="filterSpinnerTheam" parent="android:Widget.Spinner">
+        <item name="android:background">@drawable/bg_spinner</item>
+    </style>
     <!--    *********************** White ************************-->
     <style name="text_white_roman_10" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/white</item>
@@ -243,6 +247,11 @@
         <item name="android:textSize">16sp</item>
         <item name="android:fontFamily">@font/helvetica_roman</item>
     </style>
+    <style name="text_darkblue_roman_16_special" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">#7F98AA</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/helvetica_roman</item>
+    </style>
 
     <style name="text_darkblue_roman_18" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/darkblue</item>
@@ -431,7 +440,6 @@
         <item name="android:textSize">26sp</item>
         <item name="android:fontFamily">@font/helvetica_roman</item>
     </style>
-
     <style name="text_gray_9F_roman_10" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/gray_9F</item>
         <item name="android:textSize">10sp</item>
@@ -470,6 +478,7 @@
         <item name="android:textSize">10sp</item>
         <item name="android:fontFamily">@font/helvetica_roman</item>
     </style>
+
 
 
 

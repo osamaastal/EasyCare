@@ -70,4 +70,18 @@
     <string name="menu_report">تقرير عن مشكلة</string>
     <string name="menu_contact_us">اتصل بنا</string>
     <string name="menu_wallet">محفظتي</string>
+    <string name="website_url">www.easycaresa.com</string>
+    <string name="changePassword">تغيير كلمة المرور</string>
+    <string name="search">بحث</string>
+    <string name="search_result">نتائج البحث</string>
+    <string name="num_results">عدد النتائج</string>
+    <string name="no_search_result">لا يوجد نتائج بحث</string>
+    <string name="no_search_result_1">تطبيق العناية السهلة يلبي احتياجاتك المنزلية من مشاكل تحتاج لمهنيىن محترفين</string>
+    <string name="city">المدينة</string>
+    <string name="service_type">نوع الخدمة</string>
+    <string name="near_companies">الشركات القريبة</string>
+    <string name="wach_">غسيل سيارات متنقلة</string>
+    <string name="rate">التقييم</string>
+    <string name="save_pass">"حفظ كلمة المرور "</string>
+    <string name="save_profile">حفظ التعديلات</string>
 </resources>

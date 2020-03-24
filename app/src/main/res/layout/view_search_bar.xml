@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:layoutDirection="locale"
+    android:elevation="2dp"
     android:background="@drawable/bg_req_white_30dp">
     <ImageButton
         android:layout_width="35dp"

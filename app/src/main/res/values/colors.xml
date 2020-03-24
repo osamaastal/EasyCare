@@ -4,10 +4,12 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
 
+    <color name="trans">#00FFFFFF</color>
     <color name="white">#FFFFFF</color>
     <color name="white_op50">#80FFFFFF</color>
     <color name="white_op85">#D9FFFFFF</color>
     <color name="white_op17">#2BFFFFFF</color>
+    <color name="white_op8">#14FFFFFF</color>
     <color name="white_fcfcfc">#FCFCFC</color>
     <color name="white_bg">#F6F9FA</color>
     <color name="light_gray">#DCDBDB</color>
@@ -39,11 +41,11 @@
     <color name="gray_menu">#818181</color>
     <color name="blue_menu">#395DEF</color>
     <color name="gray_e1">#E1E1E1</color>
-    <color name="gray_8F">#8F8F8F</color>
-    <color name="gray_9F">#9F9F9F</color>
     <color name="gray_AA">#BBBBBB</color>
     <color name="mid_blue_1">#1E65A1</color>
     <color name="line_lightgray">#F5F5F5</color>
+    <color name="gray_8F">#8F8F8F</color>
+    <color name="gray_9F">#9F9F9F</color>
 
 
     <color name="dark_purple">#55348F</color>
@@ -52,5 +54,9 @@
     <color name="purple">#A573FF</color>
     <color name="red">#EE467E</color>
     <color name="green">#22CDD5</color>
+    <color name="filter_bg_color">#94140F26</color>
+    <color name="filter_bg_color_pressed">#33140F26</color>
+    <color name="filter_bg_color_done">#94A09C9E</color>
+    <color name="filter_bg_color_done_pressed">#94797778</color>
 
 </resources>
