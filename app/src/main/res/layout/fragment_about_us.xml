@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layoutDirection="locale"
+    android:layoutDirection="rtl"
     tools:context=".fragments.AboutUs">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraint1"
@@ -27,11 +27,11 @@
             android:layout_width="46dp"
             android:layout_height="46dp"
             android:src="@drawable/ic_back_ar"
-            android:background="@drawable/bg_circle_midblue"
-            android:layout_marginEnd="18dp"
+            android:background="@drawable/bg_circle_blue_gradiant"
+            android:layout_marginStart="18dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             />
@@ -78,8 +78,8 @@
         android:layout_weight="2.5"/>
     <Button
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="www.easycaresa.com"
+        android:layout_height="60dp"
+        android:text="@string/website_url"
         android:textAllCaps="true"
         android:fontFamily="@font/montserra_regular"
         android:textSize="12sp"

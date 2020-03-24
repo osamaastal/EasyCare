@@ -26,7 +26,7 @@
             android:layout_width="46dp"
             android:layout_height="46dp"
             android:src="@drawable/ic_back_ar"
-            android:background="@drawable/bg_circle_midblue"
+            android:background="@drawable/bg_circle_blue_gradiant"
             android:layout_marginEnd="18dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
