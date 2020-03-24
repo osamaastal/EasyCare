@@ -31,7 +31,7 @@ public class Provider_adapter extends RecyclerView.Adapter<Provider_adapter.View
     private static final String TAG = "RecyclerViewAdapter";
 
     //vars
-    private List<TopRequestedProviders> mItems = new ArrayList<>();
+    private List<Provider> mItems = new ArrayList<>();
     private Context mContext;
     private View mview;
     public interface Selected_item{
@@ -39,7 +39,7 @@ public class Provider_adapter extends RecyclerView.Adapter<Provider_adapter.View
     }
     public static int item_select=-1;
     Selected_item listenner;
-    public Provider_adapter(Context context, List<TopRequestedProviders> names, Selected_item listenner) {
+    public Provider_adapter(Context context, List<Provider> names, Selected_item listenner) {
         mItems = names;
         mContext = context;
         this.listenner=listenner;
@@ -61,13 +61,13 @@ public class Provider_adapter extends RecyclerView.Adapter<Provider_adapter.View
     @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.name.setText(mItems.get(position).getProvider().getName());
-        holder.address.setText(mItems.get(position).getProvider().getAddress());
-holder.ratingBar.setRating(mItems.get(position).getProvider().getRate());
+        holder.name.setText(mItems.get(position).getName());
+        holder.address.setText(mItems.get(position).getAddress());
+holder.ratingBar.setRating(mItems.get(position).getRate());
 
        try {
            Picasso.with(mContext)
-                   .load(mItems.get(position).getProvider().getImage())
+                   .load(mItems.get(position).getImage())
                    .into(holder.Img);
        } catch (Exception e) {
            e.printStackTrace();

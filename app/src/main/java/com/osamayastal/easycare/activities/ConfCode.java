@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -30,15 +31,17 @@ private PinView cod;
     private Button conf_btn;
     private LinearLayout resned;
     private TextView timer;
-
+private ImageView back_btn;
     private void init() {
         cod=findViewById(R.id.confCode_pinView);
         conf_btn=findViewById(R.id.conf_btn);
         resned=findViewById(R.id.resend);
         timer=findViewById(R.id.timer);
+        back_btn=findViewById(R.id.back_btn);
         /*****************************Actions*********************************/
         conf_btn.setOnClickListener(this);
         resned.setOnClickListener(this);
+        back_btn.setOnClickListener(this);
     }
     private void Timer_resendButton() {
         resned.setEnabled(false);
@@ -63,15 +66,19 @@ private PinView cod;
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.resend:
+                Timer_resendButton();
                 break;
                 case R.id.conf_btn:
-                    user user=new user();
-                    final User_info user_info=new User_info(this);
-                    user_info.DO_CONF_phone(ConfCode.this);
-                    startActivity(new Intent(ConfCode.this,MainActivity.class));
+//                    user user=new user();
+//                    final User_info user_info=new User_info(this);
+//                    user_info.DO_CONF_phone(ConfCode.this);
+//                    startActivity(new Intent(ConfCode.this,MainActivity.class));
 
-//                    Conferme_fun();
+                    Conferme_fun();
 
+                break;
+            case R.id.back_btn:
+                finish();
                 break;
         }
     }
@@ -88,6 +95,7 @@ private PinView cod;
                     @Override
                     public void onSuccess(users new_account) {
                         if (new_account.isStatus()){
+                            new User_info(new_account.getItems(),ConfCode.this);
                             user_info.DO_CONF_phone(ConfCode.this);
                             startActivity(new Intent(ConfCode.this,MainActivity.class));
                             finish();

@@ -12,10 +12,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.osamayastal.easycare.Model.Const.User_info;
 import com.osamayastal.easycare.Model.Controle.users;
 import com.osamayastal.easycare.Model.Rootes.user;
 import com.osamayastal.easycare.R;
+import com.osamayastal.easycare.activities.ConfCode;
 import com.osamayastal.easycare.activities.LoginActivity;
 import com.osamayastal.easycare.activities.MainActivity;
 
@@ -72,13 +74,21 @@ private Button login_btn;
         list.add(passord);
         if (Verefy(list)){
             final user user=new user();
-            user.Post_Login(getContext(), "", passord.getText().toString(),
+            String tokenFCM = FirebaseInstanceId.getInstance().getToken();
+            user.Post_Login(getContext(), tokenFCM, passord.getText().toString(),
                     phone.getText().toString(), new user.user_Listener() {
                         @Override
                         public void onSuccess(users new_account) {
-                           new User_info(new_account.getItems(),getContext());
-                           startActivity(new Intent(getActivity(), MainActivity.class));
-                           getActivity().finish();
+                            if (new_account.getItems().isIsVerify()) {
+                                new User_info(new_account.getItems(), getContext());
+                                startActivity(new Intent(getActivity(), MainActivity.class));
+                                getActivity().finish();
+                            }
+                            else {
+                                new User_info(new_account.getItems(), getContext());
+                                startActivity(new Intent(getContext(), ConfCode.class));
+                                getActivity().finish();
+                            }
                         }
 
                         @Override

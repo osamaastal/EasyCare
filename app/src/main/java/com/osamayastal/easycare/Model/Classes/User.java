@@ -22,8 +22,8 @@ public class User {
     private String image;
     private boolean isBlock;
     private boolean isVerify;
-    private float lat;
-    private float lng;
+    private Double lat;
+    private Double lng;
     private String phoneNumber;
     private String token;
     private String verifyCode;
@@ -133,22 +133,6 @@ public class User {
         return this.isVerify;
     }
 
-    public void setLat(float lat) {
-        this.lat = lat;
-    }
-
-    public float getLat() {
-        return this.lat;
-    }
-
-    public void setLng(float lng) {
-        this.lng = lng;
-    }
-
-    public float getLng() {
-        return this.lng;
-    }
-
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
@@ -175,6 +159,22 @@ public class User {
 
     public void setWallet(Long wallet) {
         this.wallet = wallet;
+    }
+
+    public Double getLat() {
+        return lat;
+    }
+
+    public void setLat(Double lat) {
+        this.lat = lat;
+    }
+
+    public Double getLng() {
+        return lng;
+    }
+
+    public void setLng(Double lng) {
+        this.lng = lng;
     }
 
     public Long getWallet() {
@@ -208,8 +208,8 @@ public class User {
         image = jsonObject.optString("image");
         isBlock = jsonObject.optBoolean("isBlock");
         isVerify = jsonObject.optBoolean("isVerify");
-        lat = jsonObject.optLong("lat");
-        lng = jsonObject.optLong("lng");
+        lat = jsonObject.optDouble("lat");
+        lng = jsonObject.optDouble("lng");
         phoneNumber = jsonObject.optString("phone_number");
         try {
             token = jsonObject.optString("token");

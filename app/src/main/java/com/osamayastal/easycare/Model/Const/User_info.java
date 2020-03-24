@@ -16,7 +16,7 @@ private long wallet;
 private  int point;
     public User_info(Context mcontext) {
         final SharedPreferences sp=mcontext.getSharedPreferences("Login", MODE_PRIVATE);
-        id=sp.getString("id","");
+        id=sp.getString("id",null);
         token=sp.getString("token","");
         phone=sp.getString("phone","+966 000-0000-00");
         name=sp.getString("name","إسم العميل");
@@ -63,7 +63,7 @@ private  int point;
         Ed.commit();
         new User_info(context);
     }
-    public User_info(Context context,Boolean sate) {
+    public User_info(Context context,Boolean logout) {
         SharedPreferences sp=context.getSharedPreferences("Login", MODE_PRIVATE);
         SharedPreferences.Editor Ed=sp.edit();
         Ed.putString("phone",null );

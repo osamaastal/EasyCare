@@ -18,6 +18,16 @@ public class Logo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logo);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Timer();
+    }
+
+    private void Timer() {
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

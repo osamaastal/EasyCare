@@ -20,6 +20,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.osamayastal.easycare.Model.Classes.User;
+import com.osamayastal.easycare.Model.Const.User_info;
+import com.osamayastal.easycare.Model.Controle.users;
+import com.osamayastal.easycare.Model.Rootes.user;
 import com.osamayastal.easycare.R;
 import com.osamayastal.easycare.fragments.Basket;
 import com.osamayastal.easycare.fragments.Home;
@@ -138,9 +142,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 break;
             case R.id.drawer_points_tv:
+                Toast.makeText(this,"point" ,Toast.LENGTH_SHORT).show();
 
                 break;
             case R.id.drawer_chat_tv:
+                Toast.makeText(this,"chat",Toast.LENGTH_SHORT).show();
 
                 break;
             case R.id.drawer_notification_tv:
@@ -170,7 +176,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.user_name_tv:
 
                 break;
+            case R.id.language:
+                Toast.makeText(this,"langauge",Toast.LENGTH_SHORT).show();
 
+                break;
+            case R.id.logout_btn:
+                    user user=new user();
+                    user.Post_Logout(this, new user.user_Listener() {
+                        @Override
+                        public void onSuccess(users new_account) {
+                            new User_info(new User(),MainActivity.this);
+                           finish();
+                        }
+
+                        @Override
+                        public void onStart() {
+
+                        }
+
+                        @Override
+                        public void onFailure(String msg) {
+
+                        }
+                    });
+                    break;
 
         }
     }

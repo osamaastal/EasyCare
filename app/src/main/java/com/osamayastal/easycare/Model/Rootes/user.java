@@ -2,6 +2,7 @@ package com.osamayastal.easycare.Model.Rootes;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -106,14 +107,9 @@ public class user {
                         } catch (JSONException e1) {
                             e1.printStackTrace();
                         }
-                        try {
 
-                            String mssg=Jobject.getString("message");
-                            Log.d("Response_mssg",mssg );
-                            lisenner.onSuccess(new users(Jobject));
-                        } catch (JSONException e1) {
-                            e1.printStackTrace();
-                        }
+
+                        lisenner.onSuccess(new users(Jobject));
 
                     }
                 },
@@ -132,6 +128,7 @@ public class user {
                 parameters.put("password", password);
                 parameters.put("phone_number", phone_number);
                 parameters.put("fcmToken", fcmtoken);
+                parameters.put("os", "Android");
 
                 return parameters;
             }
@@ -201,9 +198,12 @@ public class user {
         if (queue==null) {
             queue = Volley.newRequestQueue(mcontext);  // this = context
         }
-        final String token="new user_info(mcontext).getToken();";
+        final String token=new User_info(mcontext).getToken();
 
-        String url = Server_info.API+"api/logout";//"http://httpbin.org/post";
+        Log.d("token",token);
+
+
+        String url = Server_info.API+"api/mobile/logout";
         lisenner.onStart();
         StringRequest postRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>()
@@ -393,10 +393,11 @@ public class user {
         if (queue==null) {
             queue = Volley.newRequestQueue(mcontext);  // this = context
         }
-        String url = Server_info.API+"api/verfiy";//"http://httpbin.org/post";
+
+        String url = Server_info.API+"api/mobile/verfiy";
 
         listenner.onStart();
-        StringRequest postRequest = new StringRequest(Request.Method.PUT, url,
+        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>()
                 {
                     @Override

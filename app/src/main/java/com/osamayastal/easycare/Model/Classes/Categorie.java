@@ -15,9 +15,9 @@ public class Categorie {
             _id=jsonObject.getString("_id");
             arName=jsonObject.getString("arName");
             enName=jsonObject.getString("enName");
-            color=jsonObject.getString("color");
             image=jsonObject.getString("image");
             isActive=jsonObject.getBoolean("isActive");
+            color=jsonObject.getString("color");
 
 
         } catch (JSONException e) {

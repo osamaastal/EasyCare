@@ -31,8 +31,12 @@ public class Profile extends Fragment implements View.OnClickListener {
     }
 
     private void Loading_data() {
-        user user=new user();
-//        user.egetprofile
+       User_info info=new User_info(getContext());
+        email.setText(info.getEmail());
+        phone.setText(info.getPhone());
+        city.setText(info.getCity());
+
+
     }
 
     private TextView email,phone,city,favorit_nb,order_nb;
@@ -58,7 +62,7 @@ public class Profile extends Fragment implements View.OnClickListener {
                 user.Post_Logout(getContext(), new user.user_Listener() {
                     @Override
                     public void onSuccess(users new_account) {
-                        new User_info(new User(),getContext());
+                        new User_info(getContext(),true);
                         getActivity().finish();
                     }
 

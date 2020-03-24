@@ -69,7 +69,6 @@ private AppCompatCheckBox accept;
 
 
 
-    private LatLng mlatlng=null;
     private void init(View view) {
         term_btn=view.findViewById(R.id.term_btn);
         login_btn=view.findViewById(R.id.login_btn);
@@ -129,8 +128,8 @@ private AppCompatCheckBox accept;
             user_.setPhoneNumber(phone.getText().toString());
             user_.setEmail(email.getText().toString());
             user_.setPassword(password.getText().toString());
-            user_.setLat(Float.parseFloat(mlatlng.latitude+""));
-            user_.setLng(Float.parseFloat(mlatlng.longitude+""));
+            user_.setLat(mLatLng.latitude);
+            user_.setLng(mLatLng.longitude);
             user_.setCity("no city");
 
             user user=new user();

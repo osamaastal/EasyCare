@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.osamayastal.easycare.Adapters.Categories_adapter;
 import com.osamayastal.easycare.Adapters.Provider_adapter;
 import com.osamayastal.easycare.Model.Classes.Categorie;
-import com.osamayastal.easycare.Model.Classes.TopRequestedProviders;
+import com.osamayastal.easycare.Model.Classes.Provider;
 import com.osamayastal.easycare.Model.Rootes.Home_root;
 import com.osamayastal.easycare.R;
 
@@ -43,8 +43,8 @@ public class Home extends Fragment implements View.OnClickListener {
                 top_req_list.clear();
                 categories.clear();
                 //////addAll
-                top_req_list.addAll(home.getTopRequestedProviders());
-                top_rate_list.addAll(home.getTopRatedProviders());
+                top_req_list.addAll(home.getTopRequestedProviders().get(0).getProvider());
+                top_rate_list.addAll(home.getTopRatedProviders().get(0).getProvider());
                 categories.addAll(home.getCategories());
                 adapter_rate.notifyDataSetChanged();
                 adapter_req.notifyDataSetChanged();
@@ -66,8 +66,8 @@ public class Home extends Fragment implements View.OnClickListener {
     private RecyclerView RV_server,RV_top_rat,RV_top_req;
     private TextView more_server,more_rat,more_req;
     private List<Categorie> categories;
-    private List<TopRequestedProviders> top_rate_list;
-    private List<TopRequestedProviders> top_req_list;
+    private List<Provider> top_rate_list;
+    private List<Provider> top_req_list;
     private Categories_adapter categories_adapter;
     private Provider_adapter adapter_rate;
     private Provider_adapter adapter_req;
@@ -85,18 +85,18 @@ public class Home extends Fragment implements View.OnClickListener {
         more_rat.setOnClickListener(this);
         /********************************List****************************************/
         categories=new ArrayList<>();
-        top_rate_list=new ArrayList<>();
-        top_req_list=new ArrayList<>();
+        top_rate_list=new ArrayList<com.osamayastal.easycare.Model.Classes.Provider>();
+        top_req_list=new ArrayList<Provider>();
         /********************************adapters****************************************/
         adapter_rate=new Provider_adapter(getContext(),top_rate_list,null);
         adapter_req=new Provider_adapter(getContext(),top_req_list,null);
         categories_adapter=new Categories_adapter(getContext(),categories,null);
         /********************************RV****************************************/
-        RV_top_req.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,true));
+        RV_top_req.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false));
         RV_top_req.setAdapter(adapter_req);
-        RV_top_rat.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,true));
+        RV_top_rat.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false));
         RV_top_rat.setAdapter(adapter_rate);
-        RV_server.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,true));
+        RV_server.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false));
         RV_server.setAdapter(categories_adapter);
     }
 

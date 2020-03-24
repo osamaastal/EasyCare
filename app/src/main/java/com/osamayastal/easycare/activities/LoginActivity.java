@@ -8,6 +8,8 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.net.MailTo;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.osamayastal.easycare.Model.Const.User_info;
 import com.osamayastal.easycare.R;
@@ -21,6 +23,10 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         User_info user_info=new User_info(this);
+        if (user_info.getId()==null){
+            switchFGM(new LoginFrag());
+            return;
+        }
         if (user_info.CONF_phone(this)){
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
             finish();
@@ -28,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(new Intent(LoginActivity.this, ConfCode.class));
             finish();
         }
-        switchFGM(new LoginFrag());
+
 
     }
 

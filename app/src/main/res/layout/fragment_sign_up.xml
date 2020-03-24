@@ -117,7 +117,7 @@
                 android:drawablePadding="17dp"
                 android:hint="@string/email"
                 style="@style/text_black_roman_14"
-                android:inputType="textPersonName"
+                android:inputType="textEmailAddress"
                 android:maxLength="10"
                 />
         </com.chinodev.androidneomorphframelayout.NeomorphFrameLayout>

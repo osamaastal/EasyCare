@@ -35,6 +35,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent">
                 <ImageButton
+                    android:id="@+id/back_btn"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:src="@drawable/ic_back_ar"
@@ -120,7 +121,7 @@
             app:itemWidth="63dp"
             app:itemRadius="16dp"
             app:itemSpacing="20dp"
-            android:text="1234"
+            android:text=""
             android:itemBackground="@drawable/bg_req_darkblue_16dp_gradiant"
             app:lineColor="@color/blue"
             app:lineWidth="0dp"
