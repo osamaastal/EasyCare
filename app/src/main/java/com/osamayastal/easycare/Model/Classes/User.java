@@ -28,6 +28,23 @@ public class User {
     private String token;
     private String verifyCode;
     private Long wallet = Long.valueOf(0);
+    private int favoritCount,orderCount;
+
+    public int getFavoritCount() {
+        return favoritCount;
+    }
+
+    public void setFavoritCount(int favoritCount) {
+        this.favoritCount = favoritCount;
+    }
+
+    public int getOrderCount() {
+        return orderCount;
+    }
+
+    public void setOrderCount(int orderCount) {
+        this.orderCount = orderCount;
+    }
 
     public String getPassword() {
         return password;
@@ -211,6 +228,8 @@ public class User {
         lat = jsonObject.optDouble("lat");
         lng = jsonObject.optDouble("lng");
         phoneNumber = jsonObject.optString("phone_number");
+        favoritCount = jsonObject.optInt("favoritCount");
+        orderCount = jsonObject.optInt("orderCount");
         try {
             token = jsonObject.optString("token");
         } catch (Exception exc) {

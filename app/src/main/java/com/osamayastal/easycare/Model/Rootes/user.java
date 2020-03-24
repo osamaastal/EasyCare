@@ -321,6 +321,55 @@ public class user {
         // prepare the Request
 
     }
+    public void GET_profil(final Context mcontext,  final user_Listener lisenner){
+        if (queue==null) {
+            queue = Volley.newRequestQueue(mcontext);  // this = context
+        }
+        String url = Server_info. API+"api/mobile/showprofile";
+        final String token=new User_info(mcontext).getToken();
+        lisenner.onStart();
+        StringRequest postRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        Log.d("Response", response);
+                        String jsonData = response;
+                        JSONObject Jobject = null;
+                        try {
+                            Jobject = new JSONObject(jsonData);
+                            lisenner.onSuccess(new users(Jobject));
+                        } catch (JSONException e1) {
+                            e1.printStackTrace();
+                        }
+
+
+                        lisenner.onSuccess(new users(Jobject));
+
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String>  parameters = new HashMap<String, String>();
+
+                parameters.put("token", token);
+
+                return parameters;
+            }
+        };
+        queue.add(postRequest);
+
+        // prepare the Request
+
+    }
 
 
     public void Post_update_fcmToken(final Context mcontext, final String token, final String fcmtoken, final user_Listener lisenner){

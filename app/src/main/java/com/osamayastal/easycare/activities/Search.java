@@ -1,10 +1,14 @@
 package com.osamayastal.easycare.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.osamayastal.easycare.R;
@@ -17,6 +21,22 @@ public class Search extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        init();
+    }
+private EditText name;
+    private ImageView filter,search,close,back;
+    private TextView result_nb;
+    private LinearLayout no_result;
+    private RecyclerView RV;
+    private void init() {
+        filter=findViewById(R.id.filter_btn);
+        search=findViewById(R.id.search_btn);
+        close=findViewById(R.id.close_btn);
+        result_nb=findViewById(R.id.result_nb);
+        no_result=findViewById(R.id.linear_no_results);
+        RV=findViewById(R.id.RV);
+        back=findViewById(R.id.back_btn);
+        RV=findViewById(R.id.RV);
     }
 
     private void makeDrawable(int color, TextView view, boolean isChoose) {

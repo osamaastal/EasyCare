@@ -24,6 +24,7 @@
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <ImageButton
+            android:id="@+id/back_btn"
             android:layout_width="46dp"
             android:layout_height="46dp"
             android:src="@drawable/ic_back_ar"
@@ -72,6 +73,7 @@
             android:layout_marginEnd="23dp"
             android:layout_marginStart="23dp">
             <EditText
+                android:id="@+id/email_ed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_trans"
@@ -108,6 +110,7 @@
             android:layout_marginEnd="23dp"
             android:layout_marginStart="23dp">
             <EditText
+                android:id="@+id/phone_ed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_trans"
@@ -129,6 +132,7 @@
         android:layout_height="0dp"
         android:layout_weight="7"/>
     <Button
+        android:id="@+id/save_btn"
         style="@style/text_white_roman_18"
         android:layout_width="match_parent"
         android:layout_height="60dp"

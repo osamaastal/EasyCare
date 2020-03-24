@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Fragment fragment;
     private Fragment home_frag, myOrders_frag, myPlace_frag, basket_frag, profile_frag;
     private Toolbar toolbar;
-
+public static  FragmentTransaction transaction;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         toolbar.setBackground(getDrawable(R.drawable.bg_circle_blue_gradiant));
                         break;
                 }
-                final FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction = fragmentManager.beginTransaction();
                 transaction.replace(R.id.mainContainer, fragment).commit();
                 return true;
             }

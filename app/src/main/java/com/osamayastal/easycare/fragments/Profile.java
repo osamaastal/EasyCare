@@ -32,9 +32,29 @@ public class Profile extends Fragment implements View.OnClickListener {
 
     private void Loading_data() {
        User_info info=new User_info(getContext());
-        email.setText(info.getEmail());
-        phone.setText(info.getPhone());
-        city.setText(info.getCity());
+
+
+        user user=new user();
+        user.GET_profil(getContext(), new user.user_Listener() {
+            @Override
+            public void onSuccess(users account) {
+                email.setText(account.getItems().getEmail());
+                phone.setText(account.getItems().getPhoneNumber());
+                city.setText(account.getItems().getCity());
+                favorit_nb.setText(account.getItems().getFavoritCount()+"");
+                order_nb.setText(account.getItems().getOrderCount()+"");
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onFailure(String msg) {
+
+            }
+        });
 
 
     }

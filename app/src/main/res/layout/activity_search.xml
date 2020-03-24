@@ -25,6 +25,7 @@
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <ImageButton
+            android:id="@+id/back_btn"
             android:layout_width="46dp"
             android:layout_height="46dp"
             android:src="@drawable/ic_back_ar"
@@ -88,6 +89,7 @@
                 android:layout_gravity="bottom"
                 />
             <TextView
+                android:id="@+id/result_nb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="00"
@@ -113,7 +115,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"
-                android:layout_marginEnd="3dp"/>
+                android:layout_marginEnd="3dp"
+                tools:listitem="@layout/row_service_text"
+                android:id="@+id/RV"/>
         </androidx.core.widget.NestedScrollView>
         <LinearLayout
             android:id="@+id/linear_no_results"
