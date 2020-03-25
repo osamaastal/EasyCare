@@ -4,8 +4,6 @@ import android.util.Log;
 
 import com.osamayastal.easycare.Model.Classes.Categorie;
 import com.osamayastal.easycare.Model.Classes.Pagenation;
-import com.osamayastal.easycare.Model.Classes.Provider;
-import com.osamayastal.easycare.Model.Classes.TopRequestedProviders;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,13 +12,12 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Search {
+public class Categories {
     private String message;
     private int status_code;
-    private Pagenation pagenation;
-    private List<com.osamayastal.easycare.Model.Classes.Search> items;
+    private List<com.osamayastal.easycare.Model.Classes.Categorie> items;
 
-    public Search(JSONObject jsonObject) {
+    public Categories(JSONObject jsonObject) {
         if (jsonObject==null){
             return;
         }
@@ -30,12 +27,11 @@ public class Search {
             message=jsonObject.getString("message");
             Log.d("message",message);
             status_code=jsonObject.getInt("status_code");
-            pagenation=new Pagenation(jsonObject.getJSONObject("pagenation"));
             JSONArray jsonArray2=jsonObject.getJSONArray("items");
 
 
             for(int i=0;i<jsonArray2.length();i++){
-                items.add(new com.osamayastal.easycare.Model.Classes.Search(jsonArray2.getJSONObject(i)));
+                items.add(new com.osamayastal.easycare.Model.Classes.Categorie(jsonArray2.getJSONObject(i)));
             }
 
         } catch (JSONException e) {
@@ -60,19 +56,11 @@ public class Search {
         this.status_code = status_code;
     }
 
-    public Pagenation getPagenation() {
-        return pagenation;
-    }
-
-    public void setPagenation(Pagenation pagenation) {
-        this.pagenation = pagenation;
-    }
-
-    public List<com.osamayastal.easycare.Model.Classes.Search> getItems() {
+    public List<Categorie> getItems() {
         return items;
     }
 
-    public void setItems(List<com.osamayastal.easycare.Model.Classes.Search> items) {
+    public void setItems(List<Categorie> items) {
         this.items = items;
     }
 }

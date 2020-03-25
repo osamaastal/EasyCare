@@ -6,6 +6,7 @@
     android:paddingStart="10dp"
     android:paddingEnd="8dp"
     android:paddingTop="4dp"
+    android:id="@+id/type_tv"
     android:paddingBottom="4dp"
     style="@style/text_white_roman_12"
     android:drawableEnd="@drawable/ic_true_circle"

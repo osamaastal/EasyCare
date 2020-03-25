@@ -1,5 +1,6 @@
 package com.osamayastal.easycare.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.osamayastal.easycare.Adapters.Categories_adapter;
@@ -17,6 +19,7 @@ import com.osamayastal.easycare.Model.Classes.Categorie;
 import com.osamayastal.easycare.Model.Classes.Provider;
 import com.osamayastal.easycare.Model.Rootes.Home_root;
 import com.osamayastal.easycare.R;
+import com.osamayastal.easycare.activities.Search;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +74,7 @@ public class Home extends Fragment implements View.OnClickListener {
     private Categories_adapter categories_adapter;
     private Provider_adapter adapter_rate;
     private Provider_adapter adapter_req;
-
+private ImageButton search_btn;
     private void init(View view) {
         more_rat=view.findViewById(R.id.more_rate);
         more_req=view.findViewById(R.id.more_request);
@@ -79,10 +82,12 @@ public class Home extends Fragment implements View.OnClickListener {
         RV_server=view.findViewById(R.id.RV_server);
         RV_top_rat=view.findViewById(R.id.RV_top_rate);
         RV_top_req=view.findViewById(R.id.RV_top_request);
+        search_btn=view.findViewById(R.id.search_btn);
      /*******************************Actions************************************/
         more_server.setOnClickListener(this);
         more_req.setOnClickListener(this);
         more_rat.setOnClickListener(this);
+        search_btn.setOnClickListener(this);
         /********************************List****************************************/
         categories=new ArrayList<>();
         top_rate_list=new ArrayList<com.osamayastal.easycare.Model.Classes.Provider>();
@@ -108,6 +113,9 @@ public class Home extends Fragment implements View.OnClickListener {
             case R.id.more_request:
                 break;
             case R.id.more_server:
+                break;
+            case R.id.search_btn:
+                startActivity(new Intent(getContext(), Search.class));
                 break;
         }
     }

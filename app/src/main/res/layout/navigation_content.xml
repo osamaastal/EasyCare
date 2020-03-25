@@ -221,7 +221,7 @@
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:background="@drawable/bg_circle_white"
-
+                    android:gravity="center"
                     android:text="@string/en"
                     android:layout_marginStart="40dp"
                     style="@style/text_darkblue_roman_18"

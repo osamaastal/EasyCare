@@ -8,7 +8,7 @@ import com.osamayastal.easycare.Model.Classes.User;
 import static android.content.Context.MODE_PRIVATE;
 
 public class User_info {
-    private String supplier_id;
+    private String language;
     private String id,phone,token,name,email,image,gender,city,pw,address;
 private String lat;
     private String lng;
@@ -30,14 +30,14 @@ private  int point;
         pw=sp.getString("pw","");
         wallet=sp.getLong("wallet", (long) 0.0);
         point=sp.getInt("point", 0);
-        supplier_id=sp.getString("supplier_id","");
+        language=sp.getString("language","");
     }
 
-    public User_info(String supplier_id, Context context) {
+    public User_info(String language, Context context) {
         SharedPreferences sp=context.getSharedPreferences("Login", MODE_PRIVATE);
         SharedPreferences.Editor Ed=sp.edit();
 
-        Ed.putString("supplier_id", String.valueOf(supplier_id));
+        Ed.putString("language", String.valueOf(language));
 
         Ed.commit();
 
@@ -78,15 +78,12 @@ private  int point;
 
     }
 
-    public String getSupplier_id(Context mcontext) {
-        final SharedPreferences sp=mcontext.getSharedPreferences("Login", MODE_PRIVATE);
-
-        supplier_id=sp.getString("supplier_id","");
-        return supplier_id;
+    public String getLanguage() {
+        return language;
     }
 
-    public void setSupplier_id(String supplier_id) {
-        this.supplier_id = supplier_id;
+    public void setLanguage(String language) {
+        this.language = language;
     }
 
     public User_info() {
