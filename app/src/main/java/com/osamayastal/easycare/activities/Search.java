@@ -81,8 +81,8 @@ mypopupWindow_filter=setPopUpWindow();
     String city_id=null;
     int rat =-1;
     private PopupWindow setPopUpWindow() {
-        LayoutInflater inflater = (LayoutInflater)
-                getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//        LayoutInflater inflater = (LayoutInflater).getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater=(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view1 = inflater.inflate(R.layout.popup_filter, null);
 
         final Spinner city=view1.findViewById(R.id.city_spinner);
@@ -107,7 +107,7 @@ mypopupWindow_filter=setPopUpWindow();
         GEt_all_saervic(categories,adaptertype);
         /*************************************City*********************************/
         List<City> cityArrayList=new ArrayList<>();
-        City_adapter adaptercity=new City_adapter(Search.this,R.id.type_tv, cityArrayList);
+        City_adapter adaptercity=new City_adapter(Search.this,R.layout.row_service_text,R.id.type_tv, cityArrayList);
         city.setAdapter(adaptercity);
         Get_all_city(cityArrayList,adaptercity);
         /********************************************************************************/

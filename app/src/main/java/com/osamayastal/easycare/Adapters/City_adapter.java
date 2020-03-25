@@ -31,9 +31,9 @@ public class City_adapter extends ArrayAdapter<City> {
 
     LayoutInflater flater;
 String lang="";
-    public City_adapter(Activity context, int textviewId, List<City> list){
+    public City_adapter(Activity context,int resouceId, int textviewId, List<City> list){
 
-        super(context,textviewId, list);
+        super(context,resouceId,textviewId, list);
         flater = context.getLayoutInflater();
        lang= new User_info(context).getLanguage();
     }
@@ -46,6 +46,7 @@ String lang="";
         View rowview = flater.inflate(R.layout.row_service_text,null,true);
 
         TextView txtTitle = (TextView) rowview.findViewById(R.id.type_tv);
+
         if (lang.equals("en")){
             txtTitle.setText(rowItem.getEnName());
 

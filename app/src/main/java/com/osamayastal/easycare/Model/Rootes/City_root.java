@@ -39,7 +39,7 @@ public class City_root {
                 //Build.logError("Setting a new request queue");
             }
             // prepare the Request
-            JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.POST, url, null,
+            JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url, null,
                     new Response.Listener<JSONObject>()
                     {
                         @Override
