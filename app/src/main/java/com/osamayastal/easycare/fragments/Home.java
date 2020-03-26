@@ -13,13 +13,23 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.osamayastal.easycare.Adapters.Categories_adapter;
-import com.osamayastal.easycare.Adapters.Provider_adapter;
-import com.osamayastal.easycare.Model.Classes.Categorie;
-import com.osamayastal.easycare.Model.Classes.Provider;
-import com.osamayastal.easycare.Model.Rootes.Home_root;
+import com.github.islamkhsh.CardSliderViewPager;
 import com.osamayastal.easycare.R;
-import com.osamayastal.easycare.activities.Search;
+import com.osamayastal.easycare.classes.items.Card;
+import com.osamayastal.easycare.classes.adapters.CardAdapter;
+
+import java.util.ArrayList;
+
+/**
+ * A simple {@link Fragment} subclass.
+ * Use the {@link Home#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class Home extends Fragment {
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
 
 import java.util.ArrayList;
 import java.util.List;
@@ -118,5 +128,16 @@ private ImageButton search_btn;
                 startActivity(new Intent(getContext(), Search.class));
                 break;
         }
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        ArrayList<Card> movies = new ArrayList<>();
+        // add items to arraylist
+        movies.add(new Card());
+        movies.add(new Card());
+        movies.add(new Card());
+        movies.add(new Card());
+        movies.add(new Card());
+        CardSliderViewPager cardSliderViewPager = view.findViewById(R.id.viewPager);
+        cardSliderViewPager.setAdapter(new CardAdapter(movies));
+        return view;
     }
 }

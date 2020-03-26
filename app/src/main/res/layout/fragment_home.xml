@@ -53,7 +53,8 @@
         android:background="@drawable/bg_mid_blue_50dp">
         <com.github.islamkhsh.CardSliderViewPager
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="180dp"
+            android:layoutDirection="locale"
             android:id="@+id/viewPager"
             android:layout_marginTop="24dp"
             app:cardSlider_smallScaleFactor="0.8"
