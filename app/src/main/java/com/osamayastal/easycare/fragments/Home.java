@@ -1,6 +1,5 @@
 package com.osamayastal.easycare.fragments;
 
-import android.graphics.Movie;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,7 +10,7 @@ import android.view.ViewGroup;
 
 import com.github.islamkhsh.CardSliderViewPager;
 import com.osamayastal.easycare.R;
-import com.osamayastal.easycare.classes.Card;
+import com.osamayastal.easycare.classes.items.Card;
 import com.osamayastal.easycare.classes.adapters.CardAdapter;
 
 import java.util.ArrayList;

@@ -1,6 +1,5 @@
 package com.osamayastal.easycare.classes.adapters;
 
-import android.graphics.Movie;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,7 +7,7 @@ import android.view.ViewGroup;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.osamayastal.easycare.R;
-import com.osamayastal.easycare.classes.Card;
+import com.osamayastal.easycare.classes.items.Card;
 
 import org.jetbrains.annotations.NotNull;
 

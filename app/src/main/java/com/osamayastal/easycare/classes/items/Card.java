@@ -1,4 +1,4 @@
-package com.osamayastal.easycare.classes;
+package com.osamayastal.easycare.classes.items;
 
 public class Card {
     public Card() {
