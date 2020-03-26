@@ -1,5 +1,6 @@
 package com.osamayastal.easycare.fragments;
 
+import android.graphics.Movie;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -8,7 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.islamkhsh.CardSliderViewPager;
 import com.osamayastal.easycare.R;
+import com.osamayastal.easycare.classes.Card;
+import com.osamayastal.easycare.classes.adapters.CardAdapter;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -60,6 +66,16 @@ public class Home extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        ArrayList<Card> movies = new ArrayList<>();
+        // add items to arraylist
+        movies.add(new Card());
+        movies.add(new Card());
+        movies.add(new Card());
+        movies.add(new Card());
+        movies.add(new Card());
+        CardSliderViewPager cardSliderViewPager = view.findViewById(R.id.viewPager);
+        cardSliderViewPager.setAdapter(new CardAdapter(movies));
+        return view;
     }
 }
