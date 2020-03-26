@@ -38,17 +38,20 @@ String lang="";
         flater = context.getLayoutInflater();
        lang= new User_info(context).getLanguage();
     }
-
+//    @Override
+//    public View getView(int position, View convertView, ViewGroup parent) {
+//        return getDropDownView(position, convertView, parent);
+//    }
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
         City rowItem = getItem(position);
         Log.d("City_name",rowItem.getArName());
 
-        View rowview = flater.inflate(R.layout.row_city_text,null,true);
+        View rowview =getDropDownView(position, convertView, parent);// flater.inflate(R.layout.row_city_text,null,true);
 
         TextView txtTitle = (TextView) rowview.findViewById(R.id.type_tv);
-
+//        txtTitle.setText(rowItem.toString());
         if (lang.equals("en")){
             txtTitle.setText(rowItem.getEnName().toString());
 

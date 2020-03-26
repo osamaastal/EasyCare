@@ -41,4 +41,9 @@ public class City {
     public void setEnName(String enName) {
         this.enName = enName;
     }
+
+    @Override
+    public String toString() {
+        return arName;
+    }
 }

@@ -68,10 +68,10 @@ public class Search_root {
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
                     Map<String, String>  parameters = new HashMap<String, String>();
-                   if (rate!=-1) parameters.put("rate",rate+"");
-                    if (city_id!=null) parameters.put("city_id",city_id);
-                    if (category_id!=null) parameters.put("category_id",category_id);
-                    if (name!=null) parameters.put("name",name);
+//                   if (rate!=-1) parameters.put("rate",rate+"");
+//                    if (city_id!=null) parameters.put("city_id",city_id);
+//                    if (category_id!=null) parameters.put("category_id",category_id);
+                     parameters.put("name",name.trim());
                     return  parameters;
                 }
             };

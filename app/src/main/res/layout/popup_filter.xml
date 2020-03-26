@@ -155,10 +155,7 @@
                     app:isb_track_progress_size="7dp"
                     app:isb_track_rounded_corners="true"
                     app:isb_only_thumb_draggable="false"/>
-                <!--            <SeekBar-->
-                <!--                android:layout_width="0dp"-->
-                <!--                android:layout_weight="1"-->
-                <!--                android:layout_height="wrap_content"/>-->
+
             </LinearLayout>
             <View
                 android:layout_width="match_parent"
@@ -225,6 +222,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="?android:attr/ratingBarStyleIndicator"
+                    android:isIndicator="false"
                     android:rating="4"
                     android:theme="@style/RatingBar"
                     android:layout_marginTop="5dp"

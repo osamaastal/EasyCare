@@ -118,7 +118,7 @@ mypopupWindow_filter=setPopUpWindow();
                 City city1=(City) city.getSelectedItem();
                 city_id=city1.get_id();
                 rat=rang.getProgress();
-                Search_fun(name.getText(),categorie_id,city_id,rat);
+                Search_fun(name,categorie_id,city_id,rat);
                 mypopupWindow_filter.dismiss();
 
             }
@@ -179,9 +179,9 @@ mypopupWindow_filter=setPopUpWindow();
         });
     }
 
-    private void Search_fun(CharSequence charSequence, String categorie_id, String city_id, int rat) {
+    private void Search_fun(EditText name, String categorie_id, String city_id, int rat) {
         final Search_root search_root=new Search_root();
-        search_root.GetSearch(this, categorie_id, city_id, charSequence.toString(), rat, 0,
+        search_root.GetSearch(this, categorie_id, city_id, name.getText().toString(), rat, 0,
                 new Search_root.homeListener() {
                     @Override
                     public void onSuccess(com.osamayastal.easycare.Model.Controle.Search home) {
@@ -224,7 +224,7 @@ mypopupWindow_filter=setPopUpWindow();
                 name.setText("");
                 break;
             case R.id.search_btn:
-                Search_fun(name.getText(), categorie_id, city_id, rat);
+                Search_fun(name, categorie_id, city_id, rat);
                 break;
             case R.id.filter_btn:
                 mypopupWindow_filter.showAsDropDown(filter,0,0);

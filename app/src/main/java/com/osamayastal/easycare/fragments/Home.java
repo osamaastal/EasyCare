@@ -14,22 +14,18 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.github.islamkhsh.CardSliderViewPager;
+import com.osamayastal.easycare.Adapters.Categories_adapter;
+import com.osamayastal.easycare.Adapters.Provider_adapter;
+import com.osamayastal.easycare.Model.Classes.Categorie;
+import com.osamayastal.easycare.Model.Classes.Provider;
+import com.osamayastal.easycare.Model.Classes.Slider;
+import com.osamayastal.easycare.Model.Rootes.Home_root;
 import com.osamayastal.easycare.R;
+import com.osamayastal.easycare.activities.Search;
 import com.osamayastal.easycare.classes.items.Card;
 import com.osamayastal.easycare.classes.adapters.CardAdapter;
 
 import java.util.ArrayList;
-
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Home#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class Home extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,13 +51,17 @@ public class Home extends Fragment implements View.OnClickListener {
                 top_rate_list.clear();
                 top_req_list.clear();
                 categories.clear();
+                sliderList.clear();
+
                 //////addAll
                 top_req_list.addAll(home.getTopRequestedProviders().get(0).getProvider());
                 top_rate_list.addAll(home.getTopRatedProviders());
                 categories.addAll(home.getCategories());
+                sliderList.addAll(home.getSliders());
                 adapter_rate.notifyDataSetChanged();
                 adapter_req.notifyDataSetChanged();
                 categories_adapter.notifyDataSetChanged();
+                Slide_adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -81,9 +81,11 @@ public class Home extends Fragment implements View.OnClickListener {
     private List<Categorie> categories;
     private List<Provider> top_rate_list;
     private List<Provider> top_req_list;
+    private List<Slider> sliderList;
     private Categories_adapter categories_adapter;
     private Provider_adapter adapter_rate;
     private Provider_adapter adapter_req;
+    private CardAdapter Slide_adapter;
 private ImageButton search_btn;
     private void init(View view) {
         more_rat=view.findViewById(R.id.more_rate);
@@ -102,6 +104,7 @@ private ImageButton search_btn;
         categories=new ArrayList<>();
         top_rate_list=new ArrayList<com.osamayastal.easycare.Model.Classes.Provider>();
         top_req_list=new ArrayList<Provider>();
+        sliderList=new ArrayList<Slider>();
         /********************************adapters****************************************/
         adapter_rate=new Provider_adapter(getContext(),top_rate_list,null);
         adapter_req=new Provider_adapter(getContext(),top_req_list,null);
@@ -113,6 +116,18 @@ private ImageButton search_btn;
         RV_top_rat.setAdapter(adapter_rate);
         RV_server.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false));
         RV_server.setAdapter(categories_adapter);
+
+        /*************************************ADS***************************************/
+//        ArrayList<Card> movies = new ArrayList<>();
+////        // add items to arraylist
+////        movies.add(new Card());
+////        movies.add(new Card());
+////        movies.add(new Card());
+////        movies.add(new Card());
+////        movies.add(new Card());
+        CardSliderViewPager cardSliderViewPager = view.findViewById(R.id.viewPager);
+      Slide_adapter=new CardAdapter(getContext(),sliderList);
+        cardSliderViewPager.setAdapter(Slide_adapter);
     }
 
     @Override
@@ -128,16 +143,6 @@ private ImageButton search_btn;
                 startActivity(new Intent(getContext(), Search.class));
                 break;
         }
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
-        ArrayList<Card> movies = new ArrayList<>();
-        // add items to arraylist
-        movies.add(new Card());
-        movies.add(new Card());
-        movies.add(new Card());
-        movies.add(new Card());
-        movies.add(new Card());
-        CardSliderViewPager cardSliderViewPager = view.findViewById(R.id.viewPager);
-        cardSliderViewPager.setAdapter(new CardAdapter(movies));
-        return view;
+
     }
 }

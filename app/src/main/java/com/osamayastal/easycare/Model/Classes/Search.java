@@ -27,6 +27,7 @@ public class Search {
             city_id=new City(provider.getJSONObject("city_id"));
             image=provider.getString("image");
             fcmToken=provider.getString("fcmToken");
+            rate=provider.getInt("rate");
 
             isBlock=provider.getBoolean("isBlock");
 
