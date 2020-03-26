@@ -28,7 +28,11 @@
         <item name="android:textSize">12sp</item>
         <item name="android:fontFamily">@font/helvetica_roman</item>
     </style>
-
+    <style name="text_grey_roman_12" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/gray_menu</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/helvetica_roman</item>
+    </style>
     <style name="text_white_roman_14" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">14sp</item>

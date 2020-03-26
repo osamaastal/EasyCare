@@ -6,7 +6,7 @@ import org.json.JSONObject;
 public class City {
     private String _id,arName,enName;
     public City(JSONObject provider) {
-        if (provider!=null){
+        if (provider==null){
             return;
         }
         try {

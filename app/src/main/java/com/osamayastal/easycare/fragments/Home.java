@@ -47,7 +47,7 @@ public class Home extends Fragment implements View.OnClickListener {
                 categories.clear();
                 //////addAll
                 top_req_list.addAll(home.getTopRequestedProviders().get(0).getProvider());
-                top_rate_list.addAll(home.getTopRatedProviders().get(0).getProvider());
+                top_rate_list.addAll(home.getTopRatedProviders());
                 categories.addAll(home.getCategories());
                 adapter_rate.notifyDataSetChanged();
                 adapter_req.notifyDataSetChanged();

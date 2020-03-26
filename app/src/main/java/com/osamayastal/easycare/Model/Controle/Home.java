@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.osamayastal.easycare.Model.Classes.Categorie;
 import com.osamayastal.easycare.Model.Classes.Provider;
+import com.osamayastal.easycare.Model.Classes.Slider;
 import com.osamayastal.easycare.Model.Classes.TopRatedProviders;
 import com.osamayastal.easycare.Model.Classes.TopRequestedProviders;
 
@@ -18,8 +19,9 @@ public class Home {
     private String message;
     private int status_code;
     private List<TopRequestedProviders> topRequestedProviders;
-    private List<TopRequestedProviders> topRatedProviders;
+    private List<Provider> topRatedProviders;
     private List<Categorie> categories;
+    private List<Slider> sliders;
 
     public Home(JSONObject jsonObject) {
         if (jsonObject==null){
@@ -28,6 +30,7 @@ public class Home {
         topRequestedProviders=new ArrayList<>();
         topRatedProviders=new ArrayList<>();
         categories=new ArrayList<>();
+        sliders=new ArrayList<>();
         try {
             message=jsonObject.getString("message");
             Log.d("message",message);
@@ -35,17 +38,22 @@ public class Home {
             JSONArray jsonArray=jsonObject.getJSONArray("topRequestedProviders");
             JSONArray jsonArray1=jsonObject.getJSONArray("topRatedProviders");
             JSONArray jsonArray2=jsonObject.getJSONArray("categories");
+            JSONArray jsonArray3=jsonObject.getJSONArray("sliders");
 
             for(int i=0;i<jsonArray.length();i++){
                topRequestedProviders.add(new TopRequestedProviders(jsonArray.getJSONObject(i)));
             }
 
             for(int i=0;i<jsonArray1.length();i++){
-                topRatedProviders.add(new TopRequestedProviders(jsonArray.getJSONObject(i)));
+                topRatedProviders.add(new Provider(jsonArray1.getJSONObject(i)));
             }
 
             for(int i=0;i<jsonArray2.length();i++){
                 categories.add(new Categorie(jsonArray2.getJSONObject(i)));
+            }
+
+            for(int i=0;i<jsonArray3.length();i++){
+                sliders.add(new Slider(jsonArray3.getJSONObject(i)));
             }
 
         } catch (JSONException e) {
@@ -78,12 +86,20 @@ public class Home {
         this.topRequestedProviders = topRequestedProviders;
     }
 
-    public List<TopRequestedProviders> getTopRatedProviders() {
+    public List<Provider> getTopRatedProviders() {
         return topRatedProviders;
     }
 
-    public void setTopRatedProviders(List<TopRequestedProviders> topRatedProviders) {
+    public void setTopRatedProviders(List<Provider> topRatedProviders) {
         this.topRatedProviders = topRatedProviders;
+    }
+
+    public List<Slider> getSliders() {
+        return sliders;
+    }
+
+    public void setSliders(List<Slider> sliders) {
+        this.sliders = sliders;
     }
 
     public List<Categorie> getCategories() {

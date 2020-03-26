@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,16 +43,17 @@ String lang="";
     public View getView(int position, View convertView, ViewGroup parent) {
 
         City rowItem = getItem(position);
+        Log.d("City_name",rowItem.getArName());
 
-        View rowview = flater.inflate(R.layout.row_service_text,null,true);
+        View rowview = flater.inflate(R.layout.row_city_text,null,true);
 
         TextView txtTitle = (TextView) rowview.findViewById(R.id.type_tv);
 
         if (lang.equals("en")){
-            txtTitle.setText(rowItem.getEnName());
+            txtTitle.setText(rowItem.getEnName().toString());
 
         }else {
-            txtTitle.setText(rowItem.getArName());
+            txtTitle.setText(rowItem.getArName().toString());
 
         }
 

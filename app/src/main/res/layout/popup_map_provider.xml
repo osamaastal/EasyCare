@@ -19,17 +19,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         />
+
     <TextView
         android:id="@+id/provider_name_tv"
+        style="@style/text_darkblue_bold_18"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="مغسلة الوفاء"
+        android:layout_marginTop="16dp"
         android:gravity="start"
-        style="@style/text_darkblue_bold_18"
-        android:layout_marginStart="10dp"
+        android:text="مغسلة الوفاء"
         app:layout_constraintStart_toEndOf="@id/provider_Img"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/location_tv"
         android:layout_width="wrap_content"
@@ -88,6 +89,7 @@
         app:layout_constraintTop_toTopOf="@+id/type_tv"
         app:layout_constraintBottom_toBottomOf="@+id/type_tv"/>
     <ImageView
+        android:id="@+id/like_btn"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:src="@drawable/ic_unlike"

@@ -9,7 +9,7 @@ public class Provider {
     private double lat,lng,profitPercentage,orderPercentage;
 private float rate;
     public Provider(JSONObject provider) {
-        if (provider!=null){
+        if (provider==null){
             return;
         }
         try {
@@ -22,6 +22,7 @@ private float rate;
             password=provider.getString("password");
             category_id=provider.getString("category_id");
             image=provider.getString("image");
+            rate=provider.getInt("rate");
 
             isBlock=provider.getBoolean("isBlock");
 

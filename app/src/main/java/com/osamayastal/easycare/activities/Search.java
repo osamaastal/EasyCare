@@ -106,8 +106,8 @@ mypopupWindow_filter=setPopUpWindow();
         RV.setAdapter(adaptertype);
         GEt_all_saervic(categories,adaptertype);
         /*************************************City*********************************/
-        List<City> cityArrayList=new ArrayList<>();
-        City_adapter adaptercity=new City_adapter(Search.this,R.layout.row_service_text,R.id.type_tv, cityArrayList);
+        List<City> cityArrayList=new ArrayList<City>();
+        City_adapter adaptercity=new City_adapter(Search.this,R.layout.row_city_text,R.id.type_tv, cityArrayList);
         city.setAdapter(adaptercity);
         Get_all_city(cityArrayList,adaptercity);
         /********************************************************************************/

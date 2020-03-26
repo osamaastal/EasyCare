@@ -4,7 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Employee {
-    private String _id,createAt,full_name,email,phone_number,password;
+    private String _id,createAt,full_name,email,phone_number,password,image;
     private boolean isBlock;
     private Provider provider_id;
 
@@ -19,6 +19,7 @@ public class Employee {
             email=provider.getString("email");
             phone_number=provider.getString("phone_number");
             password=provider.getString("password");
+            image=provider.getString("image");
 
             isBlock=provider.getBoolean("isBlock");
             provider_id=new Provider(provider.getJSONObject("provider_id"));
@@ -28,6 +29,14 @@ public class Employee {
 
 
 
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String get_id() {
