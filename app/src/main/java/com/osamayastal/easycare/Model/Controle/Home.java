@@ -18,7 +18,7 @@ import java.util.List;
 public class Home {
     private String message;
     private int status_code;
-    private List<TopRequestedProviders> topRequestedProviders;
+    private List<Provider> topRequestedProviders;
     private List<Provider> topRatedProviders;
     private List<Categorie> categories;
     private List<Slider> sliders;
@@ -41,7 +41,7 @@ public class Home {
             JSONArray jsonArray3=jsonObject.getJSONArray("sliders");
 
             for(int i=0;i<jsonArray.length();i++){
-               topRequestedProviders.add(new TopRequestedProviders(jsonArray.getJSONObject(i)));
+               topRequestedProviders.add(new Provider(jsonArray.getJSONObject(i)));
             }
 
             for(int i=0;i<jsonArray1.length();i++){
@@ -78,11 +78,11 @@ public class Home {
         this.status_code = status_code;
     }
 
-    public List<TopRequestedProviders> getTopRequestedProviders() {
+    public List<Provider> getTopRequestedProviders() {
         return topRequestedProviders;
     }
 
-    public void setTopRequestedProviders(List<TopRequestedProviders> topRequestedProviders) {
+    public void setTopRequestedProviders(List<Provider> topRequestedProviders) {
         this.topRequestedProviders = topRequestedProviders;
     }
 

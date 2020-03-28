@@ -61,7 +61,7 @@ private ImageView back;
     }
     public void switchFGM(Fragment fragment){
         MainActivity.transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        MainActivity. transaction.replace(R.id.LoginContainer, fragment);
+        MainActivity. transaction.replace(R.id.mainContainer, fragment);
         MainActivity. transaction.commit();
     }
     private void update_data() {

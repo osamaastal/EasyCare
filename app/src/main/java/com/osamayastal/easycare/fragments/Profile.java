@@ -16,6 +16,8 @@ import com.osamayastal.easycare.Model.Const.User_info;
 import com.osamayastal.easycare.Model.Controle.users;
 import com.osamayastal.easycare.Model.Rootes.user;
 import com.osamayastal.easycare.R;
+import com.osamayastal.easycare.activities.LoginActivity;
+import com.osamayastal.easycare.activities.MainActivity;
 
 
 public class Profile extends Fragment implements View.OnClickListener {
@@ -60,7 +62,7 @@ public class Profile extends Fragment implements View.OnClickListener {
     }
 
     private TextView email,phone,city,favorit_nb,order_nb;
-    private Button logout_btn;
+    private Button changPW_btn;
     private ImageView edit_btn;
     private void init(View view) {
         email=view.findViewById(R.id.emial_tv);
@@ -68,34 +70,43 @@ public class Profile extends Fragment implements View.OnClickListener {
         city =view.findViewById(R.id.city_tv);
         favorit_nb=view.findViewById(R.id.favorit_nb);
         order_nb=view.findViewById(R.id.order_nb);
-        logout_btn=view.findViewById(R.id.logout_btn);
+        changPW_btn=view.findViewById(R.id.logout_btn);
         edit_btn=view.findViewById(R.id.edit_btn);
         /*****************************Actions****************************/
-        logout_btn.setOnClickListener(this);
+        changPW_btn.setOnClickListener(this);
+        edit_btn.setOnClickListener(this);
     }
-
+    public void switchFGM(Fragment fragment){
+        MainActivity.transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        MainActivity. transaction.replace(R.id.mainContainer, fragment);
+        MainActivity. transaction.commit();
+    }
     @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.logout_btn:
-                user user=new user();
-                user.Post_Logout(getContext(), new user.user_Listener() {
-                    @Override
-                    public void onSuccess(users new_account) {
-                        new User_info(getContext(),true);
-                        getActivity().finish();
-                    }
-
-                    @Override
-                    public void onStart() {
-
-                    }
-
-                    @Override
-                    public void onFailure(String msg) {
-
-                    }
-                });
+                switchFGM(new ChangePass());
+//                user user=new user();
+//                user.Post_Logout(getContext(), new user.user_Listener() {
+//                    @Override
+//                    public void onSuccess(users new_account) {
+//                        new User_info(getContext(),true);
+//                        getActivity().finish();
+//                    }
+//
+//                    @Override
+//                    public void onStart() {
+//
+//                    }
+//
+//                    @Override
+//                    public void onFailure(String msg) {
+//
+//                    }
+//                });
+                break;
+            case R.id.edit_btn:
+                switchFGM(new EditProfile());
                 break;
         }
     }

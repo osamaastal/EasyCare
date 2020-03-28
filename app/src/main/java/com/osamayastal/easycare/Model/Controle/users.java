@@ -9,7 +9,7 @@ import org.json.JSONObject;
 public class users {
 
     private User items;
-    private String message;
+    private String messageAr,messageEn;
     private boolean status;
     private int statusCode;
 
@@ -21,13 +21,7 @@ public class users {
         this.items = items;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
 
-    public String getMessage() {
-        return this.message;
-    }
 
     public void setStatus(boolean status) {
         this.status = status;
@@ -45,6 +39,22 @@ public class users {
         return this.statusCode;
     }
 
+    public String getMessageAr() {
+        return messageAr;
+    }
+
+    public void setMessageAr(String messageAr) {
+        this.messageAr = messageAr;
+    }
+
+    public String getMessageEn() {
+        return messageEn;
+    }
+
+    public void setMessageEn(String messageEn) {
+        this.messageEn = messageEn;
+    }
+
     /**
      * Instantiate the instance using the passed jsonObject to set the properties values
      */
@@ -52,7 +62,8 @@ public class users {
         if (jsonObject == null) {
             return;
         }
-        message = jsonObject.optString("message");
+        messageAr = jsonObject.optString("messageAr");
+        messageEn = jsonObject.optString("messageEn");
         status = jsonObject.optBoolean("status");
         statusCode = jsonObject.optInt("status_code");
         items = new User(jsonObject.optJSONObject("items"));
@@ -62,18 +73,6 @@ public class users {
     /**
      * Returns all the available property values in the form of JSONObject instance where the key is the approperiate json key and the value is the value of the corresponding field
      */
-    public JSONObject toJsonObject() {
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("items", items.toJsonObject());
-            jsonObject.put("message", message);
-            jsonObject.put("status", status);
-            jsonObject.put("status_code", statusCode);
-        } catch (JSONException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return jsonObject;
-    }
+
 
 }

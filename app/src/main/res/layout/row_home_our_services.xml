@@ -36,7 +36,7 @@
         style="@style/text_white_roman_12"
         android:gravity="center"
         android:paddingBottom="5dp"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:background="@drawable/bg_circle_yellow"

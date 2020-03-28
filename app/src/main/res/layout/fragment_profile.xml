@@ -128,7 +128,7 @@
                             style="@style/text_white_bold_20"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="02" />
+                            android:text="00" />
 
                         <TextView
                             style="@style/text_white_roman_16"
@@ -172,7 +172,7 @@
                             style="@style/text_white_bold_20"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="02" />
+                            android:text="00" />
 
                         <TextView
                             style="@style/text_white_roman_16"
@@ -207,7 +207,7 @@
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/ic_email_red"
                     android:drawablePadding="10dp"
-                    android:text="osamayastal@gmail.com"
+                    android:text=" "
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/email" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -240,7 +240,7 @@
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/ic_phone_red"
                     android:drawablePadding="10dp"
-                    android:text="+966 595689576"
+                    android:text=" "
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/phone" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -273,7 +273,7 @@
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/ic_place_red"
                     android:drawablePadding="10dp"
-                    android:text="السعودية - الرياض شارع الملك عبدالعزيز"
+                    android:text=" "
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/place" />
             </androidx.constraintlayout.widget.ConstraintLayout>

@@ -22,12 +22,10 @@ import com.osamayastal.easycare.Model.Classes.Slider;
 import com.osamayastal.easycare.Model.Rootes.Home_root;
 import com.osamayastal.easycare.R;
 import com.osamayastal.easycare.activities.Search;
-import com.osamayastal.easycare.classes.items.Card;
-import com.osamayastal.easycare.classes.adapters.CardAdapter;
+import com.osamayastal.easycare.Adapters.CardAdapter;
 
 import java.util.ArrayList;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Home extends Fragment implements View.OnClickListener {
@@ -54,7 +52,7 @@ public class Home extends Fragment implements View.OnClickListener {
                 sliderList.clear();
 
                 //////addAll
-                top_req_list.addAll(home.getTopRequestedProviders().get(0).getProvider());
+                top_req_list.addAll(home.getTopRequestedProviders());
                 top_rate_list.addAll(home.getTopRatedProviders());
                 categories.addAll(home.getCategories());
                 sliderList.addAll(home.getSliders());

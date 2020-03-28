@@ -10,7 +10,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.osamayastal.easycare.Model.Const.User_info;
+import com.osamayastal.easycare.Model.Controle.users;
 import com.osamayastal.easycare.Model.Rootes.user;
 import com.osamayastal.easycare.R;
 import com.osamayastal.easycare.activities.MainActivity;
@@ -60,7 +63,7 @@ public class ChangePass extends Fragment implements View.OnClickListener {
     }
     public void switchFGM(Fragment fragment){
         MainActivity.transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        MainActivity. transaction.replace(R.id.LoginContainer, fragment);
+        MainActivity. transaction.replace(R.id.mainContainer, fragment);
         MainActivity. transaction.commit();
     }
     private void update_data() {
@@ -69,7 +72,40 @@ public class ChangePass extends Fragment implements View.OnClickListener {
         list.add(newPW);
         list.add(confPW);
         if (Verefy(list)){
+            if (!lastPW.getText().toString().equals(new User_info(getContext()).getPw())){
+                lastPW.setError(newPW.getHint());
+                return;
+            }
+            if (!newPW.getText().toString().equals(confPW.getText().toString())){
+                newPW.setError(newPW.getHint());
+                confPW.setError(confPW.getHint());
+                return;
+            }
+
             user user=new user();
+            user.Post_change_password(getContext(), newPW.getText().toString(), new user.user_Listener() {
+                @Override
+                public void onSuccess(users new_account) {
+                   if (new_account.isStatus()){
+                       if (new User_info(getContext()).getLanguage().equals("en")){
+                           Toast.makeText(getContext(),new_account.getMessageEn(),Toast.LENGTH_SHORT).show();
+                       }else {
+                           Toast.makeText(getContext(),new_account.getMessageAr(),Toast.LENGTH_SHORT).show();
+                       }
+                       new User_info(new_account.getItems(),getContext());
+                   }
+                }
+
+                @Override
+                public void onStart() {
+
+                }
+
+                @Override
+                public void onFailure(String msg) {
+
+                }
+            });
 
         }else {
             return;

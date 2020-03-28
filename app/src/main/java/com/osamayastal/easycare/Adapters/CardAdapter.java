@@ -1,4 +1,4 @@
-package com.osamayastal.easycare.classes.adapters;
+package com.osamayastal.easycare.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.osamayastal.easycare.Model.Classes.Slider;
+import com.osamayastal.easycare.Model.Const.User_info;
 import com.osamayastal.easycare.R;
 import com.osamayastal.easycare.classes.items.Card;
 import com.squareup.picasso.Picasso;
@@ -45,22 +46,31 @@ public class CardAdapter extends com.github.islamkhsh.CardSliderAdapter {
     @Override
     public void bindVH(@NotNull RecyclerView.ViewHolder viewHolder, int i) {
        ImageView img=viewHolder.itemView.findViewById(R.id.Img);
+      TextView  title=viewHolder.itemView.findViewById(R.id.title_tv);
+        TextView   dis =viewHolder.itemView.findViewById(R.id.details_tv);
+        TextView  more=viewHolder.itemView.findViewById(R.id.more);
+
         Picasso.with(mcontext)
                 .load(mItems.get(i).getImage())
                 .into(img);
+
+        if (new User_info(mcontext).getLanguage().equals("en")){
+
+            title.setText(mItems.get(i).getTitleEn());
+            dis.setText(mItems.get(i).getDescriptionEn());
+        }else {
+
+            title.setText(mItems.get(i).getTitleAr());
+            dis.setText(mItems.get(i).getDescriptionAr());
+        }
     }
 
 
     class MovieViewHolder extends RecyclerView.ViewHolder {
-TextView title,dis,more;
 
-ImageView img;
         public MovieViewHolder(View view){
             super(view);
-//            img=view.findViewById(R.id.Img);
-//            title=view.findViewById(R.id.title_tv);
-//            dis =view.findViewById(R.id.details_tv);
-//            more=view.findViewById(R.id.more);
+
         }
     }
 }

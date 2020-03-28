@@ -6,8 +6,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Slider {
-    private String _id,ads_for,expiry_date,image,url,store_id,product_id,by;
+    private String _id,ads_for,expiry_date,image,url,store_id,product_id,by,titleEn,titleAr,descriptionEn,descriptionAr;
     private boolean is_ads_redirect_to_store,is_ads_have_expiry_date,isApprove;
+
     public Slider(JSONObject provider) {
         if (provider==null){
             return;
@@ -22,6 +23,10 @@ public class Slider {
             url=provider.getString("url");
             store_id=provider.getString("store_id");
             product_id=provider.getString("product_id");
+            titleEn=provider.getString("titleEn");
+            titleAr=provider.getString("titleAr");
+            descriptionEn=provider.getString("descriptionEn");
+            descriptionAr=provider.getString("descriptionAr");
 
             is_ads_redirect_to_store=provider.getBoolean("is_ads_redirect_to_store");
             is_ads_have_expiry_date=provider.getBoolean("is_ads_have_expiry_date");
@@ -35,6 +40,38 @@ public class Slider {
 
 
 
+    }
+
+    public String getTitleEn() {
+        return titleEn;
+    }
+
+    public void setTitleEn(String titleEn) {
+        this.titleEn = titleEn;
+    }
+
+    public String getTitleAr() {
+        return titleAr;
+    }
+
+    public void setTitleAr(String titleAr) {
+        this.titleAr = titleAr;
+    }
+
+    public String getDescriptionEn() {
+        return descriptionEn;
+    }
+
+    public void setDescriptionEn(String descriptionEn) {
+        this.descriptionEn = descriptionEn;
+    }
+
+    public String getDescriptionAr() {
+        return descriptionAr;
+    }
+
+    public void setDescriptionAr(String descriptionAr) {
+        this.descriptionAr = descriptionAr;
     }
 
     public String get_id() {

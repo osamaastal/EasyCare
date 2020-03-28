@@ -60,7 +60,9 @@ public class Categories_adapter extends RecyclerView.Adapter<Categories_adapter.
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.name.setText(mItems.get(position).getArName());
-
+        if (mItems.get(position).isActive()){
+            holder.soon.setVisibility(View.GONE);
+        }
 
        try {
            Picasso.with(mContext)

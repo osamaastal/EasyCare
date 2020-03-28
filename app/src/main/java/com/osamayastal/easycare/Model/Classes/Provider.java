@@ -19,9 +19,8 @@ private float rate;
             email=provider.getString("email");
             address=provider.getString("address");
             phone_number=provider.getString("phone_number");
-            password=provider.getString("password");
             category_id=provider.getString("category_id");
-            image=provider.getString("image");
+
             rate=provider.getInt("rate");
 
             isBlock=provider.getBoolean("isBlock");
@@ -30,6 +29,9 @@ private float rate;
             lng=provider.getDouble("lng");
             profitPercentage=provider.getDouble("profitPercentage");
             orderPercentage=provider.getDouble("orderPercentage");
+            image=provider.getString("image");
+            password=provider.getString("password");
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

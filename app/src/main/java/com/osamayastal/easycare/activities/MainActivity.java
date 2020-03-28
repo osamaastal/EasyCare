@@ -26,6 +26,7 @@ import com.osamayastal.easycare.Model.Controle.users;
 import com.osamayastal.easycare.Model.Rootes.user;
 import com.osamayastal.easycare.R;
 import com.osamayastal.easycare.fragments.Basket;
+import com.osamayastal.easycare.fragments.EditProfile;
 import com.osamayastal.easycare.fragments.Home;
 import com.osamayastal.easycare.fragments.MyOrders;
 import com.osamayastal.easycare.fragments.MyPlace;
@@ -134,6 +135,11 @@ public static  FragmentTransaction transaction;
 
     }
 
+    public void switchFGM(Fragment fragment){
+        MainActivity.transaction = getSupportFragmentManager().beginTransaction();
+        MainActivity. transaction.replace(R.id.mainContainer, fragment);
+        MainActivity. transaction.commit();
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -168,7 +174,7 @@ public static  FragmentTransaction transaction;
 
                 break;
             case R.id.edit_profile_tv:
-
+switchFGM(new EditProfile());
                 break;
             case R.id.user_img:
 
