@@ -25,11 +25,13 @@ import com.osamayastal.easycare.Model.Const.User_info;
 import com.osamayastal.easycare.Model.Controle.users;
 import com.osamayastal.easycare.Model.Rootes.user;
 import com.osamayastal.easycare.R;
+import com.osamayastal.easycare.fragments.AboutUs;
 import com.osamayastal.easycare.fragments.Basket;
 import com.osamayastal.easycare.fragments.EditProfile;
 import com.osamayastal.easycare.fragments.Home;
 import com.osamayastal.easycare.fragments.MyOrders;
 import com.osamayastal.easycare.fragments.MyPlace;
+import com.osamayastal.easycare.fragments.Notifications;
 import com.osamayastal.easycare.fragments.Profile;
 import com.yarolegovich.slidingrootnav.SlideGravity;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
@@ -156,12 +158,13 @@ public static  FragmentTransaction transaction;
 
                 break;
             case R.id.drawer_notification_tv:
-
+                switchFGM(new Notifications());
                 break;
             case R.id.drawer_settings_tv:
 
                 break;
             case R.id.drawer_about_tv:
+                switchFGM(new AboutUs());
 
                 break;
             case R.id.drawer_report_tv:

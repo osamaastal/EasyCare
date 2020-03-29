@@ -5,6 +5,7 @@ import android.util.Log;
 import com.osamayastal.easycare.Model.Classes.Employee;
 import com.osamayastal.easycare.Model.Classes.Pagenation;
 import com.osamayastal.easycare.Model.Classes.Provider;
+import com.osamayastal.easycare.Model.Classes.Provider_map;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,7 +18,7 @@ public class Maps {
     private String message;
     private int status_code;
     private List<Employee> employees;
-    private List<Provider> providers;
+    private List<Provider_map> providers;
 
     public Maps(JSONObject jsonObject) {
         if (jsonObject==null){
@@ -37,7 +38,7 @@ public class Maps {
             }
 
             for(int i=0;i<jsonArray2.length();i++){
-                providers.add(new Provider(jsonArray2.getJSONObject(i)));
+                providers.add(new Provider_map(jsonArray2.getJSONObject(i)));
             }
 
         } catch (JSONException e) {
@@ -70,11 +71,11 @@ public class Maps {
         this.employees = employees;
     }
 
-    public List<Provider> getProviders() {
+    public List<Provider_map> getProviders() {
         return providers;
     }
 
-    public void setProviders(List<Provider> providers) {
+    public void setProviders(List<Provider_map> providers) {
         this.providers = providers;
     }
 }
