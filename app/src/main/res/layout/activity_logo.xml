@@ -1,9 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.Logo">
+    android:orientation="vertical"
+    tools:context=".activities.Logo"
+    android:background="@drawable/splash_bg">
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="21"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:gravity="center_horizontal">
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="0.35"
+            android:src="@drawable/app_logo"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="35"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/website_url"
+        style="@style/text_white_roman_18"
+        android:gravity="center_horizontal"
+        android:fontFamily="@font/montserra_regular"
+        android:textSize="14sp"
+        android:textColor="@color/white"
+        android:textScaleX="1.2"
+        android:textAllCaps="true"
+        />
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="8.5"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

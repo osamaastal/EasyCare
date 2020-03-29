@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="default_array">
+        <item>فلسطين</item>
+        <item>الجزائر</item>
+        <item>السعودية</item>
+        <item>تركيا</item>
+    </string-array>
+</resources>

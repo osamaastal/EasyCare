@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layoutDirection="rtl"
+    android:orientation="vertical"
+    android:background="@drawable/bg_req_darkblue_50dp_dark_gradiant"
+
+    android:gravity="center_horizontal">
+    <View
+        android:layout_width="50dp"
+        android:layout_height="7dp"
+        android:background="@drawable/bg_line_sheet_blue"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="لغة تطبيق العناية السهلة"
+        style="@style/text_white_bold_24"
+        android:layout_marginTop="20dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="هل انت متاكد من تغير لغة التطبيق سيتم إعادة تشغيل التطبيق وإظهار اللغة المختارة"
+        style="@style/text_white_roman_16"
+        android:gravity="center"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:gravity="center"
+        android:paddingEnd="25dp"
+        android:paddingStart="25dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/bg_req_darkblue_50dp_top">
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="60dp"
+            android:text="@string/continue_"
+            android:textAllCaps="false"
+            style="@style/text_darkblue_roman_18"
+            android:background="@drawable/bg_req_white_30dp"
+            android:drawableEnd="@drawable/ic_check_drawable_1"
+            android:paddingStart="25dp"
+            android:paddingEnd="10dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="13dp"
+            />
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="60dp"
+            android:text="@string/cancel_now"
+            android:textAllCaps="false"
+            style="@style/text_white_roman_18"
+            android:background="@drawable/bg_req_darkblue_30dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="0dp"
+            />
+    </LinearLayout>
+
+</LinearLayout>

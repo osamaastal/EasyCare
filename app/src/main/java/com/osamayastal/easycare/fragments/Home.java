@@ -8,12 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.deishelon.roundedbottomsheet.RoundedBottomSheetDialog;
 import com.github.islamkhsh.CardSliderViewPager;
 import com.osamayastal.easycare.R;
 import com.osamayastal.easycare.classes.items.Card;
 import com.osamayastal.easycare.classes.adapters.CardAdapter;
 
 import java.util.ArrayList;
+
+import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -75,6 +78,15 @@ public class Home extends Fragment {
         movies.add(new Card());
         CardSliderViewPager cardSliderViewPager = view.findViewById(R.id.viewPager);
         cardSliderViewPager.setAdapter(new CardAdapter(movies));
+        show_bottomSheet();
         return view;
+    }
+
+    private void show_bottomSheet(){
+        RoundedBottomSheetDialog mBottomSheetDialog = new RoundedBottomSheetDialog(getContext());
+        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+        View sheetView = inflater.inflate(R.layout.bottom_sheet_choose_city, null);
+        mBottomSheetDialog.setContentView(sheetView);
+        mBottomSheetDialog.show();
     }
 }

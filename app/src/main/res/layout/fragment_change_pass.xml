@@ -53,7 +53,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="كلمة المرور القديمة"
+            android:text="@string/old_pass"
             style="@style/text_black_bold_18"
             android:layout_marginStart="60dp"
             />
@@ -83,13 +83,13 @@
                 android:drawablePadding="17dp"
                 style="@style/text_black_roman_14"
                 android:inputType="textPassword"
-                android:gravity="end|center_vertical"
+                android:textAlignment="viewStart"
                 />
         </com.chinodev.androidneomorphframelayout.NeomorphFrameLayout>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="كلمة المرور الجديدة"
+            android:text="@string/new_pass"
             style="@style/text_black_bold_18"
             android:layout_marginStart="60dp"
             />
@@ -119,13 +119,13 @@
                 android:drawablePadding="17dp"
                 style="@style/text_black_roman_14"
                 android:inputType="textPassword"
-                android:gravity="end|center_vertical"
+                android:textAlignment="viewStart"
                 />
         </com.chinodev.androidneomorphframelayout.NeomorphFrameLayout>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="تاكيد كلمة المرور الجديدة"
+            android:text="@string/conf_new_pass"
             style="@style/text_black_bold_18"
             android:layout_marginStart="60dp"
             />
@@ -155,7 +155,7 @@
                 android:drawablePadding="17dp"
                 style="@style/text_black_roman_14"
                 android:inputType="textPassword"
-                android:gravity="end|center_vertical"
+                android:textAlignment="viewStart"
                 />
         </com.chinodev.androidneomorphframelayout.NeomorphFrameLayout>
 
