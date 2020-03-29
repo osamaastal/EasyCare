@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="15dp"
+    android:layout_marginEnd="15dp"
+    android:layout_marginTop="16dp"
+    android:layout_marginBottom="0dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <TextView
+        android:id="@+id/msg_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="مرحبا محمد مغسلة السيارات أو هي منشأة تستخدم لتنظيف السطح الخارجي، وفي بعض الحالات، الداخلي للسيارات. الفئات غسيل السيارات الالي عن طريق دخول السيارة للاله وتغسيلها وتلميعها وتجفيفها اليا غسيل تقليدي"
+        style="@style/text_darkblue_roman_14"
+        android:background="@drawable/bg_req_gray_chat"
+        android:maxWidth="270dp"
+        android:paddingStart="25dp"
+        android:paddingEnd="25dp"
+        android:paddingTop="6dp"
+        android:paddingBottom="12dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
+    <TextView
+        android:id="@+id/time_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="06:34 PM"
+        style="@style/text_grayA2_roman_12"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toBottomOf="@+id/msg_tv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/edit_profile"
-            style="@style/text_darkblue_bold_24"
+            style="@style/text_darkblue_bold_22"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -51,19 +51,57 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/email"
-            style="@style/text_black_bold_18"
-            android:layout_marginStart="60dp"
-            />
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/email"-->
+<!--            style="@style/text_black_bold_18"-->
+<!--            android:layout_marginStart="60dp"-->
+<!--            />-->
+        <!--            TODO change icon-->
         <com.chinodev.androidneomorphframelayout.NeomorphFrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:neomorph_shadow_type="outer"
             app:neomorph_layer_type="software"
-            app:neomorph_background_color="@color/white_fcfcfc"
+            app:neomorph_background_color="@color/white"
+            app:neomorph_corner_radius="35dp"
+            app:neomorph_elevation="@dimen/neomorph_view_elevation"
+            app:neomorph_view_type="rectangular"
+            app:neomorph_shadow_color="@color/light_gray"
+            app:neomorph_highlight_color="@color/neomorph_highlight_color"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="23dp"
+            android:layout_marginStart="23dp">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_trans"
+                android:drawableStart="@drawable/bg_username"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingTop="9dp"
+                android:paddingBottom="9dp"
+                android:drawablePadding="17dp"
+                android:hint="@string/name"
+                style="@style/text_black_roman_14"
+                android:inputType="textPersonName"
+                android:maxLength="30"
+                />
+        </com.chinodev.androidneomorphframelayout.NeomorphFrameLayout>
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/phone"-->
+<!--            style="@style/text_black_bold_18"-->
+<!--            android:layout_marginStart="60dp"-->
+<!--            />-->
+        <com.chinodev.androidneomorphframelayout.NeomorphFrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:neomorph_shadow_type="outer"
+            app:neomorph_layer_type="software"
+            app:neomorph_background_color="@color/white"
             app:neomorph_corner_radius="35dp"
             app:neomorph_elevation="@dimen/neomorph_view_elevation"
             app:neomorph_view_type="rectangular"
@@ -84,23 +122,50 @@
                 android:paddingBottom="9dp"
                 android:drawablePadding="17dp"
                 style="@style/text_black_roman_14"
-                android:inputType="textPassword"
-                android:gravity="end|center_vertical"
+                android:inputType="textEmailAddress"
+                android:hint="@string/email"
+                android:maxLength="50"
                 />
         </com.chinodev.androidneomorphframelayout.NeomorphFrameLayout>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/phone"
-            style="@style/text_black_bold_18"
-            android:layout_marginStart="60dp"
-            />
         <com.chinodev.androidneomorphframelayout.NeomorphFrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:neomorph_shadow_type="outer"
             app:neomorph_layer_type="software"
-            app:neomorph_background_color="@color/white_fcfcfc"
+            app:neomorph_background_color="@color/white"
+            app:neomorph_corner_radius="35dp"
+            app:neomorph_elevation="@dimen/neomorph_view_elevation"
+            app:neomorph_view_type="rectangular"
+            app:neomorph_shadow_color="@color/light_gray"
+            app:neomorph_highlight_color="@color/neomorph_highlight_color"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="23dp"
+            android:layout_marginStart="23dp">
+            <!--            TODO change icon-->
+            <!--            <Spinner-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="60dp"-->
+            <!--                style="@style/City_SpinnerTheam"-->
+            <!--                />-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/bg_trans"
+                android:drawableStart="@drawable/bg_email"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingTop="9dp"
+                android:paddingBottom="9dp"
+                android:drawablePadding="17dp"
+                style="@style/text_black_roman_14"
+                android:hint="@string/city"/>
+        </com.chinodev.androidneomorphframelayout.NeomorphFrameLayout>
+        <com.chinodev.androidneomorphframelayout.NeomorphFrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:neomorph_shadow_type="outer"
+            app:neomorph_layer_type="software"
+            app:neomorph_background_color="@color/white"
             app:neomorph_corner_radius="35dp"
             app:neomorph_elevation="@dimen/neomorph_view_elevation"
             app:neomorph_view_type="rectangular"
@@ -114,17 +179,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_trans"
-                android:drawableStart="@drawable/bg_phone"
+                android:drawableStart="@drawable/bg_email"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
                 android:paddingTop="9dp"
                 android:paddingBottom="9dp"
                 android:drawablePadding="17dp"
                 style="@style/text_black_roman_14"
-                android:inputType="textPassword"
-                android:gravity="end|center_vertical"
+                android:inputType="textPostalAddress"
+                android:hint="@string/address"
+                android:maxLength="50"
                 />
         </com.chinodev.androidneomorphframelayout.NeomorphFrameLayout>
+
 
     </LinearLayout>
     <Space

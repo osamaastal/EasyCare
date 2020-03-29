@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
-    <gradient
-        android:endColor="@color/pink_end"
-        android:startColor="@color/pink_start"
-        android:angle="45"/>
-    <corners android:radius="30dp"/>
-</shape>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="false">
+        <shape android:shape="rectangle">
+            <gradient android:angle="45"
+                android:endColor="@color/pink_end"
+                android:startColor="@color/pink_start" />
+            <corners android:radius="30dp" />
+        </shape>
+    </item>
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <gradient android:angle="45"
+                android:endColor="@color/pink_start"
+                android:startColor="@color/pink_start" />
+            <corners android:radius="30dp" />
+        </shape>
+    </item>
+</selector>

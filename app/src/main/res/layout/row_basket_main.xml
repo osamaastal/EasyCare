@@ -17,10 +17,19 @@
             android:layout_height="wrap_content"
             android:text="مغسلة الوفاء الجديدة"
             style="@style/text_darkblue_roman_14"
-            android:layout_marginStart="30dp"
+            android:layout_marginStart="55dp"
+            android:maxLength="30"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
+        <CheckBox
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:button="@drawable/check_box_style_basket"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
