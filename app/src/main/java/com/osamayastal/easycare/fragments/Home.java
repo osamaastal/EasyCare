@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.deishelon.roundedbottomsheet.RoundedBottomSheetDialog;
 import com.github.islamkhsh.CardSliderViewPager;
 import com.osamayastal.easycare.Adapters.Categories_adapter;
 import com.osamayastal.easycare.Adapters.Provider_adapter;
@@ -27,6 +28,8 @@ import com.osamayastal.easycare.Adapters.CardAdapter;
 import java.util.ArrayList;
 
 import java.util.List;
+
+import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 public class Home extends Fragment implements View.OnClickListener {
 
@@ -142,5 +145,13 @@ private ImageButton search_btn;
                 break;
         }
 
+    }
+    private void show_bottomSheet(){
+
+        RoundedBottomSheetDialog mBottomSheetDialog = new RoundedBottomSheetDialog(getContext());
+        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+        View sheetView = inflater.inflate(R.layout.bottom_sheet_choose_city, null);
+        mBottomSheetDialog.setContentView(sheetView);
+        mBottomSheetDialog.show();
     }
 }
