@@ -16,7 +16,10 @@
         android:roundIcon="@drawable/app_icon_no_text"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.AllServices"></activity>
+        <activity android:name=".activities.OrderDetails_Create"></activity>
+        <activity android:name=".activities.AllProducts" />
+        <activity android:name=".activities.ServiceProfiderDetails" />
+        <activity android:name=".activities.AllServices" />
         <activity android:name=".activities.Service_Single" />
         <activity android:name=".activities.Search" />
         <activity android:name=".activities.Messages" />

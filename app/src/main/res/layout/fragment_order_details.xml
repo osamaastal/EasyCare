@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layoutDirection="rtl"
-    tools:context=".activities.OrderDetails">
+    tools:context=".fragments.OrderDetails">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraint1"
         android:layout_width="match_parent"
