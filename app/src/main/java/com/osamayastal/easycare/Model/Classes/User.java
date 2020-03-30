@@ -16,6 +16,7 @@ public class User {
     private String gender;
     private String address;
     private String city;
+    private String city_id;
     private String createAt;
     private String email;
     private String fullName;
@@ -198,6 +199,14 @@ public class User {
         return this.wallet;
     }
 
+    public String getCity_id() {
+        return city_id;
+    }
+
+    public void setCity_id(String city_id) {
+        this.city_id = city_id;
+    }
+
     public User() {
     }
 
@@ -230,6 +239,8 @@ public class User {
         phoneNumber = jsonObject.optString("phone_number");
         favoritCount = jsonObject.optInt("favoritCount");
         orderCount = jsonObject.optInt("orderCount");
+        city = jsonObject.optString("city_id");
+
         try {
             token = jsonObject.optString("token");
         } catch (Exception exc) {

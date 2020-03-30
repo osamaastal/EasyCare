@@ -48,6 +48,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.osamayastal.easycare.Model.Classes.Employee;
 import com.osamayastal.easycare.Model.Classes.Provider;
+import com.osamayastal.easycare.Model.Classes.Provider_map;
 import com.osamayastal.easycare.Model.Controle.Maps;
 import com.osamayastal.easycare.Model.Rootes.Maps_root;
 import com.osamayastal.easycare.R;
@@ -153,7 +154,7 @@ private ImageButton search_btn;
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        Provider provider =markersMap_prov.get(marker);
+        Provider_map provider =markersMap_prov.get(marker);
         name.setText(provider.getName());
         address.setText(provider.getAddress());
 //        type.setText(provider.getc());
@@ -213,7 +214,7 @@ private ImageButton search_btn;
                     make_marke(e,null);
                 }
 
-                for (Provider provider:maps.getProviders()
+                for (Provider_map provider:maps.getProviders()
                 ) {
                     make_marke(null,provider);
                 }
@@ -237,8 +238,8 @@ private ImageButton search_btn;
      */
     private LatLng mLatLng=null;
     private Map<Marker, Employee> markersMap_emp = new HashMap<Marker, Employee>();
-    private Map<Marker, Provider> markersMap_prov = new HashMap<Marker, Provider>();
-    private void make_marke(final Employee emp, Provider provider){
+    private Map<Marker, Provider_map> markersMap_prov = new HashMap<Marker, Provider_map>();
+    private void make_marke(final Employee emp, Provider_map provider){
 
         if (emp!=null){
             LatLng latLng=new LatLng(emp.getProvider_id().getLat()
@@ -251,7 +252,7 @@ private ImageButton search_btn;
             .icon(bitmapDescriptorFromVector(getContext(), R.drawable.ic_icon_emp)));
 
             mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-            markersMap_prov.put(marker, emp.getProvider_id());
+//            markersMap_prov.put(marker, emp.getProvider_id());
         }
         if (provider!=null){
             LatLng latLng=new LatLng(provider.getLat()

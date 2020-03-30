@@ -22,8 +22,11 @@ import com.osamayastal.easycare.Model.Classes.Provider;
 import com.osamayastal.easycare.Model.Classes.Slider;
 import com.osamayastal.easycare.Model.Rootes.Home_root;
 import com.osamayastal.easycare.R;
+import com.osamayastal.easycare.activities.AllProducts;
+import com.osamayastal.easycare.activities.AllServices;
 import com.osamayastal.easycare.activities.Search;
 import com.osamayastal.easycare.Adapters.CardAdapter;
+import com.osamayastal.easycare.activities.ServiceProfiderDetails;
 
 import java.util.ArrayList;
 
@@ -139,6 +142,8 @@ private ImageButton search_btn;
             case R.id.more_request:
                 break;
             case R.id.more_server:
+                startActivity(new Intent(getContext(), AllServices.class));
+
                 break;
             case R.id.search_btn:
                 startActivity(new Intent(getContext(), Search.class));
@@ -146,12 +151,5 @@ private ImageButton search_btn;
         }
 
     }
-    private void show_bottomSheet(){
 
-        RoundedBottomSheetDialog mBottomSheetDialog = new RoundedBottomSheetDialog(getContext());
-        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-        View sheetView = inflater.inflate(R.layout.bottom_sheet_choose_city, null);
-        mBottomSheetDialog.setContentView(sheetView);
-        mBottomSheetDialog.show();
-    }
 }

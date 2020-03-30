@@ -84,6 +84,7 @@
                     android:layout_marginStart="23dp"
                     tools:ignore="NestedWeights">
                     <EditText
+                        android:id="@+id/fullname_ed"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
                         android:background="@drawable/bg_trans"
@@ -112,6 +113,7 @@
                     android:layout_marginEnd="23dp"
                     android:layout_marginStart="23dp">
                     <EditText
+                        android:id="@+id/email_ed"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
                         android:background="@drawable/bg_trans"
@@ -146,6 +148,7 @@
                     <!--                style="@style/City_SpinnerTheam"-->
                     <!--                />-->
                     <TextView
+                        android:id="@+id/city_tv"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
                         android:background="@drawable/bg_trans"
@@ -174,6 +177,7 @@
                     android:layout_marginEnd="23dp"
                     android:layout_marginStart="23dp">
                     <EditText
+                        android:id="@+id/phone_ed"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
                         android:background="@drawable/bg_trans"
@@ -204,6 +208,7 @@
                     android:layout_marginEnd="23dp"
                     android:layout_marginStart="23dp">
                     <EditText
+                        android:id="@+id/password_ed"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
                         android:background="@drawable/bg_trans"
@@ -231,6 +236,7 @@
                     android:layout_gravity="start|center_vertical"
                     android:layout_marginStart="70dp">
                     <androidx.appcompat.widget.AppCompatCheckBox
+                        android:id="@+id/term_check"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
@@ -240,6 +246,8 @@
                         android:button="@drawable/check_box_style"
                         style="@style/text_black_roman_14"/>
                     <LinearLayout
+                        android:id="@+id/term"
+
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
@@ -278,6 +286,7 @@
             tools:ignore="NestedWeights" />
 
         <Button
+            android:id="@+id/logup_btn"
             style="@style/text_white_roman_18"
             android:layout_width="match_parent"
             android:layout_height="60dp"
@@ -307,6 +316,7 @@
                 android:text="@string/have_an_acoount"
                 style="@style/text_white_roman_16"/>
             <LinearLayout
+                android:id="@+id/login_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"

@@ -19,6 +19,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
     <TextView
+        android:id="@+id/type_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="غسيل السيارات"
@@ -34,7 +35,7 @@
         style="@style/text_white_roman_12"
         android:gravity="center"
         android:paddingBottom="5dp"
-        android:visibility="gone"
+
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:background="@drawable/bg_circle_yellow"

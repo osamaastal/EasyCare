@@ -85,6 +85,7 @@
                         android:background="@drawable/bg_req_black_gradiant"/>
 
                     <ImageButton
+                        android:id="@+id/like_btn"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:src="@drawable/ic_unlike_black"
@@ -162,10 +163,11 @@
                             android:layout_marginTop="5dp"
                             android:layout_marginStart="15dp"
                             app:layout_constraintStart_toEndOf="@id/provider_Img"
-                            app:layout_constraintTop_toTopOf="@+id/type_tv"
+                            app:layout_constraintTop_toBottomOf="@+id/address_tv"
                             app:layout_constraintBottom_toBottomOf="@+id/type_tv"/>
 
                         <TextView
+                            android:visibility="gone"
                             android:id="@+id/type_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -238,12 +240,23 @@
                     />
                 <!--            TODO row_all_services_main.xml-->
                 <!--            TODO more > ic_circle_more.png-->
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginEnd="30dp"
-                    android:layout_marginTop="5dp"/>
+              <RelativeLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content">
+
+                  <androidx.recyclerview.widget.RecyclerView
+                      android:id="@+id/RV_services"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginStart="30dp"
+                      android:layout_marginEnd="30dp"
+                      android:layout_marginTop="5dp"/>
+                  <ProgressBar
+                      android:id="@+id/progress1"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_centerInParent="true"/>
+              </RelativeLayout>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -269,6 +282,7 @@
                         android:layout_weight="1"
                         android:layout_height="match_parent"/>
                     <TextView
+                        android:id="@+id/more_product"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/more"
@@ -283,13 +297,24 @@
                         />
                 </LinearLayout>
 
-
-                <androidx.recyclerview.widget.RecyclerView
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="22dp"
-                    android:layout_marginEnd="22dp"
-                    android:layout_marginTop="10dp"/>
+                    android:layout_height="wrap_content">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/RV_products"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="22dp"
+                        android:layout_marginEnd="22dp"
+                        android:layout_marginTop="10dp"/>
+                    <ProgressBar
+                        android:id="@+id/progress2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"/>
+                </RelativeLayout>
+
                 <Space
                     android:layout_width="match_parent"
                     android:layout_height="120dp"/>
@@ -317,6 +342,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 />
             <TextView
+                android:id="@+id/basket_nb"
                 android:layout_width="wrap_content"
                 android:layout_height="18dp"
                 android:background="@drawable/bg_badge"

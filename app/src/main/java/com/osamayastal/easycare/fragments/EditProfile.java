@@ -4,13 +4,25 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.cncoderx.wheelview.Wheel3DView;
+import com.deishelon.roundedbottomsheet.RoundedBottomSheetDialog;
+import com.osamayastal.easycare.Model.Classes.City;
+import com.osamayastal.easycare.Model.Classes.Provider;
+import com.osamayastal.easycare.Model.Classes.User;
+import com.osamayastal.easycare.Model.Const.User_info;
+import com.osamayastal.easycare.Model.Controle.users;
+import com.osamayastal.easycare.Model.Rootes.City_root;
 import com.osamayastal.easycare.Model.Rootes.user;
 import com.osamayastal.easycare.R;
 import com.osamayastal.easycare.activities.LoginActivity;
@@ -18,6 +30,8 @@ import com.osamayastal.easycare.activities.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 
 public class EditProfile extends Fragment implements View.OnClickListener {
@@ -31,19 +45,78 @@ public class EditProfile extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_edit_profile, container, false);
         init(view);
+        Loading_data();
         return view;
     }
-private ImageView back;
-    public EditText email,phone;
+
+    String city_id=null;
+    private void Loading_data() {
+        User_info user_info=new User_info(getContext());
+        fullname.setText(user_info.getName());
+        address.setText(user_info.getAddress());
+        email.setText(user_info.getEmail());
+        city.setText(user_info.getCity());
+        city_id=user_info.getCityID();
+    }
+    private void show_bottomSheet(){
+
+        final RoundedBottomSheetDialog mBottomSheetDialog = new RoundedBottomSheetDialog(getContext());
+        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+        final View sheetView = inflater.inflate(R.layout.bottom_sheet_choose_city, null);
+        mBottomSheetDialog.setContentView(sheetView);
+        mBottomSheetDialog.show();
+        final Wheel3DView wheel3DView=sheetView.findViewById(R.id.wheel);
+        final ProgressBar progressBar=sheetView.findViewById(R.id.progress);
+        final List<City> cityList=new ArrayList<>();
+        City_root root=new City_root();
+        root.GetCities(getContext(), new City_root.cityListener() {
+            @Override
+            public void onSuccess(final com.osamayastal.easycare.Model.Controle.City cities) {
+                progressBar.setVisibility(View.GONE);
+                cityList.clear();
+                cityList.addAll(cities.getItems());
+                wheel3DView.setEntries(cities.getCityList());
+                Button save=sheetView.findViewById(R.id.save_btn);
+                save.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        city.setText(wheel3DView.getCurrentItem());
+                        city_id=cities.getItems().get(wheel3DView.getCurrentIndex()).get_id();
+                        Log.d("City ID", city_id);
+
+                        mBottomSheetDialog.dismiss();
+                    }
+                });
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onFailure(String msg) {
+
+            }
+        });
+
+
+    }
+    private ImageView back;
+    public EditText email,fullname,address;
+    private TextView city;
     private Button save;
     private void init(View view) {
         back=view.findViewById(R.id.back_btn);
         email=view.findViewById(R.id.email_ed);
-        phone=view.findViewById(R.id.phone_ed);
+        address=view.findViewById(R.id.address_ed);
+        city=view.findViewById(R.id.city_tv);
+        fullname=view.findViewById(R.id.fullname_ed);
         save=view.findViewById(R.id.save_btn);
         /******************************Actions***************************************/
         save.setOnClickListener(this);
         back.setOnClickListener(this);
+        city.setOnClickListener(this);
 
     }
 
@@ -56,6 +129,9 @@ private ImageView back;
           case R.id.back_btn:
               switchFGM(new Profile());
               break;
+          case R.id.city_tv:
+             show_bottomSheet();
+              break;
 
       }
     }
@@ -66,10 +142,41 @@ private ImageView back;
     }
     private void update_data() {
         List<EditText> list=new ArrayList<>();
-        list.add(phone);
+        list.add(fullname);
         list.add(email);
+        list.add(address);
         if (Verefy(list)){
+           User mUser=new User();
+           mUser.setCity_id(city_id);
+           mUser.setFullName(fullname.getText().toString());
+           mUser.setAddress(address.getText().toString());
+           mUser.setEmail(email.getText().toString());
+
             user user=new user();
+            user.Post_update_user(getContext(),mUser , new user.user_Listener() {
+                @Override
+                public void onSuccess(users new_account) {
+                    User user1=new_account.getItems();
+                    user1.setCity(city.getText().toString());
+                    new User_info(user1,getContext());
+                    if (new User_info(getContext()).getLanguage().equals("en")){
+                        Toast.makeText(getContext(),new_account.getMessageEn(),Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(getContext(),new_account.getMessageAr(),Toast.LENGTH_SHORT).show();
+
+                    }
+                }
+
+                @Override
+                public void onStart() {
+
+                }
+
+                @Override
+                public void onFailure(String msg) {
+
+                }
+            });
 
         }else {
             return;

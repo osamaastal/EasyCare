@@ -24,6 +24,7 @@
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <ImageButton
+            android:id="@+id/back_btn"
             android:layout_width="46dp"
             android:layout_height="46dp"
             android:src="@drawable/ic_back_ar"
@@ -77,6 +78,7 @@
                 android:layout_marginEnd="23dp"
                 android:layout_marginStart="23dp">
                 <EditText
+                    android:id="@+id/fullname_ed"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_trans"
@@ -115,6 +117,7 @@
                 android:layout_marginEnd="23dp"
                 android:layout_marginStart="23dp">
                 <EditText
+                    android:id="@+id/email_ed"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_trans"
@@ -159,6 +162,7 @@
                 <!--                style="@style/City_SpinnerTheam"-->
                 <!--                />-->
                 <TextView
+                    android:id="@+id/city_tv"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@drawable/bg_trans"
@@ -194,6 +198,7 @@
                 android:layout_marginEnd="23dp"
                 android:layout_marginStart="23dp">
                 <EditText
+                    android:id="@+id/address_ed"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_trans"
@@ -214,19 +219,20 @@
 <!--                android:layout_height="0dp"-->
 <!--                android:layout_weight="7"/>-->
             <Button
+                android:id="@+id/save_btn"
                 style="@style/text_white_roman_18"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginStart="35dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="35dp"
+                android:layout_marginBottom="50dp"
                 android:background="@drawable/bg_req_darkblue_50dp_gradiant_x"
                 android:drawableEnd="@drawable/ic_login_drawable"
                 android:paddingStart="60dp"
                 android:paddingEnd="15dp"
                 android:text="@string/save_profile"
-                android:textAllCaps="false"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="20dp"/>
+                android:textAllCaps="false" />
 
         </LinearLayout>
     </ScrollView>

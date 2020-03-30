@@ -1,8 +1,10 @@
 package com.osamayastal.easycare.Model.Controle;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.osamayastal.easycare.Model.Classes.Categorie;
+import com.osamayastal.easycare.Model.Const.User_info;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,13 +17,15 @@ public class City {
     private String message;
     private int status_code;
     private List<com.osamayastal.easycare.Model.Classes.City> items;
+    private List<String> cityList;
 
-    public City(JSONObject jsonObject) {
+    public City(JSONObject jsonObject, Context mcontext) {
         if (jsonObject==null){
             return;
         }
 
         items=new ArrayList<>();
+        cityList=new ArrayList<>();
         try {
             message=jsonObject.getString("message");
             Log.d("message",message);
@@ -31,12 +35,25 @@ public class City {
 
             for(int i=0;i<jsonArray2.length();i++){
                 items.add(new com.osamayastal.easycare.Model.Classes.City(jsonArray2.getJSONObject(i)));
-            }
+                if (new User_info(mcontext).getLanguage().equals("en")){
+                    cityList.add(new com.osamayastal.easycare.Model.Classes.City(jsonArray2.getJSONObject(i)).getEnName());
+                }else {
+                    cityList.add(new com.osamayastal.easycare.Model.Classes.City(jsonArray2.getJSONObject(i)).getArName());
+                }
+           }
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+    }
+
+    public List<String> getCityList() {
+        return cityList;
+    }
+
+    public void setCityList(List<String> cityList) {
+        this.cityList = cityList;
     }
 
     public String getMessage() {

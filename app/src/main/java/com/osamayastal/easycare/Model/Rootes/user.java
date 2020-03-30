@@ -76,7 +76,7 @@ public class user {
                 parameters.put("os", "android");
                 parameters.put("full_name", user_.getFullName());
                 parameters.put("phone_number",user_.getPhoneNumber());
-                parameters.put("city", user_.getCity());
+                parameters.put("city_id", user_.getCity_id());
                 parameters.put("lat",String.valueOf(user_.getLat()));
                 parameters.put("lng", String.valueOf(user_.getLng()));
                 return parameters;
@@ -365,6 +365,73 @@ public class user {
 
     }
 
+    public void Post_update_user(final Context mcontext, final User user, final user_Listener lisenner){
+        if (queue==null) {
+            queue = Volley.newRequestQueue(mcontext);  // this = context
+        }
+        final String token=new User_info(mcontext).getToken();
+        Log.d("Token", token);
+
+        String url = Server_info.API+"api/mobile/updateprofileAndroid";
+        lisenner.onStart();
+        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        Log.d("Response", response);
+                        String jsonData = response;
+                        JSONObject Jobject = null;
+                        try {
+                            Jobject = new JSONObject(jsonData);
+                        } catch (JSONException e1) {
+                            e1.printStackTrace();
+                        }
+
+                        lisenner.onSuccess(new users(Jobject));
+
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+
+                Map<String, String>  Headers = new HashMap<String, String>();
+                Headers.put("Content-Type","multipart/form-data; boundary=<calculated when request is sent>");
+                Headers.put("Content-Length","<calculated when request is sent>");
+                Headers.put("Host","<calculated when request is sent>");
+                Headers.put("User-Agent","PostmanRuntime/7.24.0");
+                Headers.put("Accept","*/*");
+                Headers.put("Accept-Encoding","gzip, deflate, br");
+                Headers.put("Connection","keep-alive");
+                Headers.put("token",token);
+
+                return  Headers;
+            }
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String>  parameters = new HashMap<String, String>();
+                parameters.put("full_name",user.getFullName());
+                parameters.put("address",user.getAddress());
+                parameters.put("email",user.getEmail());
+                parameters.put("city_id",user.getCity_id());
+                Log.d("parametters",parameters.toString());
+                return parameters;
+            }
+        };
+
+        queue.add(postRequest);
+
+
+    }
 
     public void Post_update_fcmToken(final Context mcontext, final String token, final String fcmtoken, final user_Listener lisenner){
         if (queue==null) {

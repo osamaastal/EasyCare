@@ -9,7 +9,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class User_info {
     private String language;
-    private String id,phone,token,name,email,image,gender,city,pw,address;
+    private String id,phone,token,name,email,image,gender,city,cityID,pw,address;
 private String lat;
     private String lng;
 private long wallet;
@@ -24,6 +24,7 @@ private  int point;
         image=sp.getString("image","");
         gender=sp.getString("gender","");
         city=sp.getString("city"," ");
+        cityID=sp.getString("cityID"," ");
         address=sp.getString("address"," ");
         lat=sp.getString("lat","");
         lng=sp.getString("lng","");
@@ -55,6 +56,7 @@ private  int point;
         }
         Ed.putString("email",user_.getEmail());
         Ed.putString("city",user_.getCity());
+        Ed.putString("cityID",user_.getCity_id());
         Ed.putString("address",user_.getAddress());
         Ed.putLong("wallet",user_.getWallet());
         Ed.putString("lat", String.valueOf(user_.getLat()));
@@ -97,6 +99,14 @@ private  int point;
 //        Ed.putLong("wallet",points.getMoney());
 //        Ed.commit();
 //    }
+
+    public String getCityID() {
+        return cityID;
+    }
+
+    public void setCityID(String cityID) {
+        this.cityID = cityID;
+    }
 
     public String getAddress() {
         return address;

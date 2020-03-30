@@ -29,13 +29,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cncoderx.wheelview.Wheel3DView;
+import com.deishelon.roundedbottomsheet.RoundedBottomSheetDialog;
 import com.google.android.gms.maps.model.LatLng;
+import com.osamayastal.easycare.Model.Classes.City;
 import com.osamayastal.easycare.Model.Classes.User;
 import com.osamayastal.easycare.Model.Const.User_info;
 import com.osamayastal.easycare.Model.Controle.users;
+import com.osamayastal.easycare.Model.Rootes.City_root;
 import com.osamayastal.easycare.Model.Rootes.user;
 import com.osamayastal.easycare.R;
 import com.osamayastal.easycare.activities.ConfCode;
@@ -47,6 +52,8 @@ import java.util.List;
 
 import pub.devrel.easypermissions.EasyPermissions;
 
+import static android.content.Context.LAYOUT_INFLATER_SERVICE;
+
 
 public class SignUp extends Fragment implements View.OnClickListener {
 
@@ -54,6 +61,8 @@ private LinearLayout term_btn,login_btn;
 private Button logup_btn;
 private EditText name,phone,email,password;
 private ImageView back_btn;
+TextView city;
+String city_id=null;
 private AppCompatCheckBox accept;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,36 +79,80 @@ private AppCompatCheckBox accept;
 
 
     private void init(View view) {
-        term_btn=view.findViewById(R.id.term_btn);
+        term_btn=view.findViewById(R.id.term);
+        city=view.findViewById(R.id.city_tv);
         login_btn=view.findViewById(R.id.login_btn);
-        logup_btn=view.findViewById(R.id.Logup_btn);
-        name=view.findViewById(R.id.full_name_ed);
+        logup_btn=view.findViewById(R.id.logup_btn);
+        name=view.findViewById(R.id.fullname_ed);
         phone=view.findViewById(R.id.phone_ed);
         email=view.findViewById(R.id.email_ed);
         password=view.findViewById(R.id.password_ed);
         back_btn=view.findViewById(R.id.back_btn);
-        accept=view.findViewById(R.id.accept);
+        accept=view.findViewById(R.id.term_check);
         /*********************************Actions******************************/
         term_btn.setOnClickListener(this);
         login_btn.setOnClickListener(this);
         logup_btn.setOnClickListener(this);
-        back_btn.setOnClickListener(this);
+        city.setOnClickListener(this);
     }
+    private void show_bottomSheet(){
 
+        final RoundedBottomSheetDialog mBottomSheetDialog = new RoundedBottomSheetDialog(getContext());
+        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+        final View sheetView = inflater.inflate(R.layout.bottom_sheet_choose_city, null);
+        mBottomSheetDialog.setContentView(sheetView);
+        mBottomSheetDialog.show();
+        final Wheel3DView wheel3DView=sheetView.findViewById(R.id.wheel);
+        final ProgressBar progressBar=sheetView.findViewById(R.id.progress);
+        final List<City> cityList=new ArrayList<>();
+        City_root root=new City_root();
+        root.GetCities(getContext(), new City_root.cityListener() {
+            @Override
+            public void onSuccess(final com.osamayastal.easycare.Model.Controle.City cities) {
+                progressBar.setVisibility(View.GONE);
+                cityList.clear();
+                cityList.addAll(cities.getItems());
+                wheel3DView.setEntries(cities.getCityList());
+                Button save=sheetView.findViewById(R.id.save_btn);
+                save.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        city.setText(wheel3DView.getCurrentItem());
+                        city_id=cities.getItems().get(wheel3DView.getCurrentIndex()).get_id();
+                        Log.d("City ID", city_id);
+
+                        mBottomSheetDialog.dismiss();
+                    }
+                });
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onFailure(String msg) {
+
+            }
+        });
+
+
+    }
     @Override
     public void onClick(View view) {
     switch (view.getId()){
         case R.id.login_btn:
             switchFGM(new LoginFrag());
             break;
-        case R.id.Logup_btn:
+        case R.id.logup_btn:
             Logup_fun();
             break;
-        case R.id.term_btn:
+        case R.id.term:
 
             break;
-        case R.id.back_btn:
-            switchFGM(new LoginFrag());
+        case R.id.city_tv:
+           show_bottomSheet();
 
             break;
 
@@ -115,6 +168,10 @@ private AppCompatCheckBox accept;
         list.add(email);
         list.add(password);
         if (Verefy(list)){
+            if (city_id==null){
+                city.setError(city.getText());
+                return;
+            }
             if (!accept.isChecked()){
                 accept.setError(accept.getText());
                 return;
@@ -130,7 +187,7 @@ private AppCompatCheckBox accept;
             user_.setPassword(password.getText().toString());
             user_.setLat(mLatLng.latitude);
             user_.setLng(mLatLng.longitude);
-            user_.setCity("no city");
+            user_.setCity_id(city_id);
 
             user user=new user();
             user.Post_create_user(getContext(), user_, new user.user_Listener() {

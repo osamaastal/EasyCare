@@ -21,7 +21,7 @@ import com.osamayastal.easycare.activities.MainActivity;
 
 
 public class Profile extends Fragment implements View.OnClickListener {
-
+    public static User user;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
