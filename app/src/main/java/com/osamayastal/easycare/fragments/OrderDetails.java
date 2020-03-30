@@ -1,4 +1,4 @@
-package com.osamayastal.easycare.activities;
+package com.osamayastal.easycare.fragments;
 
 import android.os.Bundle;
 

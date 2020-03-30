@@ -114,4 +114,18 @@
     <string name="conf_new_pass">تاكيد كلمة المرور الجديدة</string>
     <string name="add_money">إضافة رصيد</string>
     <string name="address">العنوان</string>
+    <string name="work_times">أوقات العمل</string>
+    <string name="services">الخدمات</string>
+    <string name="products">المنتجات</string>
+    <string name="all_products">كافة المنتجات</string>
+    <string name="order_details">تفاصيل الطلب</string>
+    <string name="service_location_">مكان تنفيذ الخدمة</string>
+    <string name="last_saved_place">حسب المكان المحفوظ</string>
+    <string name="cobon">كوبون الخصم</string>
+    <string name="enter_cobon">هنا يكتب كوبون الخصم</string>
+    <string name="price_before_discount">المبلغ قبل الخصم</string>
+    <string name="pay_now">دفع الان</string>
+    <string name="discount_amount">قيمة الخصم</string>
+    <string name="order_date">تاريخ التنفيذ</string>
+    <string name="order_time">وقت التنفيذ</string>
 </resources>

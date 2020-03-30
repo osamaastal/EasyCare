@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layoutDirection="locale"
+    android:layoutDirection="rtl"
     android:orientation="vertical"
     tools:context=".fragments.Basket">
 
@@ -70,33 +70,38 @@
                 android:layout_marginTop="10dp"/>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="26dp"
-        android:layout_marginEnd="26dp"
-        android:layout_marginBottom="50dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        android:paddingTop="20dp"
+        android:background="@color/white_op85"
         app:layout_constraintBottom_toBottomOf="parent">
         <Button
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="match_parent"
+            android:layout_height="60dp"
             android:text="@string/conf_order"
             style="@style/text_white_bold_18"
             android:paddingEnd="20dp"
             android:layout_marginEnd="-40dp"
+            android:layout_marginStart="20dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/bg_req_darkblue_50dp_gradiant_x"
             />
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="60dp"
             android:background="@drawable/bg_req_green_gradiant_30dp"
             android:gravity="center_vertical"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             android:elevation="5dp"
             android:layout_marginBottom="10dp"
+            android:layout_marginEnd="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
