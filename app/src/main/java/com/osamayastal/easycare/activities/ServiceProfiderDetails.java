@@ -1,10 +1,16 @@
 package com.osamayastal.easycare.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -12,12 +18,22 @@ import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.joooonho.SelectableRoundedImageView;
 import com.osamayastal.easycare.Adapters.Product_adapter;
 import com.osamayastal.easycare.Adapters.Provider_servicies_adapter;
 import com.osamayastal.easycare.Model.Classes.Categorie;
 import com.osamayastal.easycare.Model.Classes.Product;
 import com.osamayastal.easycare.Model.Classes.Provider;
+import com.osamayastal.easycare.Model.Classes.Search;
 import com.osamayastal.easycare.Model.Controle.Provider_Details;
 import com.osamayastal.easycare.Model.Rootes.ProviderDetails_root;
 import com.osamayastal.easycare.R;
@@ -28,9 +44,9 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ServiceProfiderDetails extends AppCompatActivity implements View.OnClickListener {
+public class ServiceProfiderDetails extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback {
 
-    public static Provider provider=null;
+    public static Search provider=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,7 +139,10 @@ public class ServiceProfiderDetails extends AppCompatActivity implements View.On
         prod_RV.setLayoutManager(new GridLayoutManager(this,2));
         serv_RV.setAdapter(serviciesAdapter);
         prod_RV.setAdapter(product_adapter);
-
+        /***********************************Map***************************************/
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
 
     }
 
@@ -141,5 +160,52 @@ public class ServiceProfiderDetails extends AppCompatActivity implements View.On
                 startActivity(new Intent(ServiceProfiderDetails.this,AllProducts.class));
                 break;
         }
+    }
+
+    private GoogleMap mMap;
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+
+
+        mMap.getUiSettings().setZoomControlsEnabled(true);
+        mMap.setMinZoomPreference(5);
+
+        LatLng latLng=new LatLng(provider.getLat()
+                ,provider.getLng());
+
+        Marker marker = mMap.addMarker(new MarkerOptions()
+                .title(provider.getName())
+                .snippet(provider.getName() )
+                .position(latLng)
+                .icon(bitmapDescriptorFromVector(this, R.drawable.ic_icon_prov)));
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                double latitude = latLng.latitude;
+                double longitude = latLng.longitude;
+                String label = provider.getName();
+                String uriBegin = "geo:" + latitude + "," + longitude;
+                String query = latitude + "," + longitude + "(" + label + ")";
+                String encodedQuery = Uri.encode(query);
+                String uriString = uriBegin + "?q=" + encodedQuery + "&z=16";
+                Uri uri = Uri.parse(uriString);
+                Intent mapIntent = new Intent(android.content.Intent.ACTION_VIEW, uri);
+                startActivity(mapIntent);
+            }
+        });
+
+    }
+
+    private BitmapDescriptor bitmapDescriptorFromVector(Context context, int vectorResId) {
+        Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorResId);
+        vectorDrawable.setBounds(0, 0, vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight());
+        Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        vectorDrawable.draw(canvas);
+        return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 }

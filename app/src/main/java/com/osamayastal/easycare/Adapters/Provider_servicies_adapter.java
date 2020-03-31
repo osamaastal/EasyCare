@@ -13,6 +13,8 @@ import android.widget.TextView;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.osamayastal.easycare.Model.Classes.Categorie;
 import com.osamayastal.easycare.Model.Const.User_info;
 import com.osamayastal.easycare.R;
@@ -27,7 +29,7 @@ import top.defaults.drawabletoolbox.DrawableBuilder;
  * Created by User on 26/02/2020.
  */
 
-public class Provider_servicies_adapter extends RecyclerView.Adapter<Provider_servicies_adapter.ViewHolder> {
+public class Provider_servicies_adapter extends RecyclerView.Adapter<Provider_servicies_adapter.ViewHolder>  {
 
     private static final String TAG = "RecyclerViewAdapter";
 
@@ -35,6 +37,9 @@ public class Provider_servicies_adapter extends RecyclerView.Adapter<Provider_se
     private List<Categorie> mItems = new ArrayList<>();
     private Context mContext;
     private View mview;
+
+
+
     public interface Selected_item{
         void Onselcted(Categorie categorie);
     }

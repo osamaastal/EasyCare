@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.osamayastal.easycare.Model.Const.User_info;
@@ -79,8 +80,19 @@ private Button login_btn;
                     phone.getText().toString(), new user.user_Listener() {
                         @Override
                         public void onSuccess(users new_account) {
+                            if (new User_info(getContext()).getLanguage().equals("en")){
+                                Toast.makeText(getContext(),new_account.getMessageEn(),Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(getContext(),new_account.getMessageAr(),Toast.LENGTH_SHORT).show();
+                            }
+                            if (!new_account.isStatus()){
+                                return;
+                            }
                             if (new_account.getItems().isIsVerify()) {
                                 new User_info(new_account.getItems(), getContext());
+                                new User_info( getContext()).CONF_phone(getContext());
+
+
                                 startActivity(new Intent(getActivity(), MainActivity.class));
                                 getActivity().finish();
                             }

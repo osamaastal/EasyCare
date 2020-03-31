@@ -12,13 +12,17 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.osamayastal.easycare.Model.Classes.Wellcom;
 import com.osamayastal.easycare.Model.Const.User_info;
+import com.osamayastal.easycare.Model.Rootes.Wellcom_root;
 import com.osamayastal.easycare.R;
 import com.osamayastal.easycare.fragments.Welcome1;
 import com.osamayastal.easycare.fragments.Welcome2;
 import com.osamayastal.easycare.fragments.Welcome3;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Handler;
@@ -35,14 +39,14 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
             new Welcome2(),
             new Welcome3()
     };
+    private List<Wellcom> wellcomList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         init();
 
-        User_info user_info=new User_info();
-        user_info.DO_INTRO(this);
+
     }
 
     private void init() {
@@ -53,20 +57,48 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
         valid_ar = findViewById(R.id.valid_ar);
         valid_en = findViewById(R.id.valid_en);
 
-        mPager.setAdapter( new MyPagerAdapter(getSupportFragmentManager()));
-        CircleIndicator indicator = findViewById(R.id.indicator);
-        indicator.setViewPager(mPager);
+
 
         /********************************Actions****************************************/
         skip.setOnClickListener(this);
         ar.setOnClickListener(this);
         en.setOnClickListener(this);
+
+        wellcomList=new ArrayList<>();
+
+        Loading();
+
+    }
+
+    private void Loading() {
+        Wellcom_root root=new Wellcom_root();
+        root.Get_WellcomPages(this, new Wellcom_root.Wellcom_Listener() {
+            @Override
+            public void onSuccess(com.osamayastal.easycare.Model.Controle.Wellcom wellcom) {
+                wellcomList.addAll(wellcom.getItems());
+                mPager.setAdapter( new MyPagerAdapter(getSupportFragmentManager()));
+                CircleIndicator indicator = findViewById(R.id.indicator);
+                indicator.setViewPager(mPager);
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onFailure(String msg) {
+
+            }
+        });
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.skip:
+                User_info user_info=new User_info();
+                user_info.DO_INTRO(WelcomeActivity.this);
                 startActivity(new Intent(WelcomeActivity.this,LoginActivity.class));
                 break;
             case R.id.ar_tv:
@@ -79,18 +111,25 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     public class MyPagerAdapter extends FragmentPagerAdapter {
+
+
         public MyPagerAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);
         }
 
         @Override
         public Fragment getItem(int position) {
-            return PAGES[position];
+//            return PAGES[position];
+            findViewById(R.id.progress).setVisibility(View.GONE);
+            Welcome1 fragment=new Welcome1();
+           fragment.welcom=wellcomList.get(position);
+
+            return fragment;
         }
 
         @Override
         public int getCount() {
-            return PAGES.length;
+            return wellcomList.size();
         }
 
     }

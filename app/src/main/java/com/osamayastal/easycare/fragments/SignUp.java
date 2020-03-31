@@ -71,12 +71,15 @@ private AppCompatCheckBox accept;
         View view= inflater.inflate(R.layout.fragment_sign_up, container, false);
         init(view);
 
-     GetLocation(getContext());
+
         return view;
     }
 
-
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        GetLocation(getContext());
+    }
 
     private void init(View view) {
         term_btn=view.findViewById(R.id.term);

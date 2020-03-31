@@ -42,7 +42,7 @@ public class Profile extends Fragment implements View.OnClickListener {
             public void onSuccess(users account) {
                 email.setText(account.getItems().getEmail());
                 phone.setText(account.getItems().getPhoneNumber());
-                city.setText(account.getItems().getCity());
+                city.setText(account.getItems().getAddress());
                 favorit_nb.setText(account.getItems().getFavoritCount()+"");
                 order_nb.setText(account.getItems().getOrderCount()+"");
             }

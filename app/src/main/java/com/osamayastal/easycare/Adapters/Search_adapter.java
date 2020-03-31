@@ -2,6 +2,7 @@ package com.osamayastal.easycare.Adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.osamayastal.easycare.Model.Classes.Provider;
 import com.osamayastal.easycare.Model.Classes.Search;
 import com.osamayastal.easycare.Model.Const.User_info;
 import com.osamayastal.easycare.R;
+import com.osamayastal.easycare.activities.ServiceProfiderDetails;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -84,8 +86,8 @@ if (new User_info(mContext).getLanguage().equals("en")) {
 
             @Override
             public void onClick(View view) {
-
-
+                ServiceProfiderDetails.provider=mItems.get(position);
+                mContext.startActivity(new Intent(mContext,ServiceProfiderDetails.class));
             }
         });
     }

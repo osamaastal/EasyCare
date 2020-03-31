@@ -14,6 +14,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -76,6 +77,10 @@ public static  FragmentTransaction transaction;
         TextView edit_profile_tv = navigation.findViewById(R.id.edit_profile_tv);
         TextView user_name_tv = navigation.findViewById(R.id.user_name_tv);
         CircleImageView user_img = navigation.findViewById(R.id.user_img);
+        TextView langu = navigation.findViewById(R.id.language);
+        ImageButton logout = navigation.findViewById(R.id.logout_btn);
+        langu.setOnClickListener(this);
+        logout.setOnClickListener(this);
         drawer_offers_tv.setOnClickListener(this);
         drawer_points_tv.setOnClickListener(this);
         drawer_chat_tv.setOnClickListener(this);
@@ -194,6 +199,14 @@ switchFGM(new EditProfile());
                     user.Post_Logout(this, new user.user_Listener() {
                         @Override
                         public void onSuccess(users new_account) {
+                            if (new User_info(MainActivity.this).getLanguage().equals("en")){
+                                Toast.makeText(MainActivity.this,new_account.getMessageEn(),Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(MainActivity.this,new_account.getMessageAr(),Toast.LENGTH_SHORT).show();
+                            }
+                            if (!new_account.isStatus()){
+                                return;
+                            }
                             new User_info(new User(),MainActivity.this);
                            finish();
                         }

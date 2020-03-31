@@ -51,9 +51,8 @@ private  int point;
         Ed.putString("token",user_.getToken());
         Ed.putString("name",user_.getFullName());
         Ed.putString("image",user_.getImage());
-        if (!user_.getPassword().isEmpty()){
-            Ed.putString("pw",user_.getPassword());
-        }
+        Ed.putString("pw",user_.getPassword());
+
         Ed.putString("email",user_.getEmail());
         Ed.putString("city",user_.getCity());
         Ed.putString("cityID",user_.getCity_id());

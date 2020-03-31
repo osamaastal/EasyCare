@@ -39,7 +39,19 @@ private float rate;
 
 
     }
-
+public Search toProvider(){
+    Search provider=new Search(null);
+    provider.set_id(_id);
+    provider.setName(name);
+    provider.setAddress(address);
+    provider.setEmail(email);
+    provider.setImage(image);
+    provider.setLat(lat);
+    provider.setLng(lng);
+    provider.setRate(rate);
+    provider.setPhone_number(phone_number);
+    return provider;
+}
     public String get_id() {
         return _id;
     }

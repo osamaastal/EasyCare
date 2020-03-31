@@ -12,6 +12,7 @@ import com.android.volley.toolbox.Volley;
 import com.osamayastal.easycare.Model.Const.Server_info;
 import com.osamayastal.easycare.Model.Controle.City;
 import com.osamayastal.easycare.Model.Controle.Provider_Details;
+import com.osamayastal.easycare.Model.Controle.Search;
 
 import org.json.JSONObject;
 
@@ -21,13 +22,18 @@ public class ProviderDetails_root {
         void onStart();
         void onFailure(String msg);
     }
+    public interface AppProv_Listener{
+        void onSuccess(Search prov);
+        void onStart();
+        void onFailure(String msg);
+    }
     private RequestQueue queue;
     public void GetDetailsListener(final Context mcontext,String id,
                           final DetailsListener listener)
     {
 
        listener.onStart();
-            String url= Server_info.API +"api/providerDetails/"+id;
+            String url= Server_info.API +"api/mobile/providerDetails/"+id;
 
 
             if (queue == null) {
@@ -64,5 +70,45 @@ public class ProviderDetails_root {
             queue.getCache().clear();
        }
 
+    public void GetALL_pro_By_cat(final Context mcontext,String id,int page,
+                                   final AppProv_Listener listener)
+    {
 
+        listener.onStart();
+        String url= Server_info.API +"api/mobile/getProviderByCategoryId/"+id+"?page="+page+"&limit=10";
+
+
+        if (queue == null) {
+            queue = Volley.newRequestQueue(mcontext);  // this = context
+        }
+        // prepare the Request
+        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>()
+                {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        Log.d("Response", response.toString());
+                        listener.onSuccess(new Search(response));
+
+
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+//                        Log.d("Error.Response", error.getMessage());
+                    }
+                }
+        ){
+
+        };
+
+        queue.getCache().initialize();
+// add it to the RequestQueue
+        queue.add(getRequest);
+        queue.getCache().clear();
+    }
 }

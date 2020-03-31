@@ -2,6 +2,7 @@ package com.osamayastal.easycare.Adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.osamayastal.easycare.Model.Classes.Categorie;
 import com.osamayastal.easycare.R;
+import com.osamayastal.easycare.activities.ServiceProfiderDetails;
+import com.osamayastal.easycare.activities.Service_Single;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -79,7 +82,8 @@ public class Categories_adapter extends RecyclerView.Adapter<Categories_adapter.
             @Override
             public void onClick(View view) {
 
-
+                Service_Single.id=mItems.get(position).get_id();
+                mContext.startActivity(new Intent(mContext,Service_Single.class));
             }
         });
     }
