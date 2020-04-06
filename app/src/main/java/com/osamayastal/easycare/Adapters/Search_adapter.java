@@ -18,6 +18,8 @@ import com.osamayastal.easycare.Model.Classes.Categorie;
 import com.osamayastal.easycare.Model.Classes.Provider;
 import com.osamayastal.easycare.Model.Classes.Search;
 import com.osamayastal.easycare.Model.Const.User_info;
+import com.osamayastal.easycare.Model.Controle.Favorites;
+import com.osamayastal.easycare.Model.Rootes.Favorite_root;
 import com.osamayastal.easycare.R;
 import com.osamayastal.easycare.activities.ServiceProfiderDetails;
 import com.squareup.picasso.Picasso;
@@ -81,7 +83,12 @@ if (new User_info(mContext).getLanguage().equals("en")) {
        } catch (Exception e) {
            e.printStackTrace();
        }
+if (!mItems.get(position).getFavorite_id().equals("null")){
+    holder.like_btn.setImageDrawable(mContext.getDrawable(R.drawable.ic_like));
+}else {
+    holder.like_btn.setImageDrawable(mContext.getDrawable(R.drawable.ic_unlike));
 
+}
         mview.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -90,6 +97,29 @@ if (new User_info(mContext).getLanguage().equals("en")) {
                 mContext.startActivity(new Intent(mContext,ServiceProfiderDetails.class));
             }
         });
+
+       holder.like_btn.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               Favorite_root root=new Favorite_root();
+               root.POSTFavorites(mContext, mItems.get(position).get_id(), new Favorite_root.FavoriteListener() {
+                   @Override
+                   public void onSuccess(Favorites favorites) {
+                       holder.like_btn.setImageDrawable(mContext.getDrawable(R.drawable.ic_like));
+                   }
+
+                   @Override
+                   public void onStart() {
+
+                   }
+
+                   @Override
+                   public void onFailure(String msg) {
+
+                   }
+               });
+           }
+       });
     }
 
     @Override

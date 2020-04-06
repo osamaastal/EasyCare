@@ -4,7 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Provider {
-    private String _id,createAt,name,email,address,phone_number,password,category_id,image;
+    private String _id,createAt,name,email,address,phone_number,password,category_id,image,favorite_id;
     private boolean isBlock;
     private double lat,lng,profitPercentage,orderPercentage;
 private float rate;
@@ -20,6 +20,7 @@ private float rate;
             address=provider.getString("address");
             phone_number=provider.getString("phone_number");
             category_id=provider.getString("category_id");
+            favorite_id=provider.getString("favorite_id");
 
             rate=provider.getInt("rate");
 
@@ -50,6 +51,7 @@ public Search toProvider(){
     provider.setLng(lng);
     provider.setRate(rate);
     provider.setPhone_number(phone_number);
+    provider.setFavorite_id(favorite_id);
     return provider;
 }
     public String get_id() {
@@ -62,6 +64,14 @@ public Search toProvider(){
 
     public String getCreateAt() {
         return createAt;
+    }
+
+    public String getFavorite_id() {
+        return favorite_id;
+    }
+
+    public void setFavorite_id(String favorite_id) {
+        this.favorite_id = favorite_id;
     }
 
     public void setCreateAt(String createAt) {

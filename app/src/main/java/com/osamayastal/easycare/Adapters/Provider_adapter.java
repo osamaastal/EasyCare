@@ -84,6 +84,8 @@ holder.ratingBar.setRating(mItems.get(position).getRate());
 
             }
         });
+
+
     }
 
     @Override

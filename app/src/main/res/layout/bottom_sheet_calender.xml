@@ -16,12 +16,13 @@
         android:layout_gravity="center_horizontal"
         />
     <CalendarView
+        android:id="@+id/calendar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />
 <!--        style="@style/Widget.CalendarView.Custom"-->
     <Button
-        android:id="@+id/login_btn"
+        android:id="@+id/save_btn"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:text="@string/conf_now"

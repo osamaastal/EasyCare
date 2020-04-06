@@ -1,10 +1,12 @@
 package com.osamayastal.easycare.Model.Classes;
 
+import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Search {
-    private String _id,createAt,name,email,address,phone_number,password,image,fcmToken;
+    private String _id,createAt,name,email,address,phone_number,password,image,fcmToken,favorite_id;
     private Categorie category_id;
     private City city_id;
     private boolean isBlock;
@@ -23,24 +25,51 @@ public class Search {
             address=provider.getString("address");
             phone_number=provider.getString("phone_number");
             password=provider.getString("password");
-            category_id=new Categorie(provider.getJSONObject("category_id"));
-            city_id=new City(provider.getJSONObject("city_id"));
-            image=provider.getString("image");
-            fcmToken=provider.getString("fcmToken");
+
+            try{
+                fcmToken=provider.getString("fcmToken");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            favorite_id=provider.getString("favorite_id");
+            Log.d("favorite_id ", favorite_id.toString());
+
             rate=provider.getInt("rate");
 
             isBlock=provider.getBoolean("isBlock");
 
             lat=provider.getDouble("lat");
             lng=provider.getDouble("lng");
+
             profitPercentage=provider.getDouble("profitPercentage");
             orderPercentage=provider.getDouble("orderPercentage");
+            try {
+                category_id=new Categorie(provider.getJSONObject("category_id"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            city_id=new City(provider.getJSONObject("city_id"));
+            try {
+                image=provider.getString("image");
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
 
 
+    }
+
+    public String getFavorite_id() {
+        return favorite_id;
+    }
+
+    public void setFavorite_id(String favorite_id) {
+        this.favorite_id = favorite_id;
     }
 
     public String get_id() {

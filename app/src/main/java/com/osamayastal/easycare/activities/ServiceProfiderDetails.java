@@ -12,11 +12,13 @@ import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -33,8 +35,13 @@ import com.osamayastal.easycare.Adapters.Provider_servicies_adapter;
 import com.osamayastal.easycare.Model.Classes.Categorie;
 import com.osamayastal.easycare.Model.Classes.Product;
 import com.osamayastal.easycare.Model.Classes.Provider;
+import com.osamayastal.easycare.Model.Classes.ProviderSetting;
 import com.osamayastal.easycare.Model.Classes.Search;
+import com.osamayastal.easycare.Model.Classes.Sub_servic;
+import com.osamayastal.easycare.Model.Const.User_info;
+import com.osamayastal.easycare.Model.Controle.Favorites;
 import com.osamayastal.easycare.Model.Controle.Provider_Details;
+import com.osamayastal.easycare.Model.Rootes.Favorite_root;
 import com.osamayastal.easycare.Model.Rootes.ProviderDetails_root;
 import com.osamayastal.easycare.R;
 import com.squareup.picasso.Picasso;
@@ -68,19 +75,35 @@ public class ServiceProfiderDetails extends AppCompatActivity implements View.On
            name.setText(provider.getName());
            address.setText(provider.getAddress());
            ratingBar.setRating(provider.getRate());
+           Log.d("favorite_id ", provider.getFavorite_id().toString());
+
+           if (!provider.getFavorite_id().equals("null")){
+               like_btn.setImageDrawable(getDrawable(R.drawable.ic_like));
+           }else {
+               like_btn.setImageDrawable(getDrawable(R.drawable.ic_unlike));
+
+           }
            /*******************Loading********************/
            ProviderDetails_root root=new ProviderDetails_root();
            root.GetDetailsListener(this, provider.get_id(), new ProviderDetails_root.DetailsListener() {
                @Override
                public void onSuccess(Provider_Details details) {
-                   categorieList.clear();
+                   sub_servicList.clear();
+                   providerSettingList.clear();
                    productList.clear();
-                   categorieList.addAll(details.getServices());
-                   productList.addAll(details.getProducts());
+                   sub_servicList.addAll(details.getProviderDetails().getSub_services());
+                   productList.addAll(details.getProviderDetails().getProducts());
                    serviciesAdapter.notifyDataSetChanged();
                    product_adapter.notifyDataSetChanged();
                    progressBar1.setVisibility(View.GONE);
                    progressBar2.setVisibility(View.GONE);
+/******************************From ...To *********************************/
+                   providerSettingList.addAll(details.getProviderDetails().getProviderSetting());
+                  if (providerSettingList.size()!=0){
+                      from.setText(providerSettingList.get(0).getMin());
+                      to.setText(providerSettingList.get(0).getMax());
+                  }
+
                }
 
                @Override
@@ -104,7 +127,8 @@ public class ServiceProfiderDetails extends AppCompatActivity implements View.On
     RecyclerView prod_RV,serv_RV;
     RatingBar ratingBar;
     List<Product> productList;
-    List<Categorie> categorieList;
+    List<Sub_servic> sub_servicList;
+    List<ProviderSetting> providerSettingList;
     Provider_servicies_adapter serviciesAdapter;
     Product_adapter product_adapter;
     private void init() {
@@ -132,9 +156,10 @@ public class ServiceProfiderDetails extends AppCompatActivity implements View.On
         more_pro.setOnClickListener(this);
         /*******************************RV******************************************/
         productList=new ArrayList<>();
-        categorieList=new ArrayList<>();
+        sub_servicList=new ArrayList<>();
+        providerSettingList=new ArrayList<>();
         product_adapter=new Product_adapter(this,productList,null);
-        serviciesAdapter=new Provider_servicies_adapter(this,categorieList,null);
+        serviciesAdapter=new Provider_servicies_adapter(this,sub_servicList,null);
         serv_RV.setLayoutManager(new GridLayoutManager(this,3));
         prod_RV.setLayoutManager(new GridLayoutManager(this,2));
         serv_RV.setAdapter(serviciesAdapter);
@@ -150,6 +175,63 @@ public class ServiceProfiderDetails extends AppCompatActivity implements View.On
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.like_btn:
+                Favorite_root root=new Favorite_root();
+                if (!provider.getFavorite_id().equals("null")){
+
+                    root.DELETEFavorites(this, provider.getFavorite_id(), new Favorite_root.FavoriteListener() {
+                        @Override
+                        public void onSuccess(Favorites favorites) {
+                            if (new User_info(ServiceProfiderDetails.this).getLanguage().equals("en")){
+                                Toast.makeText(ServiceProfiderDetails.this,favorites.getMessageEn(),Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(ServiceProfiderDetails.this,favorites.getMessageAr(),Toast.LENGTH_SHORT).show();
+
+                            }
+                            if (favorites.getStatus_code()==200){
+                                like_btn.setImageDrawable(getDrawable(R.drawable.ic_unlike));
+                            }
+
+                        }
+
+                        @Override
+                        public void onStart() {
+
+                        }
+
+                        @Override
+                        public void onFailure(String msg) {
+
+                        }
+                    });
+
+                }
+                else {
+                    root.POSTFavorites(this, provider.get_id(), new Favorite_root.FavoriteListener() {
+                        @Override
+                        public void onSuccess(Favorites favorites) {
+                            if (new User_info(ServiceProfiderDetails.this).getLanguage().equals("en")){
+                                Toast.makeText(ServiceProfiderDetails.this,favorites.getMessageEn(),Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(ServiceProfiderDetails.this,favorites.getMessageAr(),Toast.LENGTH_SHORT).show();
+
+                            }
+                            if (favorites.getStatus_code()==200){
+                                like_btn.setImageDrawable(getDrawable(R.drawable.ic_like));
+                            }
+                        }
+
+                        @Override
+                        public void onStart() {
+
+                        }
+
+                        @Override
+                        public void onFailure(String msg) {
+
+                        }
+                    });
+
+                }
                 break;
             case R.id.basket_btn:
                 break;
@@ -169,7 +251,7 @@ public class ServiceProfiderDetails extends AppCompatActivity implements View.On
 
 
         mMap.getUiSettings().setZoomControlsEnabled(true);
-        mMap.setMinZoomPreference(5);
+        mMap.setMinZoomPreference(12);
 
         LatLng latLng=new LatLng(provider.getLat()
                 ,provider.getLng());
@@ -178,7 +260,7 @@ public class ServiceProfiderDetails extends AppCompatActivity implements View.On
                 .title(provider.getName())
                 .snippet(provider.getName() )
                 .position(latLng)
-                .icon(bitmapDescriptorFromVector(this, R.drawable.ic_icon_prov)));
+                .icon(bitmapDescriptorFromVector(this, R.drawable.ic_marker_wash)));
 
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
 

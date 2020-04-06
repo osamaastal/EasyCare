@@ -2,6 +2,7 @@ package com.osamayastal.easycare.fragments;
 
 import android.os.Bundle;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -60,11 +61,13 @@ public class Profile extends Fragment implements View.OnClickListener {
 
 
     }
-
+private ConstraintLayout favorit,order;
     private TextView email,phone,city,favorit_nb,order_nb;
     private Button changPW_btn;
     private ImageView edit_btn;
     private void init(View view) {
+        favorit=view.findViewById(R.id.favorit_btn);
+        order=view.findViewById(R.id.order_btn);
         email=view.findViewById(R.id.emial_tv);
         phone=view.findViewById(R.id.phone_tv);
         city =view.findViewById(R.id.city_tv);
@@ -75,6 +78,8 @@ public class Profile extends Fragment implements View.OnClickListener {
         /*****************************Actions****************************/
         changPW_btn.setOnClickListener(this);
         edit_btn.setOnClickListener(this);
+        favorit.setOnClickListener(this);
+        order.setOnClickListener(this);
     }
     public void switchFGM(Fragment fragment){
         MainActivity.transaction = getActivity().getSupportFragmentManager().beginTransaction();
@@ -86,27 +91,15 @@ public class Profile extends Fragment implements View.OnClickListener {
         switch (view.getId()){
             case R.id.logout_btn:
                 switchFGM(new ChangePass());
-//                user user=new user();
-//                user.Post_Logout(getContext(), new user.user_Listener() {
-//                    @Override
-//                    public void onSuccess(users new_account) {
-//                        new User_info(getContext(),true);
-//                        getActivity().finish();
-//                    }
-//
-//                    @Override
-//                    public void onStart() {
-//
-//                    }
-//
-//                    @Override
-//                    public void onFailure(String msg) {
-//
-//                    }
-//                });
                 break;
             case R.id.edit_btn:
                 switchFGM(new EditProfile());
+                break;
+            case R.id.favorit_btn:
+                switchFGM(new MyFavorites());
+                break;
+            case R.id.order_btn:
+
                 break;
         }
     }

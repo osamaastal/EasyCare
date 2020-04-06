@@ -5,7 +5,10 @@ import android.util.Log;
 import com.osamayastal.easycare.Model.Classes.Categorie;
 import com.osamayastal.easycare.Model.Classes.Product;
 import com.osamayastal.easycare.Model.Classes.Provider;
+import com.osamayastal.easycare.Model.Classes.ProviderSetting;
+import com.osamayastal.easycare.Model.Classes.Provider_map;
 import com.osamayastal.easycare.Model.Classes.Slider;
+import com.osamayastal.easycare.Model.Classes.Sub_servic;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,35 +21,27 @@ public class Provider_Details {
     private String message;
     private int status_code;
     private Boolean status;
-    private Provider providerDetails;
-    private List<Product> Products;
-    private List<Categorie> Services;
+    private com.osamayastal.easycare.Model.Classes.Provider_Details providerDetails;
+
 
     public Provider_Details(JSONObject jsonObject) {
         if (jsonObject==null){
             return;
         }
 
-        Products=new ArrayList<>();
-        Services=new ArrayList<>();
+
         try {
             message=jsonObject.getString("message");
             status=jsonObject.getBoolean("status");
-            Log.d("message",message);
+            Log.d("items",jsonObject.getJSONObject("items").toString());
             status_code=jsonObject.getInt("status_code");
-            providerDetails=new Provider(jsonObject.getJSONObject("items").getJSONObject("providerDetails"));
-
-            JSONArray jsonArray=jsonObject.getJSONObject("items").getJSONArray("Services");
-            JSONArray jsonArray1=jsonObject.getJSONObject("items").getJSONArray("Products");
-
-
-            for(int i=0;i<jsonArray.length();i++){
-                Services.add(new Categorie(jsonArray.getJSONObject(i)));
+            try{
+                providerDetails=new com.osamayastal.easycare.Model.Classes.Provider_Details(jsonObject.getJSONObject("items"));
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
 
-            for(int i=0;i<jsonArray1.length();i++){
-                Products.add(new Product(jsonArray1.getJSONObject(i)));
-            }
+
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -78,27 +73,11 @@ public class Provider_Details {
         this.status = status;
     }
 
-    public Provider getProviderDetails() {
+    public com.osamayastal.easycare.Model.Classes.Provider_Details getProviderDetails() {
         return providerDetails;
     }
 
-    public void setProviderDetails(Provider providerDetails) {
+    public void setProviderDetails(com.osamayastal.easycare.Model.Classes.Provider_Details providerDetails) {
         this.providerDetails = providerDetails;
-    }
-
-    public List<Product> getProducts() {
-        return Products;
-    }
-
-    public void setProducts(List<Product> products) {
-        Products = products;
-    }
-
-    public List<Categorie> getServices() {
-        return Services;
-    }
-
-    public void setServices(List<Categorie> services) {
-        Services = services;
     }
 }

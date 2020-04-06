@@ -11,6 +11,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.osamayastal.easycare.Model.Const.Server_info;
+import com.osamayastal.easycare.Model.Const.User_info;
 import com.osamayastal.easycare.Model.Controle.Categories;
 import com.osamayastal.easycare.Model.Controle.Search;
 
@@ -31,6 +32,7 @@ public class Categories_root {
     {
 
             String url= Server_info.API +"api/admin/category";
+        final String token =new User_info(mcontext).getToken();
 
 
             if (queue == null) {
@@ -59,7 +61,13 @@ public class Categories_root {
                         }
                     }
             ){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
 
+                    Map<String, String>  Headers = new HashMap<String, String>();
+                    Headers.put("token",token);
+                    return Headers;
+                }
             };
 
             queue.getCache().initialize();

@@ -36,6 +36,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -49,10 +50,14 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.osamayastal.easycare.Model.Classes.Employee;
 import com.osamayastal.easycare.Model.Classes.Provider;
 import com.osamayastal.easycare.Model.Classes.Provider_map;
+import com.osamayastal.easycare.Model.Const.User_info;
+import com.osamayastal.easycare.Model.Controle.Favorites;
 import com.osamayastal.easycare.Model.Controle.Maps;
+import com.osamayastal.easycare.Model.Rootes.Favorite_root;
 import com.osamayastal.easycare.Model.Rootes.Maps_root;
 import com.osamayastal.easycare.R;
 import com.osamayastal.easycare.activities.Search;
+import com.osamayastal.easycare.activities.ServiceProfiderDetails;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
@@ -110,6 +115,8 @@ private ImageButton search_btn;
             case R.id.search_btn:
                 startActivity(new Intent(getContext(), Search.class));
                 break;
+
+
         }
     }
     private GoogleMap mMap;
@@ -154,11 +161,85 @@ private ImageButton search_btn;
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        Provider_map provider =markersMap_prov.get(marker);
+        final Provider_map provider =markersMap_prov.get(marker);
         name.setText(provider.getName());
         address.setText(provider.getAddress());
-//        type.setText(provider.getc());
-//        dis.setText(employee.getFull_name());
+if (new User_info(getContext()).getLanguage().equals("en")){
+    type.setText(provider.getCategory_id().getEnName());
+}else {
+    type.setText(provider.getCategory_id().getArName());
+}
+        if (!provider.getFavorite_id().equals("null")){
+
+            like.setImageDrawable(getContext().getDrawable(R.drawable.ic_like));
+    }else {
+        like.setImageDrawable(getContext().getDrawable(R.drawable.ic_unlike));
+
+    }
+    like.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Favorite_root root=new Favorite_root();
+            if (!provider.getFavorite_id().equals("null")){
+
+                root.DELETEFavorites(getContext(), provider.getFavorite_id(), new Favorite_root.FavoriteListener() {
+                    @Override
+                    public void onSuccess(Favorites favorites) {
+                        if (new User_info(getContext()).getLanguage().equals("en")){
+                            Toast.makeText(getContext(),favorites.getMessageEn(),Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(getContext(),favorites.getMessageAr(),Toast.LENGTH_SHORT).show();
+
+                        }
+                        if (favorites.getStatus_code()==200){
+                            like.setImageDrawable(getContext().getDrawable(R.drawable.ic_unlike));
+                        }
+
+                    }
+
+                    @Override
+                    public void onStart() {
+
+                    }
+
+                    @Override
+                    public void onFailure(String msg) {
+
+                    }
+                });
+
+            }
+            else {
+                root.POSTFavorites(getContext(), provider.get_id(), new Favorite_root.FavoriteListener() {
+                    @Override
+                    public void onSuccess(Favorites favorites) {
+                        if (new User_info(getContext()).getLanguage().equals("en")){
+                            Toast.makeText(getContext(),favorites.getMessageEn(),Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(getContext(),favorites.getMessageAr(),Toast.LENGTH_SHORT).show();
+
+                        }
+                        if (favorites.getStatus_code()==200){
+                            like.setImageDrawable(getContext().getDrawable(R.drawable.ic_like));
+                        }
+                    }
+
+                    @Override
+                    public void onStart() {
+
+                    }
+
+                    @Override
+                    public void onFailure(String msg) {
+
+                    }
+                });
+
+            }
+        }
+    });
+
+//        dis.setText(employee.getFull_ name());
         try {
             Picasso.with(getContext())
                     .load(provider.getImage())

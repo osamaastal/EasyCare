@@ -4,7 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Provider_map {
-    private String _id,createAt,name,email,address,phone_number,password,image;
+    private String _id,createAt,name,email,address,phone_number,password,image,favorite_id;
     private Categorie category_id;
     private boolean isBlock;
     private double lat,lng,profitPercentage,orderPercentage;
@@ -21,6 +21,7 @@ private float rate;
             address=provider.getString("address");
             phone_number=provider.getString("phone_number");
             category_id=new Categorie(provider.getJSONObject("category_id"));
+            favorite_id=provider.getString("favorite_id");
 
             rate=provider.getInt("rate");
 
@@ -39,6 +40,14 @@ private float rate;
 
 
 
+    }
+
+    public String getFavorite_id() {
+        return favorite_id;
+    }
+
+    public void setFavorite_id(String favorite_id) {
+        this.favorite_id = favorite_id;
     }
 
     public String get_id() {

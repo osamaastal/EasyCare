@@ -33,6 +33,8 @@ import com.osamayastal.easycare.Model.Rootes.Search_root;
 import com.osamayastal.easycare.R;
 import com.suke.widget.SwitchButton;
 import com.warkiz.widget.IndicatorSeekBar;
+import com.warkiz.widget.OnSeekChangeListener;
+import com.warkiz.widget.SeekParams;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,6 +82,7 @@ mypopupWindow_filter=setPopUpWindow();
     String categorie_id=null;
     String city_id=null;
     int rat =-1;
+    int raduis =100;
     private PopupWindow setPopUpWindow() {
 //        LayoutInflater inflater = (LayoutInflater).getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         LayoutInflater inflater=(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -89,6 +92,7 @@ mypopupWindow_filter=setPopUpWindow();
         RecyclerView RV=view1.findViewById(R.id.Rv_type);
         final IndicatorSeekBar rang=view1.findViewById(R.id.range);
         SwitchButton watch=view1.findViewById(R.id.watch_switch);
+
         RatingBar rate=view1.findViewById(R.id.ratingBar);
         ImageButton save=view1.findViewById(R.id.save_btn);
         ImageButton cacel=view1.findViewById(R.id.cancel_btn);
@@ -111,14 +115,30 @@ mypopupWindow_filter=setPopUpWindow();
         city.setAdapter(adaptercity);
         Get_all_city(cityArrayList,adaptercity);
         /********************************************************************************/
+        rang.setOnSeekChangeListener(new OnSeekChangeListener() {
+            @Override
+            public void onSeeking(SeekParams seekParams) {
 
+            }
+
+            @Override
+            public void onStartTrackingTouch(IndicatorSeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(IndicatorSeekBar seekBar) {
+raduis=seekBar.getProgress();
+            }
+        });
+/***********************************************************************************/
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 City city1=(City) city.getSelectedItem();
                 city_id=city1.get_id();
                 rat=rang.getProgress();
-                Search_fun(name,categorie_id,city_id,rat);
+                Search_fun(name,categorie_id,city_id,rat,raduis);
                 mypopupWindow_filter.dismiss();
 
             }
@@ -179,9 +199,9 @@ mypopupWindow_filter=setPopUpWindow();
         });
     }
 
-    private void Search_fun(EditText name, String categorie_id, String city_id, int rat) {
+    private void Search_fun(EditText name, String categorie_id, String city_id, int rat,int raduis) {
         final Search_root search_root=new Search_root();
-        search_root.GetSearch(this, categorie_id, city_id, name.getText().toString(), rat, 0,
+        search_root.GetSearch(this, categorie_id, city_id, name.getText().toString(), rat, 0,raduis,
                 new Search_root.homeListener() {
                     @Override
                     public void onSuccess(com.osamayastal.easycare.Model.Controle.Search home) {
@@ -224,7 +244,7 @@ mypopupWindow_filter=setPopUpWindow();
                 name.setText("");
                 break;
             case R.id.search_btn:
-                Search_fun(name, categorie_id, city_id, rat);
+                Search_fun(name, categorie_id, city_id, rat,raduis);
                 break;
             case R.id.filter_btn:
                 mypopupWindow_filter.showAsDropDown(filter,0,0);

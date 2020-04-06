@@ -158,12 +158,14 @@
 
             </LinearLayout>
             <View
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/white_op8"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"/>
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="20dp"

@@ -35,12 +35,12 @@ import java.util.List;
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 public class Home extends Fragment implements View.OnClickListener {
-
+    View view;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_home, container, false);
+         view= inflater.inflate(R.layout.fragment_home, container, false);
         init(view);
         Loading_data();
         return view;
@@ -52,6 +52,11 @@ public class Home extends Fragment implements View.OnClickListener {
         home_root.GetHome(getContext(), new Home_root.homeListener() {
             @Override
             public void onSuccess(com.osamayastal.easycare.Model.Controle.Home home) {
+                view.findViewById(R.id.progress1).setVisibility(View.GONE);
+                view.findViewById(R.id.progress2).setVisibility(View.GONE);
+                view.findViewById(R.id.progress3).setVisibility(View.GONE);
+                view.findViewById(R.id.progress4).setVisibility(View.GONE);
+
                 top_rate_list.clear();
                 top_req_list.clear();
                 categories.clear();
@@ -122,13 +127,7 @@ private ImageButton search_btn;
         RV_server.setAdapter(categories_adapter);
 
         /*************************************ADS***************************************/
-//        ArrayList<Card> movies = new ArrayList<>();
-////        // add items to arraylist
-////        movies.add(new Card());
-////        movies.add(new Card());
-////        movies.add(new Card());
-////        movies.add(new Card());
-////        movies.add(new Card());
+
         CardSliderViewPager cardSliderViewPager = view.findViewById(R.id.viewPager);
       Slide_adapter=new CardAdapter(getContext(),sliderList);
         cardSliderViewPager.setAdapter(Slide_adapter);

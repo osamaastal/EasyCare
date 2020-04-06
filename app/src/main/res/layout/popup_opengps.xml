@@ -67,18 +67,17 @@ android:layout_gravity="right"
        <Button
 
            android:id="@+id/open_sitting_btn"
-           android:layout_width="0dp"
+           android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:text="@string/go_to_sitting"
            android:fontFamily="@font/helvetica_light"
            android:textColor="@color/white"
            android:textSize="18sp"
-           android:background="@color/blue_menu"
+           android:background="@color/blue_start"
            android:paddingTop="16dp"
            android:paddingBottom="16dp"
            android:layout_marginTop="14dp"
            android:layout_weight="1"
-           android:layout_marginRight="1dp"
              />
 
    </LinearLayout>

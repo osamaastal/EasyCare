@@ -34,11 +34,14 @@ public class Search_root {
                           final String name,
                           final int rate,
                           final int page,
+                          final int raduis,
                           final homeListener listener)
     {
 
        listener.onStart();
-            String url= Server_info.API +"api/mobile/getProviderSearchFilter?page="+page+"&limit=10";
+            String url= Server_info.API +"api/mobile/getProviderSearchFilter?page="+page
+                    +"&limit=10&rate="+rate+"&city_id="+city_id+"&category_id="+category_id
+                    +"&name=ا"+name+"&raduis="+raduis;
 
 
             if (queue == null) {
@@ -46,7 +49,7 @@ public class Search_root {
                 //Build.logError("Setting a new request queue");
             }
             // prepare the Request
-        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("Response", response.toString());
@@ -70,15 +73,15 @@ public class Search_root {
         }){
 
 
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> parameters = new HashMap<>();
-                if (rate!=-1) parameters.put("rate",rate+"");
-                    if (city_id!=null) parameters.put("city_id",city_id);
-                    if (category_id!=null) parameters.put("category_id",category_id);
-                parameters.put("name",name);
-                return  parameters;
-            }
+//            @Override
+//            protected Map<String, String> getParams() throws AuthFailureError {
+//                Map<String, String> parameters = new HashMap<>();
+//                if (rate!=-1) parameters.put("rate",rate+"");
+//                    if (city_id!=null) parameters.put("city_id",city_id);
+//                    if (category_id!=null) parameters.put("category_id",category_id);
+//                parameters.put("name",name);
+//                return  parameters;
+//            }
         };
         queue.add(request);
 

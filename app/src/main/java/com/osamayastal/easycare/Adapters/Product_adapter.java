@@ -64,13 +64,10 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.ViewHo
     @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-if (new User_info(mContext).getLanguage().equals("en")){
-    holder.name.setText(mItems.get(position).getEnName());
+        holder.name.setText(mItems.get(position).getName());
+        holder.old_price.setText(mItems.get(position).getPrice().toString());
+        holder.new_price.setText(mItems.get(position).getDiscountPrice().toString());
 
-}else {
-    holder.name.setText(mItems.get(position).getArName());
-
-}
         Picasso .with(mContext)
                 .load(mItems.get(position).getImage())
                 .into(holder.img);

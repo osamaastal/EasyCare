@@ -3,6 +3,7 @@ package com.osamayastal.easycare.Model.Rootes;
 import android.content.Context;
 import android.util.Log;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -10,11 +11,15 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.osamayastal.easycare.Model.Const.Server_info;
+import com.osamayastal.easycare.Model.Const.User_info;
 import com.osamayastal.easycare.Model.Controle.City;
 import com.osamayastal.easycare.Model.Controle.Provider_Details;
 import com.osamayastal.easycare.Model.Controle.Search;
 
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ProviderDetails_root {
     public interface DetailsListener{
@@ -33,7 +38,7 @@ public class ProviderDetails_root {
     {
 
        listener.onStart();
-            String url= Server_info.API +"api/mobile/providerDetails/"+id;
+            String url= Server_info.API +"api/admin/getproviderDetails/"+id;
 
 
             if (queue == null) {
@@ -76,6 +81,7 @@ public class ProviderDetails_root {
 
         listener.onStart();
         String url= Server_info.API +"api/mobile/getProviderByCategoryId/"+id+"?page="+page+"&limit=10";
+        final String token =new User_info(mcontext).getToken();
 
 
         if (queue == null) {
@@ -89,6 +95,7 @@ public class ProviderDetails_root {
                     public void onResponse(JSONObject response) {
 
                         Log.d("Response", response.toString());
+                        Log.d("token ", token.toString());
                         listener.onSuccess(new Search(response));
 
 
@@ -103,7 +110,13 @@ public class ProviderDetails_root {
                     }
                 }
         ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
 
+                Map<String, String>  Headers = new HashMap<String, String>();
+                Headers.put("token",token);
+                return Headers;
+            }
         };
 
         queue.getCache().initialize();

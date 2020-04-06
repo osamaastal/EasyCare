@@ -31,8 +31,8 @@ public class Maps {
             message=jsonObject.getString("message");
             Log.d("message",message);
             status_code=jsonObject.getInt("status_code");
-            JSONArray jsonArray2=jsonObject.getJSONArray("provider");
-            JSONArray jsonArray=jsonObject.getJSONArray("employee");
+            JSONArray jsonArray2=jsonObject.getJSONArray("providers");
+            JSONArray jsonArray=jsonObject.getJSONArray("employees");
             for(int i=0;i<jsonArray.length();i++){
                 employees.add(new Employee(jsonArray.getJSONObject(i)));
             }

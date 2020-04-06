@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LoginFrag extends Fragment implements View.OnClickListener {
-private TextView forget,logup;
+private TextView forget,logup,skip;
 private EditText phone,passord;
 private Button login_btn;
 
@@ -45,10 +45,12 @@ private Button login_btn;
         phone=view.findViewById(R.id.phone_ed);
         passord=view.findViewById(R.id.password_ed);
         login_btn=view.findViewById(R.id.login_btn);
+        skip=view.findViewById(R.id.skip);
         /**************************Actions*****************************/
         login_btn.setOnClickListener(this);
         forget.setOnClickListener(this);
         logup.setOnClickListener(this);
+        skip.setOnClickListener(this);
 
     }
 
@@ -59,10 +61,14 @@ private Button login_btn;
                 switchFGM(new SignUp());
                 break;
             case R.id.forget:
-//                switchFGM(new SignUp());
+                switchFGM(new ResetPassword());
                 break;
             case R.id.login_btn:
                 login_fun();
+                break;
+            case R.id.skip:
+                startActivity(new Intent(getActivity(), MainActivity.class));
+                getActivity().finish();
                 break;
 
         }

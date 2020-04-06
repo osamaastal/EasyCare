@@ -1,12 +1,17 @@
 package com.osamayastal.easycare.Model.Classes;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+
 public class Product {
-    private String _id,arName,enName,image;
-    private int color;
-    private boolean isActive;
+    private String _id,name,description,image,by_user_id,createat;
+    private  Double price,discountPrice;
+    private int upFront;
+    private boolean isUpFront,status;
+    private List<String> images;
 
     public Product(JSONObject jsonObject) {
         if (jsonObject==null){
@@ -14,24 +19,25 @@ public class Product {
         }
         try {
             _id=jsonObject.getString("_id");
-            arName=jsonObject.getString("arName");
-            enName=jsonObject.getString("enName");
+            name=jsonObject.getString("name");
+            description=jsonObject.getString("description");
             image=jsonObject.getString("image");
-            isActive=jsonObject.getBoolean("isActive");
-            color=jsonObject.getInt("color");
+            by_user_id=jsonObject.getString("by_user_id");
+            by_user_id=jsonObject.getString("by_user_id");
+            createat=jsonObject.getString("createat");
 
+            isUpFront=jsonObject.getBoolean("isUpFront");
+            status=jsonObject.getBoolean("status");
+            upFront=jsonObject.getInt("upFront");
+
+            JSONArray jsonArray=jsonObject.getJSONArray("images");
+            for (int i=0;i<jsonArray.length();i++){
+                images.add(jsonArray.getString(i));
+            }
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-    }
-
-    public int getColor() {
-        return color;
-    }
-
-    public void setColor(int color) {
-        this.color = color;
     }
 
     public String get_id() {
@@ -42,23 +48,21 @@ public class Product {
         this._id = _id;
     }
 
-    public String getArName() {
-        return arName;
+    public String getName() {
+        return name;
     }
 
-    public void setArName(String arName) {
-        this.arName = arName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getEnName() {
-        return enName;
+    public String getDescription() {
+        return description;
     }
 
-    public void setEnName(String enName) {
-        this.enName = enName;
+    public void setDescription(String description) {
+        this.description = description;
     }
-
-
 
     public String getImage() {
         return image;
@@ -68,11 +72,67 @@ public class Product {
         this.image = image;
     }
 
-    public boolean isActive() {
-        return isActive;
+    public String getBy_user_id() {
+        return by_user_id;
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
+    public void setBy_user_id(String by_user_id) {
+        this.by_user_id = by_user_id;
+    }
+
+    public String getCreateat() {
+        return createat;
+    }
+
+    public void setCreateat(String createat) {
+        this.createat = createat;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public Double getDiscountPrice() {
+        return discountPrice;
+    }
+
+    public void setDiscountPrice(Double discountPrice) {
+        this.discountPrice = discountPrice;
+    }
+
+    public int getUpFront() {
+        return upFront;
+    }
+
+    public void setUpFront(int upFront) {
+        this.upFront = upFront;
+    }
+
+    public boolean isUpFront() {
+        return isUpFront;
+    }
+
+    public void setUpFront(boolean upFront) {
+        isUpFront = upFront;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
     }
 }
