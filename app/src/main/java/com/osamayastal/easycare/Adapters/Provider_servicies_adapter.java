@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.osamayastal.easycare.Model.Classes.Categorie;
 import com.osamayastal.easycare.Model.Classes.Sub_servic;
 import com.osamayastal.easycare.Model.Const.User_info;
+import com.osamayastal.easycare.Popups.OrderPop;
 import com.osamayastal.easycare.R;
 import com.squareup.picasso.Picasso;
 
@@ -30,7 +31,7 @@ public class Provider_servicies_adapter extends RecyclerView.Adapter<Provider_se
     private static final String TAG = "RecyclerViewAdapter";
 
     //vars
-    private List<Sub_servic> mItems = new ArrayList<>();
+    private List<Categorie> mItems = new ArrayList<>();
     private Context mContext;
     private View mview;
 
@@ -41,7 +42,7 @@ public class Provider_servicies_adapter extends RecyclerView.Adapter<Provider_se
     }
     public static int item_select=-1;
     Selected_item listenner;
-    public Provider_servicies_adapter(Context context, List<Sub_servic> names, Selected_item listenner) {
+    public Provider_servicies_adapter(Context context, List<Categorie> names, Selected_item listenner) {
         mItems = names;
         mContext = context;
         this.listenner=listenner;
@@ -64,27 +65,32 @@ public class Provider_servicies_adapter extends RecyclerView.Adapter<Provider_se
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 if (new User_info(mContext).getLanguage().equals("en")){
-    holder.type.setText(mItems.get(position).getSubCategory_id().getNameEn());
+    holder.type.setText(mItems.get(position).getEnName());
 
 }else {
-    holder.type.setText(mItems.get(position).getSubCategory_id().getNameAr());
+    holder.type.setText(mItems.get(position).getArName());
 
 }
         Picasso .with(mContext)
-                .load(mItems.get(position).getSubCategory_id().getImage())
+                .load(mItems.get(position).getImage())
                 .into(holder.img);
-if (mItems.get(position).isActive()){
-    holder.soon.setVisibility(View.GONE);
-}else {
-    holder.img.setBackground(mContext.getDrawable(R.drawable.bg_circle_gray));
-}
+
+        holder.soon.setVisibility(View.GONE);
+//
+//if (mItems.get(position).isActive()){
+//    holder.soon.setVisibility(View.GONE);
+//}else {
+//    holder.img.setBackground(mContext.getDrawable(R.drawable.bg_circle_gray));
+//}
 
         mview.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
                 item_select=position;
-                notifyDataSetChanged();
+listenner.Onselcted(mItems.get(position));
+
+
 
             }
         });

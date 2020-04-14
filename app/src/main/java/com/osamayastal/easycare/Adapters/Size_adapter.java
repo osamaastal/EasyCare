@@ -11,13 +11,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.osamayastal.easycare.Model.Classes.Categorie;
+import com.osamayastal.easycare.Model.Classes.Size;
 import com.osamayastal.easycare.Model.Const.User_info;
 import com.osamayastal.easycare.R;
-import com.osamayastal.easycare.activities.ServiceProfiderDetails;
 import com.osamayastal.easycare.activities.Service_Single;
 import com.squareup.picasso.Picasso;
 
@@ -28,20 +27,20 @@ import java.util.List;
  * Created by User on 26/02/2020.
  */
 
-public class Categories_adapter extends RecyclerView.Adapter<Categories_adapter.ViewHolder> {
+public class Size_adapter extends RecyclerView.Adapter<Size_adapter.ViewHolder> {
 
     private static final String TAG = "RecyclerViewAdapter";
 
     //vars
-    private List<Categorie> mItems = new ArrayList<>();
+    private List<Size> mItems = new ArrayList<>();
     private Context mContext;
     private View mview;
     public interface Selected_item{
-        void Onselcted(Categorie categorie);
+        void Onselcted(Size size);
     }
     public static int item_select=-1;
     Selected_item listenner;
-    public Categories_adapter(Context context, List<Categorie> names, Selected_item listenner) {
+    public Size_adapter(Context context, List<Size> names, Selected_item listenner) {
         mItems = names;
         mContext = context;
         this.listenner=listenner;
@@ -53,7 +52,7 @@ public class Categories_adapter extends RecyclerView.Adapter<Categories_adapter.
 
         View view;
 
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_home_our_services, parent, false);
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_service_type, parent, false);
 
         mview=view;
         return new ViewHolder(view); // Inflater means reading a layout XML
@@ -69,27 +68,22 @@ if(new User_info(mContext).getLanguage().equals("en")){
     holder.name.setText(mItems.get(position).getArName());
 
 }
-        if (mItems.get(position).isActive()){
-            holder.soon.setVisibility(View.GONE);
-        }else {
-            holder.Img.setBackground(mContext.getDrawable(R.drawable.bg_circle_gray));
-        }
 
-       try {
-           Picasso.with(mContext)
-                   .load(mItems.get(position).getImage())
-                   .into(holder.Img);
-       } catch (Exception e) {
-           e.printStackTrace();
-       }
+if (item_select==position){
+    holder.name.setBackground(mContext.getDrawable(R.drawable.bg_req_green_gradiant_30dp));
+}else {
+    holder.name.setBackground(mContext.getDrawable(R.drawable.bg_req_gray_50dp));
+
+}
+
 
         mview.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-
-                Service_Single.id=mItems.get(position).get_id();
-                mContext.startActivity(new Intent(mContext,Service_Single.class));
+                item_select=position;
+                listenner.Onselcted(mItems.get(position));
+                notifyDataSetChanged();
             }
         });
     }

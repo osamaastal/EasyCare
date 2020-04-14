@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Product {
@@ -17,6 +18,7 @@ public class Product {
         if (jsonObject==null){
             return;
         }
+        images=new ArrayList<>();
         try {
             _id=jsonObject.getString("_id");
             name=jsonObject.getString("name");
@@ -29,6 +31,8 @@ public class Product {
             isUpFront=jsonObject.getBoolean("isUpFront");
             status=jsonObject.getBoolean("status");
             upFront=jsonObject.getInt("upFront");
+            price=jsonObject.getDouble("price");
+            discountPrice=jsonObject.getDouble("discountPrice");
 
             JSONArray jsonArray=jsonObject.getJSONArray("images");
             for (int i=0;i<jsonArray.length();i++){

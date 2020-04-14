@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
@@ -98,28 +99,69 @@ if (!mItems.get(position).getFavorite_id().equals("null")){
             }
         });
 
-       holder.like_btn.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               Favorite_root root=new Favorite_root();
-               root.POSTFavorites(mContext, mItems.get(position).get_id(), new Favorite_root.FavoriteListener() {
-                   @Override
-                   public void onSuccess(Favorites favorites) {
-                       holder.like_btn.setImageDrawable(mContext.getDrawable(R.drawable.ic_like));
-                   }
+        holder.like_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Favorite_root root=new Favorite_root();
+                Search provider=mItems.get(position);
+                if (!provider.getFavorite_id().equals("null")){
 
-                   @Override
-                   public void onStart() {
+                    root.DELETEFavorites(mContext, provider.getFavorite_id(), new Favorite_root.FavoriteListener() {
+                        @Override
+                        public void onSuccess(Favorites favorites) {
+                            if (new User_info(mContext).getLanguage().equals("en")){
+                                Toast.makeText(mContext,favorites.getMessageEn(),Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(mContext,favorites.getMessageAr(),Toast.LENGTH_SHORT).show();
 
-                   }
+                            }
+                            if (favorites.getStatus_code()==200){
+                                holder.like_btn.setImageDrawable(mContext.getDrawable(R.drawable.ic_unlike));
+                            }
 
-                   @Override
-                   public void onFailure(String msg) {
+                        }
 
-                   }
-               });
-           }
-       });
+                        @Override
+                        public void onStart() {
+
+                        }
+
+                        @Override
+                        public void onFailure(String msg) {
+
+                        }
+                    });
+
+                }
+                else {
+                    root.POSTFavorites(mContext, provider.get_id(), new Favorite_root.FavoriteListener() {
+                        @Override
+                        public void onSuccess(Favorites favorites) {
+                            if (new User_info(mContext).getLanguage().equals("en")){
+                                Toast.makeText(mContext,favorites.getMessageEn(),Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(mContext,favorites.getMessageAr(),Toast.LENGTH_SHORT).show();
+
+                            }
+                            if (favorites.getStatus_code()==200){
+                                holder.like_btn.setImageDrawable(mContext.getDrawable(R.drawable.ic_like));
+                            }
+                        }
+
+                        @Override
+                        public void onStart() {
+
+                        }
+
+                        @Override
+                        public void onFailure(String msg) {
+
+                        }
+                    });
+
+                }
+            }
+        });
     }
 
     @Override

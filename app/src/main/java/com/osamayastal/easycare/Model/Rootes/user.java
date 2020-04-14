@@ -31,7 +31,49 @@ public class user {
         void onFailure(String msg);
     }
 
+
     RequestQueue queue=null;
+    public void Get_Token(final Context mcontext){
+        if (queue==null) {
+            queue = Volley.newRequestQueue(mcontext);  // this = context
+        }
+        String url = Server_info. API+"api/mobile/guestToken";
+
+        StringRequest postRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        Log.d("Response", response);
+                        String jsonData = response;
+                        JSONObject Jobject = null;
+                        try {
+                            Jobject = new JSONObject(jsonData);
+                            new User_info().Token(Jobject.getString("items"),mcontext);
+                        } catch (JSONException e1) {
+                            e1.printStackTrace();
+                        }
+
+
+
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+                }
+        ) {
+
+        };
+        queue.add(postRequest);
+
+        // prepare the Request
+
+    }
+
     public void Post_create_user(final Context mcontext, final User user_, final user_Listener lisenner){
         if (queue==null) {
             queue = Volley.newRequestQueue(mcontext);

@@ -13,7 +13,7 @@ public class StaticPage {
             _id=provider.getString("_id");
             arTitle=provider.getString("arTitle");
             enTitle=provider.getString("enTitle");
-            arContent=provider.getString("arName");
+            arContent=provider.getString("arContent");
             enContent=provider.getString("enContent");
         } catch (JSONException e) {
             e.printStackTrace();

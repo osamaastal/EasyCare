@@ -7,15 +7,34 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.cncoderx.wheelview.Wheel3DView;
 import com.deishelon.roundedbottomsheet.RoundedBottomSheetDialog;
+import com.osamayastal.easycare.Adapters.Car_adapter;
+import com.osamayastal.easycare.Adapters.Size_adapter;
+import com.osamayastal.easycare.Adapters.SubCategories_adapter;
+import com.osamayastal.easycare.Model.Classes.Car_servece;
+import com.osamayastal.easycare.Model.Classes.Categorie;
 import com.osamayastal.easycare.Model.Classes.City;
+import com.osamayastal.easycare.Model.Classes.Size;
+import com.osamayastal.easycare.Model.Classes.Sub_categorie;
+import com.osamayastal.easycare.Model.Classes.Sub_servic;
+import com.osamayastal.easycare.Model.Classes.Sub_service;
+import com.osamayastal.easycare.Model.Const.User_info;
+import com.osamayastal.easycare.Model.Controle.Sub_categories;
+import com.osamayastal.easycare.Model.Rootes.Categories_root;
 import com.osamayastal.easycare.Model.Rootes.City_root;
 import com.osamayastal.easycare.R;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,6 +48,192 @@ public class OrderPop {
     private static String time;
     private static int payment;
     private   Context mcontext;
+    Car_servece servic;
+    Sub_categorie sub_categorie;
+    List<Sub_service>  sub_servics;
+    List<Size>  sizeList;
+     int i=-1;
+    public void AddOrder_pop(final Context mcontext, final String cat_id,String prov_id){
+
+        final RoundedBottomSheetDialog mBottomSheetDialog = new RoundedBottomSheetDialog(mcontext);
+        LayoutInflater inflater = (LayoutInflater) mcontext.getSystemService(LAYOUT_INFLATER_SERVICE);
+        final View sheetView = inflater.inflate(R.layout.bottom_sheet_add_car, null);
+        mBottomSheetDialog.setContentView(sheetView);
+        mBottomSheetDialog.show();
+
+        ///////RV
+        final RecyclerView car,details,type;
+        car=sheetView.findViewById(R.id.RV_car);
+        details=sheetView.findViewById(R.id.RV_services);
+        type=sheetView.findViewById(R.id.RV_services_type);
+        car.setLayoutManager(new LinearLayoutManager(mcontext,RecyclerView.HORIZONTAL,false));
+        details.setLayoutManager(new LinearLayoutManager(mcontext,RecyclerView.VERTICAL,false));
+        type.setLayoutManager(new LinearLayoutManager(mcontext,RecyclerView.HORIZONTAL,false));
+        ///////List Array
+        final List<Car_servece>  carList=new ArrayList<>();
+        sub_servics=new ArrayList<>();
+        sizeList=new ArrayList<>();
+        sub_categorie=new Sub_categorie(null);
+
+//       sub_categorie.Sub_categorie_details(null);
+        ///////adapters
+        final Size_adapter size_adapter=new Size_adapter(mcontext, sizeList, new Size_adapter.Selected_item() {
+            @Override
+            public void Onselcted(Size size) {
+               if (i!=-1) carList.get(i).setSize_id(size.getSize_id());
+               else servic.setSize_id(size.getSize_id());
+            }
+        });
+        type.setAdapter(size_adapter);
+        /////////
+        final SubCategories_adapter subCategories_adapter=new SubCategories_adapter(mcontext, sub_servics, new SubCategories_adapter.Selected_item() {
+            @Override
+            public void Onselcted(Sub_service sub_service) {
+                if (i!=-1) carList.get(i).setProviderSubCategory_id(servic.getProviderSubCategory_id()+","+sub_service.get_id());
+                else servic.setProviderSubCategory_id(servic.getProviderSubCategory_id()+","+sub_service.get_id());
+            }
+        });
+        details.setAdapter(subCategories_adapter);
+        /////
+        final Car_adapter car_adapter=new Car_adapter(mcontext, carList, new Car_adapter.Selected_item() {
+            @Override
+            public void Onselcted(Car_servece car_servece) {
+                i= Car_adapter.item_select;
+                sub_servics.clear();
+                sub_servics.addAll(sub_categorie.getSub_services());
+                for (Sub_service s:sub_servics
+                     ) {
+                    if (car_servece.getProviderSubCategory_id().contains(s.get_id())){
+                        s.setActive(true);
+                    }
+                }
+
+                for (int i=0;i<sub_categorie.getSizes().size();i++
+                ) {
+                    if (car_servece.getSize_id().equals(sub_categorie.getSizes().get(i).getSize_id())){
+                        size_adapter.item_select=i;
+                    }
+                }
+
+                subCategories_adapter.notifyDataSetChanged();
+                size_adapter.notifyDataSetChanged();
+            }
+        });
+        car.setAdapter(car_adapter);
+
+
+
+
+
+        ////////////////////////////////////////Button
+        ImageButton basket,add;
+
+        basket=sheetView.findViewById(R.id.basket_btn);
+        add=sheetView.findViewById(R.id.add);
+
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (servic.getSize_id()!=null && servic.getProviderSubCategory_id()!=null){
+                    carList.add(servic);
+                    sub_servics.clear();
+                    sub_servics.addAll(sub_categorie.getSub_services());
+                    subCategories_adapter.notifyDataSetChanged();
+                    car_adapter.notifyDataSetChanged();
+                    size_adapter.item_select=-1;
+                    size_adapter.notifyDataSetChanged();
+                }else {
+                    Toast.makeText(mcontext,"make sur you select service details and size",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                servic=new Car_servece();
+                int k=carList.size()+1;
+                servic.setCar_name(mcontext.getString(R.string.car_name)+" "+k);
+                servic.setCategory_id(sub_categorie.get_id());
+
+
+
+            }
+        });
+
+///////////////////////////////Textview
+        final TextView service_name,service_details,basket_nb;
+        final ImageView service_img;
+
+        service_name=sheetView.findViewById(R.id.service_title);
+        service_details=sheetView.findViewById(R.id.servic_details);
+        basket_nb=sheetView.findViewById(R.id.basket_nb);
+        service_img=sheetView.findViewById(R.id.service_img);
+
+        service_details.setText("");
+        basket_nb.setText(new User_info(mcontext).getBasket()+"");
+        ////////save data
+        Button save=sheetView.findViewById(R.id.save_btn);
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//
+//                SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH);
+//                String formatedDate = format.format(calendarView.getDate());
+//                Log.d("date", formatedDate);
+//                OrderPop.date=formatedDate;
+                mBottomSheetDialog.dismiss();
+
+
+            }
+        });
+
+        Categories_root root=new Categories_root();
+        root.Get_SubCategories(mcontext, cat_id, prov_id, new Categories_root.cat_Listener2() {
+            @Override
+            public void onSuccess(Sub_categories sub_categories) {
+                if (sub_categories.getStatus_code()!=200){
+                    return;
+                }
+                sheetView.findViewById(R.id.progress).setVisibility(View.GONE);
+                sub_categorie=sub_categories.getItems();
+                Picasso .with(mcontext)
+                        .load(sub_categorie.getImage())
+                        .into(service_img);
+                if (new User_info(mcontext).getLanguage().equals("en")){
+                    service_name.setText(sub_categorie.getNameEn());
+                }else {
+                    service_name.setText(sub_categorie.getNameAr());
+                }
+                ////////creat new car
+                servic=new Car_servece();
+                int k=carList.size()+1;
+                servic.setCar_name(mcontext.getString(R.string.car_name)+" "+k);
+                try {
+                    servic.setCategory_id(sub_categories.getItems().get_id());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+//                carList.add(servic);
+                ////notify
+                sub_servics.clear();
+                sub_servics.addAll(sub_categorie.getSub_services());
+                sizeList.clear();
+                sizeList.addAll(sub_categorie.getSizes());
+                subCategories_adapter.notifyDataSetChanged();
+                size_adapter.notifyDataSetChanged();
+                car_adapter.notifyDataSetChanged();
+
+
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onFailure(String msg) {
+
+            }
+        });
+
+    }
    public void GetDate_pop( Context mcontext){
 
        final RoundedBottomSheetDialog mBottomSheetDialog = new RoundedBottomSheetDialog(mcontext);

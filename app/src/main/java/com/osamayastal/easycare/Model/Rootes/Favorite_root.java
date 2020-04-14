@@ -15,6 +15,7 @@ import com.osamayastal.easycare.Model.Const.Server_info;
 import com.osamayastal.easycare.Model.Const.User_info;
 import com.osamayastal.easycare.Model.Controle.City;
 import com.osamayastal.easycare.Model.Controle.Favorites;
+import com.osamayastal.easycare.Model.Controle.Favorites_get;
 import com.osamayastal.easycare.Model.Controle.users;
 
 import org.json.JSONException;
@@ -29,13 +30,18 @@ public class Favorite_root {
         void onStart();
         void onFailure(String msg);
     }
+    public interface FavoriteListener_get{
+        void onSuccess(Favorites_get favorites);
+        void onStart();
+        void onFailure(String msg);
+    }
     private RequestQueue queue;
     public void GetFavorites(final Context mcontext,String page,
-                          final FavoriteListener listener)
+                          final FavoriteListener_get listener)
     {
 
        listener.onStart();
-            String url= Server_info.API +"api/mobile/getFavorite?page="+page+"&limit=10";
+            final String url= Server_info.API +"api/mobile/getFavorite?page="+page+"&limit=10";
         final String token =new User_info(mcontext).getToken();
 
 
@@ -51,7 +57,9 @@ public class Favorite_root {
                         public void onResponse(JSONObject response) {
 
                             Log.d("Response", response.toString());
-                            listener.onSuccess(new Favorites(response));
+                            Log.d("token", token.toString());
+                            Log.d("url", url.toString());
+                            listener.onSuccess(new Favorites_get(response));
 
 
                         }

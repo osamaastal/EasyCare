@@ -42,8 +42,11 @@ public class AboutUs extends Fragment implements View.OnClickListener {
                         if (staticPage.get_id().equals("5e418d96ee6c030024e30751")){
                             if (new User_info(getContext()).getLanguage().equals("en")){
                                 about_us.setText(staticPage.getEnContent());
+                                title.setText(staticPage.getEnTitle());
                             }else {
                                 about_us.setText(staticPage.getArContent());
+                                title.setText(staticPage.getArTitle());
+
                             }
                             return;
                         }
@@ -63,11 +66,12 @@ public class AboutUs extends Fragment implements View.OnClickListener {
         });
     }
 
-    private TextView about_us;
+    private TextView about_us,title;
     private Button web_sit_btn;
     private ImageButton back;
     private void init(View view) {
         about_us=view.findViewById(R.id.about_us);
+        title=view.findViewById(R.id.title);
         web_sit_btn=view.findViewById(R.id.web_site_btn);
         back=view.findViewById(R.id.back_btn);
         /*****************************Actions*******************************/

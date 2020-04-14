@@ -20,7 +20,7 @@ private float rate;
             email=provider.getString("email");
             address=provider.getString("address");
             phone_number=provider.getString("phone_number");
-            category_id=new Categorie(provider.getJSONObject("category_id"));
+            category_id=new Categorie(provider.getJSONObject("type_id"));
             favorite_id=provider.getString("favorite_id");
 
             rate=provider.getInt("rate");

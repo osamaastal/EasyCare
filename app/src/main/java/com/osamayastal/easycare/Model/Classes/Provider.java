@@ -1,13 +1,18 @@
 package com.osamayastal.easycare.Model.Classes;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Provider {
     private String _id,createAt,name,email,address,phone_number,password,category_id,image,favorite_id;
     private boolean isBlock;
     private double lat,lng,profitPercentage,orderPercentage;
 private float rate;
+private List<String> images;
     public Provider(JSONObject provider) {
         if (provider==null){
             return;
@@ -37,6 +42,15 @@ private float rate;
             e.printStackTrace();
         }
 
+        images=new ArrayList<>();
+        try {
+            JSONArray jsonArray=provider.getJSONArray("images");
+            for (int i=0;i<jsonArray.length();i++){
+                images.add(jsonArray.getString(i));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
 
     }
@@ -52,8 +66,18 @@ public Search toProvider(){
     provider.setRate(rate);
     provider.setPhone_number(phone_number);
     provider.setFavorite_id(favorite_id);
+    provider.setImages(images);
     return provider;
 }
+
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
+    }
+
     public String get_id() {
         return _id;
     }

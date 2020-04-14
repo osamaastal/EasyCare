@@ -11,13 +11,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.osamayastal.easycare.Model.Classes.Car_servece;
 import com.osamayastal.easycare.Model.Classes.Categorie;
+import com.osamayastal.easycare.Model.Classes.Sub_servic;
 import com.osamayastal.easycare.Model.Const.User_info;
 import com.osamayastal.easycare.R;
-import com.osamayastal.easycare.activities.ServiceProfiderDetails;
 import com.osamayastal.easycare.activities.Service_Single;
 import com.squareup.picasso.Picasso;
 
@@ -28,20 +28,20 @@ import java.util.List;
  * Created by User on 26/02/2020.
  */
 
-public class Categories_adapter extends RecyclerView.Adapter<Categories_adapter.ViewHolder> {
+public class Car_adapter extends RecyclerView.Adapter<Car_adapter.ViewHolder> {
 
     private static final String TAG = "RecyclerViewAdapter";
 
     //vars
-    private List<Categorie> mItems = new ArrayList<>();
+    private List<Car_servece> mItems = new ArrayList<>();
     private Context mContext;
     private View mview;
     public interface Selected_item{
-        void Onselcted(Categorie categorie);
+        void Onselcted(Car_servece car_servece);
     }
     public static int item_select=-1;
     Selected_item listenner;
-    public Categories_adapter(Context context, List<Categorie> names, Selected_item listenner) {
+    public Car_adapter(Context context, List<Car_servece> names, Selected_item listenner) {
         mItems = names;
         mContext = context;
         this.listenner=listenner;
@@ -53,7 +53,7 @@ public class Categories_adapter extends RecyclerView.Adapter<Categories_adapter.
 
         View view;
 
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_home_our_services, parent, false);
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_add_car, parent, false);
 
         mview=view;
         return new ViewHolder(view); // Inflater means reading a layout XML
@@ -63,33 +63,21 @@ public class Categories_adapter extends RecyclerView.Adapter<Categories_adapter.
     @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-if(new User_info(mContext).getLanguage().equals("en")){
-    holder.name.setText(mItems.get(position).getEnName());
-}else {
-    holder.name.setText(mItems.get(position).getArName());
 
-}
-        if (mItems.get(position).isActive()){
-            holder.soon.setVisibility(View.GONE);
-        }else {
-            holder.Img.setBackground(mContext.getDrawable(R.drawable.bg_circle_gray));
+    holder.name.setText(mItems.get(position).getCar_name());
+    holder.delet.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            mItems.remove(mItems.get(position));
+            notifyDataSetChanged();
         }
-
-       try {
-           Picasso.with(mContext)
-                   .load(mItems.get(position).getImage())
-                   .into(holder.Img);
-       } catch (Exception e) {
-           e.printStackTrace();
-       }
-
+    });
         mview.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-
-                Service_Single.id=mItems.get(position).get_id();
-                mContext.startActivity(new Intent(mContext,Service_Single.class));
+                item_select=position;
+                listenner.Onselcted(mItems.get(position));
             }
         });
     }
@@ -101,13 +89,13 @@ if(new User_info(mContext).getLanguage().equals("en")){
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-     ImageView Img;
-      TextView name,soon;
+     ImageView delet;
+      TextView name;
       public ViewHolder(View itemView) {
             super(itemView);
           name = itemView.findViewById(R.id.name);
-          Img = itemView.findViewById(R.id.Img);
-          soon= itemView.findViewById(R.id.soon_tv);
+          delet = itemView.findViewById(R.id.delete_btn);
+
 
 
         }

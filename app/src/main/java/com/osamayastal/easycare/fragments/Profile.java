@@ -1,5 +1,8 @@
 package com.osamayastal.easycare.fragments;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -28,6 +31,8 @@ public class Profile extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_profile, container, false);
+        User_info user_info=new User_info();
+
         init(view);
         Loading_data();
         return view;

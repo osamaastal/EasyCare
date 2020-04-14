@@ -64,7 +64,9 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.ViewHo
     @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.name.setText(mItems.get(position).getName());
+
+            holder.name.setText(mItems.get(position).getName());
+      
         holder.old_price.setText(mItems.get(position).getPrice().toString());
         holder.new_price.setText(mItems.get(position).getDiscountPrice().toString());
 

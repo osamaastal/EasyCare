@@ -5,7 +5,9 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -20,6 +22,11 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.Indicators.PagerIndicator;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -30,6 +37,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.joooonho.SelectableRoundedImageView;
+import com.osamayastal.easycare.Adapters.Categories_adapter;
 import com.osamayastal.easycare.Adapters.Product_adapter;
 import com.osamayastal.easycare.Adapters.Provider_servicies_adapter;
 import com.osamayastal.easycare.Model.Classes.Categorie;
@@ -43,6 +51,7 @@ import com.osamayastal.easycare.Model.Controle.Favorites;
 import com.osamayastal.easycare.Model.Controle.Provider_Details;
 import com.osamayastal.easycare.Model.Rootes.Favorite_root;
 import com.osamayastal.easycare.Model.Rootes.ProviderDetails_root;
+import com.osamayastal.easycare.Popups.OrderPop;
 import com.osamayastal.easycare.R;
 import com.squareup.picasso.Picasso;
 
@@ -64,15 +73,14 @@ public class ServiceProfiderDetails extends AppCompatActivity implements View.On
 
     private void Loading() {
        if (provider!=null){
-           Picasso.with(this)
-                   .load(provider.getImage())
-                   .into(img_slide);
+          
            /*******/
            Picasso.with(this)
                    .load(provider.getImage())
                    .into(img);
            /*************/
            name.setText(provider.getName());
+           title.setText(provider.getName());
            address.setText(provider.getAddress());
            ratingBar.setRating(provider.getRate());
            Log.d("favorite_id ", provider.getFavorite_id().toString());
@@ -83,6 +91,35 @@ public class ServiceProfiderDetails extends AppCompatActivity implements View.On
                like_btn.setImageDrawable(getDrawable(R.drawable.ic_unlike));
 
            }
+           /*************
+            * Images of product
+            */
+           mDemoSlider.removeAllSliders();
+
+           for(String name : provider.getImages()){
+               TextSliderView textSliderView = new TextSliderView(this);
+               // initialize a SliderLayout
+               textSliderView
+                       .description("")
+                       .image(name)
+                       .setScaleType(BaseSliderView.ScaleType.Fit);
+
+               Log.d("image_url",name);
+
+
+               //add your extra information
+               textSliderView.bundle(new Bundle());
+               textSliderView.getBundle()
+                       .putString("extra",name);
+               mDemoSlider.addSlider(textSliderView);
+           }
+           // Toast.makeText(getApplicationContext(),real_estate.getImagesURL().size()+"",Toast.LENGTH_SHORT).show();
+           mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
+           mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+           mDemoSlider.setCustomAnimation(new DescriptionAnimation());
+           mDemoSlider.setDuration(4000);
+           mDemoSlider.setCustomIndicator((PagerIndicator) findViewById(R.id.app_indicator));
+
            /*******************Loading********************/
            ProviderDetails_root root=new ProviderDetails_root();
            root.GetDetailsListener(this, provider.get_id(), new ProviderDetails_root.DetailsListener() {
@@ -91,14 +128,18 @@ public class ServiceProfiderDetails extends AppCompatActivity implements View.On
                    sub_servicList.clear();
                    providerSettingList.clear();
                    productList.clear();
-                   sub_servicList.addAll(details.getProviderDetails().getSub_services());
-                   productList.addAll(details.getProviderDetails().getProducts());
-                   serviciesAdapter.notifyDataSetChanged();
+                   sub_servicList.addAll(details.getServicList());
+
+                   categorieList.clear();
+                   categorieList.addAll(details.getCategorieList());
+
+                   productList.addAll(details.getProductList());
+                   categories_adapter.notifyDataSetChanged();
                    product_adapter.notifyDataSetChanged();
                    progressBar1.setVisibility(View.GONE);
                    progressBar2.setVisibility(View.GONE);
 /******************************From ...To *********************************/
-                   providerSettingList.addAll(details.getProviderDetails().getProviderSetting());
+                   providerSettingList.addAll(details.getProviderSettingList());
                   if (providerSettingList.size()!=0){
                       from.setText(providerSettingList.get(0).getMin());
                       to.setText(providerSettingList.get(0).getMax());
@@ -118,28 +159,31 @@ public class ServiceProfiderDetails extends AppCompatActivity implements View.On
            });
        }
     }
-
+    private SliderLayout mDemoSlider;
     ProgressBar progressBar1,progressBar2;
-    SelectableRoundedImageView img_slide;
+
     ImageButton like_btn,basket_btn,back_btn;
     CircleImageView img;
-    TextView name,address,from,to,type,more_pro,basket_nb;
+    TextView name,address,from,to,type,more_pro,basket_nb,title;
     RecyclerView prod_RV,serv_RV;
     RatingBar ratingBar;
     List<Product> productList;
     List<Sub_servic> sub_servicList;
+    List<Categorie> categorieList;
     List<ProviderSetting> providerSettingList;
-    Provider_servicies_adapter serviciesAdapter;
+    Provider_servicies_adapter categories_adapter;
     Product_adapter product_adapter;
     private void init() {
         progressBar1=findViewById(R.id.progress1);
         progressBar2=findViewById(R.id.progress2);
         img=findViewById(R.id.provider_Img);
-        img_slide=findViewById(R.id.ImgSlider);
+        mDemoSlider = (SliderLayout)findViewById(R.id.ImgSlider);
+
         like_btn=findViewById(R.id.like_btn);
         basket_btn=findViewById(R.id.basket_btn);
         back_btn=findViewById(R.id.back_btn);
         name=findViewById(R.id.provider_name_tv);
+        title=findViewById(R.id.title);
         address=findViewById(R.id.address_tv);
         from=findViewById(R.id.from_tv);
         to=findViewById(R.id.to_tv);
@@ -158,11 +202,22 @@ public class ServiceProfiderDetails extends AppCompatActivity implements View.On
         productList=new ArrayList<>();
         sub_servicList=new ArrayList<>();
         providerSettingList=new ArrayList<>();
+        categorieList=new ArrayList<>();
         product_adapter=new Product_adapter(this,productList,null);
-        serviciesAdapter=new Provider_servicies_adapter(this,sub_servicList,null);
+        categories_adapter=new Provider_servicies_adapter(this, categorieList, new Provider_servicies_adapter.Selected_item() {
+            @Override
+            public void Onselcted(Categorie categorie) {
+                if (new User_info(ServiceProfiderDetails.this).getId()==null){
+                    LoginAlert();
+                }else {
+                    OrderPop pop = new OrderPop();
+                    pop.AddOrder_pop(ServiceProfiderDetails.this, categorie.get_id(), provider.get_id());
+                }
+            }
+        });
         serv_RV.setLayoutManager(new GridLayoutManager(this,3));
         prod_RV.setLayoutManager(new GridLayoutManager(this,2));
-        serv_RV.setAdapter(serviciesAdapter);
+        serv_RV.setAdapter(categories_adapter);
         prod_RV.setAdapter(product_adapter);
         /***********************************Map***************************************/
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -170,7 +225,23 @@ public class ServiceProfiderDetails extends AppCompatActivity implements View.On
         mapFragment.getMapAsync(this);
 
     }
-
+    public void LoginAlert(){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("قم بتسجيل الدخول ")
+                .setPositiveButton("تسجيل الدخول", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        startActivity(new Intent(ServiceProfiderDetails.this, LoginActivity.class));
+                        finish();
+                    }
+                })
+                .setNegativeButton("إلغاء", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                }).create().show();
+    }
     @Override
     public void onClick(View view) {
         switch (view.getId()){

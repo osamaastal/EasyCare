@@ -13,7 +13,7 @@ public class User_info {
 private String lat;
     private String lng;
 private long wallet;
-private  int point;
+private  int point,basket;
     public User_info(Context mcontext) {
         final SharedPreferences sp=mcontext.getSharedPreferences("Login", MODE_PRIVATE);
         id=sp.getString("id",null);
@@ -31,14 +31,34 @@ private  int point;
         pw=sp.getString("pw","");
         wallet=sp.getLong("wallet", (long) 0.0);
         point=sp.getInt("point", 0);
-        language=sp.getString("language","");
+        basket=sp.getInt("basket", 0);
+        language=sp.getString("language","ar");
     }
 
     public User_info(String language, Context context) {
         SharedPreferences sp=context.getSharedPreferences("Login", MODE_PRIVATE);
         SharedPreferences.Editor Ed=sp.edit();
 
-        Ed.putString("language", String.valueOf(language));
+        Ed.putString("language", language);
+
+        Ed.commit();
+
+    }
+
+    public void Token(String token, Context context) {
+        SharedPreferences sp=context.getSharedPreferences("Login", MODE_PRIVATE);
+        SharedPreferences.Editor Ed=sp.edit();
+
+        Ed.putString("token", token);
+
+        Ed.commit();
+
+    }
+    public void Basket(int nb, Context context) {
+        SharedPreferences sp=context.getSharedPreferences("Login", MODE_PRIVATE);
+        SharedPreferences.Editor Ed=sp.edit();
+
+        Ed.putInt("basket", nb);
 
         Ed.commit();
 
@@ -98,6 +118,14 @@ private  int point;
 //        Ed.putLong("wallet",points.getMoney());
 //        Ed.commit();
 //    }
+
+    public int getBasket() {
+        return basket;
+    }
+
+    public void setBasket(int basket) {
+        this.basket = basket;
+    }
 
     public String getCityID() {
         return cityID;

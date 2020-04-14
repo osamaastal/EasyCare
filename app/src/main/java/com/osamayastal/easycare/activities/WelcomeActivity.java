@@ -19,13 +19,9 @@ import com.osamayastal.easycare.R;
 import com.osamayastal.easycare.fragments.Welcome1;
 import com.osamayastal.easycare.fragments.Welcome2;
 import com.osamayastal.easycare.fragments.Welcome3;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.logging.Handler;
 
 import me.relex.circleindicator.CircleIndicator;
 
@@ -71,6 +67,7 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void Loading() {
+        languge();
         Wellcom_root root=new Wellcom_root();
         root.Get_WellcomPages(this, new Wellcom_root.Wellcom_Listener() {
             @Override
@@ -91,10 +88,13 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
 
             }
         });
+
     }
 
     @Override
     public void onClick(View view) {
+
+        MainActivity mainActivity=new MainActivity();
         switch (view.getId()){
             case R.id.skip:
                 User_info user_info=new User_info();
@@ -103,13 +103,44 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             case R.id.ar_tv:
 
+          mainActivity.ChangeLanguge_pop("ar", this, new MainActivity.chang() {
+              @Override
+              public void onSave(Boolean v) {
+                  if (v){
+                      valid_ar.setVisibility(View.VISIBLE);
+                      valid_en.setVisibility(View.GONE);
+                  }
+              }
+          });
+
+
+
+
                 break;
             case R.id.en_tv:
+
+               if(mainActivity.ChangeLanguge_pop("en", this, new MainActivity.chang() {
+                   @Override
+                   public void onSave(Boolean v) {
+                       if (v){
+                           valid_en.setVisibility(View.VISIBLE);
+                           valid_ar.setVisibility(View.GONE);
+                       }
+                   }
+               }));
 
                 break;
         }
     }
-
+private void languge(){
+    if (new User_info(this).getLanguage().equals("en")){
+        valid_en.setVisibility(View.VISIBLE);
+        valid_ar.setVisibility(View.GONE);
+    }else {
+        valid_ar.setVisibility(View.VISIBLE);
+        valid_en.setVisibility(View.GONE);
+    }
+}
     public class MyPagerAdapter extends FragmentPagerAdapter {
 
 

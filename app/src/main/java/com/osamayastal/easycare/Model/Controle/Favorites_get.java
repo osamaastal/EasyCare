@@ -1,8 +1,7 @@
 package com.osamayastal.easycare.Model.Controle;
 
-import android.util.Log;
-
 import com.osamayastal.easycare.Model.Classes.Favorite;
+import com.osamayastal.easycare.Model.Classes.Favorite_get;
 import com.osamayastal.easycare.Model.Classes.Pagenation;
 
 import org.json.JSONArray;
@@ -12,13 +11,13 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Favorites {
-    private String messageEn,messageAr;
+public class Favorites_get {
+    private String message;
     private int status_code;
     private Pagenation pagenation;
-    private List<com.osamayastal.easycare.Model.Classes.Favorite> items;
+    private List<Favorite_get> items;
 
-    public Favorites(JSONObject jsonObject) {
+    public Favorites_get(JSONObject jsonObject) {
         if (jsonObject==null){
             return;
         }
@@ -33,7 +32,7 @@ public class Favorites {
 
 
             for(int i=0;i<jsonArray2.length();i++){
-                items.add(new com.osamayastal.easycare.Model.Classes.Favorite(jsonArray2.getJSONObject(i)));
+                items.add(new Favorite_get(jsonArray2.getJSONObject(i)));
             }
 
         } catch (JSONException e) {
@@ -41,29 +40,14 @@ public class Favorites {
         }
 
         try{
-            messageAr=jsonObject.getString("messageAr");
-            messageEn=jsonObject.getString("messageEn");
+            message=jsonObject.getString("message");
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
     }
 
-    public String getMessageEn() {
-        return messageEn;
-    }
-
-    public void setMessageEn(String messageEn) {
-        this.messageEn = messageEn;
-    }
-
-    public String getMessageAr() {
-        return messageAr;
-    }
-
-    public void setMessageAr(String messageAr) {
-        this.messageAr = messageAr;
-    }
 
     public int getStatus_code() {
         return status_code;
@@ -81,11 +65,19 @@ public class Favorites {
         this.pagenation = pagenation;
     }
 
-    public List<Favorite> getItems() {
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public List<Favorite_get> getItems() {
         return items;
     }
 
-    public void setItems(List<Favorite> items) {
+    public void setItems(List<Favorite_get> items) {
         this.items = items;
     }
 }

@@ -37,7 +37,7 @@ public class Home {
             status_code=jsonObject.getInt("status_code");
             JSONArray jsonArray=jsonObject.getJSONArray("topRequestedProviders");
             JSONArray jsonArray1=jsonObject.getJSONArray("topRatedProviders");
-            JSONArray jsonArray2=jsonObject.getJSONArray("categories");
+            JSONArray jsonArray2=jsonObject.getJSONArray("types");
             JSONArray jsonArray3=jsonObject.getJSONArray("sliders");
 
             for(int i=0;i<jsonArray.length();i++){

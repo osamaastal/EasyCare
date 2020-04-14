@@ -12,7 +12,9 @@ public class Sub_servic {
     private boolean isActive;
     private Double price;
     private Sub_categorie subCategory_id;
-private List<Size> sizeList;
+    private List<Size> sizeList;
+    private List<Sub_servic> car_list;
+private String car_name;
     public Sub_servic(JSONObject jsonObject) {
         if (jsonObject==null){
             return;
@@ -35,6 +37,23 @@ private List<Size> sizeList;
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+
+    public List<Sub_servic> getCar_list() {
+        return car_list;
+    }
+
+    public void setCar_list(List<Sub_servic> car_list) {
+        this.car_list = car_list;
+    }
+
+    public String getCar_name() {
+        return car_name;
+    }
+
+    public void setCar_name(String car_name) {
+        this.car_name = car_name;
     }
 
     public String get_id() {

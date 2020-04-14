@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -12,12 +13,15 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
+import com.osamayastal.easycare.Adapters.Favorit_adapter;
 import com.osamayastal.easycare.Adapters.Product_adapter;
 import com.osamayastal.easycare.Adapters.Search_adapter;
+import com.osamayastal.easycare.Model.Classes.Favorite_get;
 import com.osamayastal.easycare.Model.Classes.Product;
 import com.osamayastal.easycare.Model.Classes.Search;
 import com.osamayastal.easycare.Model.Controle.Categories;
 import com.osamayastal.easycare.Model.Controle.Favorites;
+import com.osamayastal.easycare.Model.Controle.Favorites_get;
 import com.osamayastal.easycare.Model.Rootes.Categories_root;
 import com.osamayastal.easycare.Model.Rootes.Favorite_root;
 import com.osamayastal.easycare.R;
@@ -41,12 +45,12 @@ public class MyFavorites extends Fragment implements View.OnClickListener {
 
     private void Loading() {
         Favorite_root root=new Favorite_root();
-        root.GetFavorites(getContext(), "1", new Favorite_root.FavoriteListener() {
+        root.GetFavorites(getContext(), "0", new Favorite_root.FavoriteListener_get() {
             @Override
-            public void onSuccess(Favorites favorites) {
+            public void onSuccess(Favorites_get favorites) {
                 progressBar.setVisibility(View.GONE);
                 providerList.clear();
-//providerList.addAll(favorites.getItems());
+providerList.addAll(favorites.getItems());
                 adapter.notifyDataSetChanged();
             }
 
@@ -65,8 +69,8 @@ public class MyFavorites extends Fragment implements View.OnClickListener {
     ProgressBar progressBar;
     private ImageButton back;
     RecyclerView RV;
-    List<Search> providerList;
-    Search_adapter adapter;
+    List<Favorite_get> providerList;
+    Favorit_adapter adapter;
     private void init(View view) {
         progressBar=view.findViewById(R.id.progress);
         back=view.findViewById(R.id.back_btn);
@@ -74,8 +78,8 @@ public class MyFavorites extends Fragment implements View.OnClickListener {
         /******************Actions*******************/
         back.setOnClickListener(this);
         providerList=new ArrayList<>();
-        adapter=new Search_adapter(getContext(),providerList,null);
-        RV.setLayoutManager(new GridLayoutManager(getContext(),2));
+        adapter=new Favorit_adapter(getContext(),providerList,null);
+        RV.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false));
         RV.setAdapter(adapter);
 
     }

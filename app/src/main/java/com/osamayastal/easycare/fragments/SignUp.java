@@ -196,6 +196,14 @@ private AppCompatCheckBox accept;
             user.Post_create_user(getContext(), user_, new user.user_Listener() {
                 @Override
                 public void onSuccess(users new_account) {
+                    if (new User_info(getContext()).getLanguage().equals("en")){
+                        Toast.makeText(getContext(),new_account.getMessageEn(),Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(getContext(),new_account.getMessageAr(),Toast.LENGTH_SHORT).show();
+                    }
+                    if (!new_account.isStatus()){
+                        return;
+                    }
                     new User_info(new_account.getItems(),getContext());
                     startActivity(new Intent(getActivity(), ConfCode.class));
                     getActivity().finish();

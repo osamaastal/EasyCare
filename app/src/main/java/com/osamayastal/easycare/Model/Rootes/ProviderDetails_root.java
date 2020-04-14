@@ -38,8 +38,8 @@ public class ProviderDetails_root {
     {
 
        listener.onStart();
-            String url= Server_info.API +"api/admin/getproviderDetails/"+id;
-
+            String url= Server_info.API +"api/mobile/getproviderDetails/"+id;
+        final String token =new User_info(mcontext).getToken();
 
             if (queue == null) {
                 queue = Volley.newRequestQueue(mcontext);  // this = context
@@ -66,11 +66,15 @@ public class ProviderDetails_root {
                         }
                     }
             ){
-
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> Headers=new HashMap<>();
+                    Headers.put("token",token);
+                    return Headers;
+                }
             };
 
             queue.getCache().initialize();
-// add it to the RequestQueue
             queue.add(getRequest);
             queue.getCache().clear();
        }

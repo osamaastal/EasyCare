@@ -2,8 +2,12 @@ package com.osamayastal.easycare.Model.Classes;
 
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Search {
     private String _id,createAt,name,email,address,phone_number,password,image,fcmToken,favorite_id;
@@ -12,6 +16,8 @@ public class Search {
     private boolean isBlock;
     private double lat,lng,profitPercentage,orderPercentage;
     private float rate;
+    private List<String> images;
+
 
     public Search(JSONObject provider) {
         if (provider==null){
@@ -20,48 +26,115 @@ public class Search {
         try {
             _id=provider.getString("_id");
             createAt=provider.getString("createAt");
-            name=provider.getString("name");
-            email=provider.getString("email");
-            address=provider.getString("address");
-            phone_number=provider.getString("phone_number");
-            password=provider.getString("password");
 
-            try{
-                fcmToken=provider.getString("fcmToken");
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
 
-            favorite_id=provider.getString("favorite_id");
-            Log.d("favorite_id ", favorite_id.toString());
-
-            rate=provider.getInt("rate");
-
-            isBlock=provider.getBoolean("isBlock");
-
-            lat=provider.getDouble("lat");
-            lng=provider.getDouble("lng");
 
             profitPercentage=provider.getDouble("profitPercentage");
             orderPercentage=provider.getDouble("orderPercentage");
-            try {
-                category_id=new Categorie(provider.getJSONObject("category_id"));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            city_id=new City(provider.getJSONObject("city_id"));
-            try {
-                image=provider.getString("image");
 
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try{
+            city_id=new City(provider.getJSONObject("city_id"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try{
+            fcmToken=provider.getString("fcmToken");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try{
+            name=provider.getString("name");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            category_id=new Categorie(provider.getJSONObject("type_id"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            image=provider.getString("image");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try{
+            email=provider.getString("email");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try{
+            address=provider.getString("address");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try{
+            phone_number=provider.getString("phone_number");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try{
+            password=provider.getString("password");
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
 
+        try{
+            favorite_id=provider.getString("favorite_id");
+            Log.d("favorite_id ", favorite_id.toString());
 
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try{
+            rate=provider.getInt("rate");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try{
+            isBlock=provider.getBoolean("isBlock");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try{
+            lat=provider.getDouble("lat");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try{
+            lng=provider.getDouble("lng");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        images=new ArrayList<>();
+        try {
+            JSONArray jsonArray=provider.getJSONArray("images");
+            for (int i=0;i<jsonArray.length();i++){
+                images.add(jsonArray.getString(i));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
     }
 
     public String getFavorite_id() {

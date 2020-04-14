@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/gray_F9"
+        android:paddingStart="40dp"
+        android:paddingEnd="30dp"
+        android:layout_marginTop="15dp">
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/out_wach"
+            style="@style/text_darkblue_roman_14"
+            android:paddingTop="3dp"
+            android:paddingBottom="8dp"
+            android:paddingStart="25dp"
+            android:paddingEnd="25dp"
+            />
+        <Space
+            android:layout_width="0dp"
+            android:layout_weight="0.53"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="50"
+            style="@style/text_darkblue_bold_18"
+            android:layout_gravity="bottom"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ريال سعودي"
+            style="@style/text_darkblue_roman_10"
+            android:layout_gravity="bottom"
+            android:layout_marginStart="5dp"
+            android:layout_marginBottom="3dp"
+            />
+        <Space
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"/>
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/checkbox"
+            android:checked="true"
+            style="@style/text_black_roman_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:button="@drawable/check_box_style" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

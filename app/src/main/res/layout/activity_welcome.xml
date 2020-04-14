@@ -84,6 +84,7 @@
             app:layout_constraintStart_toStartOf="parent"
             />
         <ImageView
+            android:visibility="gone"
             android:id="@+id/valid_en"
             android:layout_width="18dp"
             android:layout_height="18dp"
@@ -98,7 +99,7 @@
             android:layout_height="18dp"
             android:src="@drawable/ic_checked_circle"
             android:layout_marginStart="39dp"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintTop_toTopOf="@id/ar_tv"
             app:layout_constraintStart_toStartOf="@id/ar_tv"/>
         <TextView

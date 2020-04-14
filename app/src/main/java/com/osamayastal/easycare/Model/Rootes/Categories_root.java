@@ -9,12 +9,16 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.osamayastal.easycare.Model.Classes.Sub_categorie;
 import com.osamayastal.easycare.Model.Const.Server_info;
 import com.osamayastal.easycare.Model.Const.User_info;
 import com.osamayastal.easycare.Model.Controle.Categories;
 import com.osamayastal.easycare.Model.Controle.Search;
+import com.osamayastal.easycare.Model.Controle.Sub_categories;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -26,12 +30,17 @@ public class Categories_root {
         void onStart();
         void onFailure(String msg);
     }
+    public interface cat_Listener2{
+        void onSuccess(Sub_categories sub_categorie);
+        void onStart();
+        void onFailure(String msg);
+    }
     private RequestQueue queue;
     public void GetCategories(final Context mcontext,
                           final cat_Listener listener)
     {
 
-            String url= Server_info.API +"api/admin/category";
+            String url= Server_info.API +"api/admin/type";
         final String token =new User_info(mcontext).getToken();
 
 
@@ -76,5 +85,49 @@ public class Categories_root {
             queue.getCache().clear();
        }
 
+    public void Get_SubCategories(final Context mcontext, final String categoryId, final String providerId, final cat_Listener2 listener ){
+        if (queue==null) {
+            queue = Volley.newRequestQueue(mcontext);  // this = context
+        }
+        final String url = Server_info. API+"api/mobile/getSubCategoryByCategoryId?categoryId=" +
+                categoryId+"&providerId="+providerId;
+
+        StringRequest postRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        Log.d("Response", response);
+                        Log.d("url", url);
+                        String jsonData = response;
+                        JSONObject Jobject = null;
+                        try {
+                            Jobject = new JSONObject(jsonData);
+                            Sub_categories sub_categorie=new Sub_categories(Jobject);
+
+                          listener.onSuccess(new Sub_categories(Jobject));
+                        } catch (JSONException e1) {
+                            e1.printStackTrace();
+                        }
+
+
+
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+                }
+        ) {
+
+        };
+        queue.add(postRequest);
+
+        // prepare the Request
+
+    }
 
 }
