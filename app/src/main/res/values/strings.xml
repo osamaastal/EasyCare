@@ -52,7 +52,7 @@
     <string name="order_type_canceled">ملغية</string>
     <string name="about">يبعد</string>
     <string name="km">كيلومتر</string>
-    <string name="num_units">عدد الوحدات</string>
+    <string name="num_units">الوحدات</string>
     <string name="conf_order">تأكيد الطلب</string>
     <string name="rial">ريال سعودي</string>
     <string name="Execus">عذرا  ....!</string>
@@ -136,5 +136,6 @@
     <string name="order_time">وقت التنفيذ</string>
     <string name="no_whatsapp">no what\'up</string>
     <string name="car_name">المركبة</string>
+
 
 </resources>
