@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zerobranch.layout.SwipeLayout
+<androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/swipe_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:draggedItem="@id/card"
-    app:leftItem="@id/delete_btn"
-    app:swipeDirection="right"
     android:layout_marginStart="15dp"
     android:layout_marginEnd="15dp"
-    android:layoutDirection="rtl">
+    android:layoutDirection="rtl"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="16dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp">
 <!--    TODO  code : -->
 <!--    TODO SwipeLayout.setOnActionsListener(new SwipeLayout.SwipeActionsListener() {-->
 <!--    TODO @Override-->
@@ -28,24 +29,7 @@
 <!--    TODO }-->
 <!--    TODO });-->
 
-    <ImageButton
-        android:id="@+id/delete_btn"
-        android:layout_width="50dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="end"
-        android:background="@drawable/bg_req_pink_orders"
-        android:gravity="center"
-        android:paddingEnd="0dp"
-        android:paddingStart="0dp"
-        android:layout_marginStart="20dp"
-        android:src="@drawable/ic_delete"/>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="16dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -72,15 +56,30 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_gravity="center_vertical">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="غسيل سيارات"
-                    style="@style/text_darkblue_bold_16"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center">
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="غسيل سيارات"
+                        style="@style/text_darkblue_bold_16"/>
+
+                    <ImageButton
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:src="@drawable/ic_delete_small"
+                        android:background="@drawable/bg_circle_pink"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginTop="10dp">
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -103,8 +102,8 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"/>
                     <ImageButton
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
                         android:src="@drawable/ic_minus_blue_small"
                         android:background="@drawable/bg_circle_light_gray"/>
                     <TextView
@@ -115,36 +114,17 @@
                         android:layout_marginStart="10dp"
                         android:layout_marginEnd="10dp"/>
                     <ImageButton
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
                         android:src="@drawable/ic_plus_blue_small"
                         android:background="@drawable/bg_circle_light_gray"/>
-                    <Space
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"/>
+
                 </LinearLayout>
             </LinearLayout>
-<!--            <ImageButton-->
-<!--                android:layout_width="30dp"-->
-<!--                android:layout_height="30dp"-->
-<!--                android:layout_gravity="center_vertical"-->
-<!--                android:src="@drawable/arrow_down"-->
-<!--                android:rotation="90"-->
-<!--                android:background="@drawable/bg_circle_pink"-->
-<!--                />-->
+
+
 
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
-<!--    <TextView-->
-<!--        android:id="@+id/drag_item"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:background="#eeeeee"-->
-<!--        android:gravity="center_vertical"-->
-<!--        android:paddingEnd="10dp"-->
-<!--        android:paddingStart="20dp"-->
-<!--        android:textSize="20sp"/>-->
 
 
-</com.zerobranch.layout.SwipeLayout>
+</androidx.cardview.widget.CardView>

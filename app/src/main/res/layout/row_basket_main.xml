@@ -17,14 +17,15 @@
             android:layout_height="wrap_content"
             android:text="مغسلة الوفاء الجديدة"
             style="@style/text_darkblue_roman_14"
-            android:layout_marginStart="55dp"
-            android:maxLength="30"
+            android:layout_marginStart="15dp"
+            android:layout_marginBottom="4dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
         <CheckBox
             android:layout_width="45dp"
             android:layout_height="45dp"
+            android:visibility="gone"
             android:button="@drawable/check_box_style_basket"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -33,27 +34,61 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:paddingEnd="20dp"
-            android:paddingStart="20dp"
-            android:gravity="center_vertical"
-            android:background="@drawable/bg_req_green_gradiant_30dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/num_units"
-                style="@style/text_white_roman_12"
-                android:layout_marginEnd="8dp"
-                />
-            <TextView
+                android:layout_height="match_parent"
+                android:paddingEnd="20dp"
+                android:paddingStart="20dp"
+                android:layout_marginEnd="-40dp"
+                android:elevation="1dp"
+                android:gravity="center_vertical"
+                android:background="@drawable/bg_req_green_gradiant_30dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/services"
+                    style="@style/text_white_roman_12"
+                    android:layout_marginEnd="8dp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="999"
+                    style="@style/text_white_bold_16"
+                    />
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="02"
-                style="@style/text_white_bold_18"
-                />
+                android:layout_height="match_parent"
+                android:paddingEnd="20dp"
+                android:paddingStart="45dp"
+                android:gravity="center_vertical"
+                android:background="@drawable/bg_req_green_gradiant_30dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/products"
+                    style="@style/text_white_roman_12"
+                    android:layout_marginEnd="8dp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="999"
+                    style="@style/text_white_bold_16"
+                    />
+            </LinearLayout>
         </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
