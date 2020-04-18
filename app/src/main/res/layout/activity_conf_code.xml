@@ -119,7 +119,6 @@
             app:itemWidth="63dp"
             app:itemRadius="20dp"
             app:itemSpacing="20dp"
-            android:text="7"
             android:itemBackground="@drawable/bg_req_darkblue_16dp_gradiant"
             app:lineColor="@color/blue"
             app:lineWidth="0dp"
