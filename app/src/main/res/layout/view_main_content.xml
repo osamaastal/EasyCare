@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:elevation="10dp"
-    android:layoutDirection="locale">
+    android:layoutDirection="rtl">
 
 
     <!--    <ScrollView-->
@@ -35,6 +35,7 @@
             android:layout_height="46dp"
             android:layout_marginStart="18dp"
             android:elevation="1dp"
+            app:theme="@style/ToolbarColoredBackArrow"
             android:background="@drawable/bg_circle_midblue"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -6,4 +6,10 @@
             <corners android:radius="16dp"/>
         </shape>
     </item>
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#0B4890"/>
+            <corners android:radius="16dp"/>
+        </shape>
+    </item>
 </selector>

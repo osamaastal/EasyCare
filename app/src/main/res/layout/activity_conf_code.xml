@@ -117,7 +117,7 @@
             app:itemCount="4"
             app:itemHeight="77dp"
             app:itemWidth="63dp"
-            app:itemRadius="16dp"
+            app:itemRadius="20dp"
             app:itemSpacing="20dp"
             android:text="7"
             android:itemBackground="@drawable/bg_req_darkblue_16dp_gradiant"

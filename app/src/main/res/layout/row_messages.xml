@@ -39,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Osama yousef"
-            style="@style/text_darkblue_bold_18"
+            style="@style/text_darkblue_bold_16"
             android:layout_marginStart="15dp"
             android:maxLength="20"
             app:layout_constraintTop_toTopOf="parent"

@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:text="مغسلة الوفاء"
         android:gravity="start"
-        style="@style/text_darkblue_bold_18"
+        style="@style/text_darkblue_bold_16"
         android:layout_marginStart="10dp"
         app:layout_constraintStart_toEndOf="@id/provider_Img"
         app:layout_constraintTop_toTopOf="parent"

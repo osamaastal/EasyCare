@@ -75,6 +75,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 style="@style/filterSpinnerTheam"
                 android:layout_marginTop="5dp"
+                android:entries="@array/default_array"
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>
         <View

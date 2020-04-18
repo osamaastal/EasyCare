@@ -8,6 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="cardViewStyle">@style/CardView</item>
     </style>
+    <style name="ToolbarColoredBackArrow" parent="AppTheme">
+        <item name="android:textColorSecondary">@color/white</item>
+    </style>
     <!--        **************************RattingBat***************-->
     <style name="RatingBar" parent="Theme.AppCompat">
         <item name="colorControlNormal">#E3E3E3</item>
