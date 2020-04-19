@@ -9,9 +9,45 @@ import java.util.List;
 
 public class Car_servece {
 
-    private String size_id,providerSubCategory_id,car_name,category_id;
+    private String size_id,providerSubCategory_id="",car_name,category_id;
 
     public Car_servece() {
+    }
+public JSONObject Order_JSON(String provider_id,List<Car_servece> car_serveces)  {
+        JSONObject jsonObject=new JSONObject();
+
+    if(car_serveces != null && car_serveces.size() > 0){
+        JSONArray itemsJsonArray = new JSONArray();
+        for(Car_servece itemsElement : car_serveces){
+            try {
+                itemsJsonArray.put(itemsElement.toJsonObject());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            jsonObject.put("services", itemsJsonArray);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    try {
+        jsonObject.put("provider_id",provider_id);
+    } catch (JSONException e) {
+        e.printStackTrace();
+    }
+
+    return jsonObject;
+}
+
+    private JSONObject toJsonObject() throws JSONException {
+        JSONObject jsonObject=new JSONObject();
+        jsonObject.put("car_name",car_name);
+        jsonObject.put("providerSubCategory_id",providerSubCategory_id);
+        jsonObject.put("size_id",size_id);
+        jsonObject.put("category_id",category_id);
+return jsonObject;
     }
 
     public String getSize_id() {

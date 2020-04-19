@@ -1,15 +1,21 @@
-package com.osamayastal.easycare.Model.Classes;
+package com.osamayastal.easycare.Model.Classes.Provider;
 
+import com.osamayastal.easycare.Model.Classes.Search;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Provider_map {
-    private String _id,createAt,name,email,address,phone_number,password,image,favorite_id;
-    private Categorie category_id;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Provider {
+    private String _id,createAt,name,email,address,phone_number,password,category_id,image,favorite_id;
     private boolean isBlock;
     private double lat,lng,profitPercentage,orderPercentage;
 private float rate;
-    public Provider_map(JSONObject provider) {
+private List<String> images;
+    public Provider(JSONObject provider) {
         if (provider==null){
             return;
         }
@@ -20,7 +26,7 @@ private float rate;
             email=provider.getString("email");
             address=provider.getString("address");
             phone_number=provider.getString("phone_number");
-            category_id=new Categorie(provider.getJSONObject("type_id"));
+            category_id=provider.getString("category_id");
             favorite_id=provider.getString("favorite_id");
 
             rate=provider.getInt("rate");
@@ -38,16 +44,40 @@ private float rate;
             e.printStackTrace();
         }
 
+        images=new ArrayList<>();
+        try {
+            JSONArray jsonArray=provider.getJSONArray("images");
+            for (int i=0;i<jsonArray.length();i++){
+                images.add(jsonArray.getString(i));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
 
     }
+public Search toProvider(){
+    Search provider=new Search(null);
+    provider.set_id(_id);
+    provider.setName(name);
+    provider.setAddress(address);
+    provider.setEmail(email);
+    provider.setImage(image);
+    provider.setLat(lat);
+    provider.setLng(lng);
+    provider.setRate(rate);
+    provider.setPhone_number(phone_number);
+    provider.setFavorite_id(favorite_id);
+    provider.setImages(images);
+    return provider;
+}
 
-    public String getFavorite_id() {
-        return favorite_id;
+    public List<String> getImages() {
+        return images;
     }
 
-    public void setFavorite_id(String favorite_id) {
-        this.favorite_id = favorite_id;
+    public void setImages(List<String> images) {
+        this.images = images;
     }
 
     public String get_id() {
@@ -60,6 +90,14 @@ private float rate;
 
     public String getCreateAt() {
         return createAt;
+    }
+
+    public String getFavorite_id() {
+        return favorite_id;
+    }
+
+    public void setFavorite_id(String favorite_id) {
+        this.favorite_id = favorite_id;
     }
 
     public void setCreateAt(String createAt) {
@@ -114,11 +152,11 @@ private float rate;
         this.password = password;
     }
 
-    public Categorie getCategory_id() {
+    public String getCategory_id() {
         return category_id;
     }
 
-    public void setCategory_id(Categorie category_id) {
+    public void setCategory_id(String category_id) {
         this.category_id = category_id;
     }
 

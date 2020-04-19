@@ -13,26 +13,21 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.deishelon.roundedbottomsheet.RoundedBottomSheetDialog;
 import com.github.islamkhsh.CardSliderViewPager;
 import com.osamayastal.easycare.Adapters.Categories_adapter;
 import com.osamayastal.easycare.Adapters.Provider_adapter;
 import com.osamayastal.easycare.Model.Classes.Categorie;
-import com.osamayastal.easycare.Model.Classes.Provider;
+import com.osamayastal.easycare.Model.Classes.Provider.Provider;
 import com.osamayastal.easycare.Model.Classes.Slider;
 import com.osamayastal.easycare.Model.Rootes.Home_root;
 import com.osamayastal.easycare.R;
-import com.osamayastal.easycare.activities.AllProducts;
 import com.osamayastal.easycare.activities.AllServices;
 import com.osamayastal.easycare.activities.Search;
 import com.osamayastal.easycare.Adapters.CardAdapter;
-import com.osamayastal.easycare.activities.ServiceProfiderDetails;
 
 import java.util.ArrayList;
 
 import java.util.List;
-
-import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 public class Home extends Fragment implements View.OnClickListener {
     View view;
@@ -111,7 +106,7 @@ private ImageButton search_btn;
         search_btn.setOnClickListener(this);
         /********************************List****************************************/
         categories=new ArrayList<>();
-        top_rate_list=new ArrayList<com.osamayastal.easycare.Model.Classes.Provider>();
+        top_rate_list=new ArrayList<Provider>();
         top_req_list=new ArrayList<Provider>();
         sliderList=new ArrayList<Slider>();
         /********************************adapters****************************************/

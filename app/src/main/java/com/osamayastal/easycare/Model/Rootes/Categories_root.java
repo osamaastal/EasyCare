@@ -104,7 +104,6 @@ public class Categories_root {
                         JSONObject Jobject = null;
                         try {
                             Jobject = new JSONObject(jsonData);
-                            Sub_categories sub_categorie=new Sub_categories(Jobject);
 
                           listener.onSuccess(new Sub_categories(Jobject));
                         } catch (JSONException e1) {

@@ -19,7 +19,7 @@ public class Categorie {
             image=jsonObject.getString("image");
             isActive=jsonObject.getBoolean("isActive");
             color=jsonObject.getInt("color");
-
+            image.replace("http", "https");
 
         } catch (JSONException e) {
             e.printStackTrace();

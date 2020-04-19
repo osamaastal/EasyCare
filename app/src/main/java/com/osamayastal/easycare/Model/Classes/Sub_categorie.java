@@ -15,25 +15,25 @@ public class Sub_categorie {
     private List<Size> sizes;
     private List<Sub_service> sub_services;
 
-//    public Sub_categorie(JSONObject jsonObject) {
-//        if (jsonObject==null){
-//            return;
-//        }
-//        try {
-//            _id=jsonObject.getString("_id");
-//            nameAr=jsonObject.getString("nameAr");
-//            nameEn=jsonObject.getString("nameEn");
-//            category_id=jsonObject.getString("category_id");
-//            image=jsonObject.getString("image");
-//            isActive=jsonObject.getBoolean("isActive");
-//
-//
-//
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//    }
-    public  Sub_categorie(JSONObject jsonObject) {
+    public Sub_categorie(JSONObject jsonObject) {
+        if (jsonObject==null){
+            return;
+        }
+        try {
+            _id=jsonObject.getString("_id");
+            nameAr=jsonObject.getString("nameAr");
+            nameEn=jsonObject.getString("nameEn");
+            category_id=jsonObject.getString("category_id");
+            image=jsonObject.getString("image");
+            isActive=jsonObject.getBoolean("isActive");
+
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+    public void Sub_categorie_forOrder(JSONObject jsonObject) {
         sizes=new ArrayList<>();
         sub_services=new ArrayList<>();
 

@@ -75,13 +75,11 @@ if(new User_info(mContext).getLanguage().equals("en")){
 }
         holder.price.setText(mItems.get(position).getPrice().toString());
         holder.checkBox.setChecked(mItems.get(position).isActive());
-holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+holder.checkBox.setOnClickListener(new View.OnClickListener() {
     @Override
-    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-        mItems.get(position).setActive(b);
-//        notifyDataSetChanged();
+    public void onClick(View view) {
+        mItems.get(position).setActive(holder.checkBox.isChecked());
         listenner.Onselcted(mItems.get(position));
-
     }
 });
 

@@ -8,11 +8,14 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.osamayastal.easycare.Model.Const.Server_info;
 import com.osamayastal.easycare.Model.Const.User_info;
 import com.osamayastal.easycare.Model.Controle.Bascket;
+import com.osamayastal.easycare.Model.Controle.Favorites_get;
+import com.osamayastal.easycare.Model.Controle.Result;
 import com.osamayastal.easycare.Model.Controle.Search;
 
 import org.json.JSONException;
@@ -22,8 +25,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Bascket_root {
-    public interface homeListener{
+    public interface GetbasketListener{
         void onSuccess(Bascket bascket);
+        void onStart();
+        void onFailure(String msg);
+    }
+    public interface PostbasketListener{
+        void onSuccess(Result bascket);
         void onStart();
         void onFailure(String msg);
     }
@@ -74,13 +82,13 @@ public class Bascket_root {
     }
     public void GetBasket(final Context mcontext,
                           final int page,
-                          final homeListener listener)
+                          final GetbasketListener listener)
     {
 
         listener.onStart();
         String url= Server_info.API +"api/mobile/getCart?page="+page+"&limit=10";
         final String token=new User_info(mcontext).getToken();
-
+        Log.d("token", token);
         if (queue == null) {
             queue = Volley.newRequestQueue(mcontext);  // this = context
             //Build.logError("Setting a new request queue");
@@ -89,7 +97,7 @@ public class Bascket_root {
         StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("Response", response.toString());
+
                 JSONObject Jobject = null;
                 try {
                     Jobject = new JSONObject(response);
@@ -123,7 +131,7 @@ public class Bascket_root {
 
     public void PostProduct(final Context mcontext,
                           final String productID,final int qty,
-                          final homeListener listener)
+                          final PostbasketListener listener)
     {
 
         listener.onStart();
@@ -143,7 +151,8 @@ public class Bascket_root {
                 try {
                     Jobject = new JSONObject(response);
                     Log.d("Response", response.toString());
-                    listener.onSuccess(new Bascket(Jobject));
+                    GetItemCount(mcontext);
+                    listener.onSuccess(new Result(Jobject));
 
                 } catch (JSONException e1) {
                     e1.printStackTrace();
@@ -177,14 +186,123 @@ public class Bascket_root {
 
     }
 
-
-    public void DeleteProduct(final Context mcontext,
-                            final String productID,final boolean isProduct,
-                            final homeListener listener)
+    public void PutProduct(final Context mcontext,
+                            final JSONObject product,
+                            final PostbasketListener listener)
     {
 
         listener.onStart();
-        String url= Server_info.API +"api/mobile/deleteItemCart";
+        final String url= Server_info.API +"api/mobile/UpdateCart";
+        final String token=new User_info(mcontext).getToken();
+
+        if (queue == null) {
+            queue = Volley.newRequestQueue(mcontext);  // this = context
+            //Build.logError("Setting a new request queue");
+        }
+        // prepare the Request
+        // prepare the Request
+        Log.d("product", product.toString());
+
+        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.POST, url, product,
+                new Response.Listener<JSONObject>()
+                {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        Log.d("Response", response.toString());
+
+                        GetItemCount(mcontext);
+                        listener.onSuccess(new Result(response));
+
+
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+//                        Log.d("Error.Response", error.getMessage());
+                    }
+                }
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+
+                Map<String, String>  Headers = new HashMap<String, String>();
+                Headers.put("token",token);
+                return Headers;
+            }
+        };
+
+        queue.getCache().initialize();
+// add it to the RequestQueue
+        queue.add(getRequest);
+        queue.getCache().clear();
+
+    }
+    public void PostService(final Context mcontext,
+                            final JSONObject service,
+                            final PostbasketListener listener)
+    {
+
+        listener.onStart();
+        final String url= Server_info.API +"api/mobile/addServiceCart";
+        final String token=new User_info(mcontext).getToken();
+
+        if (queue == null) {
+            queue = Volley.newRequestQueue(mcontext);  // this = context
+            //Build.logError("Setting a new request queue");
+        }
+        // prepare the Request
+        // prepare the Request
+        Log.d("service", service.toString());
+
+        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.POST, url, service,
+                new Response.Listener<JSONObject>()
+                {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        Log.d("Response", response.toString());
+
+                        GetItemCount(mcontext);
+                        listener.onSuccess(new Result(response));
+
+
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+//                        Log.d("Error.Response", error.getMessage());
+                    }
+                }
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+
+                Map<String, String>  Headers = new HashMap<String, String>();
+                Headers.put("token",token);
+                return Headers;
+            }
+        };
+
+        queue.getCache().initialize();
+// add it to the RequestQueue
+        queue.add(getRequest);
+        queue.getCache().clear();
+
+    }
+    public void Delete(final Context mcontext,
+                            final String ID,
+                            final PostbasketListener listener)
+    {
+
+        listener.onStart();
+        String url= Server_info.API +"api/mobile/deleteItemCart/"+ID;
         final String token=new User_info(mcontext).getToken();
 
         if (queue == null) {
@@ -200,7 +318,7 @@ public class Bascket_root {
                 try {
                     Jobject = new JSONObject(response);
                     Log.d("Response", response.toString());
-                    listener.onSuccess(new Bascket(Jobject));
+                    listener.onSuccess(new Result(Jobject));
 
                 } catch (JSONException e1) {
                     e1.printStackTrace();
@@ -213,14 +331,6 @@ public class Bascket_root {
                 Log.d("error",error.toString());
             }
         }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> parameters = new HashMap<>();
-
-                parameters.put("product_id",productID);
-                parameters.put("isProduct", String.valueOf(isProduct));
-                return  parameters;
-            }
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {

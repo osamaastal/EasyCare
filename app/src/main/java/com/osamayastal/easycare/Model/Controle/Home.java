@@ -3,10 +3,8 @@ package com.osamayastal.easycare.Model.Controle;
 import android.util.Log;
 
 import com.osamayastal.easycare.Model.Classes.Categorie;
-import com.osamayastal.easycare.Model.Classes.Provider;
+import com.osamayastal.easycare.Model.Classes.Provider.Provider;
 import com.osamayastal.easycare.Model.Classes.Slider;
-import com.osamayastal.easycare.Model.Classes.TopRatedProviders;
-import com.osamayastal.easycare.Model.Classes.TopRequestedProviders;
 
 import org.json.JSONArray;
 import org.json.JSONException;

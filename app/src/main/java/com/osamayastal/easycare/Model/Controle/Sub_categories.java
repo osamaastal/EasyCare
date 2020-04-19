@@ -27,8 +27,8 @@ public class Sub_categories {
             status_code=jsonObject.getInt("status_code");
 
 
-            items=new Sub_categorie(jsonObject.getJSONObject("items"));
-//            sub_categorie.Sub_categorie_details(jsonObject.getJSONObject("items"));
+            items=new Sub_categorie(null);
+            items.Sub_categorie_forOrder(jsonObject.getJSONObject("items"));
 
         } catch (JSONException e) {
             e.printStackTrace();

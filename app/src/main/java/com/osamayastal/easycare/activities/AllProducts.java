@@ -10,10 +10,7 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
 import com.osamayastal.easycare.Adapters.Product_adapter;
-import com.osamayastal.easycare.Adapters.Provider_servicies_adapter;
-import com.osamayastal.easycare.Model.Classes.Categorie;
 import com.osamayastal.easycare.Model.Classes.Product;
-import com.osamayastal.easycare.Model.Classes.Provider;
 import com.osamayastal.easycare.Model.Controle.Categories;
 import com.osamayastal.easycare.Model.Rootes.Categories_root;
 import com.osamayastal.easycare.R;

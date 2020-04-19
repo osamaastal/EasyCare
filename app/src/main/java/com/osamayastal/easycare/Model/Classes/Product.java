@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Product {
-    private String _id,name,description,image,by_user_id,createat;
-    private  Double price,discountPrice;
-    private int upFront;
+    private String _id,name,description,image,by_user_id,createat,cart_id;
+    private  Double price,discountPrice,Total;
+    private int upFront,qty;
     private boolean isUpFront,status;
     private List<String> images;
 
@@ -36,12 +36,79 @@ public class Product {
 
             JSONArray jsonArray=jsonObject.getJSONArray("images");
             for (int i=0;i<jsonArray.length();i++){
+                jsonArray.getString(i).replace("http", "https");
+
                 images.add(jsonArray.getString(i));
             }
+            image.replace("http", "https");
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        try {
+            cart_id=jsonObject.getString("cart_id");
+            qty=jsonObject.getInt("qty");
+            Total=jsonObject.getDouble("Total");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public JSONObject Order_JSON(List<Product> products)  {
+        JSONObject jsonObject=new JSONObject();
+
+        if(products != null && products.size() > 0){
+            JSONArray itemsJsonArray = new JSONArray();
+            for(Product itemsElement : products){
+                try {
+                    itemsJsonArray.put(itemsElement.toJsonObject());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            try {
+                jsonObject.put("Cart", itemsJsonArray);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        return jsonObject;
+    }
+
+    private JSONObject toJsonObject() throws JSONException {
+        JSONObject jsonObject=new JSONObject();
+        jsonObject.put("cart_id",cart_id);
+        jsonObject.put("qty",qty);
+
+        return jsonObject;
+    }
+
+    public String getCart_id() {
+        return cart_id;
+    }
+
+    public void setCart_id(String cart_id) {
+        this.cart_id = cart_id;
+    }
+
+    public Double getTotal() {
+        return Total;
+    }
+
+    public void setTotal(Double total) {
+        Total = total;
+    }
+
+    public int getQty() {
+        return qty;
+    }
+
+    public void setQty(int qty) {
+        this.qty = qty;
     }
 
     public String get_id() {

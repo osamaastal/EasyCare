@@ -16,7 +16,6 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.osamayastal.easycare.Model.Classes.Categorie;
-import com.osamayastal.easycare.Model.Classes.Provider;
 import com.osamayastal.easycare.Model.Classes.Search;
 import com.osamayastal.easycare.Model.Const.User_info;
 import com.osamayastal.easycare.Model.Controle.Favorites;

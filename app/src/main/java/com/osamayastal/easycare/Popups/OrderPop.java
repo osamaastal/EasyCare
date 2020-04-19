@@ -30,7 +30,9 @@ import com.osamayastal.easycare.Model.Classes.Sub_categorie;
 import com.osamayastal.easycare.Model.Classes.Sub_servic;
 import com.osamayastal.easycare.Model.Classes.Sub_service;
 import com.osamayastal.easycare.Model.Const.User_info;
+import com.osamayastal.easycare.Model.Controle.Result;
 import com.osamayastal.easycare.Model.Controle.Sub_categories;
+import com.osamayastal.easycare.Model.Rootes.Bascket_root;
 import com.osamayastal.easycare.Model.Rootes.Categories_root;
 import com.osamayastal.easycare.Model.Rootes.City_root;
 import com.osamayastal.easycare.R;
@@ -53,7 +55,7 @@ public class OrderPop {
     List<Sub_service>  sub_servics;
     List<Size>  sizeList;
      int i=-1;
-    public void AddOrder_pop(final Context mcontext, final String cat_id,String prov_id){
+    public void AddOrder_pop(final Context mcontext, final String cat_id, final String prov_id){
 
         final RoundedBottomSheetDialog mBottomSheetDialog = new RoundedBottomSheetDialog(mcontext);
         LayoutInflater inflater = (LayoutInflater) mcontext.getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -89,8 +91,22 @@ public class OrderPop {
         final SubCategories_adapter subCategories_adapter=new SubCategories_adapter(mcontext, sub_servics, new SubCategories_adapter.Selected_item() {
             @Override
             public void Onselcted(Sub_service sub_service) {
-                if (i!=-1) carList.get(i).setProviderSubCategory_id(servic.getProviderSubCategory_id()+","+sub_service.get_id());
-                else servic.setProviderSubCategory_id(servic.getProviderSubCategory_id()+","+sub_service.get_id());
+                String id=servic.getProviderSubCategory_id();
+                for (Sub_service s:sub_servics
+                ) {
+                    if (s.isActive()){
+
+                        if (id.isEmpty()){
+                            id=s.getProvider_subCategory_id();
+
+                        }else {
+                            id=id+","+s.getProvider_subCategory_id();
+                        }
+                    }
+
+                }
+                if (i!=-1) carList.get(i).setProviderSubCategory_id(id);
+
             }
         });
         details.setAdapter(subCategories_adapter);
@@ -99,12 +115,13 @@ public class OrderPop {
             @Override
             public void Onselcted(Car_servece car_servece) {
                 i= Car_adapter.item_select;
-                sub_servics.clear();
-                sub_servics.addAll(sub_categorie.getSub_services());
+
                 for (Sub_service s:sub_servics
                      ) {
-                    if (car_servece.getProviderSubCategory_id().contains(s.get_id())){
+                    if (car_servece.getProviderSubCategory_id().contains(s.getProvider_subCategory_id())){
                         s.setActive(true);
+                    }else {
+                        s.setActive(false);
                     }
                 }
 
@@ -135,9 +152,28 @@ public class OrderPop {
             @Override
             public void onClick(View view) {
                 if (servic.getSize_id()!=null && servic.getProviderSubCategory_id()!=null){
+                    String id=servic.getProviderSubCategory_id();
+                    for (Sub_service s:sub_servics
+                    ) {
+                        if (s.isActive()){
+
+                            if (id.isEmpty()){
+                                id=s.getProvider_subCategory_id();
+
+                            }else {
+                                id=id+","+s.getProvider_subCategory_id();
+                            }
+                        }
+                        s.setActive(false);
+                    }
+                    servic.setProviderSubCategory_id(id);
                     carList.add(servic);
-                    sub_servics.clear();
-                    sub_servics.addAll(sub_categorie.getSub_services());
+                    servic=new Car_servece();
+                    int k=carList.size()+1;
+                    servic.setCar_name(mcontext.getString(R.string.car_name)+" "+k);
+                    servic.setCategory_id(sub_categorie.get_id());
+
+
                     subCategories_adapter.notifyDataSetChanged();
                     car_adapter.notifyDataSetChanged();
                     size_adapter.item_select=-1;
@@ -146,10 +182,7 @@ public class OrderPop {
                     Toast.makeText(mcontext,"make sur you select service details and size",Toast.LENGTH_SHORT).show();
                     return;
                 }
-                servic=new Car_servece();
-                int k=carList.size()+1;
-                servic.setCar_name(mcontext.getString(R.string.car_name)+" "+k);
-                servic.setCategory_id(sub_categorie.get_id());
+
 
 
 
@@ -172,11 +205,27 @@ public class OrderPop {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//
-//                SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH);
-//                String formatedDate = format.format(calendarView.getDate());
-//                Log.d("date", formatedDate);
-//                OrderPop.date=formatedDate;
+                Bascket_root root=new Bascket_root();
+                Car_servece car_servece=new Car_servece();
+                root.PostService(mcontext, car_servece.Order_JSON(prov_id, carList), new Bascket_root.PostbasketListener() {
+                    @Override
+                    public void onSuccess(Result bascket) {
+                        if (new User_info(mcontext).getLanguage().equals("en")) {
+                            Toast.makeText(mcontext, bascket.getMessageEn(), Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(mcontext, bascket.getMessageAr(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    @Override
+                    public void onStart() {
+
+                    }
+
+                    @Override
+                    public void onFailure(String msg) {
+
+                    }
+                });
                 mBottomSheetDialog.dismiss();
 
 

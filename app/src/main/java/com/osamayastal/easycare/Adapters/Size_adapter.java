@@ -38,7 +38,7 @@ public class Size_adapter extends RecyclerView.Adapter<Size_adapter.ViewHolder> 
     public interface Selected_item{
         void Onselcted(Size size);
     }
-    public static int item_select=-1;
+    public  int item_select=-1;
     Selected_item listenner;
     public Size_adapter(Context context, List<Size> names, Selected_item listenner) {
         mItems = names;

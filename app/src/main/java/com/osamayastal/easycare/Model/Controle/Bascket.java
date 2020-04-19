@@ -2,9 +2,6 @@ package com.osamayastal.easycare.Model.Controle;
 
 import android.util.Log;
 
-import com.osamayastal.easycare.Model.Classes.Pagenation;
-import com.osamayastal.easycare.Model.Classes.Product;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,9 +12,9 @@ import java.util.List;
 public class Bascket {
     private String message;
     private int status_code;
-    private Pagenation pagenation;
-    private List<com.osamayastal.easycare.Model.Classes.Bascket> items;
-
+    private Boolean status;
+    private List<com.osamayastal.easycare.Model.Classes.Basket.Bascket> items;
+private Double total_price;
     public Bascket(JSONObject jsonObject) {
         if (jsonObject==null){
             return;
@@ -26,15 +23,18 @@ public class Bascket {
         items=new ArrayList<>();
         try {
             message=jsonObject.getString("message");
+            status=jsonObject.getBoolean("status");
             Log.d("message",message);
             status_code=jsonObject.getInt("status_code");
-            pagenation=new Pagenation(jsonObject.getJSONObject("pagenation"));
+
+
+
             JSONArray jsonArray2=jsonObject.getJSONArray("items");
-
-
             for(int i=0;i<jsonArray2.length();i++){
-                items.add(new com.osamayastal.easycare.Model.Classes.Bascket(jsonArray2.getJSONObject(i)));
+                items.add(new com.osamayastal.easycare.Model.Classes.Basket.Bascket(jsonArray2.getJSONObject(i)));
             }
+
+            total_price=jsonObject.getDouble("total_price");
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -58,19 +58,27 @@ public class Bascket {
         this.status_code = status_code;
     }
 
-    public Pagenation getPagenation() {
-        return pagenation;
-    }
-
-    public void setPagenation(Pagenation pagenation) {
-        this.pagenation = pagenation;
-    }
-
-    public List<com.osamayastal.easycare.Model.Classes.Bascket> getItems() {
+    public List<com.osamayastal.easycare.Model.Classes.Basket.Bascket> getItems() {
         return items;
     }
 
-    public void setItems(List<com.osamayastal.easycare.Model.Classes.Bascket> items) {
+    public void setItems(List<com.osamayastal.easycare.Model.Classes.Basket.Bascket> items) {
         this.items = items;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    public Double getTotal_price() {
+        return total_price;
+    }
+
+    public void setTotal_price(Double total_price) {
+        this.total_price = total_price;
     }
 }

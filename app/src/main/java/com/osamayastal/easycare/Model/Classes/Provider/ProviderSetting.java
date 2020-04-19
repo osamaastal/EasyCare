@@ -1,4 +1,4 @@
-package com.osamayastal.easycare.Model.Classes;
+package com.osamayastal.easycare.Model.Classes.Provider;
 
 import org.json.JSONException;
 import org.json.JSONObject;

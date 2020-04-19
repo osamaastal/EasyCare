@@ -14,179 +14,184 @@
         android:layout_marginTop="10dp"
         android:layout_gravity="center_horizontal"
         />
+
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ScrollView
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+
             app:layout_constraintTop_toTopOf="parent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp">
-
-        </ScrollView>
-        <LinearLayout
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
+                app:layout_constraintTop_toTopOf="parent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="30dp"
-                android:paddingEnd="30dp">
-                <ImageView
-                    android:id="@+id/service_img"
-                    android:layout_width="90dp"
-                    android:layout_height="90dp"
-                    android:src="@drawable/test_service1"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
-                <TextView
-                    android:id="@+id/service_title"
-                    android:layout_width="wrap_content"
+                android:orientation="vertical">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="غسيل سيارات"
-                    style="@style/text_darkblue_bold_18"
-                    app:layout_constraintStart_toEndOf="@+id/service_img"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:layout_marginStart="15dp"
-                    />
-                <TextView
-                    android:id="@+id/servic_details"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="مغسلة السيارات أو هي منشأة تستخدم لتنظيف السطح الخارجي، وفي بعض الحالات، الداخلي للسيارات. الفئات غسيل السيارات الالي عن طريق دخول السيارة للاله وتغسيلها وتلميعها وتجفيفها اليا غسيل تقليدي"
-                    style="@style/text_darkblue_roman_12"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="5dp"
-                    app:layout_constraintStart_toEndOf="@+id/service_img"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/service_title"
-                    />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/line_lightgray"
-                android:layout_marginTop="20dp"/>
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fillViewport="true"
-                >
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="20dp">
-                    <ImageButton
-                        android:id="@+id/add"
-                        android:layout_width="120dp"
-                        android:layout_height="45dp"
-                        android:src="@drawable/ic_plus"
-                        android:background="@drawable/bg_stroke_discreet"
-                        android:layout_marginEnd="15dp"
-                        />
-                    <androidx.recyclerview.widget.RecyclerView
+                    android:paddingStart="30dp"
+                    android:paddingEnd="30dp">
+                    <ImageView
+                        android:id="@+id/service_img"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:src="@drawable/test_service1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+                    <TextView
+                        android:id="@+id/service_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/RV_car"
-                        tools:listitem="@layout/row_add_car"
-                        android:orientation="horizontal"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
-                </LinearLayout>
-            </HorizontalScrollView>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/service_details"
-                style="@style/text_darkblue_bold_18"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="20dp"
-                />
-            <ProgressBar
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-               android:layout_gravity="center"
-                android:id="@+id/progress"/>
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/RV_services"
-                tools:listitem="@layout/row_service_details"
-                android:orientation="vertical"
-                tools:itemCount="3"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/service_type"
-                style="@style/text_darkblue_bold_18"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="20dp"
-                />
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_gravity="center_horizontal">
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="1200dp"
+                        android:text="غسيل سيارات"
+                        style="@style/text_darkblue_bold_18"
+                        app:layout_constraintStart_toEndOf="@+id/service_img"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginStart="15dp"
+                        />
+                    <TextView
+                        android:id="@+id/servic_details"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="مغسلة السيارات أو هي منشأة تستخدم لتنظيف السطح الخارجي، وفي بعض الحالات، الداخلي للسيارات. الفئات غسيل السيارات الالي عن طريق دخول السيارة للاله وتغسيلها وتلميعها وتجفيفها اليا غسيل تقليدي"
+                        style="@style/text_darkblue_roman_12"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="5dp"
+                        app:layout_constraintStart_toEndOf="@+id/service_img"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/service_title"
+                        />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/line_lightgray"
+                    android:layout_marginTop="20dp"/>
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/RV_services_type"
-                    tools:listitem="@layout/row_service_type"
-                    android:orientation="horizontal"
+                    android:fillViewport="true"
+                    >
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:layoutDirection="rtl"
+                        android:layout_marginTop="20dp">
+                        <ImageButton
+                            android:id="@+id/add"
+                            android:layout_width="120dp"
+                            android:layout_height="45dp"
+                            android:src="@drawable/ic_plus"
+                            android:background="@drawable/bg_stroke_discreet"
+                            android:layout_marginEnd="15dp"
+                            />
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/RV_car"
+                            tools:listitem="@layout/row_add_car"
+                            android:orientation="horizontal"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+                    </LinearLayout>
+                </HorizontalScrollView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/service_details"
+                    style="@style/text_darkblue_bold_18"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="20dp"
+                    />
+                <ProgressBar
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:id="@+id/progress"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/RV_services"
+                    tools:listitem="@layout/row_service_details"
+                    android:orientation="vertical"
+                    tools:itemCount="3"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
 
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="30dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/total_price"
+                    android:text="@string/service_type"
                     style="@style/text_darkblue_bold_18"
-
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="20dp"
                     />
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:id="@+id/price_tv"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="150"
-                    style="@style/text_darkblue_bold_18"
+                    android:layout_marginTop="15dp"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
-                    />
-                <TextView
-                    android:id="@+id/currency_tv"
-                    android:layout_width="wrap_content"
+                    android:layout_gravity="center_horizontal">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="1200dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/RV_services_type"
+                        tools:listitem="@layout/row_service_type"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="ريال سعودي"
-                    style="@style/text_darkblue_roman_16"
-                    />
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="30dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/total_price"
+                        style="@style/text_darkblue_bold_18"
+
+                        />
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:id="@+id/price_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="150"
+                        style="@style/text_darkblue_bold_18"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        />
+                    <TextView
+                        android:id="@+id/currency_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ريال سعودي"
+                        style="@style/text_darkblue_roman_16"
+                        />
+                </LinearLayout>
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="140dp"/>
+
+
             </LinearLayout>
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="140dp"/>
 
-
-        </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="120dp"

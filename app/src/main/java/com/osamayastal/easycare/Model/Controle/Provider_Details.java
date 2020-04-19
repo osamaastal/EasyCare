@@ -4,11 +4,8 @@ import android.util.Log;
 
 import com.osamayastal.easycare.Model.Classes.Categorie;
 import com.osamayastal.easycare.Model.Classes.Product;
-import com.osamayastal.easycare.Model.Classes.Provider;
-import com.osamayastal.easycare.Model.Classes.ProviderSetting;
-import com.osamayastal.easycare.Model.Classes.Provider_map;
+import com.osamayastal.easycare.Model.Classes.Provider.ProviderSetting;
 import com.osamayastal.easycare.Model.Classes.Search;
-import com.osamayastal.easycare.Model.Classes.Slider;
 import com.osamayastal.easycare.Model.Classes.Sub_servic;
 
 import org.json.JSONArray;

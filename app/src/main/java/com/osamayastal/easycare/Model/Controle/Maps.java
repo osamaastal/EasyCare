@@ -3,9 +3,7 @@ package com.osamayastal.easycare.Model.Controle;
 import android.util.Log;
 
 import com.osamayastal.easycare.Model.Classes.Employee;
-import com.osamayastal.easycare.Model.Classes.Pagenation;
-import com.osamayastal.easycare.Model.Classes.Provider;
-import com.osamayastal.easycare.Model.Classes.Provider_map;
+import com.osamayastal.easycare.Model.Classes.Provider.Provider_map;
 
 import org.json.JSONArray;
 import org.json.JSONException;

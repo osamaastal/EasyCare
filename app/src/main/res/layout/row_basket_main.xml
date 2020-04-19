@@ -13,6 +13,7 @@
         android:layout_height="45dp"
         android:background="@drawable/bg_req_lightgray_30dp">
         <TextView
+            android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="مغسلة الوفاء الجديدة"
@@ -57,6 +58,7 @@
                     android:layout_marginEnd="8dp"
                     />
                 <TextView
+                    android:id="@+id/nb_service"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="999"
@@ -81,6 +83,7 @@
                     android:layout_marginEnd="8dp"
                     />
                 <TextView
+                    android:id="@+id/nb_products"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="999"
@@ -91,6 +94,13 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/RV_service"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/RV_product"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"

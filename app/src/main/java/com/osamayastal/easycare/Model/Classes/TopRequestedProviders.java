@@ -1,5 +1,7 @@
 package com.osamayastal.easycare.Model.Classes;
 
+import com.osamayastal.easycare.Model.Classes.Provider.Provider;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

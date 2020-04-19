@@ -18,14 +18,12 @@ import android.widget.Toast;
 import com.cncoderx.wheelview.Wheel3DView;
 import com.deishelon.roundedbottomsheet.RoundedBottomSheetDialog;
 import com.osamayastal.easycare.Model.Classes.City;
-import com.osamayastal.easycare.Model.Classes.Provider;
 import com.osamayastal.easycare.Model.Classes.User;
 import com.osamayastal.easycare.Model.Const.User_info;
 import com.osamayastal.easycare.Model.Controle.users;
 import com.osamayastal.easycare.Model.Rootes.City_root;
 import com.osamayastal.easycare.Model.Rootes.user;
 import com.osamayastal.easycare.R;
-import com.osamayastal.easycare.activities.LoginActivity;
 import com.osamayastal.easycare.activities.MainActivity;
 
 import java.util.ArrayList;

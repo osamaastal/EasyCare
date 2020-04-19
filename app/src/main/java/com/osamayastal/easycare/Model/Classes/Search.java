@@ -60,6 +60,7 @@ public class Search {
         }
         try {
             image=provider.getString("image");
+            image.replace("http", "https");
 
         } catch (JSONException e) {
             e.printStackTrace();

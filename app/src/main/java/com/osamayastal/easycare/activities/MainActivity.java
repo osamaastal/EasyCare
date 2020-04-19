@@ -39,6 +39,7 @@ import com.osamayastal.easycare.Model.Const.Server_info;
 import com.osamayastal.easycare.Model.Const.User_info;
 import com.osamayastal.easycare.Model.Controle.Complains;
 import com.osamayastal.easycare.Model.Controle.users;
+import com.osamayastal.easycare.Model.Rootes.Bascket_root;
 import com.osamayastal.easycare.Model.Rootes.Complain_root;
 import com.osamayastal.easycare.Model.Rootes.user;
 import com.osamayastal.easycare.Popups.AppPop;
@@ -78,7 +79,11 @@ private TextView langu;
         if (user_info.getId()==null){
            user root=new user();
            root.Get_Token(this);
+        }else {
+            Bascket_root root=new Bascket_root();
+            root.GetItemCount(this);
         }
+
         /************************* Drawer*******************/
         toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
@@ -248,11 +253,22 @@ switchFGM(new EditProfile());
                 break;
             case R.id.language:
                if (new User_info(this).getLanguage().equals("en")){
-                  ChangeLanguge_pop("ar",this,null);
-                  langu.setText("Ar");
+                  ChangeLanguge_pop("ar", this, new chang() {
+                      @Override
+                      public void onSave(Boolean v) {
+
+                          if (v) langu.setText("Ar");
+
+                      }
+                  });
                }else {
-                   ChangeLanguge_pop("en",this,null);
-                   langu.setText("En");
+                   ChangeLanguge_pop("en", this, new chang() {
+                       @Override
+                       public void onSave(Boolean v) {
+                           if (v)  langu.setText("En");
+
+                       }
+                   });
 
 
                }

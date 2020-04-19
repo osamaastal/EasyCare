@@ -1,6 +1,9 @@
-package com.osamayastal.easycare.Model.Classes;
+package com.osamayastal.easycare.Model.Classes.Provider;
 
-import android.util.Log;
+import com.osamayastal.easycare.Model.Classes.Categorie;
+import com.osamayastal.easycare.Model.Classes.City;
+import com.osamayastal.easycare.Model.Classes.Product;
+import com.osamayastal.easycare.Model.Classes.Sub_servic;
 
 import org.json.JSONArray;
 import org.json.JSONException;
