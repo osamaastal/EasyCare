@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="مركبة رقم"
-            style="@style/text_darkblue_bold_18"
+            style="@style/text_darkblue_bold_16"
             android:layout_marginStart="25dp"
             android:layout_marginBottom="5dp"
             />

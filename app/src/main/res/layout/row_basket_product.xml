@@ -67,6 +67,7 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:text="غسيل سيارات"
+                        android:layout_marginEnd="5dp"
                         style="@style/text_darkblue_bold_16"/>
 
                     <ImageButton

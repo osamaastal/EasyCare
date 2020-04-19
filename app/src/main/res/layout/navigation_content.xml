@@ -40,7 +40,7 @@
                 android:id="@+id/edit_profile_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
-                android:text="@string/edit_profile"
+                android:text="@string/profile"
                 style="@style/text_white_roman_12"
                 android:layout_gravity="center"
                 android:paddingEnd="22dp"
@@ -59,7 +59,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="22dp">
+                    android:layout_marginTop="15dp">
                     <TextView
                         android:id="@+id/drawer_wallet_tv"
                         style="@style/text_white_roman_14"
@@ -84,6 +84,7 @@
                         android:paddingEnd="15dp"
                         android:paddingStart="15dp"
                         style="@style/text_white_bold_14"
+                        android:visibility="gone"
                         android:background="@drawable/bg_req_editprofile_light"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
