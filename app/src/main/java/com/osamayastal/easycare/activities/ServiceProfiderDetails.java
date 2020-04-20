@@ -88,6 +88,14 @@ public class ServiceProfiderDetails extends AppCompatActivity implements View.On
                like_btn.setImageDrawable(getDrawable(R.drawable.ic_unlike));
 
            }
+           int nb=new User_info(this).getBasket();
+           if (nb==0){
+               basket_btn.setBackground(getDrawable(R.drawable.bg_circle_gray));
+               basket_nb.setVisibility(View.GONE);
+           }
+           else {
+               basket_nb.setText(nb+"");
+           }
            /*************
             * Images of product
             */
@@ -208,7 +216,13 @@ public class ServiceProfiderDetails extends AppCompatActivity implements View.On
                     LoginAlert();
                 }else {
                     OrderPop pop = new OrderPop();
-                    pop.AddOrder_pop(ServiceProfiderDetails.this, categorie.get_id(), provider.get_id());
+                    pop.AddOrder_pop(ServiceProfiderDetails.this, categorie.get_id(), provider.get_id(), new OrderPop.OrderLisstenner() {
+                        @Override
+                        public void onGoBasket() {
+                            MainActivity.item_select=R.id.basket;
+                            finish();
+                        }
+                    });
                 }
             }
         });
@@ -302,6 +316,8 @@ public class ServiceProfiderDetails extends AppCompatActivity implements View.On
                 }
                 break;
             case R.id.basket_btn:
+                MainActivity.item_select=R.id.basket;
+                finish();
                 break;
             case R.id.back_btn:
                 finish();

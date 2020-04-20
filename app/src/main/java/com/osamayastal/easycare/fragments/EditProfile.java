@@ -126,6 +126,8 @@ public class EditProfile extends Fragment implements View.OnClickListener {
               break;
           case R.id.back_btn:
               switchFGM(new Profile());
+              MainActivity.SetVisibillty(View.VISIBLE);
+
               break;
           case R.id.city_tv:
              show_bottomSheet();
@@ -154,9 +156,11 @@ public class EditProfile extends Fragment implements View.OnClickListener {
             user.Post_update_user(getContext(),mUser , new user.user_Listener() {
                 @Override
                 public void onSuccess(users new_account) {
-                    User user1=new_account.getItems();
-                    user1.setCity(city.getText().toString());
-                    new User_info(user1,getContext());
+                    if (new_account.isStatus()){
+                        User user1=new_account.getItems();
+                        user1.setCity(city.getText().toString());
+                        new User_info(user1,getContext());
+                    }
                     if (new User_info(getContext()).getLanguage().equals("en")){
                         Toast.makeText(getContext(),new_account.getMessageEn(),Toast.LENGTH_SHORT).show();
                     }else {

@@ -16,10 +16,10 @@ public class Categorie {
             _id=jsonObject.getString("_id");
             arName=jsonObject.getString("arName");
             enName=jsonObject.getString("enName");
-            image=jsonObject.getString("image");
+            image=jsonObject.getString("image").replace("http", "https");
             isActive=jsonObject.getBoolean("isActive");
             color=jsonObject.getInt("color");
-            image.replace("http", "https");
+
 
         } catch (JSONException e) {
             e.printStackTrace();

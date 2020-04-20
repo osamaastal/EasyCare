@@ -2,6 +2,7 @@ package com.osamayastal.easycare.Model.Const;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.osamayastal.easycare.Model.Classes.User;
 
@@ -213,6 +214,7 @@ private  int point,basket;
     }
 
     public String getId() {
+
         return id;
     }
 

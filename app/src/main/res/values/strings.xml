@@ -136,6 +136,8 @@
     <string name="order_time">وقت التنفيذ</string>
     <string name="no_whatsapp">no what\'up</string>
     <string name="car_name">الخدمة</string>
+    <string name="RS">ريال سعودي</string>
+    <string name="RS_chort">ر.س</string>
 
 
 </resources>

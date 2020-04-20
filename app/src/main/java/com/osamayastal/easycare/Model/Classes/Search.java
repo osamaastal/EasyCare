@@ -59,8 +59,8 @@ public class Search {
             e.printStackTrace();
         }
         try {
-            image=provider.getString("image");
-            image.replace("http", "https");
+            image=provider.getString("image").replace("http", "https");
+
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -122,7 +122,7 @@ public class Search {
         try {
             JSONArray jsonArray=provider.getJSONArray("images");
             for (int i=0;i<jsonArray.length();i++){
-                images.add(jsonArray.getString(i));
+                images.add(jsonArray.getString(i).replace("http", "https"));
             }
         } catch (JSONException e) {
             e.printStackTrace();

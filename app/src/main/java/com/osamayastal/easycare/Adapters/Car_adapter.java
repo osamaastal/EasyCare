@@ -38,6 +38,7 @@ public class Car_adapter extends RecyclerView.Adapter<Car_adapter.ViewHolder> {
     private View mview;
     public interface Selected_item{
         void Onselcted(Car_servece car_servece);
+        void Ondelete(Car_servece car_servece);
     }
     public static int item_select=-1;
     Selected_item listenner;
@@ -64,11 +65,14 @@ public class Car_adapter extends RecyclerView.Adapter<Car_adapter.ViewHolder> {
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
-    holder.name.setText(mItems.get(position).getCar_name());
+    holder.name.setText(mItems.get(position).getCar_name()+"("
+            +mItems.get(position).getTotal().toString()+mContext.getString(R.string.RS_chort)+")");
     holder.delet.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+
             mItems.remove(mItems.get(position));
+            listenner.Ondelete(null);
             notifyDataSetChanged();
         }
     });
@@ -78,6 +82,7 @@ public class Car_adapter extends RecyclerView.Adapter<Car_adapter.ViewHolder> {
             public void onClick(View view) {
                 item_select=position;
                 listenner.Onselcted(mItems.get(position));
+                notifyDataSetChanged();
             }
         });
     }

@@ -27,11 +27,11 @@
             android:id="@+id/edit_btn"
             android:layout_width="46dp"
             android:layout_height="46dp"
-            android:layout_marginEnd="18dp"
+            android:layout_marginStart="18dp"
             android:background="@drawable/bg_circle_blue_gradiant"
             android:src="@drawable/ic_edit_profile"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

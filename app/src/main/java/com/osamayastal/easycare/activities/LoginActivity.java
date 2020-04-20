@@ -23,17 +23,23 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         User_info user_info=new User_info(this);
+
         if (user_info.getId()==null){
             switchFGM(new LoginFrag());
-            return;
-        }
-        if (user_info.CONF_phone(this)){
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-            finish();
         }else {
-            startActivity(new Intent(LoginActivity.this, ConfCode.class));
-            finish();
+            Log.d("users_id",user_info.getId());
+            if (user_info.CONF_phone(this))
+            {
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                finish();
+            }
+            else {
+                startActivity(new Intent(LoginActivity.this, ConfCode.class));
+                finish();
+            }
+
         }
+
 
 
     }

@@ -227,11 +227,10 @@ public class User {
         }
         password = jsonObject.optString("password");
         address = jsonObject.optString("address");
-        city = jsonObject.optString("city");
         createAt = jsonObject.optString("createAt");
         email = jsonObject.optString("email");
         fullName = jsonObject.optString("full_name");
-        image = jsonObject.optString("image");
+        image = jsonObject.optString("image").replace("http", "https");
         isBlock = jsonObject.optBoolean("isBlock");
         isVerify = jsonObject.optBoolean("isVerify");
         lat = jsonObject.optDouble("lat");
@@ -239,7 +238,7 @@ public class User {
         phoneNumber = jsonObject.optString("phone_number");
         favoritCount = jsonObject.optInt("favoritCount");
         orderCount = jsonObject.optInt("orderCount");
-        city = jsonObject.optString("city_id");
+        city_id = jsonObject.optString("city_id");
 
         try {
             token = jsonObject.optString("token");

@@ -23,7 +23,7 @@ public class Product {
             _id=jsonObject.getString("_id");
             name=jsonObject.getString("name");
             description=jsonObject.getString("description");
-            image=jsonObject.getString("image");
+            image=jsonObject.getString("image").replace("http", "https");
             by_user_id=jsonObject.getString("by_user_id");
             by_user_id=jsonObject.getString("by_user_id");
             createat=jsonObject.getString("createat");
@@ -38,9 +38,9 @@ public class Product {
             for (int i=0;i<jsonArray.length();i++){
                 jsonArray.getString(i).replace("http", "https");
 
-                images.add(jsonArray.getString(i));
+                images.add(jsonArray.getString(i).replace("http", "https"));
             }
-            image.replace("http", "https");
+
 
         } catch (JSONException e) {
             e.printStackTrace();

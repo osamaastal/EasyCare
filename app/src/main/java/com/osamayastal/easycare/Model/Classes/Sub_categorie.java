@@ -24,7 +24,7 @@ public class Sub_categorie {
             nameAr=jsonObject.getString("nameAr");
             nameEn=jsonObject.getString("nameEn");
             category_id=jsonObject.getString("category_id");
-            image=jsonObject.getString("image");
+            image=jsonObject.getString("image").replace("http", "https");
             isActive=jsonObject.getBoolean("isActive");
 
 

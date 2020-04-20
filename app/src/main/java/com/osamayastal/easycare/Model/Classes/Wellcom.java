@@ -15,7 +15,7 @@ public class Wellcom {
             title=provider.getString("title");
             description=provider.getString("description");
             descriptionAr=provider.getString("descriptionAr");
-            icon=provider.getString("icon");
+            icon=provider.getString("icon").replace("http", "https");
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -10,7 +10,7 @@ import java.util.List;
 public class Car_servece {
 
     private String size_id,providerSubCategory_id="",car_name,category_id;
-
+private Double total=0.0;
     public Car_servece() {
     }
 public JSONObject Order_JSON(String provider_id,List<Car_servece> car_serveces)  {
@@ -48,6 +48,14 @@ public JSONObject Order_JSON(String provider_id,List<Car_servece> car_serveces) 
         jsonObject.put("size_id",size_id);
         jsonObject.put("category_id",category_id);
 return jsonObject;
+    }
+
+    public Double getTotal() {
+        return total;
+    }
+
+    public void setTotal(Double total) {
+        this.total = total;
     }
 
     public String getSize_id() {

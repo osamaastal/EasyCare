@@ -71,7 +71,6 @@ private AppCompatCheckBox accept;
         View view= inflater.inflate(R.layout.fragment_sign_up, container, false);
         init(view);
 
-
         return view;
     }
 
@@ -253,6 +252,8 @@ private AppCompatCheckBox accept;
             locationManager = (LocationManager) mcontext.getSystemService(Context.LOCATION_SERVICE);
             enableMyLocationIfPermitted();
 
+
+
         }
         private String[] LocationPermissions = {Manifest.permission.ACCESS_FINE_LOCATION};
 
@@ -284,6 +285,7 @@ private AppCompatCheckBox accept;
                 }, 15);
 
             } else  {
+
                get_location();
             }
         }
@@ -316,8 +318,12 @@ private AppCompatCheckBox accept;
                 locationListener = new MyLocationListener();
                 locationManager.requestLocationUpdates(LocationManager
                         .GPS_PROVIDER, 5000, 10, locationListener);
-
-
+///////////////////////////////////////////////////*****************GetLastKnownLocation*****************************************/
+                Location gpsLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                Location networkLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                mLatLng=new LatLng(gpsLocation.getLatitude(),gpsLocation.getLongitude());
+                Log.d("location",mLatLng.toString());
+                dialog.dismiss();
 
             } else {
 

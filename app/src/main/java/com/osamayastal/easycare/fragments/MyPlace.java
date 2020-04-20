@@ -24,6 +24,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.provider.Settings;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -129,7 +130,12 @@ private ImageButton search_btn;
             locationManager.requestLocationUpdates(LocationManager
                     .GPS_PROVIDER, 5000, 10, locationListener);
 
-
+///////////////////////////////////////////////////*****************GetLastKnownLocation*****************************************/
+            Location gpsLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            Location networkLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            mLatLng=new LatLng(gpsLocation.getLatitude(),gpsLocation.getLongitude());
+            Log.d("location",mLatLng.toString());
+            dialog.dismiss();
 
         } else {
 

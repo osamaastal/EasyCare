@@ -33,7 +33,7 @@ private float rate;
             lng=provider.getDouble("lng");
             profitPercentage=provider.getDouble("profitPercentage");
             orderPercentage=provider.getDouble("orderPercentage");
-            image=provider.getString("image");
+            image=provider.getString("image").replace("http", "https");
             password=provider.getString("password");
 
         } catch (JSONException e) {

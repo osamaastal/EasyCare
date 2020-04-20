@@ -49,6 +49,7 @@ public class ChangePass extends Fragment implements View.OnClickListener {
 
     }
 
+
     @Override
     public void onClick(View view) {
         switch (view.getId()){
@@ -57,6 +58,7 @@ public class ChangePass extends Fragment implements View.OnClickListener {
                 break;
             case R.id.back_btn:
                 switchFGM(new Profile());
+                MainActivity.SetVisibillty(View.VISIBLE);
                 break;
 
         }

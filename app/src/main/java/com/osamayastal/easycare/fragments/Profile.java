@@ -40,15 +40,18 @@ public class Profile extends Fragment implements View.OnClickListener {
 
     private void Loading_data() {
        User_info info=new User_info(getContext());
-
+        email.setText(info.getEmail());
+        phone.setText(info.getPhone());
+        city.setText(info.getAddress());
 
         user user=new user();
         user.GET_profil(getContext(), new user.user_Listener() {
             @Override
             public void onSuccess(users account) {
-                email.setText(account.getItems().getEmail());
-                phone.setText(account.getItems().getPhoneNumber());
-                city.setText(account.getItems().getAddress());
+//                email.setText(account.getItems().getEmail());
+//                phone.setText(account.getItems().getPhoneNumber());
+//                city.setText(account.getItems().getAddress());
+                new User_info(account.getItems(),getContext());
                 favorit_nb.setText(account.getItems().getFavoritCount()+"");
                 order_nb.setText(account.getItems().getOrderCount()+"");
             }
@@ -96,9 +99,13 @@ private ConstraintLayout favorit,order;
         switch (view.getId()){
             case R.id.logout_btn:
                 switchFGM(new ChangePass());
+                MainActivity.SetVisibillty(View.GONE);
+
                 break;
             case R.id.edit_btn:
                 switchFGM(new EditProfile());
+                MainActivity.SetVisibillty(View.GONE);
+
                 break;
             case R.id.favorit_btn:
                 switchFGM(new MyFavorites());

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,9 +77,12 @@ if(new User_info(mContext).getLanguage().equals("en")){
         }
 
        try {
+           mItems.get(position).getImage().replace("http", "https");
            Picasso.with(mContext)
                    .load(mItems.get(position).getImage())
                    .into(holder.Img);
+
+           Log.d("image", mItems.get(position).getImage().replace("http", "https"));
        } catch (Exception e) {
            e.printStackTrace();
        }

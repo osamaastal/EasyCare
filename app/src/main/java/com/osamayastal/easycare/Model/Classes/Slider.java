@@ -19,7 +19,9 @@ public class Slider {
             _id=provider.getString("_id");
             ads_for=provider.getString("ads_for");
             expiry_date=provider.getString("expiry_date");
-            image=provider.getString("image");
+            image=provider.getString("image").replace("http", "https");
+
+
             url=provider.getString("url");
             store_id=provider.getString("store_id");
             product_id=provider.getString("product_id");

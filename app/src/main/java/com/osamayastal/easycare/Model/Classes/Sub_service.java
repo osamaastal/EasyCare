@@ -19,7 +19,7 @@ private Double price;
             nameEn=jsonObject.getString("nameEn");
             category_id=jsonObject.getString("category_id");
             provider_subCategory_id=jsonObject.getString("provider_subCategory_id");
-            image=jsonObject.getString("image");
+            image=jsonObject.getString("image").replace("http", "https");
             price=jsonObject.getDouble("price");
 
             isActive=jsonObject.getBoolean("isActive");

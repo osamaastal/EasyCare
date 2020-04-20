@@ -67,15 +67,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static FragmentManager fragmentManager;
     private Fragment fragment;
     private Fragment home_frag, myOrders_frag, myPlace_frag, basket_frag, profile_frag;
-    private Toolbar toolbar;
+    public static Toolbar toolbar;
 public static  FragmentTransaction transaction;
+public static BottomNavigationView bottom_navigation;
 private TextView langu;
+    User_info user_info;
+  public static   int item_select;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 /******************************Test Fore user_Login*************************************/
-       final User_info user_info=new User_info();
+       user_info=new User_info(this);
         if (user_info.getId()==null){
            user root=new user();
            root.Get_Token(this);
@@ -125,8 +128,13 @@ private TextView langu;
         edit_profile_tv.setOnClickListener(this);
         user_name_tv.setOnClickListener(this);
         user_img.setOnClickListener(this);
+        if (user_info.getId()==null){
+            logout.setVisibility(View.GONE);
+        }
+
         /********************Bottom nav view**********************/
-        BottomNavigationView bottom_navigation = findViewById(R.id.bottom_navigation);
+        item_select=R.id.home;
+         bottom_navigation = findViewById(R.id.bottom_navigation);
         fragmentManager = getSupportFragmentManager();
         home_frag = new Home();
         myOrders_frag = new MyOrders();
@@ -154,12 +162,18 @@ private TextView langu;
 
                         break;
                     case R.id.my_place:
-                        fragment = myPlace_frag;
-                        toolbar.setBackground(getDrawable(R.drawable.bg_circle_darkblue));
+
+                            fragment = myPlace_frag;
+                            toolbar.setBackground(getDrawable(R.drawable.bg_circle_darkblue));
+
                         break;
                     case R.id.basket:
-                        fragment = basket_frag;
-                        toolbar.setBackground(getDrawable(R.drawable.bg_circle_blue_gradiant));
+                        if (user_info.getId()==null){
+                            LoginAlert();
+                        }else {
+                            fragment = basket_frag;
+                            toolbar.setBackground(getDrawable(R.drawable.bg_circle_blue_gradiant));
+                        }
                         break;
                     case R.id.profile:
                         if (user_info.getId()==null){
@@ -182,6 +196,23 @@ private TextView langu;
         bottom_navigation.setSelectedItemId(R.id.home);
 
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        bottom_navigation.setSelectedItemId(item_select);
+    }
+
+    @Override
+    public void onBackPressed() {
+        return;
+//        super.onBackPressed();
+    }
+
+    public static void SetVisibillty(int visibl){
+        toolbar.setVisibility(visibl);
+        bottom_navigation.setVisibility(visibl);
     }
     public void LoginAlert(){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
@@ -230,6 +261,7 @@ private TextView langu;
                 break;
             case R.id.drawer_about_tv:
                 switchFGM(new AboutUs());
+                SetVisibillty(View.GONE);
 
                 break;
             case R.id.drawer_report_tv:
@@ -243,7 +275,12 @@ private TextView langu;
 
                 break;
             case R.id.edit_profile_tv:
-switchFGM(new EditProfile());
+
+                if (user_info.getId()==null){
+                    LoginAlert();
+                }else {
+                    switchFGM(new Profile());
+                }
                 break;
             case R.id.user_img:
 

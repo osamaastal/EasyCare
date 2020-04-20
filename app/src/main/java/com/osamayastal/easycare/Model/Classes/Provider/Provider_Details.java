@@ -36,6 +36,7 @@ public class Provider_Details {
             _id=jsonObject.getString("_id");
             createAt=jsonObject.getString("createAt");
             name=jsonObject.getString("name");
+            image=jsonObject.getString("image").replace("http", "https");
             email=jsonObject.getString("email");
             address=jsonObject.getString("address");
             phone_number=jsonObject.getString("phone_number");

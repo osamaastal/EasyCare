@@ -36,6 +36,7 @@ import com.osamayastal.easycare.Model.Rootes.Bascket_root;
 import com.osamayastal.easycare.Model.Rootes.Categories_root;
 import com.osamayastal.easycare.Model.Rootes.City_root;
 import com.osamayastal.easycare.R;
+import com.osamayastal.easycare.activities.MainActivity;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
@@ -54,8 +55,21 @@ public class OrderPop {
     Sub_categorie sub_categorie;
     List<Sub_service>  sub_servics;
     List<Size>  sizeList;
+    Double Total=0.0;
+    TextView price;
      int i=-1;
-    public void AddOrder_pop(final Context mcontext, final String cat_id, final String prov_id){
+     public interface OrderLisstenner{
+         void onGoBasket();
+     }
+     private void Calculate_total(List<Car_servece>  carList){
+         Total=0.0;
+         for (Car_servece s :carList
+         ) {
+             Total=Total+s.getTotal();
+         }
+         price.setText(Total.toString());
+     }
+    public void AddOrder_pop(final Context mcontext, final String cat_id, final String prov_id, final OrderLisstenner lisstenner){
 
         final RoundedBottomSheetDialog mBottomSheetDialog = new RoundedBottomSheetDialog(mcontext);
         LayoutInflater inflater = (LayoutInflater) mcontext.getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -76,14 +90,21 @@ public class OrderPop {
         sub_servics=new ArrayList<>();
         sizeList=new ArrayList<>();
         sub_categorie=new Sub_categorie(null);
-
-//       sub_categorie.Sub_categorie_details(null);
+        final Double[] size_price = {0.0};
         ///////adapters
         final Size_adapter size_adapter=new Size_adapter(mcontext, sizeList, new Size_adapter.Selected_item() {
             @Override
             public void Onselcted(Size size) {
-               if (i!=-1) carList.get(i).setSize_id(size.getSize_id());
-               else servic.setSize_id(size.getSize_id());
+
+               if (i!=-1){
+                   carList.get(i).setTotal(carList.get(i).getTotal()- size_price[0] +size.getPrice());
+                   carList.get(i).setSize_id(size.getSize_id());
+                   Calculate_total(carList);
+               }
+               else{
+                   servic.setSize_id(size.getSize_id());
+               }
+               size_price[0] =size.getPrice();
             }
         });
         type.setAdapter(size_adapter);
@@ -92,10 +113,11 @@ public class OrderPop {
             @Override
             public void Onselcted(Sub_service sub_service) {
                 String id=servic.getProviderSubCategory_id();
+                Double tot= size_price[0];
                 for (Sub_service s:sub_servics
                 ) {
                     if (s.isActive()){
-
+                        tot=tot+s.getPrice();
                         if (id.isEmpty()){
                             id=s.getProvider_subCategory_id();
 
@@ -105,7 +127,13 @@ public class OrderPop {
                     }
 
                 }
-                if (i!=-1) carList.get(i).setProviderSubCategory_id(id);
+
+                if (i!=-1) {
+                    carList.get(i).setProviderSubCategory_id(id);
+                    carList.get(i).setTotal(tot);
+                    Calculate_total(carList);
+
+                }
 
             }
         });
@@ -114,6 +142,7 @@ public class OrderPop {
         final Car_adapter car_adapter=new Car_adapter(mcontext, carList, new Car_adapter.Selected_item() {
             @Override
             public void Onselcted(Car_servece car_servece) {
+
                 i= Car_adapter.item_select;
 
                 for (Sub_service s:sub_servics
@@ -135,6 +164,12 @@ public class OrderPop {
                 subCategories_adapter.notifyDataSetChanged();
                 size_adapter.notifyDataSetChanged();
             }
+
+            @Override
+            public void Ondelete(Car_servece car_servece) {
+                Calculate_total(carList);
+                i=-1;
+            }
         });
         car.setAdapter(car_adapter);
 
@@ -146,6 +181,13 @@ public class OrderPop {
         ImageButton basket,add;
 
         basket=sheetView.findViewById(R.id.basket_btn);
+        basket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               lisstenner.onGoBasket();
+
+            }
+        });
         add=sheetView.findViewById(R.id.add);
 
         add.setOnClickListener(new View.OnClickListener() {
@@ -153,10 +195,11 @@ public class OrderPop {
             public void onClick(View view) {
                 if (servic.getSize_id()!=null && servic.getProviderSubCategory_id()!=null){
                     String id=servic.getProviderSubCategory_id();
+                    Double tot= size_price[0];
                     for (Sub_service s:sub_servics
                     ) {
                         if (s.isActive()){
-
+                            tot=tot+s.getPrice();
                             if (id.isEmpty()){
                                 id=s.getProvider_subCategory_id();
 
@@ -167,7 +210,9 @@ public class OrderPop {
                         s.setActive(false);
                     }
                     servic.setProviderSubCategory_id(id);
+                    servic.setTotal(tot);
                     carList.add(servic);
+                    Calculate_total(carList);
                     servic=new Car_servece();
                     int k=carList.size()+1;
                     servic.setCar_name(mcontext.getString(R.string.car_name)+" "+k);
@@ -178,6 +223,8 @@ public class OrderPop {
                     car_adapter.notifyDataSetChanged();
                     size_adapter.item_select=-1;
                     size_adapter.notifyDataSetChanged();
+
+
                 }else {
                     Toast.makeText(mcontext,"make sur you select service details and size",Toast.LENGTH_SHORT).show();
                     return;
@@ -197,9 +244,17 @@ public class OrderPop {
         service_details=sheetView.findViewById(R.id.servic_details);
         basket_nb=sheetView.findViewById(R.id.basket_nb);
         service_img=sheetView.findViewById(R.id.service_img);
+        price=sheetView.findViewById(R.id.price_tv);
 
         service_details.setText("");
-        basket_nb.setText(new User_info(mcontext).getBasket()+"");
+        int nb=new User_info(mcontext).getBasket();
+        if (nb==0){
+            basket.setBackground(mcontext.getDrawable(R.drawable.bg_circle_gray));
+            basket_nb.setVisibility(View.GONE);
+        }
+        else {
+            basket_nb.setText(nb+"");
+        }
         ////////save data
         Button save=sheetView.findViewById(R.id.save_btn);
         save.setOnClickListener(new View.OnClickListener() {

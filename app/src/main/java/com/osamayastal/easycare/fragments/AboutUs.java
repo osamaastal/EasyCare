@@ -87,6 +87,7 @@ public class AboutUs extends Fragment implements View.OnClickListener {
                 break;
             case R.id.back_btn:
                 switchFGM(new Home());
+                MainActivity.SetVisibillty(View.VISIBLE);
                 break;
         }
     }

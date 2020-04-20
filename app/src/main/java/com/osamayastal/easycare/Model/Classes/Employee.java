@@ -21,7 +21,7 @@ public class Employee {
             email=provider.getString("email");
             phone_number=provider.getString("phone_number");
             password=provider.getString("password");
-            image=provider.getString("image");
+            image=provider.getString("image").replace("http", "https");
 
             isBlock=provider.getBoolean("isBlock");
             provider_id=new Provider(provider.getJSONObject("provider_id"));

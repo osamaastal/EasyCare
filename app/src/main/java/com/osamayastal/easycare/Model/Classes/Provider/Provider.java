@@ -37,7 +37,7 @@ private List<String> images;
             lng=provider.getDouble("lng");
             profitPercentage=provider.getDouble("profitPercentage");
             orderPercentage=provider.getDouble("orderPercentage");
-            image=provider.getString("image");
+            image=provider.getString("image").replace("http", "https");
             password=provider.getString("password");
 
         } catch (JSONException e) {
@@ -48,7 +48,7 @@ private List<String> images;
         try {
             JSONArray jsonArray=provider.getJSONArray("images");
             for (int i=0;i<jsonArray.length();i++){
-                images.add(jsonArray.getString(i));
+                images.add(jsonArray.getString(i).replace("http", "https"));
             }
         } catch (JSONException e) {
             e.printStackTrace();
