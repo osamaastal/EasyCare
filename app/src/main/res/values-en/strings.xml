@@ -128,4 +128,5 @@
     <string name="discount_amount">قيمة الخصم</string>
     <string name="order_date">تاريخ التنفيذ</string>
     <string name="order_time">وقت التنفيذ</string>
+    <string name="soon">قريباً</string>
 </resources>

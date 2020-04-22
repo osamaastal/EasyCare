@@ -9,7 +9,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:allowBackup="true"
@@ -18,9 +18,13 @@
         android:roundIcon="@drawable/app_icon_no_text"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+        <activity android:name=".activities.Notifications"></activity>
 
-        <activity android:name=".activities.OrderDetails_Create"></activity>
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
+        <activity android:name=".activities.OrderDetails_Create" />
         <activity android:name=".activities.AllProducts" />
         <activity android:name=".activities.ServiceProfiderDetails" />
         <activity android:name=".activities.AllServices" />
@@ -39,14 +43,12 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-
-
         <activity
             android:name=".activities.MapsActivity"
             android:label="@string/title_activity_maps" />
         <activity android:name=".activities.WelcomeActivity" />
         <activity android:name=".activities.ConfCode" />
-        <activity android:name=".activities.Logo" >
+        <activity android:name=".activities.Logo">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -54,9 +56,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.LoginActivity" />
-        <activity android:name=".activities.MainActivity">
-
-        </activity>
+        <activity android:name=".activities.MainActivity"></activity>
     </application>
 
 </manifest>

@@ -151,6 +151,9 @@
                             android:src="@drawable/test"
                             android:elevation="0dp"
                             android:layout_marginTop="0dp"
+                            android:background="@drawable/bg_circle_gray_stroke"
+                            android:padding="1dp"
+                            android:scaleType="centerCrop"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             />
