@@ -129,6 +129,69 @@ public class user {
 
 
     }
+    public void Post_UPDATE_user(final Context mcontext, final User user_, final user_Listener lisenner){
+        if (queue==null) {
+            queue = Volley.newRequestQueue(mcontext);
+        }
+        String url = Server_info.API+"api/mobile/updateprofile";
+        final String token=new User_info(mcontext).getToken();
+        lisenner.onStart();
+        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        Log.d("Response", response);
+                        String jsonData = response;
+                        JSONObject Jobject = null;
+                        try {
+                            Jobject = new JSONObject(jsonData);
+                        } catch (JSONException e1) {
+                            e1.printStackTrace();
+                        }
+
+
+                        lisenner.onSuccess(new users(Jobject));
+
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                    }
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+
+                Map<String, String>  Headers = new HashMap<String, String>();
+
+                Headers.put("token", token);
+
+                return Headers;
+            }
+
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String>  parameters = new HashMap<String, String>();
+
+                parameters.put("email", user_.getEmail());
+                parameters.put("full_name", user_.getFullName());
+                parameters.put("city_id", user_.getCity_id());
+                parameters.put("lat",String.valueOf(user_.getLat()));
+                parameters.put("lng", String.valueOf(user_.getLng()));
+                return parameters;
+            }
+        };
+        queue.add(postRequest);
+
+
+
+    }
     public void Post_Login(final Context mcontext, final String fcmtoken, final String password, final String phone_number, final user_Listener lisenner){
         if (queue==null) {
             queue = Volley.newRequestQueue(mcontext);  // this = context
@@ -439,6 +502,7 @@ public class user {
                 {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
                     }
                 }
         ) {
@@ -448,6 +512,7 @@ public class user {
                 Map<String, String>  Headers = new HashMap<String, String>();
 
                 Headers.put("token",token);
+                Headers.put("Content-Type","application/x-www-form-urlencoded");
 
                 return  Headers;
             }
@@ -460,8 +525,8 @@ public class user {
                 parameters.put("city_id",user.getCity_id());
 
 //                parameters.put("address",user.getAddress());
-                parameters.put("lat",String.valueOf(user.getLat()));
-                parameters.put("lng",String.valueOf(user.getLng()));
+                parameters.put("lat",String.valueOf(33.6003));
+                parameters.put("lng", String.valueOf(7.0303));
 
                 Log.d("parametters",parameters.toString());
                 return parameters;

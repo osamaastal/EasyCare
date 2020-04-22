@@ -30,6 +30,8 @@
                 android:src="@drawable/ic_user_circle_white" />
 
             <TextView
+
+                android:textColor="@color/white"
                 android:id="@+id/user_name_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

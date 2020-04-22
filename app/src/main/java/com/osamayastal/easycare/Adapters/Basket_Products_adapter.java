@@ -7,6 +7,7 @@ import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -83,35 +84,50 @@ public class Basket_Products_adapter extends RecyclerView.Adapter<Basket_Product
 
             @Override
             public void onClick(View view) {
-                Dialog dialog=new Dialog(mContext);
-                dialog.setContentView(R.layout.pop);
-                Bascket_root root=new Bascket_root();
-                root.Delete(mContext, mItems.get(position).getCart_id(), new Bascket_root.PostbasketListener() {
+                final Dialog dialog=new Dialog(mContext);
+                dialog.setContentView(R.layout.popup_conf);
+                Button conf=dialog.findViewById(R.id.confBtn);
+                Button cancel=dialog.findViewById(R.id.cancelBtn);
+                cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onSuccess(Result bascket) {
-                        if (new User_info(mContext).getLanguage().equals("en")){
-                            Toast.makeText(mContext,bascket.getMessageEn(),Toast.LENGTH_SHORT).show();
-                        }else {
-                            Toast.makeText(mContext,bascket.getMessageAr(),Toast.LENGTH_SHORT).show();
-                        }
-                       if (bascket.isStatus()){
-                           mItems.remove(mItems.get(position));
-                           notifyDataSetChanged();
-                           listenner.Onselcted(null);
-                       }
-                    }
-
-                    @Override
-                    public void onStart() {
-
-                    }
-
-                    @Override
-                    public void onFailure(String msg) {
-
+                    public void onClick(View view) {
+                        dialog.dismiss();
                     }
                 });
+               conf.setOnClickListener(new View.OnClickListener() {
+                   @Override
+                   public void onClick(View view) {
+                       Bascket_root root=new Bascket_root();
+                       root.Delete(mContext, mItems.get(position).getCart_id(), new Bascket_root.PostbasketListener() {
+                           @Override
+                           public void onSuccess(Result bascket) {
+                               if (new User_info(mContext).getLanguage().equals("en")){
+                                   Toast.makeText(mContext,bascket.getMessageEn(),Toast.LENGTH_SHORT).show();
+                               }else {
+                                   Toast.makeText(mContext,bascket.getMessageAr(),Toast.LENGTH_SHORT).show();
+                               }
+                               if (bascket.isStatus()){
+                                   mItems.remove(mItems.get(position));
+                                   notifyDataSetChanged();
+                                   listenner.Onselcted(null);
+                               }
+                               dialog.dismiss();
+                           }
 
+                           @Override
+                           public void onStart() {
+
+                           }
+
+                           @Override
+                           public void onFailure(String msg) {
+
+                           }
+                       });
+
+                   }
+               });
+               dialog.show();
 
             }
         });

@@ -173,10 +173,13 @@ public class EditProfile extends Fragment implements View.OnClickListener {
            mUser.setFullName(fullname.getText().toString());
            mUser.setAddress(address.getText().toString());
            mUser.setEmail(email.getText().toString());
-            mUser.setLat(Add_New_Address_Map.mLatLng.latitude);
-            mUser.setLng(Add_New_Address_Map.mLatLng.longitude);
+           if (Add_New_Address_Map.mLatLng!=null){
+               mUser.setLat(Add_New_Address_Map.mLatLng.latitude);
+               mUser.setLng(Add_New_Address_Map.mLatLng.longitude);
+
+           }
             user user=new user();
-            user.Post_update_user(getContext(),mUser , new user.user_Listener() {
+            user.Post_UPDATE_user(getContext(),mUser , new user.user_Listener() {
                 @Override
                 public void onSuccess(users new_account) {
                     if (new_account.isStatus()){
