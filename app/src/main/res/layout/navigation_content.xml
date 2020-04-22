@@ -217,8 +217,8 @@
                     android:layout_marginBottom="10dp">
                     <TextView
                         android:id="@+id/language"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
                         android:background="@drawable/bg_circle_white"
                         android:gravity="center"
                         android:text="@string/en"
@@ -228,8 +228,8 @@
 
                     <ImageButton
                         android:id="@+id/logout_btn"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
                         android:layout_marginStart="20dp"
                         android:background="@drawable/bg_circle_white"
                         android:src="@drawable/ic_logout" />

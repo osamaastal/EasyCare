@@ -6,24 +6,40 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 <!--    bg_req_gray_50dp-->
-    <TextView
-        android:id="@+id/name"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="الخدمة 01"
-        style="@style/text_white_roman_18"
+        android:orientation="vertical"
         android:paddingTop="3dp"
-        android:paddingBottom="9dp"
-        android:paddingStart="24dp"
-        android:paddingEnd="24dp"
+        android:paddingBottom="5dp"
+        android:paddingStart="40dp"
+        android:paddingEnd="40dp"
         android:background="@drawable/bg_req_darkblue_50dp_gradiant_x"
         android:layout_marginStart="6dp"
         android:layout_marginTop="6dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintEnd_toEndOf="parent">
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="خدمة 01"
+            style="@style/text_white_roman_14"
+            android:gravity="center_horizontal"
+            />
+        <TextView
+            android:id="@+id/price_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="35 ريال"
+            style="@style/text_white_roman_14"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="-4dp"
+            />
+    </LinearLayout>
+
     <ImageView
         android:id="@+id/delete_btn"
         android:layout_width="24dp"

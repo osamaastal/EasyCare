@@ -71,7 +71,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:text="@string/about_us_main"
             style="@style/text_darkblue_roman_16"/>
 
     </ScrollView>
