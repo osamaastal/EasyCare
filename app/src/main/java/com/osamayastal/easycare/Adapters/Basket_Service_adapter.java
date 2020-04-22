@@ -2,6 +2,7 @@ package com.osamayastal.easycare.Adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +28,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import top.defaults.drawabletoolbox.DrawableBuilder;
 
 /**
  * Created by User on 26/02/2020.
@@ -77,7 +80,11 @@ public class Basket_Service_adapter extends RecyclerView.Adapter<Basket_Service_
         Picasso.with(mContext)
                 .load(mItems.get(position).getCategory_id().getImage())
         .into(holder.img);
-
+        try{
+            makeDrawable(Integer.parseInt(mItems.get(position).getCategory_id().getColor()),holder.img,0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         if (mItems.get(position).getSub_services().size()==0){
             mItems.remove(position);
             notifyDataSetChanged();
@@ -99,7 +106,17 @@ public class Basket_Service_adapter extends RecyclerView.Adapter<Basket_Service_
 
 
     }
-
+    private void makeDrawable(int color, View view, int corner) {
+        Drawable drawable = new DrawableBuilder()
+                .oval()
+                .solidColor(color)//0xffe67e22
+                .height(90)
+                .width(90)
+//                .cornerRadii(corner, corner, corner, corner)// pixel
+                // top-left  top-right  bottom-right   bottom-left
+                .build();
+        view.setBackground(drawable);
+    }
     @Override
     public int getItemCount() {
         return mItems.size();

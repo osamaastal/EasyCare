@@ -93,6 +93,8 @@ providerList.addAll(favorites.getItems());
         switch (view.getId()){
             case R.id.back_btn:
                switchFGM(new Profile());
+                MainActivity.SetVisibillty(View.VISIBLE);
+
                 break;
         }
     }

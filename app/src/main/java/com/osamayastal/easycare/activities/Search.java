@@ -102,7 +102,7 @@ mypopupWindow_filter=setPopUpWindow();
     String categorie_id="";
     String city_id="";
     String rat ="";
-    int raduis =100;
+    String raduis ="";
     private PopupWindow setPopUpWindow() {
 //        LayoutInflater inflater = (LayoutInflater).getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         LayoutInflater inflater=(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -113,13 +113,24 @@ mypopupWindow_filter=setPopUpWindow();
         final IndicatorSeekBar rang=view1.findViewById(R.id.range);
         SwitchButton watch=view1.findViewById(R.id.watch_switch);
 
-        RatingBar rate=view1.findViewById(R.id.ratingBar);
-//        rat=rate.getProgress();
+        final RatingBar rate=view1.findViewById(R.id.ratingBar);
         ImageButton save=view1.findViewById(R.id.save_btn);
         ImageButton cacel=view1.findViewById(R.id.cancel_btn);
+        TextView default_tv=view1.findViewById(R.id.Default);
 
         /*******************************************Actions************************************/
+default_tv.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+       rang.setProgress(0);
+       rate.setRating(0);
 
+         categorie_id="";
+         city_id="";
+         rat ="";
+         raduis ="";
+    }
+});
         List<Categorie> categories=new ArrayList<>();
         ServicType_adapter adaptertype=new ServicType_adapter(Search.this, categories, new ServicType_adapter.Selected_item() {
             @Override
@@ -149,7 +160,7 @@ mypopupWindow_filter=setPopUpWindow();
 
             @Override
             public void onStopTrackingTouch(IndicatorSeekBar seekBar) {
-                raduis=seekBar.getProgress();
+                raduis=seekBar.getProgress()+"";
             }
         });
 /***********************************************************************************/
@@ -226,7 +237,7 @@ mypopupWindow_filter=setPopUpWindow();
         });
     }
 
-    private void Search_fun(EditText name, String categorie_id, String city_id, String rat, int raduis) {
+    private void Search_fun(EditText name, String categorie_id, String city_id, String rat, String raduis) {
         progressBar.setVisibility(View.VISIBLE);
         no_result.setVisibility(View.GONE);
         final Search_root search_root=new Search_root();

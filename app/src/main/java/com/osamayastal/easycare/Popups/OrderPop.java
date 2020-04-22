@@ -1,6 +1,7 @@
 package com.osamayastal.easycare.Popups;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -43,6 +45,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import top.defaults.drawabletoolbox.DrawableBuilder;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
@@ -84,6 +88,17 @@ public class OrderPop {
              basket.setBackground(mcontext.getDrawable(R.drawable.bg_circle_basket));
          }
      }
+    private void makeDrawable(int color, View view, int corner) {
+        Drawable drawable = new DrawableBuilder()
+                .oval()
+                .solidColor(color)//0xffe67e22
+                .height(100)
+                .width(100)
+//                .cornerRadii(corner, corner, corner, corner)// pixel
+                // top-left  top-right  bottom-right   bottom-left
+                .build();
+        view.setBackground(drawable);
+    }
     public void AddOrder_pop(final Context mcontext, final String cat_id, final String prov_id, final OrderLisstenner lisstenner){
 this.mcontext=mcontext;
         final RoundedBottomSheetDialog mBottomSheetDialog = new RoundedBottomSheetDialog(mcontext);
@@ -203,7 +218,7 @@ this.mcontext=mcontext;
 
 
         ////////////////////////////////////////Button
-        ImageButton add;
+        LinearLayout add;
 
         basket=sheetView.findViewById(R.id.basket_btn);
 
@@ -261,6 +276,11 @@ this.mcontext=mcontext;
         service_details=sheetView.findViewById(R.id.servic_details);
         basket_nb=sheetView.findViewById(R.id.basket_nb);
         service_img=sheetView.findViewById(R.id.service_img);
+        try{
+            makeDrawable(Integer.parseInt(sub_categorie.getColor()),service_img,0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         price=sheetView.findViewById(R.id.price_tv);
 
         service_details.setText("");

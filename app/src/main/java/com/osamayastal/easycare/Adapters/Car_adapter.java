@@ -66,9 +66,8 @@ public class Car_adapter extends RecyclerView.Adapter<Car_adapter.ViewHolder> {
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         int k=position+1;
         mItems.get(position).setCar_name(mContext.getString(R.string.car_name)+" "+k);
-
-    holder.name.setText(mItems.get(position).getCar_name()+"\n"
-            +mItems.get(position).getTotal().toString()+mContext.getString(R.string.RS_chort));
+holder.price.setText(mItems.get(position).getTotal().toString()+mContext.getString(R.string.RS_chort));
+    holder.name.setText(mItems.get(position).getCar_name());
     holder.delet.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -97,11 +96,12 @@ public class Car_adapter extends RecyclerView.Adapter<Car_adapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder{
 
      ImageView delet;
-      TextView name;
+      TextView name,price;
       public ViewHolder(View itemView) {
             super(itemView);
           name = itemView.findViewById(R.id.name);
           delet = itemView.findViewById(R.id.delete_btn);
+          price = itemView.findViewById(R.id.price_tv);
 
 
 

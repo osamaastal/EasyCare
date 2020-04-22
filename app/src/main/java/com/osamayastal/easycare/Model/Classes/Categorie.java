@@ -5,7 +5,7 @@ import org.json.JSONObject;
 
 public class Categorie {
     private String _id,arName,enName,image;
-    private int color;
+    private String color;
     private boolean isActive;
 
     public Categorie(JSONObject jsonObject) {
@@ -18,7 +18,7 @@ public class Categorie {
             enName=jsonObject.getString("enName");
             image=jsonObject.getString("image").replace("http", "https");
             isActive=jsonObject.getBoolean("isActive");
-            color=jsonObject.getInt("color");
+            color= jsonObject.getString("color");
 
 
         } catch (JSONException e) {
@@ -26,11 +26,11 @@ public class Categorie {
         }
     }
 
-    public int getColor() {
+    public String getColor() {
         return color;
     }
 
-    public void setColor(int color) {
+    public void setColor(String color) {
         this.color = color;
     }
 

@@ -109,8 +109,13 @@ private ConstraintLayout favorit,order;
                 break;
             case R.id.favorit_btn:
                 switchFGM(new MyFavorites());
+                MainActivity.SetVisibillty(View.GONE);
+
                 break;
             case R.id.order_btn:
+//                switchFGM(new MyOrders());
+                MainActivity.item_select=R.id.my_orders;
+                MainActivity.bottom_navigation.setSelectedItemId(MainActivity.item_select);
 
                 break;
         }

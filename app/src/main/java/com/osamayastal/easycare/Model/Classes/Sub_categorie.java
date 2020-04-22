@@ -10,11 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Sub_categorie {
-    private String _id,nameAr,nameEn,image,category_id,color,type_id,provider_id;
+    private String _id,nameAr,nameEn,image,category_id,type_id,provider_id;
     private boolean isActive;
     private List<Size> sizes;
     private List<Sub_service> sub_services;
-
+private String color;
     public Sub_categorie(JSONObject jsonObject) {
         if (jsonObject==null){
             return;

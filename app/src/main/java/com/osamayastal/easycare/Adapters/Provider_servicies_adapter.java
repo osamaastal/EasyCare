@@ -24,6 +24,8 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import top.defaults.drawabletoolbox.DrawableBuilder;
+
 /**
  * Created by User on 26/02/2020.
  */
@@ -80,7 +82,7 @@ if (new User_info(mContext).getLanguage().equals("en")){
         holder.soon.setVisibility(View.GONE);
 
 try{
-    holder.img.setBackgroundTintList(mItems.get(position).getColor());
+   makeDrawable(Integer.parseInt(mItems.get(position).getColor()),holder.img,0);
 } catch (Exception e) {
     e.printStackTrace();
 }
@@ -105,10 +107,42 @@ try{
             }
         });
     }
-    public static Drawable setTint(Drawable drawable, int color) {
-        final Drawable newDrawable = DrawableCompat.wrap(drawable);
-        DrawableCompat.setTint(newDrawable, color);
-        return newDrawable;
+//    public static Drawable setTint(Drawable drawable, int color) {
+//        final Drawable newDrawable = DrawableCompat.wrap(drawable);
+//        DrawableCompat.setTint(newDrawable, color);
+//        return newDrawable;
+//    }
+//    private void makeDrawable(int color, TextView view, boolean isChoose) {
+//        if (isChoose){
+//            Drawable drawable = new DrawableBuilder()
+//                    .rectangle()
+//                    .solidColor(color)//0xffe67e22
+//                    .cornerRadii(18, 18, 18, 18)// pixel
+//                    // top-left  top-right  bottom-right   bottom-left
+//                    .build();
+//            view.setBackground(drawable);
+//        }else {
+//            Drawable drawable = new DrawableBuilder()
+//                    .rectangle()
+//                    .strokeColor(0xffffffff)//0xffe67e22
+//                    .strokeWidth(1)
+//                    .cornerRadii(18, 18, 18, 18)// pixel
+//                    // top-left  top-right  bottom-right   bottom-left
+//                    .build();
+//            view.setBackground(drawable);
+//        }
+//
+//    }
+    private void makeDrawable(int color, View view, int corner) {
+        Drawable drawable = new DrawableBuilder()
+                .oval()
+                .solidColor(color)//0xffe67e22
+                .height(90)
+                .width(90)
+//                .cornerRadii(corner, corner, corner, corner)// pixel
+                // top-left  top-right  bottom-right   bottom-left
+                .build();
+        view.setBackground(drawable);
     }
     @Override
     public int getItemCount() {

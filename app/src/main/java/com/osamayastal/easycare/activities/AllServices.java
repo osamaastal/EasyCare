@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -57,7 +58,7 @@ public class AllServices extends AppCompatActivity  implements View.OnClickListe
     private ImageButton back;
     RecyclerView RV;
     List<Categorie> categories;
-    Categories_adapter adapter;
+    Provider_servicies_adapter adapter;
     TextView title;
     private void init() {
         progressBar=findViewById(R.id.progress);
@@ -67,7 +68,14 @@ public class AllServices extends AppCompatActivity  implements View.OnClickListe
        /******************Actions*******************/
         back.setOnClickListener(this);
         categories=new ArrayList<>();
-        adapter=new Categories_adapter(this,categories,null);
+        adapter=new Provider_servicies_adapter(this, categories, new Provider_servicies_adapter.Selected_item() {
+            @Override
+            public void Onselcted(Categorie categorie) {
+                Service_Single.categorie = categorie;
+                startActivity(new Intent(AllServices.this, Service_Single.class));
+                finish();
+            }
+        });
         RV.setLayoutManager(new GridLayoutManager(this,3));
         RV.setAdapter(adapter);
 

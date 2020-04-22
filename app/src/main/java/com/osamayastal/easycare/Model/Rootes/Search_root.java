@@ -36,7 +36,7 @@ public class Search_root {
                           final String name,
                           final String rate,
                           final int page,
-                          final int raduis,
+                          final String raduis,
                           LatLng mLatLng, final homeListener listener)
     {
 

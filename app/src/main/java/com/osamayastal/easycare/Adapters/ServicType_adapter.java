@@ -72,9 +72,9 @@ if (new User_info(mContext).getLanguage().equals("en")){
 
 try {
    if (item_select==position){
-       makeDrawable(mItems.get(position).getColor(),holder.type,true);
+       makeDrawable(0,holder.type,true);
    }else {
-       makeDrawable(mItems.get(position).getColor(),holder.type,false);
+       makeDrawable(0,holder.type,false);
    }
 } catch (Exception e) {
     e.printStackTrace();
@@ -89,11 +89,22 @@ notifyDataSetChanged();
             }
         });
     }
+    private void makeDrawable(int color, View view, int corner) {
+        Drawable drawable = new DrawableBuilder()
+                .oval()
+                .solidColor(color)//0xffe67e22
+                .height(90)
+                .width(90)
+//                .cornerRadii(corner, corner, corner, corner)// pixel
+                // top-left  top-right  bottom-right   bottom-left
+                .build();
+        view.setBackground(drawable);
+    }
     private void makeDrawable(int color, TextView view, boolean isChoose) {
-        if (!isChoose){
+        if (isChoose){
             Drawable drawable = new DrawableBuilder()
                     .rectangle()
-                    .solidColor(color)//0xffe67e22
+                    .solidColor(mContext.getColor(R.color.green_end_pressed))//0xffe67e22
                     .cornerRadii(18, 18, 18, 18)// pixel
                     // top-left  top-right  bottom-right   bottom-left
                     .build();
@@ -101,7 +112,7 @@ notifyDataSetChanged();
         }else {
             Drawable drawable = new DrawableBuilder()
                     .rectangle()
-                    .strokeColor(0xffffffff)//0xffe67e22
+                    .strokeColor(mContext.getColor(R.color.green_end_pressed))//0xffe67e22
                     .strokeWidth(1)
                     .cornerRadii(18, 18, 18, 18)// pixel
                     // top-left  top-right  bottom-right   bottom-left

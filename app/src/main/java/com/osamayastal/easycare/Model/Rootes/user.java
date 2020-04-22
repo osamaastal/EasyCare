@@ -414,7 +414,7 @@ public class user {
         final String token=new User_info(mcontext).getToken();
         Log.d("Token", token);
 
-        String url = Server_info.API+"api/mobile/updateprofileAndroid";
+        String url = Server_info.API+"api/mobile/updateprofile";
         lisenner.onStart();
         StringRequest postRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>()
@@ -463,7 +463,7 @@ public class user {
                 parameters.put("lat",user.getLat().toString());
                 parameters.put("lng",user.getLng().toString());
 
-                Log.d("parametters",parameters.toString());
+//                Log.d("parametters",parameters.toString());
                 return parameters;
             }
         };
