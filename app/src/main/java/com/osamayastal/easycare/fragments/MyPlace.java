@@ -287,30 +287,34 @@ if (new User_info(getContext()).getLanguage().equals("en")){
 
     private void Show_nearServic(LatLng mLatLng) {
         Maps_root maps_root=new Maps_root();
-        maps_root.GetNearServic(getContext(), mLatLng, new Maps_root.MapsListener() {
-            @Override
-            public void onSuccess(Maps maps) {
-                for (Employee e:maps.getEmployees()
-                     ) {
-                    make_marke(e,null);
-                }
+       try {
+           maps_root.GetNearServic(getContext(), mLatLng, new Maps_root.MapsListener() {
+               @Override
+               public void onSuccess(Maps maps) {
+                   for (Employee e:maps.getEmployees()
+                   ) {
+                       make_marke(e,null);
+                   }
 
-                for (Provider_map provider:maps.getProviders()
-                ) {
-                    make_marke(null,provider);
-                }
-            }
+                   for (Provider_map provider:maps.getProviders()
+                   ) {
+                       make_marke(null,provider);
+                   }
+               }
 
-            @Override
-            public void onStart() {
+               @Override
+               public void onStart() {
 
-            }
+               }
 
-            @Override
-            public void onFailure(String msg) {
+               @Override
+               public void onFailure(String msg) {
 
-            }
-        });
+               }
+           });
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
     }
 
     /**

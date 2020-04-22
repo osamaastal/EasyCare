@@ -459,11 +459,11 @@ public class user {
                 parameters.put("email",user.getEmail());
                 parameters.put("city_id",user.getCity_id());
 
-                parameters.put("address",user.getAddress());
-                parameters.put("lat",user.getLat().toString());
-                parameters.put("lng",user.getLng().toString());
+//                parameters.put("address",user.getAddress());
+                parameters.put("lat",String.valueOf(user.getLat()));
+                parameters.put("lng",String.valueOf(user.getLng()));
 
-//                Log.d("parametters",parameters.toString());
+                Log.d("parametters",parameters.toString());
                 return parameters;
             }
         };

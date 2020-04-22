@@ -1,6 +1,7 @@
 package com.osamayastal.easycare.Adapters;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Build;
 import android.view.LayoutInflater;
@@ -82,6 +83,8 @@ public class Basket_Products_adapter extends RecyclerView.Adapter<Basket_Product
 
             @Override
             public void onClick(View view) {
+                Dialog dialog=new Dialog(mContext);
+                dialog.setContentView(R.layout.pop);
                 Bascket_root root=new Bascket_root();
                 root.Delete(mContext, mItems.get(position).getCart_id(), new Bascket_root.PostbasketListener() {
                     @Override
@@ -116,8 +119,10 @@ public class Basket_Products_adapter extends RecyclerView.Adapter<Basket_Product
 
             @Override
             public void onClick(View view) {
-                mItems.get(position).setQty(mItems.get(position).getQty()-1);
-                notifyDataSetChanged();
+                if (mItems.get(position).getQty()!=0) {
+                    mItems.get(position).setQty(mItems.get(position).getQty() - 1);
+                    notifyDataSetChanged();
+                }
             }
         });
         holder.add.setOnClickListener(new View.OnClickListener() {

@@ -52,7 +52,6 @@ import com.osamayastal.easycare.fragments.Home;
 import com.osamayastal.easycare.fragments.LoginFrag;
 import com.osamayastal.easycare.fragments.MyOrders;
 import com.osamayastal.easycare.fragments.MyPlace;
-import com.osamayastal.easycare.fragments.Notifications;
 import com.osamayastal.easycare.fragments.Profile;
 import com.yarolegovich.slidingrootnav.SlideGravity;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
@@ -135,7 +134,7 @@ private TextView langu;
         if (user_info.getId()==null){
             logout.setVisibility(View.GONE);
         }
-
+user_name_tv.setText(user_info.getName());
         /********************Bottom nav view**********************/
 //        item_select=R.id.home;
         linear_bottom = findViewById(R.id.linear_bottom);
@@ -218,7 +217,7 @@ private TextView langu;
 
     @Override
     public void onBackPressed() {
-        return;
+        super.onBackPressed();
     }
 
     public static void SetVisibillty(int visibl){
@@ -274,7 +273,7 @@ private TextView langu;
 
                 break;
             case R.id.drawer_notification_tv:
-                switchFGM(new Notifications());
+//                startActivity(new Intent(MainActivity.this, Notifications.class));
                 break;
             case R.id.drawer_settings_tv:
 

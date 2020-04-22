@@ -70,8 +70,8 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.ViewHo
 
             holder.name.setText(mItems.get(position).getName());
       
-        holder.old_price.setText(mItems.get(position).getPrice().toString());
-        holder.new_price.setText(mItems.get(position).getDiscountPrice().toString());
+        holder.old_price.setText(mItems.get(position).getDiscountPrice().toString());
+        holder.new_price.setText(mItems.get(position).getPrice().toString());
 
         Picasso .with(mContext)
                 .load(mItems.get(position).getImage())
