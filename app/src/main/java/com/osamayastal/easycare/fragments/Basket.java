@@ -1,5 +1,6 @@
 package com.osamayastal.easycare.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -18,7 +19,9 @@ import com.osamayastal.easycare.Adapters.Basket_adapter;
 import com.osamayastal.easycare.Model.Classes.Basket.Bascket;
 import com.osamayastal.easycare.Model.Classes.Car_servece;
 import com.osamayastal.easycare.Model.Rootes.Bascket_root;
+import com.osamayastal.easycare.Popups.OrderPop;
 import com.osamayastal.easycare.R;
+import com.osamayastal.easycare.activities.OrderDetails_Create;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,6 +108,25 @@ public class Basket extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.save_btn:
+//                OrderDetails_Create.bascket=baskets.get(0);
+//
+//                final OrderPop pop=new OrderPop(getContext());
+//                pop.GetDate_pop(new OrderPop.POPLisstenner() {
+//                    @Override
+//                    public void ongetResult(String result) {
+//                        pop.GetTime_pop(new OrderPop.POPLisstenner() {
+//                            @Override
+//                            public void ongetResult(String result) {
+//                                pop.GetWay_pop(new OrderPop.POPLisstenner() {
+//                                    @Override
+//                                    public void ongetResult(String result) {
+//                                        startActivity(new Intent(getActivity(), OrderDetails_Create.class));
+//                                    }
+//                                });
+//                            }
+//                        });
+//                    }
+//                });
                 break;
 
         }

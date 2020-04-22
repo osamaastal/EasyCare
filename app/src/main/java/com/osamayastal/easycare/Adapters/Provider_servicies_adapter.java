@@ -2,6 +2,7 @@ package com.osamayastal.easycare.Adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.osamayastal.easycare.Model.Classes.Categorie;
@@ -76,26 +78,38 @@ if (new User_info(mContext).getLanguage().equals("en")){
                 .into(holder.img);
 
         holder.soon.setVisibility(View.GONE);
-//
-//if (mItems.get(position).isActive()){
-//    holder.soon.setVisibility(View.GONE);
-//}else {
-//    holder.img.setBackground(mContext.getDrawable(R.drawable.bg_circle_gray));
-//}
+
+try{
+    holder.img.setBackgroundTintList(mItems.get(position).getColor());
+} catch (Exception e) {
+    e.printStackTrace();
+}
+        if (mItems.get(position).isActive()){
+    holder.soon.setVisibility(View.GONE);
+}else {
+    holder.soon.setVisibility(View.VISIBLE);
+
+}
 
         mview.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                item_select=position;
-listenner.Onselcted(mItems.get(position));
+               if (mItems.get(position).isActive()){
+                   item_select=position;
+                   listenner.Onselcted(mItems.get(position));
+               }
 
 
 
             }
         });
     }
-
+    public static Drawable setTint(Drawable drawable, int color) {
+        final Drawable newDrawable = DrawableCompat.wrap(drawable);
+        DrawableCompat.setTint(newDrawable, color);
+        return newDrawable;
+    }
     @Override
     public int getItemCount() {
         return mItems.size();

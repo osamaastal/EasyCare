@@ -24,6 +24,8 @@ import com.osamayastal.easycare.R;
 import com.osamayastal.easycare.activities.AllServices;
 import com.osamayastal.easycare.activities.Search;
 import com.osamayastal.easycare.Adapters.CardAdapter;
+import com.osamayastal.easycare.activities.ServiceProfiderDetails;
+import com.osamayastal.easycare.activities.Service_Single;
 
 import java.util.ArrayList;
 
@@ -110,8 +112,22 @@ private ImageButton search_btn;
         top_req_list=new ArrayList<Provider>();
         sliderList=new ArrayList<Slider>();
         /********************************adapters****************************************/
-        adapter_rate=new Provider_adapter(getContext(),top_rate_list,null);
-        adapter_req=new Provider_adapter(getContext(),top_req_list,null);
+        adapter_rate=new Provider_adapter(getContext(), top_rate_list, new Provider_adapter.Selected_item() {
+            @Override
+            public void Onselcted(Provider provider) {
+                ServiceProfiderDetails.provider= provider.toProvider();
+                startActivity(new Intent(getContext(),ServiceProfiderDetails.class));
+
+            }
+        });
+        adapter_req=new Provider_adapter(getContext(), top_req_list, new Provider_adapter.Selected_item() {
+            @Override
+            public void Onselcted(Provider provider) {
+
+                ServiceProfiderDetails.provider= provider.toProvider();
+                startActivity(new Intent(getContext(),ServiceProfiderDetails.class));
+            }
+        });
         categories_adapter=new Categories_adapter(getContext(),categories,null);
         /********************************RV****************************************/
         RV_top_req.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false));

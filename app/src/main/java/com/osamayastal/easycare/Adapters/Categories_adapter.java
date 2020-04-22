@@ -91,9 +91,10 @@ if(new User_info(mContext).getLanguage().equals("en")){
 
             @Override
             public void onClick(View view) {
-
-                Service_Single.id=mItems.get(position).get_id();
-                mContext.startActivity(new Intent(mContext,Service_Single.class));
+if (mItems.get(position).isActive()) {
+    Service_Single.categorie = mItems.get(position);
+    mContext.startActivity(new Intent(mContext, Service_Single.class));
+}
             }
         });
     }

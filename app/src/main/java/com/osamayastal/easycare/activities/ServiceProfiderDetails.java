@@ -215,12 +215,12 @@ public class ServiceProfiderDetails extends AppCompatActivity implements View.On
                 if (new User_info(ServiceProfiderDetails.this).getId()==null){
                     LoginAlert();
                 }else {
-                    OrderPop pop = new OrderPop();
+                    OrderPop pop = new OrderPop(ServiceProfiderDetails.this);
                     pop.AddOrder_pop(ServiceProfiderDetails.this, categorie.get_id(), provider.get_id(), new OrderPop.OrderLisstenner() {
                         @Override
                         public void onGoBasket() {
                             MainActivity.item_select=R.id.basket;
-                            finish();
+                             finish();
                         }
                     });
                 }
@@ -316,6 +316,7 @@ public class ServiceProfiderDetails extends AppCompatActivity implements View.On
                 }
                 break;
             case R.id.basket_btn:
+//                startActivity(new Intent(ServiceProfiderDetails.this,MainActivity.class));
                 MainActivity.item_select=R.id.basket;
                 finish();
                 break;

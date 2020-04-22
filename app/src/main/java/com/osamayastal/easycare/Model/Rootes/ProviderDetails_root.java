@@ -13,6 +13,7 @@ import com.android.volley.toolbox.Volley;
 import com.osamayastal.easycare.Model.Const.Server_info;
 import com.osamayastal.easycare.Model.Const.User_info;
 import com.osamayastal.easycare.Model.Controle.City;
+import com.osamayastal.easycare.Model.Controle.Provider;
 import com.osamayastal.easycare.Model.Controle.Provider_Details;
 import com.osamayastal.easycare.Model.Controle.Search;
 
@@ -28,7 +29,7 @@ public class ProviderDetails_root {
         void onFailure(String msg);
     }
     public interface AppProv_Listener{
-        void onSuccess(Search prov);
+        void onSuccess(Provider prov);
         void onStart();
         void onFailure(String msg);
     }
@@ -100,7 +101,7 @@ public class ProviderDetails_root {
 
                         Log.d("Response", response.toString());
                         Log.d("token ", token.toString());
-                        listener.onSuccess(new Search(response));
+                        listener.onSuccess(new Provider(response));
 
 
                     }

@@ -36,7 +36,7 @@ public class Provider_adapter extends RecyclerView.Adapter<Provider_adapter.View
     private Context mContext;
     private View mview;
     public interface Selected_item{
-        void Onselcted(Categorie categorie);
+        void Onselcted(Provider provider);
     }
     public static int item_select=-1;
     Selected_item listenner;
@@ -78,8 +78,7 @@ holder.ratingBar.setRating(mItems.get(position).getRate());
 
             @Override
             public void onClick(View view) {
-                ServiceProfiderDetails.provider= mItems.get(position).toProvider();
-                mContext.startActivity(new Intent(mContext,ServiceProfiderDetails.class));
+                listenner.Onselcted(mItems.get(position));
 
             }
         });

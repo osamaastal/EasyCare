@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.osamayastal.easycare.Adapters.Categories_adapter;
 import com.osamayastal.easycare.Adapters.Provider_servicies_adapter;
@@ -57,10 +58,12 @@ public class AllServices extends AppCompatActivity  implements View.OnClickListe
     RecyclerView RV;
     List<Categorie> categories;
     Categories_adapter adapter;
+    TextView title;
     private void init() {
         progressBar=findViewById(R.id.progress);
         back=findViewById(R.id.back_btn);
         RV=findViewById(R.id.RV);
+        title=findViewById(R.id.title);
        /******************Actions*******************/
         back.setOnClickListener(this);
         categories=new ArrayList<>();

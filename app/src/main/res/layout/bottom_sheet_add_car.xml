@@ -37,6 +37,8 @@
                     android:paddingStart="30dp"
                     android:paddingEnd="30dp">
                     <ImageView
+
+                        android:background="@drawable/bg_circle_green"
                         android:id="@+id/service_img"
                         android:layout_width="90dp"
                         android:layout_height="90dp"

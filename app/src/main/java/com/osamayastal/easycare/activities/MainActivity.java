@@ -137,7 +137,7 @@ private TextView langu;
         }
 
         /********************Bottom nav view**********************/
-        item_select=R.id.home;
+//        item_select=R.id.home;
         linear_bottom = findViewById(R.id.linear_bottom);
         bottom_navigation = findViewById(R.id.bottom_navigation);
         fragmentManager = getSupportFragmentManager();
@@ -154,10 +154,12 @@ private TextView langu;
                 int id = item.getItemId();
                 switch (id) {
                     case R.id.home:
+                        item_select=R.id.home;
                         fragment = home_frag;
                         toolbar.setBackground(getDrawable(R.drawable.bg_circle_midblue));
                         break;
                     case R.id.my_orders:
+                        item_select=R.id.my_orders;
                         if (user_info.getId()==null){
                             LoginAlert();
                         }else {
@@ -167,12 +169,15 @@ private TextView langu;
 
                         break;
                     case R.id.my_place:
+                        item_select=R.id.my_place;
 
                             fragment = myPlace_frag;
                             toolbar.setBackground(getDrawable(R.drawable.bg_circle_darkblue));
 
                         break;
                     case R.id.basket:
+                        item_select=R.id.basket;
+
                         if (user_info.getId()==null){
                             LoginAlert();
                         }else {
@@ -181,6 +186,8 @@ private TextView langu;
                         }
                         break;
                     case R.id.profile:
+                        item_select=R.id.profile;
+
                         if (user_info.getId()==null){
                             LoginAlert();
                         }else {

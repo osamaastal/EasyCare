@@ -47,9 +47,9 @@ import java.util.Locale;
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 public class OrderPop {
-    private static String date;
-    private static String time;
-    private static int payment;
+    public static String date;
+    public static String time;
+    public static int payment;
     private   Context mcontext;
     Car_servece servic;
     Sub_categorie sub_categorie;
@@ -62,7 +62,14 @@ public class OrderPop {
      public interface OrderLisstenner{
          void onGoBasket();
      }
-     private void Calculate_total(List<Car_servece>  carList){
+    public interface POPLisstenner{
+        void ongetResult(String  result);
+    }
+    public OrderPop(Context mcontext) {
+        this.mcontext = mcontext;
+    }
+
+    private void Calculate_total(List<Car_servece>  carList){
          Total=0.0;
          for (Car_servece s :carList
          ) {
@@ -284,6 +291,7 @@ this.mcontext=mcontext;
                         } else {
                             Toast.makeText(mcontext, bascket.getMessageAr(), Toast.LENGTH_SHORT).show();
                         }
+                        lisstenner.onGoBasket();
                     }
                     @Override
                     public void onStart() {
@@ -295,7 +303,7 @@ this.mcontext=mcontext;
 
                     }
                 });
-                lisstenner.onGoBasket();
+
 
 
             }
@@ -352,7 +360,7 @@ this.mcontext=mcontext;
         });
 
     }
-   public void GetDate_pop( Context mcontext){
+   public void GetDate_pop( final POPLisstenner lisstenner){
 
        final RoundedBottomSheetDialog mBottomSheetDialog = new RoundedBottomSheetDialog(mcontext);
        LayoutInflater inflater = (LayoutInflater) mcontext.getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -369,7 +377,9 @@ this.mcontext=mcontext;
                String formatedDate = format.format(calendarView.getDate());
                Log.d("date", formatedDate);
                OrderPop.date=formatedDate;
+               lisstenner.ongetResult(date);
                mBottomSheetDialog.dismiss();
+
 
 
            }
@@ -377,14 +387,14 @@ this.mcontext=mcontext;
 
 
    }
-    public void GetTime_pop( Context mcontext){
+    public void GetTime_pop( final POPLisstenner lisstenner){
 
         final RoundedBottomSheetDialog mBottomSheetDialog = new RoundedBottomSheetDialog(mcontext);
         LayoutInflater inflater = (LayoutInflater) mcontext.getSystemService(LAYOUT_INFLATER_SERVICE);
         final View sheetView = inflater.inflate(R.layout.bottom_sheet_time, null);
         mBottomSheetDialog.setContentView(sheetView);
         mBottomSheetDialog.show();
-        final TimePicker timePicker=sheetView.findViewById(R.id.timer);
+        final TimePicker timePicker=sheetView.findViewById(R.id.time);
         timePicker.setIs24HourView(true);
         Button save=sheetView.findViewById(R.id.save_btn);
         save.setOnClickListener(new View.OnClickListener() {
@@ -411,6 +421,8 @@ this.mcontext=mcontext;
 
                 Log.d("date", hour +":"+ minute+" "+am_pm);
                 OrderPop.time=hour +":"+ minute+" "+am_pm;
+                lisstenner.ongetResult(time);
+
                 mBottomSheetDialog.dismiss();
 
 
@@ -419,7 +431,7 @@ this.mcontext=mcontext;
 
 
     }
-    public void GetWay_pop( Context mcontext){
+    public void GetWay_pop(final POPLisstenner lisstenner){
 
         final RoundedBottomSheetDialog mBottomSheetDialog = new RoundedBottomSheetDialog(mcontext);
         LayoutInflater inflater = (LayoutInflater) mcontext.getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -436,7 +448,7 @@ this.mcontext=mcontext;
         payment1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                OrderPop.payment=1;
+                OrderPop.payment=2;
                 check1.setVisibility(View.VISIBLE);
                 check2.setVisibility(View.GONE);
                 check3.setVisibility(View.GONE);
@@ -446,7 +458,7 @@ this.mcontext=mcontext;
         payment2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                OrderPop.payment=2;
+                OrderPop.payment=3;
                 check2.setVisibility(View.VISIBLE);
                 check1.setVisibility(View.GONE);
                 check3.setVisibility(View.GONE);
@@ -456,7 +468,7 @@ this.mcontext=mcontext;
         payment3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                OrderPop.payment=3;
+                OrderPop.payment=1;
                 check3.setVisibility(View.VISIBLE);
                 check2.setVisibility(View.GONE);
                 check1.setVisibility(View.GONE);
@@ -470,6 +482,7 @@ this.mcontext=mcontext;
             public void onClick(View view) {
 
                 Log.d("payment", String.valueOf(payment));
+                lisstenner.ongetResult( String.valueOf(payment));
 
                 mBottomSheetDialog.dismiss();
 

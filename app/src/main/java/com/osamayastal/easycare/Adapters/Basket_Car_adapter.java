@@ -67,13 +67,13 @@ public class Basket_Car_adapter extends RecyclerView.Adapter<Basket_Car_adapter.
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
-Double price=mItems.get(position).getSubCategory_basketList().get(0).getPrice();
+Double price=mItems.get(position).getSize().getPrice();
         holder.name.setText(mItems.get(position).getCar_name());
-        holder.price.setText(mItems.get(position).getSize().getPrice().toString());
+
         if (new User_info(mContext).getLanguage().equals("en")){
-            holder.size.setText(mItems.get(position).getSize().getEnName());
+            holder.size.setText(mItems.get(position).getSize().getEnName()+" - "+price+mContext.getString(R.string.RS_chort));
         }else {
-            holder.size.setText(mItems.get(position).getSize().getArName());
+            holder.size.setText(mItems.get(position).getSize().getArName()+" - "+price+mContext.getString(R.string.RS_chort));
         }
 Basket_car_details_adapter adapter=new Basket_car_details_adapter(mContext,mItems.get(position).getSubCategory_basketList(),null);
         holder.RV.setLayoutManager(new LinearLayoutManager(mContext,RecyclerView.VERTICAL,false));

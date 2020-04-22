@@ -67,8 +67,8 @@ public class Car_adapter extends RecyclerView.Adapter<Car_adapter.ViewHolder> {
         int k=position+1;
         mItems.get(position).setCar_name(mContext.getString(R.string.car_name)+" "+k);
 
-    holder.name.setText(mItems.get(position).getCar_name()+"("
-            +mItems.get(position).getTotal().toString()+mContext.getString(R.string.RS_chort)+")");
+    holder.name.setText(mItems.get(position).getCar_name()+"\n"
+            +mItems.get(position).getTotal().toString()+mContext.getString(R.string.RS_chort));
     holder.delet.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
