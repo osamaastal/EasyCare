@@ -24,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -69,14 +70,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Fragment home_frag, myOrders_frag, myPlace_frag, basket_frag, profile_frag;
     public static Toolbar toolbar;
 public static  FragmentTransaction transaction;
-public static BottomNavigationView bottom_navigation;
+    public static BottomNavigationView bottom_navigation;
+    public static LinearLayout linear_bottom;
 private TextView langu;
     User_info user_info;
   public static   int item_select;
+  public static  FrameLayout frameLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        frameLayout=findViewById(R.id.mainContainer);
 /******************************Test Fore user_Login*************************************/
        user_info=new User_info(this);
         if (user_info.getId()==null){
@@ -134,7 +138,8 @@ private TextView langu;
 
         /********************Bottom nav view**********************/
         item_select=R.id.home;
-         bottom_navigation = findViewById(R.id.bottom_navigation);
+        linear_bottom = findViewById(R.id.linear_bottom);
+        bottom_navigation = findViewById(R.id.bottom_navigation);
         fragmentManager = getSupportFragmentManager();
         home_frag = new Home();
         myOrders_frag = new MyOrders();
@@ -207,12 +212,20 @@ private TextView langu;
     @Override
     public void onBackPressed() {
         return;
-//        super.onBackPressed();
     }
 
     public static void SetVisibillty(int visibl){
         toolbar.setVisibility(visibl);
-        bottom_navigation.setVisibility(visibl);
+        linear_bottom.setVisibility(visibl);
+
+       if (visibl==View.VISIBLE){
+           frameLayout.setPadding(0, 0, 0, 50);
+       }else {
+           frameLayout.setPadding(0, 0, 0, 0);
+
+       }
+
+
     }
     public void LoginAlert(){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);

@@ -51,10 +51,15 @@ public class EditProfile extends Fragment implements View.OnClickListener {
     private void Loading_data() {
         User_info user_info=new User_info(getContext());
         fullname.setText(user_info.getName());
-        address.setText(user_info.getAddress());
+        if (Add_New_Address_Map.Location!=null){
+            address.setText(Add_New_Address_Map.Location);
+        }else {
+            address.setText(user_info.getAddress());
+        }
         email.setText(user_info.getEmail());
-        city.setText(user_info.getCity());
+
         city_id=user_info.getCityID();
+        Getcity();
     }
     private void show_bottomSheet(){
 
@@ -65,26 +70,40 @@ public class EditProfile extends Fragment implements View.OnClickListener {
         mBottomSheetDialog.show();
         final Wheel3DView wheel3DView=sheetView.findViewById(R.id.wheel);
         final ProgressBar progressBar=sheetView.findViewById(R.id.progress);
-        final List<City> cityList=new ArrayList<>();
+
+        wheel3DView.setEntries(cities);
+        Button save=sheetView.findViewById(R.id.save_btn);
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                city.setText(wheel3DView.getCurrentItem());
+                city_id=cityList.get(wheel3DView.getCurrentIndex()).get_id();
+                Log.d("City ID", city_id);
+
+                mBottomSheetDialog.dismiss();
+            }
+        });
+
+    }
+    final List<City> cityList=new ArrayList<>();
+     List<String> cities=new ArrayList<>();
+    private void Getcity(){
         City_root root=new City_root();
         root.GetCities(getContext(), new City_root.cityListener() {
             @Override
-            public void onSuccess(final com.osamayastal.easycare.Model.Controle.City cities) {
-                progressBar.setVisibility(View.GONE);
-                cityList.clear();
-                cityList.addAll(cities.getItems());
-                wheel3DView.setEntries(cities.getCityList());
-                Button save=sheetView.findViewById(R.id.save_btn);
-                save.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        city.setText(wheel3DView.getCurrentItem());
-                        city_id=cities.getItems().get(wheel3DView.getCurrentIndex()).get_id();
-                        Log.d("City ID", city_id);
+            public void onSuccess(final com.osamayastal.easycare.Model.Controle.City cities_) {
+              cities=cities_.getCityList();
 
-                        mBottomSheetDialog.dismiss();
+                cityList.clear();
+                cityList.addAll(cities_.getItems());
+                for (int i=0; i<cityList.size();i++
+                     ) {
+                    if (cityList.get(i).get_id().equals(city_id)){
+                        city.setText(cities.get(i));
+                        return;
                     }
-                });
+                }
+
             }
 
             @Override
@@ -101,8 +120,8 @@ public class EditProfile extends Fragment implements View.OnClickListener {
 
     }
     private ImageView back;
-    public EditText email,fullname,address;
-    private TextView city;
+    public EditText email,fullname;
+    private TextView city,address;
     private Button save;
     private void init(View view) {
         back=view.findViewById(R.id.back_btn);
@@ -115,6 +134,7 @@ public class EditProfile extends Fragment implements View.OnClickListener {
         save.setOnClickListener(this);
         back.setOnClickListener(this);
         city.setOnClickListener(this);
+        address.setOnClickListener(this);
 
     }
 
@@ -132,6 +152,9 @@ public class EditProfile extends Fragment implements View.OnClickListener {
           case R.id.city_tv:
              show_bottomSheet();
               break;
+          case R.id.address_ed:
+             switchFGM(new Add_New_Address_Map());
+              break;
 
       }
     }
@@ -144,14 +167,14 @@ public class EditProfile extends Fragment implements View.OnClickListener {
         List<EditText> list=new ArrayList<>();
         list.add(fullname);
         list.add(email);
-        list.add(address);
         if (Verefy(list)){
            User mUser=new User();
            mUser.setCity_id(city_id);
            mUser.setFullName(fullname.getText().toString());
            mUser.setAddress(address.getText().toString());
            mUser.setEmail(email.getText().toString());
-
+            mUser.setLat(Add_New_Address_Map.mLatLng.latitude);
+            mUser.setLng(Add_New_Address_Map.mLatLng.longitude);
             user user=new user();
             user.Post_update_user(getContext(),mUser , new user.user_Listener() {
                 @Override

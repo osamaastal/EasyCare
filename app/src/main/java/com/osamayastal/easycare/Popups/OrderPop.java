@@ -56,7 +56,8 @@ public class OrderPop {
     List<Sub_service>  sub_servics;
     List<Size>  sizeList;
     Double Total=0.0;
-    TextView price;
+    TextView price,basket_nb;
+    ImageButton basket;
      int i=-1;
      public interface OrderLisstenner{
          void onGoBasket();
@@ -68,9 +69,16 @@ public class OrderPop {
              Total=Total+s.getTotal();
          }
          price.setText(Total.toString());
+
+         if (Total==0.0){
+             basket.setBackground(mcontext.getDrawable(R.drawable.bg_circle_gray));
+         }
+         else {
+             basket.setBackground(mcontext.getDrawable(R.drawable.bg_circle_basket));
+         }
      }
     public void AddOrder_pop(final Context mcontext, final String cat_id, final String prov_id, final OrderLisstenner lisstenner){
-
+this.mcontext=mcontext;
         final RoundedBottomSheetDialog mBottomSheetDialog = new RoundedBottomSheetDialog(mcontext);
         LayoutInflater inflater = (LayoutInflater) mcontext.getSystemService(LAYOUT_INFLATER_SERVICE);
         final View sheetView = inflater.inflate(R.layout.bottom_sheet_add_car, null);
@@ -169,6 +177,16 @@ public class OrderPop {
             public void Ondelete(Car_servece car_servece) {
                 Calculate_total(carList);
                 i=-1;
+//////////////////////////////Init////////////////////////////////////
+                for (Sub_service s:sub_servics
+                ) {
+                    s.setActive(false);
+                }
+
+                size_adapter.item_select=-1;
+
+                subCategories_adapter.notifyDataSetChanged();
+                size_adapter.notifyDataSetChanged();
             }
         });
         car.setAdapter(car_adapter);
@@ -178,16 +196,10 @@ public class OrderPop {
 
 
         ////////////////////////////////////////Button
-        ImageButton basket,add;
+        ImageButton add;
 
         basket=sheetView.findViewById(R.id.basket_btn);
-        basket.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-               lisstenner.onGoBasket();
 
-            }
-        });
         add=sheetView.findViewById(R.id.add);
 
         add.setOnClickListener(new View.OnClickListener() {
@@ -214,8 +226,6 @@ public class OrderPop {
                     carList.add(servic);
                     Calculate_total(carList);
                     servic=new Car_servece();
-                    int k=carList.size()+1;
-                    servic.setCar_name(mcontext.getString(R.string.car_name)+" "+k);
                     servic.setCategory_id(sub_categorie.get_id());
 
 
@@ -226,7 +236,7 @@ public class OrderPop {
 
 
                 }else {
-                    Toast.makeText(mcontext,"make sur you select service details and size",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mcontext,"يجب احتيار عنصر على الأقل من نوع الخدمة و تفاصيل الخدمة",Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -237,7 +247,7 @@ public class OrderPop {
         });
 
 ///////////////////////////////Textview
-        final TextView service_name,service_details,basket_nb;
+        final TextView service_name,service_details;
         final ImageView service_img;
 
         service_name=sheetView.findViewById(R.id.service_title);
@@ -248,8 +258,8 @@ public class OrderPop {
 
         service_details.setText("");
         int nb=new User_info(mcontext).getBasket();
+        basket.setBackground(mcontext.getDrawable(R.drawable.bg_circle_gray));
         if (nb==0){
-            basket.setBackground(mcontext.getDrawable(R.drawable.bg_circle_gray));
             basket_nb.setVisibility(View.GONE);
         }
         else {
@@ -257,9 +267,13 @@ public class OrderPop {
         }
         ////////save data
         Button save=sheetView.findViewById(R.id.save_btn);
-        save.setOnClickListener(new View.OnClickListener() {
+        basket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (carList.size()==0){
+                    Toast.makeText(mcontext,"يجب احتيار عنصر على الأقل",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Bascket_root root=new Bascket_root();
                 Car_servece car_servece=new Car_servece();
                 root.PostService(mcontext, car_servece.Order_JSON(prov_id, carList), new Bascket_root.PostbasketListener() {
@@ -281,7 +295,7 @@ public class OrderPop {
 
                     }
                 });
-                mBottomSheetDialog.dismiss();
+                lisstenner.onGoBasket();
 
 
             }

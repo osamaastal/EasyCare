@@ -78,9 +78,24 @@ public class Basket_Service_adapter extends RecyclerView.Adapter<Basket_Service_
                 .load(mItems.get(position).getCategory_id().getImage())
         .into(holder.img);
 
-        Basket_Car_adapter adapter=new Basket_Car_adapter(mContext,mItems.get(position).getSub_services(),null);
-        holder.RV.setLayoutManager(new LinearLayoutManager(mContext,RecyclerView.VERTICAL,false));
-        holder.RV.setAdapter(adapter);
+        if (mItems.get(position).getSub_services().size()==0){
+            mItems.remove(position);
+            notifyDataSetChanged();
+        }else {
+            Basket_Car_adapter adapter=new Basket_Car_adapter(mContext, mItems.get(position).getSub_services(), new Basket_Car_adapter.Selected_item() {
+                @Override
+                public void Onselcted(Car_servece car_servece) {
+                    if (mItems.get(position).getSub_services().size()==0){
+                        mItems.remove(position);
+                        notifyDataSetChanged();
+                    }
+                    listenner.Onselcted(null);
+                }
+            });
+            holder.RV.setLayoutManager(new LinearLayoutManager(mContext,RecyclerView.VERTICAL,false));
+            holder.RV.setAdapter(adapter);
+        }
+
 
 
     }

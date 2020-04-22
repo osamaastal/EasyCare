@@ -320,7 +320,8 @@
                     android:paddingStart="60dp"
                     android:paddingEnd="15dp"
                     android:text="@string/changePassword"
-                    android:textAllCaps="false" />
+                    android:textAllCaps="false"
+                    android:layout_marginBottom="10dp"/>
             </com.chinodev.androidneomorphframelayout.NeomorphFrameLayout>
 
 

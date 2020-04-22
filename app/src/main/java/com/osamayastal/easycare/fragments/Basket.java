@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.osamayastal.easycare.Adapters.Basket_Service_adapter;
 import com.osamayastal.easycare.Adapters.Basket_adapter;
 import com.osamayastal.easycare.Model.Classes.Basket.Bascket;
+import com.osamayastal.easycare.Model.Classes.Car_servece;
 import com.osamayastal.easycare.Model.Rootes.Bascket_root;
 import com.osamayastal.easycare.R;
 
@@ -31,11 +32,11 @@ public class Basket extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_basket, container, false);
         init(view);
-        loading();
+        loading(view);
         return view;
     }
 
-    private void loading() {
+    private void loading(final View view) {
         Bascket_root root=new Bascket_root();
         root.GetBasket(getContext(), 0, new Bascket_root.GetbasketListener() {
             @Override
@@ -44,6 +45,15 @@ public class Basket extends Fragment implements View.OnClickListener {
                 baskets.addAll(bascket_.getItems());
                 adapter.notifyDataSetChanged();
                 progressBar.setVisibility(View.GONE);
+                if (baskets.size()==0){
+                    view.findViewById(R.id.linear_no_results).setVisibility(View.VISIBLE);
+                    view.findViewById(R.id.tot_lay).setVisibility(View.GONE);
+                    view.findViewById(R.id.save_btn).setVisibility(View.GONE);
+                }else {
+                    view.findViewById(R.id.linear_no_results).setVisibility(View.GONE);
+                    view.findViewById(R.id.tot_lay).setVisibility(View.VISIBLE);
+                    view.findViewById(R.id.save_btn).setVisibility(View.VISIBLE);
+                }
                 subtotal.setText(bascket_.getTotal_price().toString());
                 discount.setText("00");
                 total.setText(bascket_.getTotal_price().toString());
@@ -67,7 +77,7 @@ public class Basket extends Fragment implements View.OnClickListener {
     List<Bascket> baskets;
     Basket_adapter adapter;
     ProgressBar progressBar;
-    private void init(View view) {
+    private void init(final View view) {
         RV=view.findViewById(R.id.RV_basket);
         subtotal=view.findViewById(R.id.subtotal);
         discount=view.findViewById(R.id.discount_amount_tv);
@@ -78,7 +88,16 @@ public class Basket extends Fragment implements View.OnClickListener {
         save.setOnClickListener(this);
         baskets=new ArrayList<>();
         RV.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false));
-         adapter=new Basket_adapter(getContext(),baskets,null);
+         adapter=new Basket_adapter(getContext(), baskets, new Basket_adapter.Selected_item() {
+             @Override
+             public void Onselcted(Car_servece car_servece) {
+                 if (baskets.size()==0){
+                     view.findViewById(R.id.linear_no_results).setVisibility(View.VISIBLE);
+                     view.findViewById(R.id.tot_lay).setVisibility(View.GONE);
+                     view.findViewById(R.id.save_btn).setVisibility(View.GONE);
+                 }
+             }
+         });
         RV.setAdapter(adapter);
     }
 

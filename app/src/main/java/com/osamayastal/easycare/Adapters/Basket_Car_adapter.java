@@ -94,6 +94,7 @@ Basket_car_details_adapter adapter=new Basket_car_details_adapter(mContext,mItem
                         if (bascket.isStatus()){
                             mItems.remove(mItems.get(position));
                             notifyDataSetChanged();
+                            listenner.Onselcted(null);
                         }
                     }
 

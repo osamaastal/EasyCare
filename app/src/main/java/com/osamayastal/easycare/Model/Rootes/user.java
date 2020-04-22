@@ -446,13 +446,7 @@ public class user {
             public Map<String, String> getHeaders() throws AuthFailureError {
 
                 Map<String, String>  Headers = new HashMap<String, String>();
-//                Headers.put("Content-Type","multipart/form-data; boundary=<calculated when request is sent>");
-//                Headers.put("Content-Length","<calculated when request is sent>");
-//                Headers.put("Host","<calculated when request is sent>");
-//                Headers.put("User-Agent","PostmanRuntime/7.24.0");
-//                Headers.put("Accept","*/*");
-//                Headers.put("Accept-Encoding","gzip, deflate, br");
-//                Headers.put("Connection","keep-alive");
+
                 Headers.put("token",token);
 
                 return  Headers;
@@ -462,9 +456,13 @@ public class user {
             {
                 Map<String, String>  parameters = new HashMap<String, String>();
                 parameters.put("full_name",user.getFullName());
-                parameters.put("address",user.getAddress());
                 parameters.put("email",user.getEmail());
                 parameters.put("city_id",user.getCity_id());
+
+                parameters.put("address",user.getAddress());
+                parameters.put("lat",user.getLat().toString());
+                parameters.put("lng",user.getLng().toString());
+
                 Log.d("parametters",parameters.toString());
                 return parameters;
             }

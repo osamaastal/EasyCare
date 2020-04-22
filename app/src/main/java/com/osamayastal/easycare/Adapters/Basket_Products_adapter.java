@@ -94,6 +94,7 @@ public class Basket_Products_adapter extends RecyclerView.Adapter<Basket_Product
                        if (bascket.isStatus()){
                            mItems.remove(mItems.get(position));
                            notifyDataSetChanged();
+                           listenner.Onselcted(null);
                        }
                     }
 

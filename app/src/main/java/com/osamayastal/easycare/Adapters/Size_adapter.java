@@ -62,10 +62,11 @@ public class Size_adapter extends RecyclerView.Adapter<Size_adapter.ViewHolder> 
     @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
+        Double price=mItems.get(position).getPrice();
 if(new User_info(mContext).getLanguage().equals("en")){
-    holder.name.setText(mItems.get(position).getEnName());
+    holder.name.setText(mItems.get(position).getEnName()+" "+price+mContext.getString(R.string.RS_chort));
 }else {
-    holder.name.setText(mItems.get(position).getArName());
+    holder.name.setText(mItems.get(position).getArName()+" "+price+mContext.getString(R.string.RS_chort));
 
 }
 

@@ -11,7 +11,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.maps.model.LatLng;
 import com.osamayastal.easycare.Model.Const.Server_info;
+import com.osamayastal.easycare.Model.Const.User_info;
 import com.osamayastal.easycare.Model.Controle.Home;
 import com.osamayastal.easycare.Model.Controle.Maps;
 import com.osamayastal.easycare.Model.Controle.Search;
@@ -29,21 +31,22 @@ public class Search_root {
         void onFailure(String msg);
     }
     private RequestQueue queue;
-    public void GetSearch(final Context mcontext,final String category_id,
+    public void GetSearch(final Context mcontext, final String category_id,
                           final String city_id,
                           final String name,
-                          final int rate,
+                          final String rate,
                           final int page,
                           final int raduis,
-                          final homeListener listener)
+                          LatLng mLatLng, final homeListener listener)
     {
 
        listener.onStart();
             String url= Server_info.API +"api/mobile/getProviderSearchFilter?page="+page
                     +"&limit=10&rate="+rate+"&city_id="+city_id+"&category_id="+category_id
-                    +"&name=ا"+name+"&raduis="+raduis;
+                    +"&name=ا"+name+"&raduis="+raduis+"&lat="+mLatLng.latitude+"&lng="+mLatLng.longitude;
+        Log.d("Response", url);
 
-
+        final String token=new User_info(mcontext).getToken();
             if (queue == null) {
                 queue = Volley.newRequestQueue(mcontext);  // this = context
                 //Build.logError("Setting a new request queue");
@@ -73,15 +76,13 @@ public class Search_root {
         }){
 
 
-//            @Override
-//            protected Map<String, String> getParams() throws AuthFailureError {
-//                Map<String, String> parameters = new HashMap<>();
-//                if (rate!=-1) parameters.put("rate",rate+"");
-//                    if (city_id!=null) parameters.put("city_id",city_id);
-//                    if (category_id!=null) parameters.put("category_id",category_id);
-//                parameters.put("name",name);
-//                return  parameters;
-//            }
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> parameters = new HashMap<>();
+
+                parameters.put("token",token);
+                return  parameters;
+            }
         };
         queue.add(request);
 

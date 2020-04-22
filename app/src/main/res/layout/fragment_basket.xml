@@ -63,6 +63,7 @@
            >
 <ProgressBar
     android:padding="10dp"
+    android:backgroundTint="#F1EBEB"
     android:layout_gravity="center"
     android:background="@drawable/bg_circle_gray"
     android:layout_width="50dp"
@@ -76,7 +77,43 @@
                 android:layout_marginEnd="18dp"
                 android:layout_marginBottom="0dp"
                 android:layout_marginTop="10dp"/>
+
             <LinearLayout
+               android:visibility="gone"
+                android:id="@+id/linear_no_results"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                app:layout_constraintVertical_bias="0.15"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/no_search_results_img"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/no_basket_item"
+                    style="@style/text_darkblue_bold_22"
+                    android:layout_marginTop="30dp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/no_search_result_1"
+                    style="@style/text_darkblue_roman_16_special"
+                    android:layout_marginTop="0dp"
+                    android:gravity="center"
+                    android:layout_marginEnd="35dp"
+                    android:layout_marginStart="35dp"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/tot_lay"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -183,7 +220,7 @@
         android:layout_height="100dp"
         android:layout_marginStart="0dp"
         android:layout_marginEnd="0dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="30dp"
         android:paddingTop="20dp"
         android:background="@color/white_op85"
         app:layout_constraintBottom_toBottomOf="parent">

@@ -133,7 +133,7 @@ private ImageButton search_btn;
 ///////////////////////////////////////////////////*****************GetLastKnownLocation*****************************************/
             Location gpsLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             Location networkLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-            mLatLng=new LatLng(gpsLocation.getLatitude(),gpsLocation.getLongitude());
+            mLatLng=new LatLng(networkLocation.getLatitude(),networkLocation.getLongitude());
             Log.d("location",mLatLng.toString());
             dialog.dismiss();
 

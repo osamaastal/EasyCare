@@ -16,24 +16,28 @@ private String lat;
 private long wallet;
 private  int point,basket;
     public User_info(Context mcontext) {
-        final SharedPreferences sp=mcontext.getSharedPreferences("Login", MODE_PRIVATE);
-        id=sp.getString("id",null);
-        token=sp.getString("token","");
-        phone=sp.getString("phone","+966 000-0000-00");
-        name=sp.getString("name","إسم العميل");
-        email=sp.getString("email","mail@email.com");
-        image=sp.getString("image","");
-        gender=sp.getString("gender","");
-        city=sp.getString("city"," ");
-        cityID=sp.getString("cityID"," ");
-        address=sp.getString("address"," ");
-        lat=sp.getString("lat","");
-        lng=sp.getString("lng","");
-        pw=sp.getString("pw","");
-        wallet=sp.getLong("wallet", (long) 0.0);
-        point=sp.getInt("point", 0);
-        basket=sp.getInt("basket", 0);
-        language=sp.getString("language","ar");
+        try {
+            final SharedPreferences sp=mcontext.getSharedPreferences("Login", MODE_PRIVATE);
+            id=sp.getString("id",null);
+            token=sp.getString("token","");
+            phone=sp.getString("phone","+966 000-0000-00");
+            name=sp.getString("name","إسم العميل");
+            email=sp.getString("email","mail@email.com");
+            image=sp.getString("image","");
+            gender=sp.getString("gender","");
+            city=sp.getString("city"," ");
+            cityID=sp.getString("cityID"," ");
+            address=sp.getString("address"," ");
+            lat=sp.getString("lat","");
+            lng=sp.getString("lng","");
+            pw=sp.getString("pw","");
+            wallet=sp.getLong("wallet", (long) 0.0);
+            point=sp.getInt("point", 0);
+            basket=sp.getInt("basket", 0);
+            language=sp.getString("language","ar");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public User_info(String language, Context context) {
@@ -65,25 +69,29 @@ private  int point,basket;
 
     }
     public User_info(User user_, Context context) {
-        SharedPreferences sp=context.getSharedPreferences("Login", MODE_PRIVATE);
-        SharedPreferences.Editor Ed=sp.edit();
-        Ed.putString("phone",user_.getPhoneNumber() );
-        Ed.putString("id",user_.getId());
-        Ed.putString("token",user_.getToken());
-        Ed.putString("name",user_.getFullName());
-        Ed.putString("image",user_.getImage());
-        Ed.putString("pw",user_.getPassword());
+       try {
+           SharedPreferences sp=context.getSharedPreferences("Login", MODE_PRIVATE);
+           SharedPreferences.Editor Ed=sp.edit();
+           Ed.putString("phone",user_.getPhoneNumber() );
+           Ed.putString("id",user_.getId());
+           Ed.putString("token",user_.getToken());
+           Ed.putString("name",user_.getFullName());
+           Ed.putString("image",user_.getImage());
+           Ed.putString("pw",user_.getPassword());
 
-        Ed.putString("email",user_.getEmail());
-        Ed.putString("city",user_.getCity());
-        Ed.putString("cityID",user_.getCity_id());
-        Ed.putString("address",user_.getAddress());
-        Ed.putLong("wallet",user_.getWallet());
-        Ed.putString("lat", String.valueOf(user_.getLat()));
-        Ed.putString("lng", String.valueOf(user_.getLng()));
+           Ed.putString("email",user_.getEmail());
+           Ed.putString("city",user_.getCity());
+           Ed.putString("cityID",user_.getCity_id());
+           Ed.putString("address",user_.getAddress());
+           Ed.putLong("wallet",user_.getWallet());
+           Ed.putString("lat", String.valueOf(user_.getLat()));
+           Ed.putString("lng", String.valueOf(user_.getLng()));
 
-        Ed.commit();
-        new User_info(context);
+           Ed.commit();
+           new User_info(context);
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
     }
     public User_info(Context context,Boolean logout) {
         SharedPreferences sp=context.getSharedPreferences("Login", MODE_PRIVATE);

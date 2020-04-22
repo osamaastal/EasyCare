@@ -18,7 +18,8 @@
         android:id="@+id/mainContainer"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="0dp"
+        android:paddingBottom="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -66,10 +67,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
+        android:id="@+id/linear_bottom"
         android:background="@drawable/bg_botttom_nav_white"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent">
-
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation"
@@ -85,20 +86,6 @@
             app:itemTextColor="@drawable/item_selector"
             app:labelVisibilityMode="labeled"
             app:menu="@menu/main_menu" />
-        <!--        <com.ismaeldivita.chipnavigation.ChipNavigationBar-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="66dp"-->
-        <!--            android:layout_gravity="bottom"-->
-        <!--            android:background="@drawable/bg_req_darkblue_50dp_gradiant"-->
-        <!--            app:cnb_menuResource="@menu/main_menu"-->
-        <!--            app:itemIconTint="@drawable/item_selector"-->
-        <!--            app:itemTextColor="@drawable/item_selector"-->
-        <!--            android:gravity="center"-->
-        <!--            android:layout_marginBottom="20dp"-->
-        <!--            android:layout_marginEnd="15dp"-->
-        <!--            android:layout_marginStart="15dp"-->
-        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--            />-->
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

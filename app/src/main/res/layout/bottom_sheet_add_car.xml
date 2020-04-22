@@ -104,7 +104,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/service_details"
+                    android:text="@string/service_type"
                     style="@style/text_darkblue_bold_18"
                     android:layout_marginStart="40dp"
                     android:layout_marginTop="20dp"
@@ -127,7 +127,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/service_type"
+                    android:text="@string/service_details"
                     style="@style/text_darkblue_bold_18"
                     android:layout_marginStart="40dp"
                     android:layout_marginTop="20dp"

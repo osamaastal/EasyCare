@@ -64,11 +64,30 @@ public class Basket_adapter extends RecyclerView.Adapter<Basket_adapter.ViewHold
         holder.nb_service.setText(mItems.get(position).getCategories().size()+"");
         holder.name.setText(mItems.get(position).getProvider().getName()+"");
 
-        Basket_Service_adapter adapter=new Basket_Service_adapter(mContext,mItems.get(position).getCategories(),null);
+        Basket_Service_adapter adapter=new Basket_Service_adapter(mContext, mItems.get(position).getCategories(), new Basket_Service_adapter.Selected_item() {
+            @Override
+            public void Onselcted(Car_servece car_servece) {
+                if (mItems.get(position).getCategories().size()==0 && mItems.get(position).getProducts().size()==0){
+                    mItems.remove(position);
+                    notifyDataSetChanged();
+                    listenner.Onselcted(null);
+                }
+            }
+        });
         holder.RV_service.setLayoutManager(new LinearLayoutManager(mContext,RecyclerView.VERTICAL,false));
         holder.RV_service.setAdapter(adapter);
 
-        Basket_Products_adapter adapter2=new Basket_Products_adapter(mContext,mItems.get(position).getProducts(),null);
+        Basket_Products_adapter adapter2=new Basket_Products_adapter(mContext, mItems.get(position).getProducts(), new Basket_Products_adapter.Selected_item() {
+            @Override
+            public void Onselcted(Car_servece car_servece) {
+                if (mItems.get(position).getCategories().size()==0 && mItems.get(position).getProducts().size()==0){
+                    mItems.remove(position);
+                    notifyDataSetChanged();
+                    listenner.Onselcted(null);
+
+                }
+            }
+        });
         holder.RV_product.setLayoutManager(new LinearLayoutManager(mContext,RecyclerView.VERTICAL,false));
         holder.RV_product.setAdapter(adapter2);
 
