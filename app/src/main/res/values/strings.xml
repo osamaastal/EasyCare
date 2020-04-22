@@ -141,6 +141,9 @@
     <string name="take_location_map">تعديل العنوان</string>
     <string name="no_basket_item">لا يوجد عناصر بالسلة</string>
     <string name="soon">قريباً</string>
+    <string name="do_you_want_to_remove_this_item">هل تريد ازالة هذا العنصر؟</string>
+    <string name="confirm">تأكيد</string>
+    <string name="cancel">إلغاء</string>
 
 
 </resources>
