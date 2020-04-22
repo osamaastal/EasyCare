@@ -84,14 +84,27 @@
                         android:orientation="horizontal"
                         android:layoutDirection="rtl"
                         android:layout_marginTop="20dp">
-                        <ImageButton
-                            android:id="@+id/add"
+                        <LinearLayout
                             android:layout_width="120dp"
                             android:layout_height="45dp"
-                            android:src="@drawable/ic_plus"
-                            android:background="@drawable/bg_stroke_discreet"
-                            android:layout_marginEnd="15dp"
-                            />
+                            android:layout_marginEnd="8dp"
+                            android:gravity="center"
+                            android:background="@drawable/bg_stroke_discreet">
+                            <ImageView
+                                android:layout_width="12dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/add_car"/>
+                            <TextView
+                                android:id="@+id/add"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="طلب جديد"
+                                style="@style/text_darkblue_1_roman_16"
+                                android:layout_marginBottom="3dp"
+                                android:layout_marginStart="5dp"
+                                />
+                        </LinearLayout>
+
                         <androidx.recyclerview.widget.RecyclerView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
