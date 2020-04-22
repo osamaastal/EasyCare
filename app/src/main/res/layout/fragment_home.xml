@@ -82,7 +82,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="-50dp"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="0dp"
         android:scrollbars="vertical">
         <LinearLayout
             android:layout_width="match_parent"
@@ -244,12 +244,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
+                    app:layout_constraintVertical_bias="0"
                     app:layout_constraintTop_toBottomOf="@+id/tx3"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     android:id="@+id/RV_top_request"
                     tools:listitem="@layout/row_home_more_rates"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     android:orientation="horizontal"
-
+                    android:layout_marginBottom="60dp"
                     />
             </androidx.constraintlayout.widget.ConstraintLayout>
 

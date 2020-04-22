@@ -5,9 +5,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layoutDirection="rtl"
     android:orientation="vertical"
-    android:background="@drawable/bg_req_darkblue_50dp_dark_gradiant"
-
+    android:background="@drawable/bg_req_darkblue_16dp_gradiant"
     android:gravity="center_horizontal">
+<!--    bg_req_darkblue_50dp_dark_gradiant-->
     <View
         android:layout_width="50dp"
         android:layout_height="7dp"

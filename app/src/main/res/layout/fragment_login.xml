@@ -25,7 +25,6 @@
             android:id="@+id/skip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:text="@string/skip"
             style="@style/text_white_bold_16"
             android:drawablePadding="15dp"
@@ -135,6 +134,7 @@
             android:layout_gravity="start"
             android:padding="5dp"
             android:layout_marginBottom="0dp"
+            android:background="@drawable/bg_req_trans_blue"
             android:text="@string/forget_password"
             style="@style/text_black_roman_14"/>
 <!--        <View-->

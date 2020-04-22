@@ -9,4 +9,13 @@
                 android:endColor="#043D80"/>
         </shape>
     </item>
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <corners android:topLeftRadius="26dp"
+                android:bottomLeftRadius="26dp"/>
+            <gradient android:angle="0"
+                android:startColor="#419BCE"
+                android:endColor="#419BCE"/>
+        </shape>
+    </item>
 </selector>
