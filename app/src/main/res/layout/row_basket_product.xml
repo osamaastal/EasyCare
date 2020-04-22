@@ -5,8 +5,8 @@
     android:id="@+id/swipe_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="15dp"
-    android:layout_marginEnd="15dp"
+    android:layout_marginStart="3dp"
+    android:layout_marginEnd="3dp"
     android:layoutDirection="rtl"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="16dp"
@@ -39,12 +39,13 @@
             android:layout_marginEnd="18dp">
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="10dp">
+                android:layout_height="match_parent"
+                app:cardCornerRadius="10dp"
+                android:layout_margin="2dp">
                 <ImageView
                     android:id="@+id/Img"
-                    android:layout_width="80dp"
-                    android:layout_height="120dp"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
                     android:src="@drawable/test_product"
                     android:scaleType="centerCrop"
                     />
@@ -83,7 +84,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="5dp">
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -111,8 +112,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="left"
-                    android:layout_marginTop="10dp">
+                    android:gravity="end"
+                    android:layout_marginTop="5dp">
 
                     <ImageButton
                         android:id="@+id/mines"
