@@ -75,9 +75,7 @@
                     android:layout_marginTop="20dp"/>
                 <androidx.core.widget.NestedScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-
-                    >
+                    android:layout_height="wrap_content">
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -101,7 +99,7 @@
                                 android:id="@+id/add"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="طلب جديد"
+                                android:text="@string/new_service"
                                 style="@style/text_darkblue_1_roman_16"
                                 android:layout_marginBottom="3dp"
                                 android:layout_marginStart="5dp"
@@ -212,8 +210,8 @@
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:layout_marginTop="0dp"
-            android:paddingStart="35dp"
-            android:paddingEnd="35dp"
+            android:paddingStart="25dp"
+            android:paddingEnd="25dp"
             android:gravity="center"
             android:background="@color/white_op85"
             app:layout_constraintBottom_toBottomOf="parent">
@@ -249,7 +247,7 @@
                 android:drawableEnd="@drawable/ic_order_pink_44dp"
 
                 android:paddingEnd="15dp"
-                android:layout_marginStart="28dp"
+                android:layout_marginStart="20dp"
                 />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
