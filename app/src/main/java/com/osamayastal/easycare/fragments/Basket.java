@@ -44,22 +44,24 @@ public class Basket extends Fragment implements View.OnClickListener {
         root.GetBasket(getContext(), 0, new Bascket_root.GetbasketListener() {
             @Override
             public void onSuccess(com.osamayastal.easycare.Model.Controle.Bascket bascket_) {
-                baskets.clear();
-                baskets.addAll(bascket_.getItems());
-                adapter.notifyDataSetChanged();
-                progressBar.setVisibility(View.GONE);
-                if (baskets.size()==0){
-                    view.findViewById(R.id.linear_no_results).setVisibility(View.VISIBLE);
-                    view.findViewById(R.id.tot_lay).setVisibility(View.GONE);
-                    view.findViewById(R.id.save_btn).setVisibility(View.GONE);
-                }else {
-                    view.findViewById(R.id.linear_no_results).setVisibility(View.GONE);
-                    view.findViewById(R.id.tot_lay).setVisibility(View.VISIBLE);
-                    view.findViewById(R.id.save_btn).setVisibility(View.VISIBLE);
+                if (bascket_.getStatus()) {
+                    baskets.clear();
+                    baskets.addAll(bascket_.getItems());
+                    adapter.notifyDataSetChanged();
+                    progressBar.setVisibility(View.GONE);
+                    if (baskets.size() == 0) {
+                        view.findViewById(R.id.linear_no_results).setVisibility(View.VISIBLE);
+                        view.findViewById(R.id.tot_lay).setVisibility(View.GONE);
+                        view.findViewById(R.id.save_btn).setVisibility(View.GONE);
+                    } else {
+                        view.findViewById(R.id.linear_no_results).setVisibility(View.GONE);
+                        view.findViewById(R.id.tot_lay).setVisibility(View.VISIBLE);
+                        view.findViewById(R.id.save_btn).setVisibility(View.VISIBLE);
+                    }
+                    subtotal.setText(bascket_.getTotal_price().toString());
+                    discount.setText("00");
+                    total.setText(bascket_.getTotal_price().toString());
                 }
-                subtotal.setText(bascket_.getTotal_price().toString());
-                discount.setText("00");
-                total.setText(bascket_.getTotal_price().toString());
             }
 
             @Override

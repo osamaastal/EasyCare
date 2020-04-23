@@ -152,13 +152,13 @@ private ImageButton search_btn;
                             public void onSuccess(Location location) {
                                 // Got last known location. In some rare situations this can be null.
                                 if (location != null) {
-                                    Log.d("location",mLatLng.toString());
+
 
                                     if (gps==0 && mMap!=null) {
                                         mLatLng = new LatLng(location.getLatitude(),location.getLongitude());
                                         mMap.moveCamera(CameraUpdateFactory.newLatLng(mLatLng));
                                         Show_nearServic(mLatLng);
-
+                                        Log.d("location",mLatLng.toString());
                                         dialog.dismiss();
                                         gps=1;
                                     }
