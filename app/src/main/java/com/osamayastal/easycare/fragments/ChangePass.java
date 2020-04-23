@@ -57,8 +57,7 @@ public class ChangePass extends Fragment implements View.OnClickListener {
                 update_data();
                 break;
             case R.id.back_btn:
-                switchFGM(new Profile());
-                MainActivity.SetVisibillty(View.VISIBLE);
+              getActivity().finish();
 
                 break;
 

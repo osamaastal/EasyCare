@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.AppCompatCheckBox;
@@ -80,6 +81,8 @@ holder.checkBox.setOnClickListener(new View.OnClickListener() {
     public void onClick(View view) {
         mItems.get(position).setActive(holder.checkBox.isChecked());
         listenner.Onselcted(mItems.get(position));
+        notifyDataSetChanged();
+
     }
 });
 

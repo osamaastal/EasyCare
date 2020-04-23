@@ -40,6 +40,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.osamayastal.easycare.R;
+import com.osamayastal.easycare.activities.Auther_activity;
 import com.osamayastal.easycare.activities.MainActivity;
 
 import java.io.IOException;
@@ -255,9 +256,9 @@ try{
 
     }
     public void switchFGM(Fragment fragment){
-        MainActivity.transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        MainActivity. transaction.replace(R.id.mainContainer, fragment);
-        MainActivity. transaction.commit();
+        Auther_activity.transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        Auther_activity. transaction.replace(R.id.mainContainer, fragment);
+        Auther_activity. transaction.commit();
     }
 
 

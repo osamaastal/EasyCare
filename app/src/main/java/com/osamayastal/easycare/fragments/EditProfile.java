@@ -24,6 +24,7 @@ import com.osamayastal.easycare.Model.Controle.users;
 import com.osamayastal.easycare.Model.Rootes.City_root;
 import com.osamayastal.easycare.Model.Rootes.user;
 import com.osamayastal.easycare.R;
+import com.osamayastal.easycare.activities.Auther_activity;
 import com.osamayastal.easycare.activities.MainActivity;
 
 import java.util.ArrayList;
@@ -145,8 +146,7 @@ public class EditProfile extends Fragment implements View.OnClickListener {
               update_data();
               break;
           case R.id.back_btn:
-              switchFGM(new Profile());
-              MainActivity.SetVisibillty(View.VISIBLE);
+              getActivity().finish();
 
               break;
           case R.id.city_tv:
@@ -159,9 +159,9 @@ public class EditProfile extends Fragment implements View.OnClickListener {
       }
     }
     public void switchFGM(Fragment fragment){
-        MainActivity.transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        MainActivity. transaction.replace(R.id.mainContainer, fragment);
-        MainActivity. transaction.commit();
+        Auther_activity.transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        Auther_activity. transaction.replace(R.id.mainContainer, fragment);
+        Auther_activity. transaction.commit();
     }
     private void update_data() {
         List<EditText> list=new ArrayList<>();

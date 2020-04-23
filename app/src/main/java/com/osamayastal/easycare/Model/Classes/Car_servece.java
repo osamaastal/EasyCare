@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Car_servece {
 
-    private String size_id,providerSubCategory_id="",car_name,category_id;
+    private String size_id="",providerSubCategory_id="",car_name,category_id;
 private Double total=0.0;
     public Car_servece() {
     }

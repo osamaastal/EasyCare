@@ -158,11 +158,17 @@ this.mcontext=mcontext;
 
                 }
 
+
                 if (i!=-1) {
+                    if (id.isEmpty()){
+                        Toast.makeText(mcontext,"يجب احتيار عنصر على الأقل من نوع الخدمة ",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     carList.get(i).setProviderSubCategory_id(id);
                     carList.get(i).setTotal(tot);
                     Calculate_total(carList);
-
+                }else {
+                    servic.setProviderSubCategory_id(id);
                 }
 
             }
@@ -227,7 +233,9 @@ this.mcontext=mcontext;
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (servic.getSize_id()!=null && servic.getProviderSubCategory_id()!=null){
+                Log.d("size*******",servic.getSize_id()+"SubC********"+servic.getProviderSubCategory_id());
+
+                if (!servic.getSize_id().isEmpty() && !servic.getProviderSubCategory_id().isEmpty()){
                     String id=servic.getProviderSubCategory_id();
                     Double tot= size_price[0];
                     for (Sub_service s:sub_servics

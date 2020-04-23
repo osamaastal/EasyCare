@@ -64,7 +64,8 @@ public class Basket_adapter extends RecyclerView.Adapter<Basket_adapter.ViewHold
         holder.nb_service.setText(mItems.get(position).getCategories().size()+"");
         holder.name.setText(mItems.get(position).getProvider().getName()+"");
 
-        Basket_Service_adapter adapter=new Basket_Service_adapter(mContext, mItems.get(position).getCategories(), new Basket_Service_adapter.Selected_item() {
+        Basket_Service_adapter adapter=new Basket_Service_adapter(mContext, mItems.get(position).getCategories()
+                ,mItems.get(position).getCategorie(), new Basket_Service_adapter.Selected_item() {
             @Override
             public void Onselcted(Car_servece car_servece) {
                 if (mItems.get(position).getCategories().size()==0 && mItems.get(position).getProducts().size()==0){

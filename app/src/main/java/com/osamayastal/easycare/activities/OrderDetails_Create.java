@@ -62,7 +62,7 @@ private void Loading(){
             item_nb.setText(bascket.getCategories().size()+bascket.getProducts().size()+"");
             date_tv.setText(OrderPop.date);
             time_tv.setText(OrderPop.time);
-            service_adapter=new Basket_Service_adapter(this,bascket.getCategories(),null);
+            service_adapter=new Basket_Service_adapter(this,bascket.getCategories(),bascket.getCategorie(),null);
             service_RV.setLayoutManager(new LinearLayoutManager(this,RecyclerView.VERTICAL,false));
             service_RV.setAdapter(service_adapter);
 

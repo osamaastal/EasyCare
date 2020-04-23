@@ -131,11 +131,15 @@ private ImageButton search_btn;
                     .GPS_PROVIDER, 5000, 10, locationListener);
 
 ///////////////////////////////////////////////////*****************GetLastKnownLocation*****************************************/
-            Location gpsLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            Location networkLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-            mLatLng=new LatLng(networkLocation.getLatitude(),networkLocation.getLongitude());
-            Log.d("location",mLatLng.toString());
-            dialog.dismiss();
+            try {
+                Location gpsLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                Location networkLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                mLatLng=new LatLng(networkLocation.getLatitude(),networkLocation.getLongitude());
+                Log.d("location",mLatLng.toString());
+                dialog.dismiss();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
         } else {
 

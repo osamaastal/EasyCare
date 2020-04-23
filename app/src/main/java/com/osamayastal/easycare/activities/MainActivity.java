@@ -50,6 +50,7 @@ import com.osamayastal.easycare.fragments.Basket;
 import com.osamayastal.easycare.fragments.EditProfile;
 import com.osamayastal.easycare.fragments.Home;
 import com.osamayastal.easycare.fragments.LoginFrag;
+import com.osamayastal.easycare.fragments.MyFavorites;
 import com.osamayastal.easycare.fragments.MyOrders;
 import com.osamayastal.easycare.fragments.MyPlace;
 import com.osamayastal.easycare.fragments.Profile;
@@ -279,8 +280,8 @@ user_name_tv.setText(user_info.getName());
 
                 break;
             case R.id.drawer_about_tv:
-                switchFGM(new AboutUs());
-                SetVisibillty(View.GONE);
+                Auther_activity.fragment=new AboutUs();
+                startActivity(new Intent(MainActivity.this, Auther_activity.class));
 
                 break;
             case R.id.drawer_report_tv:

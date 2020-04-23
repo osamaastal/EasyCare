@@ -20,6 +20,7 @@ import com.osamayastal.easycare.Model.Classes.Basket.Bascket;
 import com.osamayastal.easycare.Model.Classes.Basket.Sub_service_basket;
 import com.osamayastal.easycare.Model.Classes.Basket.categories_basket;
 import com.osamayastal.easycare.Model.Classes.Car_servece;
+import com.osamayastal.easycare.Model.Classes.Categorie;
 import com.osamayastal.easycare.Model.Const.User_info;
 import com.osamayastal.easycare.Model.Controle.Result;
 import com.osamayastal.easycare.Model.Rootes.Bascket_root;
@@ -48,9 +49,11 @@ public class Basket_Service_adapter extends RecyclerView.Adapter<Basket_Service_
     }
     public static int item_select=-1;
     Selected_item listenner;
-    public Basket_Service_adapter(Context context, List<categories_basket> names, Selected_item listenner) {
+    Categorie categorie;
+    public Basket_Service_adapter(Context context, List<categories_basket> names, Categorie categorie, Selected_item listenner) {
         mItems = names;
         mContext = context;
+        this.categorie=categorie;
         this.listenner=listenner;
 
     }
@@ -81,7 +84,7 @@ public class Basket_Service_adapter extends RecyclerView.Adapter<Basket_Service_
                 .load(mItems.get(position).getCategory_id().getImage())
         .into(holder.img);
         try{
-            makeDrawable(Integer.parseInt(mItems.get(position).getCategory_id().getColor()),holder.img,0);
+            makeDrawable(Integer.parseInt(categorie.getColor()),holder.img,0);
         } catch (Exception e) {
             e.printStackTrace();
         }

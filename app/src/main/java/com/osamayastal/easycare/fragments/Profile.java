@@ -20,6 +20,7 @@ import com.osamayastal.easycare.Model.Const.User_info;
 import com.osamayastal.easycare.Model.Controle.users;
 import com.osamayastal.easycare.Model.Rootes.user;
 import com.osamayastal.easycare.R;
+import com.osamayastal.easycare.activities.Auther_activity;
 import com.osamayastal.easycare.activities.LoginActivity;
 import com.osamayastal.easycare.activities.MainActivity;
 
@@ -90,30 +91,26 @@ private ConstraintLayout favorit,order;
         order.setOnClickListener(this);
     }
     public void switchFGM(Fragment fragment){
-        MainActivity.transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        MainActivity. transaction.replace(R.id.mainContainer, fragment);
-        MainActivity. transaction.commit();
+        Auther_activity.fragment=new MyFavorites();
+        startActivity(new Intent(getActivity(), Auther_activity.class));
     }
     @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.logout_btn:
                 switchFGM(new ChangePass());
-                MainActivity.SetVisibillty(View.GONE);
 
                 break;
             case R.id.edit_btn:
                 switchFGM(new EditProfile());
-                MainActivity.SetVisibillty(View.GONE);
 
                 break;
             case R.id.favorit_btn:
                 switchFGM(new MyFavorites());
-                MainActivity.SetVisibillty(View.GONE);
+
 
                 break;
             case R.id.order_btn:
-//                switchFGM(new MyOrders());
                 MainActivity.item_select=R.id.my_orders;
                 MainActivity.bottom_navigation.setSelectedItemId(MainActivity.item_select);
 

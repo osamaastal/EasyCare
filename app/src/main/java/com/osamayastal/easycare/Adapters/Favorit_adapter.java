@@ -71,12 +71,13 @@ public class Favorit_adapter extends RecyclerView.Adapter<Favorit_adapter.ViewHo
         holder.name.setText(mItems.get(position).getProvider_id().getName());
         holder.address.setText(mItems.get(position).getProvider_id().getAddress());
 holder.ratingBar.setRating(mItems.get(position).getProvider_id().getRate());
-if (new User_info(mContext).getLanguage().equals("en")) {
-    holder.type.setText(mItems.get(position).getProvider_id().getCategory_id().getArName());
-}else {
-    holder.type.setText(mItems.get(position).getProvider_id().getCategory_id().getEnName());
-
-}
+        holder.type.setVisibility(View.GONE);
+//if (new User_info(mContext).getLanguage().equals("en")) {
+//    holder.type.setText(mItems.get(position).getProvider_id().getCategory_id().getEnName());
+//}else {
+//    holder.type.setText(mItems.get(position).getProvider_id().getCategory_id().getArName());
+//
+//}
 
        try {
            Picasso.with(mContext)
