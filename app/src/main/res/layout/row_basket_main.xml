@@ -12,15 +12,28 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="@drawable/bg_req_lightgray_30dp">
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/checkbox"
+            android:checked="true"
+            style="@style/text_black_roman_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="15dp"
+            android:button="@drawable/check_box_style"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
         <TextView
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="مغسلة الوفاء الجديدة"
             style="@style/text_darkblue_roman_14"
-            android:layout_marginStart="15dp"
+            android:layout_marginStart="10dp"
             android:layout_marginBottom="4dp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/checkbox"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
         <CheckBox
@@ -41,8 +54,8 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:paddingEnd="20dp"
-                android:paddingStart="20dp"
+                android:paddingEnd="15dp"
+                android:paddingStart="15dp"
                 android:layout_marginEnd="-40dp"
                 android:elevation="1dp"
                 android:gravity="center_vertical"
@@ -68,7 +81,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:paddingEnd="20dp"
+                android:paddingEnd="15dp"
                 android:paddingStart="45dp"
                 android:gravity="center_vertical"
                 android:background="@drawable/bg_req_green_gradiant_30dp"
