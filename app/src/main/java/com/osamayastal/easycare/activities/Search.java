@@ -35,8 +35,12 @@ import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.osamayastal.easycare.Adapters.City_adapter;
 import com.osamayastal.easycare.Adapters.Search_adapter;
 import com.osamayastal.easycare.Adapters.ServicType_adapter;
@@ -345,6 +349,8 @@ default_tv.setOnClickListener(new View.OnClickListener() {
             }
         }
     }
+    private FusedLocationProviderClient fusedLocationClient;
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
@@ -375,11 +381,23 @@ default_tv.setOnClickListener(new View.OnClickListener() {
                     .GPS_PROVIDER, 5000, 10, locationListener);
 ///////////////////////////////////////////////////*****************GetLastKnownLocation*****************************************/
            try {
-               Location gpsLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-               Location networkLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-               mLatLng=new LatLng(networkLocation.getLatitude(),networkLocation.getLongitude());
-               Log.d("location",mLatLng.toString());
-               dialog.dismiss();
+               fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+               fusedLocationClient.getLastLocation()
+                       .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                           @Override
+                           public void onSuccess(Location location) {
+                               // Got last known location. In some rare situations this can be null.
+                               if (location != null) {
+                                   mLatLng = new LatLng(location.getLatitude(),location.getLongitude());
+                                   Log.d("location",mLatLng.toString());
+                                   dialog.dismiss();
+//                                   Toast.makeText(Search.this, "lat: " + mLatLng.latitude + "lng: " + mLatLng.longitude, Toast.LENGTH_SHORT).show();
+
+                               }
+                           }
+                       });
+//
+
            } catch (Exception e) {
                e.printStackTrace();
            }

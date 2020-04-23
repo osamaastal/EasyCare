@@ -101,6 +101,7 @@ private TextView langu;
                 .withDragDistance(250)
                 .withRootViewScale(1f)
                 .withMenuOpened(false)
+                .withGravity(SlideGravity.RIGHT)
                 .withMenuLayout(R.layout.navigation_content)
                 .inject();
         View navigation = findViewById(R.id.nav_view);
