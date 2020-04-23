@@ -300,7 +300,7 @@
                 android:layout_marginStart="25dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="25dp"
-                android:layout_marginBottom="50dp"
+                android:layout_marginBottom="65dp"
                 app:neomorph_background_color="@color/white_fcfcfc"
                 app:neomorph_corner_radius="35dp"
                 app:neomorph_elevation="@dimen/neomorph_view_elevation"
@@ -320,8 +320,7 @@
                     android:paddingStart="60dp"
                     android:paddingEnd="15dp"
                     android:text="@string/changePassword"
-                    android:textAllCaps="false"
-                    android:layout_marginBottom="15dp"/>
+                    android:textAllCaps="false"/>
             </com.chinodev.androidneomorphframelayout.NeomorphFrameLayout>
 
 
