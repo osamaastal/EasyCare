@@ -91,7 +91,7 @@ private ConstraintLayout favorit,order;
         order.setOnClickListener(this);
     }
     public void switchFGM(Fragment fragment){
-        Auther_activity.fragment=new MyFavorites();
+        Auther_activity.fragment=fragment;
         startActivity(new Intent(getActivity(), Auther_activity.class));
     }
     @Override
