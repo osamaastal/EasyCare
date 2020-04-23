@@ -96,11 +96,9 @@ public class Basket extends Fragment implements View.OnClickListener {
          adapter=new Basket_adapter(getContext(), baskets, new Basket_adapter.Selected_item() {
              @Override
              public void Onselcted(Car_servece car_servece) {
-                 if (baskets.size()==0){
-                     view.findViewById(R.id.linear_no_results).setVisibility(View.VISIBLE);
-                     view.findViewById(R.id.tot_lay).setVisibility(View.GONE);
-                     view.findViewById(R.id.save_btn).setVisibility(View.GONE);
-                 }
+
+                 loading(view);
+//
              }
          });
         RV.setAdapter(adapter);

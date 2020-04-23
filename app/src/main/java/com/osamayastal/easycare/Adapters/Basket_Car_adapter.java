@@ -107,8 +107,6 @@ Basket_car_details_adapter adapter=new Basket_car_details_adapter(mContext,mItem
                                     Toast.makeText(mContext,bascket.getMessageAr(),Toast.LENGTH_SHORT).show();
                                 }
                                 if (bascket.isStatus()){
-                                    mItems.remove(mItems.get(position));
-                                    notifyDataSetChanged();
                                     listenner.Onselcted(null);
                                 }
                                 dialog.dismiss();

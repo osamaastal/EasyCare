@@ -2,6 +2,7 @@ package com.osamayastal.easycare.Adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.view.LayoutInflater;
@@ -84,27 +85,21 @@ public class Basket_Service_adapter extends RecyclerView.Adapter<Basket_Service_
                 .load(mItems.get(position).getCategory_id().getImage())
         .into(holder.img);
         try{
-            makeDrawable(Integer.parseInt(categorie.getColor()),holder.img,0);
+            makeDrawable(Color.parseColor(categorie.getColor()),holder.img,0);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (mItems.get(position).getSub_services().size()==0){
-            mItems.remove(position);
-            notifyDataSetChanged();
-        }else {
+
             Basket_Car_adapter adapter=new Basket_Car_adapter(mContext, mItems.get(position).getSub_services(), new Basket_Car_adapter.Selected_item() {
                 @Override
                 public void Onselcted(Car_servece car_servece) {
-                    if (mItems.get(position).getSub_services().size()==0){
-                        mItems.remove(position);
-                        notifyDataSetChanged();
-                    }
+
                     listenner.Onselcted(null);
                 }
             });
             holder.RV.setLayoutManager(new LinearLayoutManager(mContext,RecyclerView.VERTICAL,false));
             holder.RV.setAdapter(adapter);
-        }
+
 
 
 
