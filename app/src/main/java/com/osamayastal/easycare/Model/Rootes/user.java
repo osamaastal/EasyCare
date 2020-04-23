@@ -9,10 +9,12 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.osamayastal.easycare.Model.Classes.User;
 import com.osamayastal.easycare.Model.Const.User_info;
+import com.osamayastal.easycare.Model.Controle.Result;
 import com.osamayastal.easycare.Model.Controle.users;
 import com.osamayastal.easycare.Model.Const.Server_info;
 import com.osamayastal.easycare.R;
@@ -133,26 +135,19 @@ public class user {
         if (queue==null) {
             queue = Volley.newRequestQueue(mcontext);
         }
-        String url = Server_info.API+"api/mobile/updateprofile";
+        String url = Server_info.API+"api/mobile/updateprofileAndroid";
         final String token=new User_info(mcontext).getToken();
         lisenner.onStart();
-        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>()
+        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.POST, url, user_.toJsonObject(),
+                new Response.Listener<JSONObject>()
                 {
                     @Override
-                    public void onResponse(String response) {
-                        // response
-                        Log.d("Response", response);
-                        String jsonData = response;
-                        JSONObject Jobject = null;
-                        try {
-                            Jobject = new JSONObject(jsonData);
-                        } catch (JSONException e1) {
-                            e1.printStackTrace();
-                        }
+                    public void onResponse(JSONObject response) {
 
+                        Log.d("Response", response.toString());
 
-                        lisenner.onSuccess(new users(Jobject));
+                        lisenner.onSuccess(new users(response));
+
 
                     }
                 },
@@ -160,34 +155,25 @@ public class user {
                 {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        error.printStackTrace();
+
+//                        Log.d("Error.Response", error.getMessage());
                     }
                 }
-        ) {
+        ){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
 
                 Map<String, String>  Headers = new HashMap<String, String>();
-
-                Headers.put("token", token);
-
+                Headers.put("token",token);
                 return Headers;
             }
-
-            @Override
-            protected Map<String, String> getParams()
-            {
-                Map<String, String>  parameters = new HashMap<String, String>();
-
-                parameters.put("email", user_.getEmail());
-                parameters.put("full_name", user_.getFullName());
-                parameters.put("city_id", user_.getCity_id());
-                parameters.put("lat",String.valueOf(user_.getLat()));
-                parameters.put("lng", String.valueOf(user_.getLng()));
-                return parameters;
-            }
         };
-        queue.add(postRequest);
+
+        queue.getCache().initialize();
+// add it to the RequestQueue
+        queue.add(getRequest);
+        queue.getCache().clear();
+
 
 
 

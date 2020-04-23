@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
@@ -35,6 +36,8 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -44,6 +47,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.osamayastal.easycare.Model.Classes.Employee;
 import com.osamayastal.easycare.Model.Classes.Provider.Provider_map;
 import com.osamayastal.easycare.Model.Const.User_info;
@@ -57,6 +61,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import top.defaults.drawabletoolbox.DrawableBuilder;
 
 public class MyPlace extends Fragment implements OnMapReadyCallback, View.OnClickListener, GoogleMap.OnMarkerClickListener {
 
@@ -82,11 +88,19 @@ public class MyPlace extends Fragment implements OnMapReadyCallback, View.OnClic
             get_location();
         }
 
+
+
 init();
 
         return view;
     }
+    private FusedLocationProviderClient fusedLocationClient;
 
+    private void getCurrentLocation() {
+        if (getActivity()==null)
+            return;
+
+    }
     private  TextView name,address,dis,type;
     private ImageView img,like;
     private RatingBar ratingBar;
@@ -132,11 +146,29 @@ private ImageButton search_btn;
 
 ///////////////////////////////////////////////////*****************GetLastKnownLocation*****************************************/
             try {
-                Location gpsLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                Location networkLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                mLatLng=new LatLng(networkLocation.getLatitude(),networkLocation.getLongitude());
-                Log.d("location",mLatLng.toString());
-                dialog.dismiss();
+                fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
+                fusedLocationClient.getLastLocation()
+                        .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
+                            @Override
+                            public void onSuccess(Location location) {
+                                // Got last known location. In some rare situations this can be null.
+                                if (location != null) {
+
+
+                                    if (gps==0 && mMap!=null) {
+                                        mLatLng = new LatLng(location.getLatitude(),location.getLongitude());
+                                        mMap.moveCamera(CameraUpdateFactory.newLatLng(mLatLng));
+                                        Show_nearServic(mLatLng);
+                                        Log.d("location",mLatLng.toString());
+                                        dialog.dismiss();
+                                        gps=1;
+                                    }
+//                                    Toast.makeText(getContext(), "lat: " + mLatLng.latitude + "lng: " + mLatLng.longitude, Toast.LENGTH_SHORT).show();
+
+                                }
+                            }
+                        });
+//
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -162,7 +194,17 @@ private ImageButton search_btn;
         mMap.setMinZoomPreference(5);
 
     }
-
+    private void makeDrawable(int color, View view, int corner) {
+        Drawable drawable = new DrawableBuilder()
+                .rectangle()
+                .solidColor(color)//0xffe67e22
+//                .height(90)
+//                .width(90)
+                .cornerRadii(corner, corner, corner, corner)// pixel
+                // top-left  top-right  bottom-right   bottom-left
+                .build();
+        view.setBackground(drawable);
+    }
     @Override
     public boolean onMarkerClick(Marker marker) {
         final Provider_map provider =markersMap_prov.get(marker);
@@ -173,6 +215,22 @@ if (new User_info(getContext()).getLanguage().equals("en")){
 }else {
     type.setText(provider.getCategory_id().getArName());
 }
+        Location loc1 = new Location("");
+        loc1.setLatitude(mLatLng.latitude);
+        loc1.setLongitude(mLatLng.longitude);
+
+        Location loc2 = new Location("");
+        loc2.setLatitude(provider.getLat());
+        loc2.setLongitude(provider.getLng());
+
+        float distanceInMeters = loc1.distanceTo(loc2)/1000;
+        dis.setText(distanceInMeters+"");
+        try{
+            String color=provider.getCategory_id().getColor();
+            makeDrawable(Color.parseColor(color),type,18);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         if (!provider.getFavorite_id().equals("null")){
 
             like.setImageDrawable(getContext().getDrawable(R.drawable.ic_like));
@@ -264,14 +322,14 @@ if (new User_info(getContext()).getLanguage().equals("en")){
 
 
 
-            if (gps==0 && mMap!=null) {
-                mLatLng=new LatLng(loc.getLatitude(),loc.getLongitude());
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(mLatLng));
-                Show_nearServic(mLatLng);
-
-                dialog.dismiss();
-                gps=1;
-            }
+//            if (gps==0 && mMap!=null) {
+//                mLatLng=new LatLng(loc.getLatitude(),loc.getLongitude());
+//                mMap.moveCamera(CameraUpdateFactory.newLatLng(mLatLng));
+//                Show_nearServic(mLatLng);
+//
+//                dialog.dismiss();
+//                gps=1;
+//            }
 
         }
 
@@ -457,4 +515,6 @@ if (new User_info(getContext()).getLanguage().equals("en")){
 
                 }
             };
+
+
 }

@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.osamayastal.easycare.Adapters.Product_adapter;
 import com.osamayastal.easycare.Adapters.Provider_adapter;
+import com.osamayastal.easycare.Adapters.Provider_service_adapter;
+import com.osamayastal.easycare.Adapters.Provider_servicies_adapter;
 import com.osamayastal.easycare.Adapters.Search_adapter;
 import com.osamayastal.easycare.Model.Classes.Categorie;
 import com.osamayastal.easycare.Model.Classes.Product;
@@ -75,7 +77,7 @@ public class Service_Single extends AppCompatActivity implements View.OnClickLis
     RecyclerView RV;
     TextView title;
     List<com.osamayastal.easycare.Model.Classes.Provider.Provider> searchList;
-    Provider_adapter adapter;
+    Provider_service_adapter adapter;
     private void init() {
         progressBar=findViewById(R.id.progress);
         back=findViewById(R.id.back_btn);
@@ -84,12 +86,14 @@ public class Service_Single extends AppCompatActivity implements View.OnClickLis
         /******************Actions*******************/
         back.setOnClickListener(this);
         searchList=new ArrayList<>();
-        adapter=new Provider_adapter(this, searchList, new Provider_adapter.Selected_item() {
+        adapter=new Provider_service_adapter(this, searchList, new Provider_service_adapter.Selected_item() {
+
+
             @Override
             public void Onselcted(com.osamayastal.easycare.Model.Classes.Provider.Provider provider) {
                 ServiceProfiderDetails.provider= provider.toProvider();
-               startActivity(new Intent(Service_Single.this,ServiceProfiderDetails.class));
-               finish();
+                startActivity(new Intent(Service_Single.this,ServiceProfiderDetails.class));
+                finish();
             }
         });
         RV.setLayoutManager(new LinearLayoutManager(this,RecyclerView.VERTICAL,false));

@@ -18,6 +18,7 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,12 +34,15 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.osamayastal.easycare.R;
 import com.osamayastal.easycare.activities.Auther_activity;
 import com.osamayastal.easycare.activities.MainActivity;
@@ -60,6 +64,8 @@ private LinearLayout address_lay;
         // Required empty public constructor
     }
     private Boolean flag;
+    private FusedLocationProviderClient fusedLocationClient;
+
     @SuppressLint("MissingPermission")
     private void get_location() {
 
@@ -72,7 +78,26 @@ private LinearLayout address_lay;
 
             locationManager.requestLocationUpdates(LocationManager
                     .GPS_PROVIDER, 5000, 10, locationListener);
+            fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
+            fusedLocationClient.getLastLocation()
+                    .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            // Got last known location. In some rare situations this can be null.
+                            if (location != null) {
 
+
+                                if (gps==0 && mMap!=null) {
+                                    mLatLng = new LatLng(location.getLatitude(),location.getLongitude());
+                                    gps=1;
+                                    make_marke(mLatLng);
+
+                                }
+//                                    Toast.makeText(getContext(), "lat: " + mLatLng.latitude + "lng: " + mLatLng.longitude, Toast.LENGTH_SHORT).show();
+
+                            }
+                        }
+                    });
 
 
         } else {

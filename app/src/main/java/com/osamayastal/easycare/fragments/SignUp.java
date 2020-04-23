@@ -35,7 +35,10 @@ import android.widget.Toast;
 
 import com.cncoderx.wheelview.Wheel3DView;
 import com.deishelon.roundedbottomsheet.RoundedBottomSheetDialog;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.osamayastal.easycare.Model.Classes.City;
 import com.osamayastal.easycare.Model.Classes.User;
 import com.osamayastal.easycare.Model.Const.User_info;
@@ -290,12 +293,16 @@ private AppCompatCheckBox accept;
             }
         }
     }
+    private FusedLocationProviderClient fusedLocationClient;
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
             case 15:
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // Permission Granted
+
+
+
                    get_location();
                 } else {
                   enableMyLocationIfPermitted();
@@ -320,11 +327,22 @@ private AppCompatCheckBox accept;
                         .GPS_PROVIDER, 5000, 10, locationListener);
 ///////////////////////////////////////////////////*****************GetLastKnownLocation*****************************************/
                 try {
-                    Location gpsLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                    Location networkLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                    mLatLng=new LatLng(networkLocation.getLatitude(),networkLocation.getLongitude());
-                    Log.d("location",mLatLng.toString());
-                    dialog.dismiss();
+                    fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
+                    fusedLocationClient.getLastLocation()
+                            .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
+                                @Override
+                                public void onSuccess(Location location) {
+                                    // Got last known location. In some rare situations this can be null.
+                                    if (location != null) {
+                                        mLatLng = new LatLng(location.getLatitude(),location.getLongitude());
+                                        Log.d("location",mLatLng.toString());
+                                        dialog.dismiss();
+//                                        Toast.makeText(getContext(), "lat: " + mLatLng.latitude + "lng: " + mLatLng.longitude, Toast.LENGTH_SHORT).show();
+
+                                    }
+                                }
+                            });
+                    ;
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
