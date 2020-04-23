@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 import com.osamayastal.easycare.Adapters.Product_adapter;
 import com.osamayastal.easycare.Model.Classes.Product;
 import com.osamayastal.easycare.Model.Controle.Categories;
+import com.osamayastal.easycare.Model.Controle.Products;
 import com.osamayastal.easycare.Model.Rootes.Categories_root;
 import com.osamayastal.easycare.R;
 
@@ -25,17 +26,17 @@ public class AllProducts extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_products);
         init();
-//        Loading();
+        Loading();
     }
-
+public static String provider_id="";
     private void Loading() {
         Categories_root root=new Categories_root();
-        root.GetCategories(this, new Categories_root.cat_Listener() {
+        root.GetProducts(this, provider_id, 0, new Categories_root.product_Listener() {
             @Override
-            public void onSuccess(Categories catego) {
+            public void onSuccess(Products products) {
                 progressBar.setVisibility(View.GONE);
                 productList.clear();
-//                categories.addAll(catego.getItems());
+                productList.addAll(products.getItems());
                 adapter.notifyDataSetChanged();
             }
 

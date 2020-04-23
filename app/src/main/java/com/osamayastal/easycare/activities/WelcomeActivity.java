@@ -100,6 +100,7 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
                 User_info user_info=new User_info();
                 user_info.DO_INTRO(WelcomeActivity.this);
                 startActivity(new Intent(WelcomeActivity.this,LoginActivity.class));
+                finish();
                 break;
             case R.id.ar_tv:
 

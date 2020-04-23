@@ -182,17 +182,19 @@ public class EditProfile extends Fragment implements View.OnClickListener {
             user.Post_UPDATE_user(getContext(),mUser , new user.user_Listener() {
                 @Override
                 public void onSuccess(users new_account) {
-                    if (new_account.isStatus()){
-                        User user1=new_account.getItems();
-                        user1.setCity(city.getText().toString());
-                        new User_info(user1,getContext());
-                    }
                     if (new User_info(getContext()).getLanguage().equals("en")){
                         Toast.makeText(getContext(),new_account.getMessageEn(),Toast.LENGTH_SHORT).show();
                     }else {
                         Toast.makeText(getContext(),new_account.getMessageAr(),Toast.LENGTH_SHORT).show();
 
                     }
+                    if (new_account.isStatus()){
+                        User user1=new_account.getItems();
+                        user1.setCity(city.getText().toString());
+                        new User_info(user1,getContext());
+                        getActivity().finish();
+                    }
+
                 }
 
                 @Override

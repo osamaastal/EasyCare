@@ -91,7 +91,7 @@ public class Service_Single extends AppCompatActivity implements View.OnClickLis
 
             @Override
             public void Onselcted(com.osamayastal.easycare.Model.Classes.Provider.Provider provider) {
-                ServiceProfiderDetails.provider= provider.toProvider();
+                ServiceProfiderDetails.provider_id= provider.get_id();
                 startActivity(new Intent(Service_Single.this,ServiceProfiderDetails.class));
                 finish();
             }

@@ -46,6 +46,7 @@ import com.osamayastal.easycare.Model.Classes.Sub_servic;
 import com.osamayastal.easycare.Model.Const.User_info;
 import com.osamayastal.easycare.Model.Controle.Favorites;
 import com.osamayastal.easycare.Model.Controle.Provider_Details;
+import com.osamayastal.easycare.Model.Rootes.Bascket_root;
 import com.osamayastal.easycare.Model.Rootes.Favorite_root;
 import com.osamayastal.easycare.Model.Rootes.ProviderDetails_root;
 import com.osamayastal.easycare.Popups.OrderPop;
@@ -59,13 +60,59 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ServiceProfiderDetails extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback {
 
-    public static Search provider=null;
+    public static String provider_id;
+    private Search provider=null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_service_profider_details);
         init();
-        Loading();
+        FetchData();
+    }
+
+    private void FetchData() {
+        /*******************Loading********************/
+        ProviderDetails_root root=new ProviderDetails_root();
+        root.GetDetailsListener(this, provider_id, new ProviderDetails_root.DetailsListener() {
+            @Override
+            public void onSuccess(Provider_Details details) {
+                findViewById(R.id.progress).setVisibility(View.GONE);
+                provider=details.getProviderDetails();
+                Loading();
+                onMapReady(mMap);
+                sub_servicList.clear();
+                providerSettingList.clear();
+                productList.clear();
+                sub_servicList.addAll(details.getServicList());
+
+                categorieList.clear();
+                categorieList.addAll(details.getCategorieList());
+
+                productList.addAll(details.getProductList());
+                categories_adapter.notifyDataSetChanged();
+                product_adapter.notifyDataSetChanged();
+                progressBar1.setVisibility(View.GONE);
+                progressBar2.setVisibility(View.GONE);
+/******************************From ...To *********************************/
+                providerSettingList.addAll(details.getProviderSettingList());
+                if (providerSettingList.size()!=0){
+                    from.setText(providerSettingList.get(0).getMin());
+                    to.setText(providerSettingList.get(0).getMax());
+                }
+
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onFailure(String msg) {
+
+            }
+        });
     }
 
     private void Loading() {
@@ -88,14 +135,7 @@ public class ServiceProfiderDetails extends AppCompatActivity implements View.On
                like_btn.setImageDrawable(getDrawable(R.drawable.ic_unlike));
 
            }
-           int nb=new User_info(this).getBasket();
-           if (nb==0){
-               basket_btn.setBackground(getDrawable(R.drawable.bg_circle_gray));
-               basket_nb.setVisibility(View.GONE);
-           }
-           else {
-               basket_nb.setText(nb+"");
-           }
+           basket_count();
            /*************
             * Images of product
             */
@@ -125,45 +165,39 @@ public class ServiceProfiderDetails extends AppCompatActivity implements View.On
            mDemoSlider.setDuration(4000);
            mDemoSlider.setCustomIndicator((PagerIndicator) findViewById(R.id.app_indicator));
 
-           /*******************Loading********************/
-           ProviderDetails_root root=new ProviderDetails_root();
-           root.GetDetailsListener(this, provider.get_id(), new ProviderDetails_root.DetailsListener() {
-               @Override
-               public void onSuccess(Provider_Details details) {
-                   sub_servicList.clear();
-                   providerSettingList.clear();
-                   productList.clear();
-                   sub_servicList.addAll(details.getServicList());
 
-                   categorieList.clear();
-                   categorieList.addAll(details.getCategorieList());
-
-                   productList.addAll(details.getProductList());
-                   categories_adapter.notifyDataSetChanged();
-                   product_adapter.notifyDataSetChanged();
-                   progressBar1.setVisibility(View.GONE);
-                   progressBar2.setVisibility(View.GONE);
-/******************************From ...To *********************************/
-                   providerSettingList.addAll(details.getProviderSettingList());
-                  if (providerSettingList.size()!=0){
-                      from.setText(providerSettingList.get(0).getMin());
-                      to.setText(providerSettingList.get(0).getMax());
-                  }
-
-               }
-
-               @Override
-               public void onStart() {
-
-               }
-
-               @Override
-               public void onFailure(String msg) {
-
-               }
-           });
        }
     }
+
+    private void basket_count() {
+        Bascket_root root=new Bascket_root();
+        root.GetItemCount(this, new Bascket_root.Basket_count_Listener() {
+            @Override
+            public void onSuccess(int nb) {
+                if (nb ==0){
+                    basket_btn.setBackground(getDrawable(R.drawable.bg_circle_gray));
+                    basket_nb.setVisibility(View.GONE);
+                }
+                else {
+                    basket_nb.setText(nb +"");
+                    basket_btn.setBackground(getDrawable(R.drawable.bg_circle_basket));
+                    basket_nb.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onFailure(String msg) {
+
+            }
+        });
+
+    }
+
     private SliderLayout mDemoSlider;
     ProgressBar progressBar1,progressBar2;
 
@@ -208,7 +242,12 @@ public class ServiceProfiderDetails extends AppCompatActivity implements View.On
         sub_servicList=new ArrayList<>();
         providerSettingList=new ArrayList<>();
         categorieList=new ArrayList<>();
-        product_adapter=new Product_adapter(this,productList,null);
+        product_adapter=new Product_adapter(this, productList, new Product_adapter.Selected_item() {
+            @Override
+            public void Onselcted(Product product) {
+                basket_count();
+            }
+        });
         categories_adapter=new Provider_servicies_adapter(this, categorieList, new Provider_servicies_adapter.Selected_item() {
             @Override
             public void Onselcted(Categorie categorie) {
@@ -220,6 +259,7 @@ public class ServiceProfiderDetails extends AppCompatActivity implements View.On
                ,new OrderPop.OrderLisstenner() {
                         @Override
                         public void onGoBasket() {
+                            basket_count();
                             MainActivity.item_select=R.id.basket;
                              finish();
                         }
@@ -317,14 +357,16 @@ public class ServiceProfiderDetails extends AppCompatActivity implements View.On
                 }
                 break;
             case R.id.basket_btn:
-//                startActivity(new Intent(ServiceProfiderDetails.this,MainActivity.class));
+                provider_id=null;
                 MainActivity.item_select=R.id.basket;
                 finish();
                 break;
             case R.id.back_btn:
+                provider_id=null;
                 finish();
                 break;
             case R.id.more_product:
+                AllProducts.provider_id=provider.get_id();
                 startActivity(new Intent(ServiceProfiderDetails.this,AllProducts.class));
                 break;
         }
@@ -336,36 +378,37 @@ public class ServiceProfiderDetails extends AppCompatActivity implements View.On
         mMap = googleMap;
 
 
-        mMap.getUiSettings().setZoomControlsEnabled(true);
-        mMap.setMinZoomPreference(12);
+if (provider!=null) {
 
-        LatLng latLng=new LatLng(provider.getLat()
-                ,provider.getLng());
+    mMap.getUiSettings().setZoomControlsEnabled(true);
+    mMap.setMinZoomPreference(12);
+    LatLng latLng = new LatLng(provider.getLat()
+            , provider.getLng());
 
-        Marker marker = mMap.addMarker(new MarkerOptions()
-                .title(provider.getName())
-                .snippet(provider.getName() )
-                .position(latLng)
-                .icon(bitmapDescriptorFromVector(this, R.drawable.ic_marker_wash)));
+    Marker marker = mMap.addMarker(new MarkerOptions()
+            .title(provider.getName())
+            .snippet(provider.getName())
+            .position(latLng)
+            .icon(bitmapDescriptorFromVector(this, R.drawable.ic_marker_wash)));
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+    mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
 
-        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng latLng) {
-                double latitude = latLng.latitude;
-                double longitude = latLng.longitude;
-                String label = provider.getName();
-                String uriBegin = "geo:" + latitude + "," + longitude;
-                String query = latitude + "," + longitude + "(" + label + ")";
-                String encodedQuery = Uri.encode(query);
-                String uriString = uriBegin + "?q=" + encodedQuery + "&z=16";
-                Uri uri = Uri.parse(uriString);
-                Intent mapIntent = new Intent(android.content.Intent.ACTION_VIEW, uri);
-                startActivity(mapIntent);
-            }
-        });
-
+    mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+        @Override
+        public void onMapClick(LatLng latLng) {
+            double latitude = latLng.latitude;
+            double longitude = latLng.longitude;
+            String label = provider.getName();
+            String uriBegin = "geo:" + latitude + "," + longitude;
+            String query = latitude + "," + longitude + "(" + label + ")";
+            String encodedQuery = Uri.encode(query);
+            String uriString = uriBegin + "?q=" + encodedQuery + "&z=16";
+            Uri uri = Uri.parse(uriString);
+            Intent mapIntent = new Intent(android.content.Intent.ACTION_VIEW, uri);
+            startActivity(mapIntent);
+        }
+    });
+}
     }
 
     private BitmapDescriptor bitmapDescriptorFromVector(Context context, int vectorResId) {

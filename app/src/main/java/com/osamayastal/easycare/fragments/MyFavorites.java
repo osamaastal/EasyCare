@@ -1,5 +1,6 @@
 package com.osamayastal.easycare.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -16,6 +17,7 @@ import android.widget.ProgressBar;
 import com.osamayastal.easycare.Adapters.Favorit_adapter;
 import com.osamayastal.easycare.Adapters.Product_adapter;
 import com.osamayastal.easycare.Adapters.Search_adapter;
+import com.osamayastal.easycare.Model.Classes.Categorie;
 import com.osamayastal.easycare.Model.Classes.Favorite_get;
 import com.osamayastal.easycare.Model.Classes.Product;
 import com.osamayastal.easycare.Model.Classes.Search;
@@ -26,6 +28,8 @@ import com.osamayastal.easycare.Model.Rootes.Categories_root;
 import com.osamayastal.easycare.Model.Rootes.Favorite_root;
 import com.osamayastal.easycare.R;
 import com.osamayastal.easycare.activities.MainActivity;
+import com.osamayastal.easycare.activities.ServiceProfiderDetails;
+import com.osamayastal.easycare.activities.Service_Single;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,7 +82,14 @@ providerList.addAll(favorites.getItems());
         /******************Actions*******************/
         back.setOnClickListener(this);
         providerList=new ArrayList<>();
-        adapter=new Favorit_adapter(getContext(),providerList,null);
+        adapter=new Favorit_adapter(getContext(), providerList, new Favorit_adapter.Selected_item() {
+            @Override
+            public void Onselcted(Favorite_get favorite_get) {
+                ServiceProfiderDetails.provider_id= favorite_get.getProvider_id().get_id();
+                startActivity(new Intent(getActivity(),ServiceProfiderDetails.class));
+                getActivity().finish();
+            }
+        });
         RV.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false));
         RV.setAdapter(adapter);
 

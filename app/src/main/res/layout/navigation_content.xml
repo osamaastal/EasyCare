@@ -154,6 +154,7 @@
                     android:text="@string/notification"
                     style="@style/text_white_roman_14"/>
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/drawer_settings_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -196,6 +197,7 @@
                     android:text="@string/menu_report"
                     style="@style/text_white_roman_14"/>
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/drawer_call_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

@@ -95,9 +95,9 @@ private Button login_btn;
                                 return;
                             }
                             if (new_account.getItems().isIsVerify()) {
-                                new User_info(new_account.getItems(), getContext());
-                                new User_info( getContext()).CONF_phone(getContext());
 
+                                new User_info(new_account.getItems(),getContext());
+                                new User_info().DO_CONF_phone(getContext());
 
                                 startActivity(new Intent(getActivity(), MainActivity.class));
                                 getActivity().finish();

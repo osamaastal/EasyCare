@@ -3,6 +3,7 @@ package com.osamayastal.easycare.Model.Rootes;
 import android.content.Context;
 import android.util.Log;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -12,6 +13,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.osamayastal.easycare.Model.Classes.Complain;
 import com.osamayastal.easycare.Model.Const.Server_info;
+import com.osamayastal.easycare.Model.Const.User_info;
 import com.osamayastal.easycare.Model.Controle.City;
 import com.osamayastal.easycare.Model.Controle.Complains;
 import com.osamayastal.easycare.Model.Controle.users;
@@ -34,7 +36,8 @@ public class Complain_root {
     {
 
        listener.onStart();
-            String url= Server_info.API +"api/mobile/addComplains";
+        String url= Server_info.API +"api/mobile/addComplains";
+        final String token= new User_info(mcontext).getToken();
 
 
             if (queue == null) {
@@ -69,6 +72,18 @@ public class Complain_root {
                     }
                 }
         ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+
+                Map<String, String>  parameters = new HashMap<String, String>();
+
+
+
+                parameters.put("token", token);
+                Log.d("parameters", parameters.toString());
+
+                return parameters;
+            }
 
             @Override
             protected Map<String, String> getParams()
@@ -79,6 +94,7 @@ public class Complain_root {
                 parameters.put("category", complain.getCategory());
                 parameters.put("title", complain.getTitle());
                 parameters.put("details", complain.getDetails());
+                Log.d("parameters", parameters.toString());
 
                 return parameters;
             }

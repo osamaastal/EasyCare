@@ -67,60 +67,107 @@ import top.defaults.drawabletoolbox.DrawableBuilder;
 public class MyPlace extends Fragment implements OnMapReadyCallback, View.OnClickListener, GoogleMap.OnMarkerClickListener {
 
     View view;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-         view= inflater.inflate(R.layout.fragment_my_place, container, false);
+        view = inflater.inflate(R.layout.fragment_my_place, container, false);
 
         SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        if (mLatLng!=null){
+        if (mLatLng != null) {
             mMap.moveCamera(CameraUpdateFactory.newLatLng(mLatLng));
             Show_nearServic(mLatLng);
-        }else {
-            dialog=new ProgressDialog(getContext());
+        } else {
+            dialog = new ProgressDialog(getContext());
             dialog.setMessage("يرجي الانتظار حتى يتم تحديد موقعك..");
             dialog.show();
             locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-            get_location();
+            GetLocation(getContext());
         }
 
 
-
-init();
+        init();
 
         return view;
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case 15:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Permission Granted
+
+
+                    get_location();
+                } else {
+                    enableMyLocationIfPermitted();
+                }
+                break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
+    public void GetLocation(Context mcontext) {
+
+
+        locationManager = (LocationManager) mcontext.getSystemService(Context.LOCATION_SERVICE);
+        enableMyLocationIfPermitted();
+
+
+    }
+
+    private String[] LocationPermissions = {Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION};
+
+    private void enableMyLocationIfPermitted() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED &&
+                    ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
+                            != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(LocationPermissions, 15);
+
+            } else {
+
+                get_location();
+            }
+        }
+    }
+
     private FusedLocationProviderClient fusedLocationClient;
 
     private void getCurrentLocation() {
-        if (getActivity()==null)
+        if (getActivity() == null)
             return;
 
     }
-    private  TextView name,address,dis,type;
-    private ImageView img,like;
+
+    private TextView name, address, dis, type;
+    private ImageView img, like;
     private RatingBar ratingBar;
-private ImageButton search_btn;
+    private ImageButton search_btn;
+
     private void init() {
-        name=view.findViewById(R.id.provider_name_tv);
-        address=view.findViewById(R.id.location_tv);
-        type=view.findViewById(R.id.type_tv);
-        dis=view.findViewById(R.id.distance_tv);
-        img=view.findViewById(R.id.provider_Img);
-        like=view.findViewById(R.id.like_btn);
-        ratingBar=view.findViewById(R.id.ratingBar);
-        search_btn=view.findViewById(R.id.search_btn);
+        name = view.findViewById(R.id.provider_name_tv);
+        address = view.findViewById(R.id.location_tv);
+        type = view.findViewById(R.id.type_tv);
+        dis = view.findViewById(R.id.distance_tv);
+        img = view.findViewById(R.id.provider_Img);
+        like = view.findViewById(R.id.like_btn);
+        ratingBar = view.findViewById(R.id.ratingBar);
+        search_btn = view.findViewById(R.id.search_btn);
         /****************************Actions******************************/
         search_btn.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.search_btn:
                 startActivity(new Intent(getContext(), Search.class));
                 break;
@@ -128,10 +175,11 @@ private ImageButton search_btn;
 
         }
     }
+
     private GoogleMap mMap;
 
     private Boolean flag;
-    @SuppressLint("MissingPermission")
+
     private void get_location() {
 
         flag = displayGpsStatus();
@@ -140,9 +188,8 @@ private ImageButton search_btn;
 
 
 
-
-            locationManager.requestLocationUpdates(LocationManager
-                    .GPS_PROVIDER, 5000, 10, locationListener);
+//            locationManager.requestLocationUpdates(LocationManager
+//                    .GPS_PROVIDER, 5000, 10, locationListener);
 
 ///////////////////////////////////////////////////*****************GetLastKnownLocation*****************************************/
             try {
@@ -188,10 +235,9 @@ private ImageButton search_btn;
         mMap.setOnMyLocationButtonClickListener(onMyLocationButtonClickListener);
         mMap.setOnMyLocationClickListener(onMyLocationClickListener);
         mMap.setOnMarkerClickListener(this);
-        enableMyLocationIfPermitted();
 
         mMap.getUiSettings().setZoomControlsEnabled(true);
-        mMap.setMinZoomPreference(5);
+        mMap.setMinZoomPreference(12);
 
     }
     private void makeDrawable(int color, View view, int corner) {
@@ -321,15 +367,6 @@ if (new User_info(getContext()).getLanguage().equals("en")){
         public void onLocationChanged(Location loc) {
 
 
-
-//            if (gps==0 && mMap!=null) {
-//                mLatLng=new LatLng(loc.getLatitude(),loc.getLongitude());
-//                mMap.moveCamera(CameraUpdateFactory.newLatLng(mLatLng));
-//                Show_nearServic(mLatLng);
-//
-//                dialog.dismiss();
-//                gps=1;
-//            }
 
         }
 
@@ -476,23 +513,6 @@ if (new User_info(getContext()).getLanguage().equals("en")){
 
 
 
-
-    private void enableMyLocationIfPermitted() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
-                    != PackageManager.PERMISSION_GRANTED &&
-                    ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
-                            != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(new String[]{
-                        Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,
-                        Manifest.permission.INTERNET
-                }, 15);
-
-            } else  if (mMap != null) {
-                mMap.setMyLocationEnabled(true);
-            }
-        }
-    }
 
     private GoogleMap.OnMyLocationButtonClickListener onMyLocationButtonClickListener =
             new GoogleMap.OnMyLocationButtonClickListener() {

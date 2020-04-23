@@ -260,22 +260,6 @@ private AppCompatCheckBox accept;
         }
         private String[] LocationPermissions = {Manifest.permission.ACCESS_FINE_LOCATION};
 
-        private void enableMyLocationIfPermitted2() {
-
-            if (EasyPermissions.hasPermissions(mcontext, LocationPermissions)) {
-
-                get_location();
-
-
-            } else {
-                EasyPermissions.requestPermissions(this, "Access for Location",
-                        1000, LocationPermissions);
-
-                get_location();
-            }
-
-
-        }
     private void enableMyLocationIfPermitted() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)

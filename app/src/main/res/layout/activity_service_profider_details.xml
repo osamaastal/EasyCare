@@ -57,6 +57,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+                <ProgressBar
+                    android:padding="10dp"
+                    android:backgroundTint="#F1EBEB"
+                    android:layout_gravity="center"
+                    android:background="@drawable/bg_circle_gray"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/progress"/>
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

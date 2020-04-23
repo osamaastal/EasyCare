@@ -41,6 +41,7 @@ public class Profile extends Fragment implements View.OnClickListener {
 
     private void Loading_data() {
        User_info info=new User_info(getContext());
+        name.setText(info.getName());
         email.setText(info.getEmail());
         phone.setText(info.getPhone());
         city.setText(info.getAddress());
@@ -49,9 +50,7 @@ public class Profile extends Fragment implements View.OnClickListener {
         user.GET_profil(getContext(), new user.user_Listener() {
             @Override
             public void onSuccess(users account) {
-//                email.setText(account.getItems().getEmail());
-//                phone.setText(account.getItems().getPhoneNumber());
-//                city.setText(account.getItems().getAddress());
+
                 new User_info(account.getItems(),getContext());
                 favorit_nb.setText(account.getItems().getFavoritCount()+"");
                 order_nb.setText(account.getItems().getOrderCount()+"");
@@ -71,7 +70,7 @@ public class Profile extends Fragment implements View.OnClickListener {
 
     }
 private ConstraintLayout favorit,order;
-    private TextView email,phone,city,favorit_nb,order_nb;
+    private TextView email,phone,city,favorit_nb,order_nb,name;
     private Button changPW_btn;
     private ImageView edit_btn;
     private void init(View view) {
@@ -84,6 +83,7 @@ private ConstraintLayout favorit,order;
         order_nb=view.findViewById(R.id.order_nb);
         changPW_btn=view.findViewById(R.id.logout_btn);
         edit_btn=view.findViewById(R.id.edit_btn);
+        name=view.findViewById(R.id.userNameTV);
         /*****************************Actions****************************/
         changPW_btn.setOnClickListener(this);
         edit_btn.setOnClickListener(this);
