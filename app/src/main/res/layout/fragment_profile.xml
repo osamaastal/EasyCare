@@ -84,6 +84,8 @@
                 </com.chinodev.androidneomorphframelayout.NeomorphFrameLayout>
 
                 <TextView
+                    android:id="@+id/userNameTV"
+                    android:text="username"
                     style="@style/text_darkblue_bold_18"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
