@@ -255,21 +255,21 @@ public class User {
     public JSONObject toJsonObject() {
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("_id", id);
-            jsonObject.put("address", address);
-            jsonObject.put("city", city);
-            jsonObject.put("createAt", createAt);
+//            jsonObject.put("_id", id);
+//            jsonObject.put("address", address);
+            jsonObject.put("city_id", city_id);
+//            jsonObject.put("createAt", createAt);
             jsonObject.put("email", email);
             jsonObject.put("full_name", fullName);
-            jsonObject.put("image", image);
-            jsonObject.put("isBlock", isBlock);
-            jsonObject.put("isVerify", isVerify);
+//            jsonObject.put("image", image);
+//            jsonObject.put("isBlock", isBlock);
+//            jsonObject.put("isVerify", isVerify);
             jsonObject.put("lat", lat);
             jsonObject.put("lng", lng);
-            jsonObject.put("phone_number", phoneNumber);
-            jsonObject.put("token", token);
-            jsonObject.put("verify_code", verifyCode);
-            jsonObject.put("wallet", wallet);
+//            jsonObject.put("phone_number", phoneNumber);
+//            jsonObject.put("token", token);
+//            jsonObject.put("verify_code", verifyCode);
+//            jsonObject.put("wallet", wallet);
         } catch (JSONException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

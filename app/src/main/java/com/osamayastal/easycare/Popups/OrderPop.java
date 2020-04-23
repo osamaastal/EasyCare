@@ -1,6 +1,7 @@
 package com.osamayastal.easycare.Popups;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.Log;
@@ -121,6 +122,7 @@ this.mcontext=mcontext;
         sizeList=new ArrayList<>();
         sub_categorie=new Sub_categorie(null);
         final Double[] size_price = {0.0};
+        final String[] size_id = {""};
         ///////adapters
         final Size_adapter size_adapter=new Size_adapter(mcontext, sizeList, new Size_adapter.Selected_item() {
             @Override
@@ -135,6 +137,8 @@ this.mcontext=mcontext;
                    servic.setSize_id(size.getSize_id());
                }
                size_price[0] =size.getPrice();
+                size_id[0] =size.getSize_id();
+
             }
         });
         type.setAdapter(size_adapter);
@@ -235,24 +239,26 @@ this.mcontext=mcontext;
             public void onClick(View view) {
                 Log.d("size*******",servic.getSize_id()+"SubC********"+servic.getProviderSubCategory_id());
 
-                if (!servic.getSize_id().isEmpty() && !servic.getProviderSubCategory_id().isEmpty()){
-                    String id=servic.getProviderSubCategory_id();
-                    Double tot= size_price[0];
-                    for (Sub_service s:sub_servics
-                    ) {
-                        if (s.isActive()){
-                            tot=tot+s.getPrice();
-                            if (id.isEmpty()){
-                                id=s.getProvider_subCategory_id();
+                String id=servic.getProviderSubCategory_id();
+                Double tot= size_price[0];
+                for (Sub_service s:sub_servics
+                ) {
+                    if (s.isActive()){
+                        tot=tot+s.getPrice();
+                        if (id.isEmpty()){
+                            id=s.getProvider_subCategory_id();
 
-                            }else {
-                                id=id+","+s.getProvider_subCategory_id();
-                            }
+                        }else {
+                            id=id+","+s.getProvider_subCategory_id();
                         }
-                        s.setActive(false);
                     }
-                    servic.setProviderSubCategory_id(id);
-                    servic.setTotal(tot);
+                    s.setActive(false);
+                }
+                servic.setProviderSubCategory_id(id);
+                servic.setTotal(tot);
+                servic.setSize_id(size_id[0]);
+                if (!servic.getSize_id().isEmpty() && !servic.getProviderSubCategory_id().isEmpty()){
+
                     carList.add(servic);
                     Calculate_total(carList);
                     servic=new Car_servece();
@@ -284,11 +290,7 @@ this.mcontext=mcontext;
         service_details=sheetView.findViewById(R.id.servic_details);
         basket_nb=sheetView.findViewById(R.id.basket_nb);
         service_img=sheetView.findViewById(R.id.service_img);
-        try{
-            makeDrawable(Integer.parseInt(sub_categorie.getColor()),service_img,0);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
         price=sheetView.findViewById(R.id.price_tv);
 
         service_details.setText("");
@@ -349,6 +351,13 @@ this.mcontext=mcontext;
                 Picasso .with(mcontext)
                         .load(sub_categorie.getImage())
                         .into(service_img);
+                try{
+                    String color=sub_categorie.getColor();
+                    Log.d("color",color);
+                    makeDrawable(Color.parseColor(color),service_img,0);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 if (new User_info(mcontext).getLanguage().equals("en")){
                     service_name.setText(sub_categorie.getNameEn());
                 }else {

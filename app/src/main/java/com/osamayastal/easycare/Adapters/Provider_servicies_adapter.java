@@ -2,6 +2,7 @@ package com.osamayastal.easycare.Adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.view.LayoutInflater;
@@ -82,7 +83,10 @@ if (new User_info(mContext).getLanguage().equals("en")){
         holder.soon.setVisibility(View.GONE);
 
 try{
-   makeDrawable(Integer.parseInt(mItems.get(position).getColor()),holder.img,0);
+    String color=mItems.get(position).getColor();
+
+    makeDrawable(Color.parseColor(color),holder.img,0);
+//   makeDrawable(Integer.parseInt(mItems.get(position).getColor()),holder.img,0);
 } catch (Exception e) {
     e.printStackTrace();
 }

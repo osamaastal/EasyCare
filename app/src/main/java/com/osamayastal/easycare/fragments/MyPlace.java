@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
@@ -162,7 +163,7 @@ private ImageButton search_btn;
                                         dialog.dismiss();
                                         gps=1;
                                     }
-                                    Toast.makeText(getContext(), "lat: " + mLatLng.latitude + "lng: " + mLatLng.longitude, Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(getContext(), "lat: " + mLatLng.latitude + "lng: " + mLatLng.longitude, Toast.LENGTH_SHORT).show();
 
                                 }
                             }
@@ -195,10 +196,10 @@ private ImageButton search_btn;
     }
     private void makeDrawable(int color, View view, int corner) {
         Drawable drawable = new DrawableBuilder()
-                .oval()
+                .rectangle()
                 .solidColor(color)//0xffe67e22
-                .height(90)
-                .width(90)
+//                .height(90)
+//                .width(90)
                 .cornerRadii(corner, corner, corner, corner)// pixel
                 // top-left  top-right  bottom-right   bottom-left
                 .build();
@@ -226,8 +227,7 @@ if (new User_info(getContext()).getLanguage().equals("en")){
         dis.setText(distanceInMeters+"");
         try{
             String color=provider.getCategory_id().getColor();
-
-            makeDrawable(Integer.parseInt(color.replaceFirst("#", ""), 16),type,18);
+            makeDrawable(Color.parseColor(color),type,18);
         } catch (Exception e) {
             e.printStackTrace();
         }
