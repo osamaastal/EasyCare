@@ -122,16 +122,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         /************************* Drawer*******************/
         toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
+        if (new User_info(this).getLanguage().equals("en")){
+            new SlidingRootNavBuilder(this)
+                    .withToolbarMenuToggle(toolbar)
+                    .withDragDistance(250)
+                    .withRootViewScale(1f)
+                    .withMenuOpened(false)
+                    .withGravity(SlideGravity.RIGHT)
+                    .withMenuLayout(R.layout.navigation_content)
+                    .inject();
+        }else {
+            new SlidingRootNavBuilder(this)
+                    .withToolbarMenuToggle(toolbar)
+                    .withDragDistance(250)
+                    .withRootViewScale(1f)
+                    .withMenuOpened(false)
+                    .withGravity(SlideGravity.RIGHT)
+                    .withMenuLayout(R.layout.navigation_content)
+                    .inject();
+
+
+        }
+
 //        toolbar.setNavigationIcon(R.drawable.ic_menu_);
 //        toolbar.setOverflowIcon(ContextCompat.getDrawable(this, R.drawable.ic_menu_));
-        new SlidingRootNavBuilder(this)
-                .withToolbarMenuToggle(toolbar)
-                .withDragDistance(250)
-                .withRootViewScale(1f)
-                .withMenuOpened(false)
-                .withGravity(SlideGravity.RIGHT)
-                .withMenuLayout(R.layout.navigation_content)
-                .inject();
+
         View navigation = findViewById(R.id.nav_view);
         TextView drawer_offers_tv = navigation.findViewById(R.id.drawer_offers_tv);
         TextView drawer_points_tv = navigation.findViewById(R.id.drawer_points_tv);
@@ -165,6 +180,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             logout.setVisibility(View.GONE);
         }
         user_name_tv.setText(user_info.getName());
+        getLanguge();
         /********************Bottom nav view**********************/
 //        item_select=R.id.home;
         linear_bottom = findViewById(R.id.linear_bottom);
@@ -176,7 +192,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         basket_frag = new Basket();
         profile_frag = new Profile();
         fragment = home_frag;
-        getLanguge();
         bottom_navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -298,20 +313,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 break;
             case R.id.drawer_points_tv:
-                Toast.makeText(this, "point", Toast.LENGTH_SHORT).show();
+
 
                 break;
             case R.id.drawer_chat_tv:
-                Toast.makeText(this, "chat", Toast.LENGTH_SHORT).show();
 
                 break;
             case R.id.drawer_notification_tv:
-//                startActivity(new Intent(MainActivity.this, Notifications.class));
+                startActivity(new Intent(MainActivity.this, Notifications.class));
                 break;
             case R.id.drawer_settings_tv:
 
                 break;
             case R.id.drawer_about_tv:
+                AboutUs.id="5e418d96ee6c030024e30751";
                 Auther_activity.fragment = new AboutUs();
                 startActivity(new Intent(MainActivity.this, Auther_activity.class));
 
@@ -331,7 +346,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (user_info.getId() == null) {
                     LoginAlert();
                 } else {
-                    switchFGM(new Profile());
+                    MainActivity.item_select=R.id.profile;
+                    MainActivity.bottom_navigation.setSelectedItemId(MainActivity.item_select);
                 }
                 break;
             case R.id.user_img:
@@ -347,7 +363,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         public void onSave(Boolean v) {
 
                             if (v) langu.setText("Ar");
-
+                            finishAffinity();
                         }
                     });
                 } else {
@@ -355,7 +371,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         @Override
                         public void onSave(Boolean v) {
                             if (v) langu.setText("En");
-
+                            finishAffinity();
                         }
                     });
 
@@ -650,6 +666,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void getLanguge() {
         if (new User_info(this).getLanguage().equals("en")){
            langu.setText("En");
+
         }else {
             langu.setText("Ar");
 

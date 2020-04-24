@@ -46,6 +46,7 @@ import com.osamayastal.easycare.Model.Controle.users;
 import com.osamayastal.easycare.Model.Rootes.City_root;
 import com.osamayastal.easycare.Model.Rootes.user;
 import com.osamayastal.easycare.R;
+import com.osamayastal.easycare.activities.Auther_activity;
 import com.osamayastal.easycare.activities.ConfCode;
 import com.osamayastal.easycare.activities.LoginActivity;
 import com.osamayastal.easycare.activities.MainActivity;
@@ -154,6 +155,9 @@ private AppCompatCheckBox accept;
             Logup_fun();
             break;
         case R.id.term:
+            AboutUs.id="5e7af8931c9d440000013fff";
+            Auther_activity.fragment = new AboutUs();
+            startActivity(new Intent(getActivity(), Auther_activity.class));
 
             break;
         case R.id.city_tv:

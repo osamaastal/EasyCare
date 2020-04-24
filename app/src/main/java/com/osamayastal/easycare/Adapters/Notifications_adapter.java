@@ -13,6 +13,7 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.osamayastal.easycare.Model.Classes.Categorie;
+import com.osamayastal.easycare.Model.Classes.Notification;
 import com.osamayastal.easycare.R;
 import com.squareup.picasso.Picasso;
 
@@ -28,7 +29,7 @@ public class Notifications_adapter extends RecyclerView.Adapter<Notifications_ad
     private static final String TAG = "RecyclerViewAdapter";
 
     //vars
-    private List<Categorie> mItems = new ArrayList<>();
+    private List<Notification> mItems = new ArrayList<>();
     private Context mContext;
     private View mview;
     public interface Selected_item{
@@ -36,7 +37,7 @@ public class Notifications_adapter extends RecyclerView.Adapter<Notifications_ad
     }
     public static int item_select=-1;
     Selected_item listenner;
-    public Notifications_adapter(Context context, List<Categorie> names, Selected_item listenner) {
+    public Notifications_adapter(Context context, List<Notification> names, Selected_item listenner) {
         mItems = names;
         mContext = context;
         this.listenner=listenner;
@@ -58,18 +59,9 @@ public class Notifications_adapter extends RecyclerView.Adapter<Notifications_ad
     @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.name.setText(mItems.get(position).getArName());
-        if (mItems.get(position).isActive()){
-            holder.soon.setVisibility(View.GONE);
-        }
+//        holder.name.setText(mItems.get(position).getTitle());
 
-       try {
-           Picasso.with(mContext)
-                   .load(mItems.get(position).getImage())
-                   .into(holder.Img);
-       } catch (Exception e) {
-           e.printStackTrace();
-       }
+
 
         mview.setOnClickListener(new View.OnClickListener() {
 
@@ -92,9 +84,9 @@ public class Notifications_adapter extends RecyclerView.Adapter<Notifications_ad
       TextView name,soon;
       public ViewHolder(View itemView) {
             super(itemView);
-          name = itemView.findViewById(R.id.name);
-          Img = itemView.findViewById(R.id.Img);
-          soon= itemView.findViewById(R.id.soon_tv);
+//          name = itemView.findViewById(R.id.name);
+//          Img = itemView.findViewById(R.id.Img);
+//          soon= itemView.findViewById(R.id.soon_tv);
 
 
         }

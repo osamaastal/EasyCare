@@ -1,5 +1,6 @@
 package com.osamayastal.easycare.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -146,6 +147,7 @@ public class EditProfile extends Fragment implements View.OnClickListener {
               update_data();
               break;
           case R.id.back_btn:
+
               getActivity().finish();
 
               break;
@@ -163,6 +165,7 @@ public class EditProfile extends Fragment implements View.OnClickListener {
         Auther_activity. transaction.replace(R.id.mainContainer, fragment);
         Auther_activity. transaction.commit();
     }
+
     private void update_data() {
         List<EditText> list=new ArrayList<>();
         list.add(fullname);
@@ -192,6 +195,10 @@ public class EditProfile extends Fragment implements View.OnClickListener {
                         User user1=new_account.getItems();
                         user1.setCity(city.getText().toString());
                         new User_info(user1,getContext());
+
+                        Add_New_Address_Map.Location=null;
+                        Add_New_Address_Map.mLatLng=null;
+
                         getActivity().finish();
                     }
 

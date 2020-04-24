@@ -1,9 +1,11 @@
 package com.osamayastal.easycare.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,7 @@ import com.osamayastal.easycare.Model.Const.User_info;
 import com.osamayastal.easycare.Model.Controle.users;
 import com.osamayastal.easycare.Model.Rootes.user;
 import com.osamayastal.easycare.R;
+import com.osamayastal.easycare.activities.Auther_activity;
 import com.osamayastal.easycare.activities.MainActivity;
 
 import java.util.ArrayList;
@@ -57,7 +60,9 @@ public class ChangePass extends Fragment implements View.OnClickListener {
                 update_data();
                 break;
             case R.id.back_btn:
-              getActivity().finish();
+
+
+                getActivity().finish();
 
                 break;
 
@@ -73,14 +78,17 @@ public class ChangePass extends Fragment implements View.OnClickListener {
         list.add(lastPW);
         list.add(newPW);
         list.add(confPW);
+        Log.d("pw",new User_info(getContext()).getPw());
         if (Verefy(list)){
-            if (!lastPW.getText().toString().equals(new User_info(getContext()).getPw())){
-                lastPW.setError(newPW.getHint());
-                return;
-            }
+//            if (!lastPW.getText().toString().equals(new User_info(getContext()).getPw())){
+//
+//                lastPW.setError("يرجى ادخال معلومات صحيحة");
+//                return;
+//            }
             if (!newPW.getText().toString().equals(confPW.getText().toString())){
-                newPW.setError(newPW.getHint());
-                confPW.setError(confPW.getHint());
+                newPW.setError("يرجى ادخال معلومات صحيحة");
+                confPW.setError("يرجى ادخال معلومات صحيحة");
+
                 return;
             }
 
@@ -95,6 +103,9 @@ public class ChangePass extends Fragment implements View.OnClickListener {
                            Toast.makeText(getContext(),new_account.getMessageAr(),Toast.LENGTH_SHORT).show();
                        }
                        new User_info(new_account.getItems(),getContext());
+
+
+                       getActivity().finish();
                    }
                 }
 
@@ -117,7 +128,7 @@ public class ChangePass extends Fragment implements View.OnClickListener {
         for (EditText ed:list
         ) {
             if (ed.getText().toString().isEmpty()){
-                ed.setError(ed.getHint());
+                ed.setError("يرجى ادخال معلومات الحقل");
                 return false;
             }
         }

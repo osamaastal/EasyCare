@@ -35,6 +35,7 @@ private  int point,basket;
             point=sp.getInt("point", 0);
             basket=sp.getInt("basket", 0);
             language=sp.getString("language","ar");
+            pw=sp.getString("pw","");
         } catch (Exception e) {
             e.printStackTrace();
         }

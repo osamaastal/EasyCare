@@ -77,7 +77,7 @@ public class ServiceProfiderDetails extends AppCompatActivity implements View.On
         root.GetDetailsListener(this, provider_id, new ProviderDetails_root.DetailsListener() {
             @Override
             public void onSuccess(Provider_Details details) {
-                findViewById(R.id.progress).setVisibility(View.GONE);
+                findViewById(R.id.linear_wait).setVisibility(View.GONE);
                 provider=details.getProviderDetails();
                 Loading();
                 onMapReady(mMap);

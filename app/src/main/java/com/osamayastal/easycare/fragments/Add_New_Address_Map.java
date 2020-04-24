@@ -271,7 +271,15 @@ mLatLng=latLng;
 
 try{
     if (addresses.size()!=0){
-        Location=addresses.get(0).getAdminArea()+" , "+addresses.get(0).getLocality();
+        String area=addresses.get(0).getAdminArea();
+        String loc=addresses.get(0).getLocality();
+        if (area!=null){
+            Location=area;
+        }
+        if (loc!=null){
+            Location=area+" , "+ loc;
+        }
+
         location_tv.setText(Location);
         address_lay.setEnabled(true);
         conf_address_btn.setEnabled(true);}
