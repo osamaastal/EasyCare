@@ -50,7 +50,8 @@ private String color;
             color=jsonObject.getString("color");
             type_id=jsonObject.getString("type_id");
             provider_id=jsonObject.getString("provider_id");
-            image=jsonObject.getString("image");
+            image=jsonObject.getString("image").replace("http", "https");
+
 
             JSONArray jsonArray=jsonObject.getJSONArray("sizes");
             for (int i=0;i<jsonArray.length();i++){

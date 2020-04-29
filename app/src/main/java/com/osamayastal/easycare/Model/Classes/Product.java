@@ -56,17 +56,15 @@ public class Product {
 
     }
 
-    public JSONObject Order_JSON(List<Product> products)  {
+    public JSONObject to_JSON(Product products)  {
         JSONObject jsonObject=new JSONObject();
 
-        if(products != null && products.size() > 0){
+        if(products != null ){
             JSONArray itemsJsonArray = new JSONArray();
-            for(Product itemsElement : products){
-                try {
-                    itemsJsonArray.put(itemsElement.toJsonObject());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+            try {
+                itemsJsonArray.put(products.toJsonObject());
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
             try {
                 jsonObject.put("Cart", itemsJsonArray);

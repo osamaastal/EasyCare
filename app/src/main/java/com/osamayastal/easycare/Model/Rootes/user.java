@@ -249,14 +249,9 @@ public class user {
                         } catch (JSONException e1) {
                             e1.printStackTrace();
                         }
-                        try {
 
-                            String mssg=Jobject.getString("message");
-                            Log.d("Response_mssg",mssg );
-                            lisenner.onSuccess(new users(Jobject));
-                        } catch (JSONException e1) {
-                            e1.printStackTrace();
-                        }
+
+                        lisenner.onSuccess(new users(Jobject));
 
                     }
                 },

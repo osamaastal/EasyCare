@@ -1,12 +1,15 @@
 package com.osamayastal.easycare.Adapters;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -84,27 +87,70 @@ public class Basket_Service_adapter extends RecyclerView.Adapter<Basket_Service_
                 .load(mItems.get(position).getCategory_id().getImage())
         .into(holder.img);
         try{
-            makeDrawable(Integer.parseInt(categorie.getColor()),holder.img,0);
+            makeDrawable(Color.parseColor(categorie.getColor()),holder.img,0);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (mItems.get(position).getSub_services().size()==0){
-            mItems.remove(position);
-            notifyDataSetChanged();
-        }else {
+
             Basket_Car_adapter adapter=new Basket_Car_adapter(mContext, mItems.get(position).getSub_services(), new Basket_Car_adapter.Selected_item() {
                 @Override
                 public void Onselcted(Car_servece car_servece) {
-                    if (mItems.get(position).getSub_services().size()==0){
-                        mItems.remove(position);
-                        notifyDataSetChanged();
-                    }
+
                     listenner.Onselcted(null);
                 }
             });
             holder.RV.setLayoutManager(new LinearLayoutManager(mContext,RecyclerView.VERTICAL,false));
             holder.RV.setAdapter(adapter);
-        }
+
+        holder.delete.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                final Dialog dialog=new Dialog(mContext);
+                dialog.setContentView(R.layout.popup_conf);
+                Button conf=dialog.findViewById(R.id.confBtn);
+                Button cancel=dialog.findViewById(R.id.cancelBtn);
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+                conf.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Bascket_root root=new Bascket_root();
+                        root.Delete(mContext, mItems.get(position).getSub_services().get(0).getCart_id(), new Bascket_root.PostbasketListener() {
+                            @Override
+                            public void onSuccess(Result bascket) {
+                                if (new User_info(mContext).getLanguage().equals("en")){
+                                    Toast.makeText(mContext,bascket.getMessageEn(),Toast.LENGTH_SHORT).show();
+                                }else {
+                                    Toast.makeText(mContext,bascket.getMessageAr(),Toast.LENGTH_SHORT).show();
+                                }
+                                if (bascket.isStatus()){
+                                    listenner.Onselcted(null);
+                                }
+                                dialog.dismiss();
+                            }
+
+                            @Override
+                            public void onStart() {
+
+                            }
+
+                            @Override
+                            public void onFailure(String msg) {
+
+                            }
+                        });
+
+                    }
+                });
+                dialog.show();
+
+            }
+        });
 
 
 
@@ -130,12 +176,15 @@ public class Basket_Service_adapter extends RecyclerView.Adapter<Basket_Service_
      RecyclerView RV;
       TextView name;
       ImageView img;
-      public ViewHolder(View itemView) {
+        ImageButton delete;
+
+        public ViewHolder(View itemView) {
             super(itemView);
           name = itemView.findViewById(R.id.name);
           img = itemView.findViewById(R.id.Img);
 
           RV = itemView.findViewById(R.id.RV);
+          delete = itemView.findViewById(R.id.delete_btn);
 
 
 

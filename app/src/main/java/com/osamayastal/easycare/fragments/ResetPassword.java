@@ -36,7 +36,7 @@ public class ResetPassword extends Fragment {
                 user.Post_forget_password(getContext(), email.getText().toString(), new user.user_Listener() {
                     @Override
                     public void onSuccess(users new_account) {
-                        if (new User_info().getLanguage().equals("en")){
+                        if (new User_info(getContext()).getLanguage().equals("en")){
                             Toast.makeText(getContext(),new_account.getMessageEn(),Toast.LENGTH_SHORT).show();
                         }else {
                             Toast.makeText(getContext(),new_account.getMessageAr(),Toast.LENGTH_SHORT).show();

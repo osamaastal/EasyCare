@@ -21,6 +21,8 @@ import com.osamayastal.easycare.activities.MainActivity;
 
 public class AboutUs extends Fragment implements View.OnClickListener {
 
+    public static String id;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -39,7 +41,7 @@ public class AboutUs extends Fragment implements View.OnClickListener {
                 if (staticPages.getStatus_code()==200){
                     for (StaticPage staticPage: staticPages.getItems()
                          ) {
-                        if (staticPage.get_id().equals("5e418d96ee6c030024e30751")){
+                        if (staticPage.get_id().equals(id)){
                             if (new User_info(getContext()).getLanguage().equals("en")){
                                 about_us.setText(staticPage.getEnContent());
                                 title.setText(staticPage.getEnTitle());

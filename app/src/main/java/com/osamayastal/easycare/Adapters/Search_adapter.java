@@ -93,7 +93,7 @@ if (!mItems.get(position).getFavorite_id().equals("null")){
 
             @Override
             public void onClick(View view) {
-                ServiceProfiderDetails.provider=mItems.get(position);
+                ServiceProfiderDetails.provider_id=mItems.get(position).get_id();
                 mContext.startActivity(new Intent(mContext,ServiceProfiderDetails.class));
             }
         });

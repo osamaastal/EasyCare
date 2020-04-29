@@ -68,11 +68,8 @@ public class Basket_adapter extends RecyclerView.Adapter<Basket_adapter.ViewHold
                 ,mItems.get(position).getCategorie(), new Basket_Service_adapter.Selected_item() {
             @Override
             public void Onselcted(Car_servece car_servece) {
-                if (mItems.get(position).getCategories().size()==0 && mItems.get(position).getProducts().size()==0){
-                    mItems.remove(position);
-                    notifyDataSetChanged();
-                    listenner.Onselcted(null);
-                }
+                listenner.Onselcted(null);
+
             }
         });
         holder.RV_service.setLayoutManager(new LinearLayoutManager(mContext,RecyclerView.VERTICAL,false));
@@ -81,12 +78,8 @@ public class Basket_adapter extends RecyclerView.Adapter<Basket_adapter.ViewHold
         Basket_Products_adapter adapter2=new Basket_Products_adapter(mContext, mItems.get(position).getProducts(), new Basket_Products_adapter.Selected_item() {
             @Override
             public void Onselcted(Car_servece car_servece) {
-                if (mItems.get(position).getCategories().size()==0 && mItems.get(position).getProducts().size()==0){
-                    mItems.remove(position);
-                    notifyDataSetChanged();
-                    listenner.Onselcted(null);
+                listenner.Onselcted(null);
 
-                }
             }
         });
         holder.RV_product.setLayoutManager(new LinearLayoutManager(mContext,RecyclerView.VERTICAL,false));

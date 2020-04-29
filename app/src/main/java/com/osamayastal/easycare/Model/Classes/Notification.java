@@ -4,7 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Notification {
-    private String _id, from, title, msg, user_id, body_parms, dt_date;
+    private String _id, fromId, title, msg, user_id, body_parms, dt_date,fromName;
     private Boolean isRead;
     private int type;
 
@@ -13,7 +13,8 @@ public class Notification {
             return;
         }
         _id = jsonObject.optString("_id");
-//        from = jsonObject.optString("from");
+        fromId = jsonObject.optString("fromId");
+        fromName = jsonObject.optString("fromName");
         title = jsonObject.optString("title");
         msg = jsonObject.optString("msg");
         try {
@@ -36,12 +37,20 @@ public class Notification {
         this._id = _id;
     }
 
-    public String getFrom() {
-        return from;
+    public String getFromId() {
+        return fromId;
     }
 
-    public void setFrom(String from) {
-        this.from = from;
+    public void setFromId(String fromId) {
+        this.fromId = fromId;
+    }
+
+    public String getFromName() {
+        return fromName;
+    }
+
+    public void setFromName(String fromName) {
+        this.fromName = fromName;
     }
 
     public String getTitle() {

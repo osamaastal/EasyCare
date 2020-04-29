@@ -42,7 +42,7 @@ public class Favorit_adapter extends RecyclerView.Adapter<Favorit_adapter.ViewHo
     private Context mContext;
     private View mview;
     public interface Selected_item{
-        void Onselcted(Categorie categorie);
+        void Onselcted(Favorite_get favorite_get);
     }
     public static int item_select=-1;
     Selected_item listenner;
@@ -92,14 +92,13 @@ if (!mItems.get(position).getProvider_id().getFavorite_id().equals("null")){
     holder.like_btn.setImageDrawable(mContext.getDrawable(R.drawable.ic_unlike));
 
 }
-//        mview.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View view) {
-//                ServiceProfiderDetails.provider=mItems.get(position);
-//                mContext.startActivity(new Intent(mContext,ServiceProfiderDetails.class));
-//            }
-//        });
+        mview.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+               listenner.Onselcted(mItems.get(position));
+            }
+        });
 
        holder.like_btn.setOnClickListener(new View.OnClickListener() {
            @Override

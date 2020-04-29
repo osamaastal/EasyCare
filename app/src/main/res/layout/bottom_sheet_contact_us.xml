@@ -13,14 +13,16 @@
         android:layout_marginTop="10dp"
         android:layout_gravity="center_horizontal"
         />
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom"
         android:layout_marginTop="15dp">
         <LinearLayout
+            android:layout_marginTop="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_gravity="top"
             android:orientation="vertical"
             android:gravity="center_horizontal">
             <ImageView
@@ -207,7 +209,7 @@
                     />
             </LinearLayout>
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 
 

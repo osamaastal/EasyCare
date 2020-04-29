@@ -62,10 +62,15 @@
                 android:layout_marginTop="10dp"
                 />
             <ProgressBar
-                android:id="@+id/progress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"/>
+                android:layout_alignParentTop="true"
+                android:layout_centerInParent="true"
+                android:padding="10dp"
+                android:backgroundTint="#F1EBEB"
+                android:layout_gravity="center"
+                android:background="@drawable/bg_circle_gray"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/progress"/>
         </RelativeLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>

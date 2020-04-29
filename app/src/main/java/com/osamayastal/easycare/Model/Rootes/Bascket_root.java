@@ -35,8 +35,13 @@ public class Bascket_root {
         void onStart();
         void onFailure(String msg);
     }
+    public interface Basket_count_Listener{
+        void onSuccess(int nb);
+        void onStart();
+        void onFailure(String msg);
+    }
     private RequestQueue queue;
-    public void GetItemCount(final Context mcontext)
+    public void GetItemCount(final Context mcontext, final Basket_count_Listener listener)
     {
         String url= Server_info.API +"api/mobile/getCartCount";
         final String token=new User_info(mcontext).getToken();
@@ -55,7 +60,7 @@ public class Bascket_root {
                     Jobject = new JSONObject(response);
                     Log.d("Response", response.toString());
                     new User_info().Basket(Jobject.getInt("items"),mcontext);
-
+                    listener.onSuccess(Jobject.getInt("items"));
                 } catch (JSONException e1) {
                     e1.printStackTrace();
                 }
@@ -151,7 +156,22 @@ public class Bascket_root {
                 try {
                     Jobject = new JSONObject(response);
                     Log.d("Response", response.toString());
-                    GetItemCount(mcontext);
+                    GetItemCount(mcontext, new Basket_count_Listener() {
+                        @Override
+                        public void onSuccess(int nb) {
+
+                        }
+
+                        @Override
+                        public void onStart() {
+
+                        }
+
+                        @Override
+                        public void onFailure(String msg) {
+
+                        }
+                    });
                     listener.onSuccess(new Result(Jobject));
 
                 } catch (JSONException e1) {
@@ -211,9 +231,24 @@ public class Bascket_root {
 
                         Log.d("Response", response.toString());
 
-                        GetItemCount(mcontext);
-                        listener.onSuccess(new Result(response));
 
+                        listener.onSuccess(new Result(response));
+                        GetItemCount(mcontext, new Basket_count_Listener() {
+                            @Override
+                            public void onSuccess(int nb) {
+
+                            }
+
+                            @Override
+                            public void onStart() {
+
+                            }
+
+                            @Override
+                            public void onFailure(String msg) {
+
+                            }
+                        });
 
                     }
                 },
@@ -266,9 +301,23 @@ public class Bascket_root {
 
                         Log.d("Response", response.toString());
 
-                        GetItemCount(mcontext);
                         listener.onSuccess(new Result(response));
+                        GetItemCount(mcontext, new Basket_count_Listener() {
+                            @Override
+                            public void onSuccess(int nb) {
 
+                            }
+
+                            @Override
+                            public void onStart() {
+
+                            }
+
+                            @Override
+                            public void onFailure(String msg) {
+
+                            }
+                        });
 
                     }
                 },
@@ -318,8 +367,24 @@ public class Bascket_root {
                 try {
                     Jobject = new JSONObject(response);
                     Log.d("Response", response.toString());
-                    listener.onSuccess(new Result(Jobject));
 
+                    listener.onSuccess(new Result(Jobject));
+                    GetItemCount(mcontext, new Basket_count_Listener() {
+                        @Override
+                        public void onSuccess(int nb) {
+
+                        }
+
+                        @Override
+                        public void onStart() {
+
+                        }
+
+                        @Override
+                        public void onFailure(String msg) {
+
+                        }
+                    });
                 } catch (JSONException e1) {
                     e1.printStackTrace();
                 }

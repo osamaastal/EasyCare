@@ -80,57 +80,6 @@ Double price=mItems.get(position).getSize().getPrice();
 Basket_car_details_adapter adapter=new Basket_car_details_adapter(mContext,mItems.get(position).getSubCategory_basketList(),null);
         holder.RV.setLayoutManager(new LinearLayoutManager(mContext,RecyclerView.VERTICAL,false));
         holder.RV.setAdapter(adapter);
-        holder.delete.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                final Dialog dialog=new Dialog(mContext);
-                dialog.setContentView(R.layout.popup_conf);
-                Button conf=dialog.findViewById(R.id.confBtn);
-                Button cancel=dialog.findViewById(R.id.cancelBtn);
-                cancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.dismiss();
-                    }
-                });
-                conf.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Bascket_root root=new Bascket_root();
-                        root.Delete(mContext, mItems.get(position).getCart_id(), new Bascket_root.PostbasketListener() {
-                            @Override
-                            public void onSuccess(Result bascket) {
-                                if (new User_info(mContext).getLanguage().equals("en")){
-                                    Toast.makeText(mContext,bascket.getMessageEn(),Toast.LENGTH_SHORT).show();
-                                }else {
-                                    Toast.makeText(mContext,bascket.getMessageAr(),Toast.LENGTH_SHORT).show();
-                                }
-                                if (bascket.isStatus()){
-                                    mItems.remove(mItems.get(position));
-                                    notifyDataSetChanged();
-                                    listenner.Onselcted(null);
-                                }
-                                dialog.dismiss();
-                            }
-
-                            @Override
-                            public void onStart() {
-
-                            }
-
-                            @Override
-                            public void onFailure(String msg) {
-
-                            }
-                        });
-
-                    }
-                });
-                dialog.show();
-
-            }
-        });
 
     }
 
@@ -143,7 +92,6 @@ Basket_car_details_adapter adapter=new Basket_car_details_adapter(mContext,mItem
 
      RecyclerView RV;
       TextView name,size,price;
-        ImageButton delete;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -152,7 +100,6 @@ Basket_car_details_adapter adapter=new Basket_car_details_adapter(mContext,mItem
           RV = itemView.findViewById(R.id.RV);
 
           price = itemView.findViewById(R.id.price);
-          delete = itemView.findViewById(R.id.delete_btn);
 
 
         }

@@ -46,6 +46,7 @@ import com.osamayastal.easycare.Model.Controle.users;
 import com.osamayastal.easycare.Model.Rootes.City_root;
 import com.osamayastal.easycare.Model.Rootes.user;
 import com.osamayastal.easycare.R;
+import com.osamayastal.easycare.activities.Auther_activity;
 import com.osamayastal.easycare.activities.ConfCode;
 import com.osamayastal.easycare.activities.LoginActivity;
 import com.osamayastal.easycare.activities.MainActivity;
@@ -154,6 +155,9 @@ private AppCompatCheckBox accept;
             Logup_fun();
             break;
         case R.id.term:
+            AboutUs.id="5e7af8931c9d440000013fff";
+            Auther_activity.fragment = new AboutUs();
+            startActivity(new Intent(getActivity(), Auther_activity.class));
 
             break;
         case R.id.city_tv:
@@ -260,22 +264,6 @@ private AppCompatCheckBox accept;
         }
         private String[] LocationPermissions = {Manifest.permission.ACCESS_FINE_LOCATION};
 
-        private void enableMyLocationIfPermitted2() {
-
-            if (EasyPermissions.hasPermissions(mcontext, LocationPermissions)) {
-
-                get_location();
-
-
-            } else {
-                EasyPermissions.requestPermissions(this, "Access for Location",
-                        1000, LocationPermissions);
-
-                get_location();
-            }
-
-
-        }
     private void enableMyLocationIfPermitted() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)

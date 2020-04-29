@@ -72,7 +72,7 @@ public class Basket_Products_adapter extends RecyclerView.Adapter<Basket_Product
 
         holder.name.setText(mItems.get(position).getName());
         holder.qty.setText(mItems.get(position).getQty()+"");
-        holder.price.setText(mItems.get(position).getTotal().toString());
+        holder.price.setText(mItems.get(position).getPrice().toString());
 
         Picasso.with(mContext)
                 .load(mItems.get(position).getImage())
@@ -84,50 +84,7 @@ public class Basket_Products_adapter extends RecyclerView.Adapter<Basket_Product
 
             @Override
             public void onClick(View view) {
-                final Dialog dialog=new Dialog(mContext);
-                dialog.setContentView(R.layout.popup_conf);
-                Button conf=dialog.findViewById(R.id.confBtn);
-                Button cancel=dialog.findViewById(R.id.cancelBtn);
-                cancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.dismiss();
-                    }
-                });
-               conf.setOnClickListener(new View.OnClickListener() {
-                   @Override
-                   public void onClick(View view) {
-                       Bascket_root root=new Bascket_root();
-                       root.Delete(mContext, mItems.get(position).getCart_id(), new Bascket_root.PostbasketListener() {
-                           @Override
-                           public void onSuccess(Result bascket) {
-                               if (new User_info(mContext).getLanguage().equals("en")){
-                                   Toast.makeText(mContext,bascket.getMessageEn(),Toast.LENGTH_SHORT).show();
-                               }else {
-                                   Toast.makeText(mContext,bascket.getMessageAr(),Toast.LENGTH_SHORT).show();
-                               }
-                               if (bascket.isStatus()){
-                                   mItems.remove(mItems.get(position));
-                                   notifyDataSetChanged();
-                                   listenner.Onselcted(null);
-                               }
-                               dialog.dismiss();
-                           }
-
-                           @Override
-                           public void onStart() {
-
-                           }
-
-                           @Override
-                           public void onFailure(String msg) {
-
-                           }
-                       });
-
-                   }
-               });
-               dialog.show();
+              delete(position);
 
             }
         });
@@ -136,8 +93,39 @@ public class Basket_Products_adapter extends RecyclerView.Adapter<Basket_Product
             @Override
             public void onClick(View view) {
                 if (mItems.get(position).getQty()!=0) {
+                    if (mItems.get(position).getQty()==1){
+                        delete(position);
+                    }else{
+                        Bascket_root root=new Bascket_root();
                     mItems.get(position).setQty(mItems.get(position).getQty() - 1);
-                    notifyDataSetChanged();
+                    root.PutProduct(mContext, mItems.get(position).to_JSON(mItems.get(position)), new Bascket_root.PostbasketListener() {
+                        @Override
+                        public void onSuccess(Result bascket) {
+                            if (new User_info(mContext).getLanguage().equals("en")){
+                                Toast.makeText(mContext,bascket.getMessageEn(),Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(mContext,bascket.getMessageAr(),Toast.LENGTH_SHORT).show();
+                            }
+                            if (bascket.isStatus()){
+
+                                listenner.Onselcted(null);
+
+                            }
+                        }
+
+                        @Override
+                        public void onStart() {
+
+                        }
+
+                        @Override
+                        public void onFailure(String msg) {
+
+                        }
+                    });
+                    }
+//
+
                 }
             }
         });
@@ -145,8 +133,33 @@ public class Basket_Products_adapter extends RecyclerView.Adapter<Basket_Product
 
             @Override
             public void onClick(View view) {
-                mItems.get(position).setQty(mItems.get(position).getQty()+1);
-                notifyDataSetChanged();
+                Bascket_root root=new Bascket_root();
+                mItems.get(position).setQty(mItems.get(position).getQty() + 1);
+                root.PutProduct(mContext, mItems.get(position).to_JSON(mItems.get(position)), new Bascket_root.PostbasketListener() {
+                    @Override
+                    public void onSuccess(Result bascket) {
+                        if (new User_info(mContext).getLanguage().equals("en")){
+                            Toast.makeText(mContext,bascket.getMessageEn(),Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(mContext,bascket.getMessageAr(),Toast.LENGTH_SHORT).show();
+                        }
+                        if (bascket.isStatus()){
+                            listenner.Onselcted(null);
+
+                        }
+                    }
+
+                    @Override
+                    public void onStart() {
+
+                    }
+
+                    @Override
+                    public void onFailure(String msg) {
+
+                    }
+                });
+
             }
         });
     }
@@ -155,7 +168,51 @@ public class Basket_Products_adapter extends RecyclerView.Adapter<Basket_Product
     public int getItemCount() {
         return mItems.size();
     }
+private void delete(final int position){
+    final Dialog dialog=new Dialog(mContext);
+    dialog.setContentView(R.layout.popup_conf);
+    Button conf=dialog.findViewById(R.id.confBtn);
+    Button cancel=dialog.findViewById(R.id.cancelBtn);
+    cancel.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            dialog.dismiss();
+        }
+    });
+    conf.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Bascket_root root=new Bascket_root();
+            root.Delete(mContext, mItems.get(position).getCart_id(), new Bascket_root.PostbasketListener() {
+                @Override
+                public void onSuccess(Result bascket) {
+                    if (new User_info(mContext).getLanguage().equals("en")){
+                        Toast.makeText(mContext,bascket.getMessageEn(),Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(mContext,bascket.getMessageAr(),Toast.LENGTH_SHORT).show();
+                    }
+                    if (bascket.isStatus()){
 
+                        listenner.Onselcted(null);
+                    }
+                    dialog.dismiss();
+                }
+
+                @Override
+                public void onStart() {
+
+                }
+
+                @Override
+                public void onFailure(String msg) {
+
+                }
+            });
+
+        }
+    });
+    dialog.show();
+}
     public class ViewHolder extends RecyclerView.ViewHolder{
 
       TextView name,price,qty;

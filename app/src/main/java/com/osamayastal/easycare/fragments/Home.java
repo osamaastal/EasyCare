@@ -115,7 +115,7 @@ private ImageButton search_btn;
         adapter_rate=new Provider_adapter(getContext(), top_rate_list, new Provider_adapter.Selected_item() {
             @Override
             public void Onselcted(Provider provider) {
-                ServiceProfiderDetails.provider= provider.toProvider();
+                ServiceProfiderDetails.provider_id= provider.get_id();
                 startActivity(new Intent(getContext(),ServiceProfiderDetails.class));
 
             }
@@ -124,7 +124,7 @@ private ImageButton search_btn;
             @Override
             public void Onselcted(Provider provider) {
 
-                ServiceProfiderDetails.provider= provider.toProvider();
+                ServiceProfiderDetails.provider_id= provider.get_id();
                 startActivity(new Intent(getContext(),ServiceProfiderDetails.class));
             }
         });

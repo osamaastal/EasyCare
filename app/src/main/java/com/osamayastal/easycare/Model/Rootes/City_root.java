@@ -69,5 +69,48 @@ public class City_root {
             queue.getCache().clear();
        }
 
+    public void GetComplain_type(final Context mcontext,
+                          final cityListener listener)
+    {
+
+        listener.onStart();
+        String url= Server_info.API +"api/mobile/ComplainsType";
+
+
+        if (queue == null) {
+            queue = Volley.newRequestQueue(mcontext);  // this = context
+            //Build.logError("Setting a new request queue");
+        }
+        // prepare the Request
+        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>()
+                {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        Log.d("Response", response.toString());
+                        listener.onSuccess(new City(response,mcontext));
+
+
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+//                        Log.d("Error.Response", error.getMessage());
+                    }
+                }
+        ){
+
+        };
+
+        queue.getCache().initialize();
+// add it to the RequestQueue
+        queue.add(getRequest);
+        queue.getCache().clear();
+    }
+
 
 }
