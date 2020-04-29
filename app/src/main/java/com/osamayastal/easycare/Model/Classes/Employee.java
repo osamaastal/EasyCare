@@ -16,14 +16,50 @@ public class Employee {
         }
         try {
             _id=provider.getString("_id");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             createAt=provider.getString("createAt");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             full_name=provider.getString("full_name");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             email=provider.getString("email");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             phone_number=provider.getString("phone_number");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             password=provider.getString("password");
-            image=provider.getString("image").replace("http", "https");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            image=provider.getString("image");
+            if (!image.contains("https")){
+                image=image.replace("http", "https");
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
+        try {
             isBlock=provider.getBoolean("isBlock");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+
             provider_id=new Provider(provider.getJSONObject("provider_id"));
         } catch (JSONException e) {
             e.printStackTrace();

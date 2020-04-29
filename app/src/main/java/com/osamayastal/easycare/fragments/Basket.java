@@ -28,15 +28,21 @@ import java.util.List;
 
 public class Basket extends Fragment implements View.OnClickListener {
 
-
+    View view;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_basket, container, false);
+         view= inflater.inflate(R.layout.fragment_basket, container, false);
         init(view);
-        loading(view);
+
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loading(view);
     }
 
     private void loading(final View view) {
@@ -58,9 +64,9 @@ public class Basket extends Fragment implements View.OnClickListener {
                         view.findViewById(R.id.tot_lay).setVisibility(View.VISIBLE);
                         view.findViewById(R.id.save_btn).setVisibility(View.VISIBLE);
                     }
-                    subtotal.setText(bascket_.getTotal_price().toString());
+                    subtotal.setText(String.format("%.2f", bascket_.getTotal_price()));
                     discount.setText("00");
-                    total.setText(bascket_.getTotal_price().toString());
+                    total.setText(String.format("%.2f", bascket_.getTotal_price()));
                 }
             }
 
@@ -108,25 +114,14 @@ public class Basket extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.save_btn:
-//                OrderDetails_Create.bascket=baskets.get(0);
-//
-//                final OrderPop pop=new OrderPop(getContext());
-//                pop.GetDate_pop(new OrderPop.POPLisstenner() {
-//                    @Override
-//                    public void ongetResult(String result) {
-//                        pop.GetTime_pop(new OrderPop.POPLisstenner() {
-//                            @Override
-//                            public void ongetResult(String result) {
-//                                pop.GetWay_pop(new OrderPop.POPLisstenner() {
-//                                    @Override
-//                                    public void ongetResult(String result) {
-//                                        startActivity(new Intent(getActivity(), OrderDetails_Create.class));
-//                                    }
-//                                });
-//                            }
-//                        });
-//                    }
-//                });
+
+                Bundle bundle = new Bundle();
+                                        bundle.putInt("bascket_index",0);
+                                        Intent intent=new Intent(getActivity(), OrderDetails_Create.class);
+                                        intent.putExtras(bundle);
+                                        startActivity(intent);
+
+
                 break;
 
         }

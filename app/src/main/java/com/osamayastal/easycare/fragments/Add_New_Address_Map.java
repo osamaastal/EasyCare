@@ -3,6 +3,7 @@ package com.osamayastal.easycare.fragments;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -102,7 +103,15 @@ private LinearLayout address_lay;
 
         } else {
 
-            alertbox("Gps Status!!", "Your GPS is: OFF");
+            new com.osamayastal.easycare.Model.Classes.GPS(getContext()).
+                    turnGPSOn(new com.osamayastal.easycare.Model.Classes.GPS.onGpsListener() {
+                        @Override
+                        public void gpsStatus(boolean isGPSEnable) {
+                            // turn on GPS
+                            flag = isGPSEnable;
+//                        Toast.makeText(Logo.this, "isGPS = " +isGPS, Toast.LENGTH_SHORT).show();
+                        }
+                    });
         }
 
     }
@@ -210,7 +219,7 @@ private LinearLayout address_lay;
 
         locationManager = (LocationManager) getActivity().
                 getSystemService(Context.LOCATION_SERVICE);
-        get_location();
+//        get_location();
         /*****************************************************************/
         conf_address_btn = (Button) view.findViewById(R.id.save_btn);
         cancel_btn = (ImageView) view.findViewById(R.id.back_btn);
@@ -246,7 +255,22 @@ address_lay.setEnabled(false);
             }
         });
 
+
+
+
+
         return view;
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == 15) {
+                flag = true; // flag maintain before get location
+                get_location();
+                mMap.setMyLocationEnabled(true);
+            }
+        }
     }
     public static String  Location=null;
     private void make_marke(final LatLng latLng){
@@ -317,7 +341,22 @@ public static LatLng mLatLng=null;
         });
 
     }
-
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case 15:
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Permission Granted
+                    get_location();
+                } else {
+//                    switchFGM(new LoginFrag());
+                }
+                break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
     private void enableMyLocationIfPermitted() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
@@ -331,6 +370,7 @@ public static LatLng mLatLng=null;
 
             } else  if (mMap != null) {
             mMap.setMyLocationEnabled(true);
+            get_location();
         }
         }
     }
@@ -343,29 +383,7 @@ public static LatLng mLatLng=null;
         mMap.moveCamera(CameraUpdateFactory.newLatLng(redmond));
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
-                            != PackageManager.PERMISSION_GRANTED &&
-                            ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
-                                    != PackageManager.PERMISSION_GRANTED) {
-                        requestPermissions(new String[]{
-                                Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,
-                                Manifest.permission.INTERNET
-                        }, 15);
-
-
-                    } else {
-                    showDefaultLocation();
-                }}
-                return;
-
-
-
-    }
 
     private GoogleMap.OnMyLocationButtonClickListener onMyLocationButtonClickListener =
             new GoogleMap.OnMyLocationButtonClickListener() {

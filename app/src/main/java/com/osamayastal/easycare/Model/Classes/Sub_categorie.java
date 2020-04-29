@@ -21,10 +21,36 @@ private String color;
         }
         try {
             _id=jsonObject.getString("_id");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             nameAr=jsonObject.getString("nameAr");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             nameEn=jsonObject.getString("nameEn");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             category_id=jsonObject.getString("category_id");
-            image=jsonObject.getString("image").replace("http", "https");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            image=jsonObject.getString("image");
+            if (!image.contains("https")){
+                image=image.replace("http", "https");
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try {
+
             isActive=jsonObject.getBoolean("isActive");
 
 
@@ -43,25 +69,74 @@ private String color;
 
         try {
             _id=jsonObject.getString("_id");
-            Log.d("_id", _id);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
+
+        try {
             nameAr=jsonObject.getString("arName");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             nameEn=jsonObject.getString("enName");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             color=jsonObject.getString("color");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             type_id=jsonObject.getString("type_id");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             provider_id=jsonObject.getString("provider_id");
-            image=jsonObject.getString("image").replace("http", "https");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-
-            JSONArray jsonArray=jsonObject.getJSONArray("sizes");
-            for (int i=0;i<jsonArray.length();i++){
-                sizes.add(new Size(jsonArray.getJSONObject(i)));
+        try {
+            image=jsonObject.getString("image");
+            if (!image.contains("https")){
+                image=image.replace("http", "https");
             }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-            JSONArray jsonArray1=jsonObject.getJSONArray("sub_services");
+
+        JSONArray jsonArray= null;
+        try {
+            jsonArray = jsonObject.getJSONArray("sizes");
+            for (int i=0;i<jsonArray.length();i++){
+                try {
+                    sizes.add(new Size(jsonArray.getJSONObject(i)));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        JSONArray jsonArray1= null;
+        try {
+            jsonArray1 = jsonObject.getJSONArray("sub_services");
             for (int i=0;i<jsonArray1.length();i++){
                 sub_services.add(new Sub_service(jsonArray1.getJSONObject(i)));
             }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        try {
 
             isActive=jsonObject.getBoolean("isActive");
 

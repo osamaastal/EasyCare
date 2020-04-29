@@ -14,25 +14,86 @@ public class Slider {
             return;
         }
         Log.d("Response", provider.toString());
-
         try {
             _id=provider.getString("_id");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             ads_for=provider.getString("ads_for");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             expiry_date=provider.getString("expiry_date");
-            image=provider.getString("image").replace("http", "https");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            image=provider.getString("image");
+            if (!image.contains("https")){
+                image=image.replace("http", "https");
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
 
+        try {
             url=provider.getString("url");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             store_id=provider.getString("store_id");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             product_id=provider.getString("product_id");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             titleEn=provider.getString("titleEn");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             titleAr=provider.getString("titleAr");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             descriptionEn=provider.getString("descriptionEn");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             descriptionAr=provider.getString("descriptionAr");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
+        try {
             is_ads_redirect_to_store=provider.getBoolean("is_ads_redirect_to_store");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             is_ads_have_expiry_date=provider.getBoolean("is_ads_have_expiry_date");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             isApprove=provider.getBoolean("isApprove");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try {
+
             by=provider.getString("by");
 
 

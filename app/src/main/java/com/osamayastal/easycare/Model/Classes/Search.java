@@ -59,8 +59,10 @@ public class Search {
             e.printStackTrace();
         }
         try {
-            image=provider.getString("image").replace("http", "https");
-
+            image=provider.getString("image");
+            if (!image.contains("https")){
+                image=image.replace("http", "https");
+            }
 
         } catch (JSONException e) {
             e.printStackTrace();

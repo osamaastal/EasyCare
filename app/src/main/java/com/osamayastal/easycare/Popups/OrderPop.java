@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -28,6 +29,7 @@ import com.osamayastal.easycare.Adapters.SubCategories_adapter;
 import com.osamayastal.easycare.Model.Classes.Car_servece;
 import com.osamayastal.easycare.Model.Classes.Categorie;
 import com.osamayastal.easycare.Model.Classes.City;
+import com.osamayastal.easycare.Model.Classes.Payment;
 import com.osamayastal.easycare.Model.Classes.Size;
 import com.osamayastal.easycare.Model.Classes.Sub_categorie;
 import com.osamayastal.easycare.Model.Classes.Sub_servic;
@@ -42,8 +44,12 @@ import com.osamayastal.easycare.R;
 import com.osamayastal.easycare.activities.MainActivity;
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -52,9 +58,10 @@ import top.defaults.drawabletoolbox.DrawableBuilder;
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 public class OrderPop {
-    public static String date;
-    public static String time;
-    public static int payment;
+    private String date;
+    private String time;
+    private int payment;
+    private   Boolean upfont=false;
     private   Context mcontext;
     Car_servece servic;
     Sub_categorie sub_categorie;
@@ -68,7 +75,7 @@ public class OrderPop {
          void onGoBasket();
      }
     public interface POPLisstenner{
-        void ongetResult(String  result);
+        void ongetResult(String  result,String time,Boolean upfont);
     }
     public OrderPop(Context mcontext) {
         this.mcontext = mcontext;
@@ -80,7 +87,7 @@ public class OrderPop {
          ) {
              Total=Total+s.getTotal();
          }
-         price.setText(Total.toString());
+         price.setText(String.format("%.2f",Total));
 
          if (Total==0.0){
              basket.setBackground(mcontext.getDrawable(R.drawable.bg_circle_gray));
@@ -151,12 +158,16 @@ this.mcontext=mcontext;
                 for (Sub_service s:sub_servics
                 ) {
                     if (s.isActive()){
+
                         tot=tot+s.getPrice();
                         if (id.isEmpty()){
                             id=s.getProvider_subCategory_id();
 
                         }else {
-                            id=id+","+s.getProvider_subCategory_id();
+                            if (!id.contains(s.getProvider_subCategory_id())){
+                                id=id+","+s.getProvider_subCategory_id();
+                            }
+
                         }
                     }
 
@@ -249,7 +260,9 @@ this.mcontext=mcontext;
                             id=s.getProvider_subCategory_id();
 
                         }else {
-                            id=id+","+s.getProvider_subCategory_id();
+                            if (!id.contains(s.getProvider_subCategory_id())){
+                                id=id+","+s.getProvider_subCategory_id();
+                            }
                         }
                     }
                     s.setActive(false);
@@ -316,12 +329,21 @@ this.mcontext=mcontext;
                 root.PostService(mcontext, car_servece.Order_JSON(prov_id, carList), new Bascket_root.PostbasketListener() {
                     @Override
                     public void onSuccess(Result bascket) {
+                        String msg="";
                         if (new User_info(mcontext).getLanguage().equals("en")) {
-                            Toast.makeText(mcontext, bascket.getMessageEn(), Toast.LENGTH_SHORT).show();
+                            msg=bascket.getMessageEn();
+//                            Toast.makeText(mcontext, bascket.getMessageEn(), Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(mcontext, bascket.getMessageAr(), Toast.LENGTH_SHORT).show();
+                            msg=bascket.getMessageAr();
+//                            Toast.makeText(mcontext, bascket.getMessageAr(), Toast.LENGTH_SHORT).show();
                         }
-                        lisstenner.onGoBasket();
+                        AppPop appPop=new AppPop();
+                        appPop.GoBasket_POP(mcontext, msg, new AppPop.gobasket() {
+                            @Override
+                            public void Go() {
+                                lisstenner.onGoBasket();
+                            }
+                        });
                     }
                     @Override
                     public void onStart() {
@@ -405,16 +427,22 @@ this.mcontext=mcontext;
        mBottomSheetDialog.setContentView(sheetView);
        mBottomSheetDialog.show();
        final CalendarView calendarView=sheetView.findViewById(R.id.calendar);
+       calendarView.setOnDateChangeListener( new CalendarView.OnDateChangeListener() {
+           public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
+//               this.calendar = new GregorianCalendar( year, month, dayOfMonth );
+               date=year+"-"+month+"-"+dayOfMonth;
+           }//met
+       });
        Button save=sheetView.findViewById(R.id.save_btn);
        save.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
 
-               SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH);
-               String formatedDate = format.format(calendarView.getDate());
-               Log.d("date", formatedDate);
-               OrderPop.date=formatedDate;
-               lisstenner.ongetResult(date);
+//               SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//               date = sdf.format(new Date(calendarView.getDate()));
+               Log.d("date", date);
+
+               lisstenner.ongetResult(date,"",false);
                mBottomSheetDialog.dismiss();
 
 
@@ -449,16 +477,17 @@ this.mcontext=mcontext;
                 }
                 if(hour > 12) {
                     am_pm = "PM";
-                    hour = hour - 12;
+//                    hour = hour - 12;
+
                 }
                 else
                 {
                     am_pm="AM";
                 }
 
-                Log.d("date", hour +":"+ minute+" "+am_pm);
-                OrderPop.time=hour +":"+ minute+" "+am_pm;
-                lisstenner.ongetResult(time);
+                Log.d("date", hour +":"+ minute);//+" "+am_pm
+                time=hour +":"+ minute;//+" "+am_pm;
+                lisstenner.ongetResult(time,time,false);
 
                 mBottomSheetDialog.dismiss();
 
@@ -468,7 +497,7 @@ this.mcontext=mcontext;
 
 
     }
-    public void GetWay_pop(final POPLisstenner lisstenner){
+    public void GetWay_pop(final Boolean isupfront, final Double mount, List<Payment> payment_id, final POPLisstenner lisstenner){
 
         final RoundedBottomSheetDialog mBottomSheetDialog = new RoundedBottomSheetDialog(mcontext);
         LayoutInflater inflater = (LayoutInflater) mcontext.getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -476,42 +505,87 @@ this.mcontext=mcontext;
         mBottomSheetDialog.setContentView(sheetView);
         mBottomSheetDialog.show();
         final ImageView payment1,payment2,payment3,check1,check2,check3;
+        final TextView upFrontmount;
+      final LinearLayout linear_upfront;
+        linear_upfront=sheetView.findViewById(R.id.linear_upfront);
+        upFrontmount=sheetView.findViewById(R.id.upfrontMount_tv);
         check1=sheetView.findViewById(R.id.checked_1);
         check2=sheetView.findViewById(R.id.checked_2);
         check3=sheetView.findViewById(R.id.checked_3);
-        payment1=sheetView.findViewById(R.id.payment_img1);
-        payment2=sheetView.findViewById(R.id.payment_img2);
-        payment3=sheetView.findViewById(R.id.payment_img3);
+        payment2=sheetView.findViewById(R.id.payment_img1);//wallet 2
+        payment3=sheetView.findViewById(R.id.payment_img2);//online 3
+        payment1=sheetView.findViewById(R.id.payment_img3);//cache 1
+        payment1.setEnabled(false);
+        payment2.setEnabled(false);
+        payment3.setEnabled(false);
+
+        payment=1;//default
+        for (Payment p:payment_id
+             ) {
+            switch (p.getId()){
+                case "1":
+                    payment1.setEnabled(true);
+                    break;
+                case "2":
+                    payment2.setEnabled(true);
+                    break;
+                case "3":
+                    payment3.setEnabled(true);
+                    break;
+            }
+        }
+
         payment1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                OrderPop.payment=2;
-                check1.setVisibility(View.VISIBLE);
+                ///Cache
+
+                payment=1;
+                check3.setVisibility(View.VISIBLE);
                 check2.setVisibility(View.GONE);
-                check3.setVisibility(View.GONE);
+                check1.setVisibility(View.GONE);
+
+                if (isupfront){
+                    linear_upfront.setVisibility(View.GONE);
+                    upfont=false;
+                }
+
 
             }
         });
         payment2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                OrderPop.payment=3;
-                check2.setVisibility(View.VISIBLE);
-                check1.setVisibility(View.GONE);
+                //Toast.makeText(mcontext,"هذه الخاصية غير مفعلة حاليا",Toast.LENGTH_SHORT).show();
+// wallet
+                payment=2;
+                check1.setVisibility(View.VISIBLE);
+                check2.setVisibility(View.GONE);
                 check3.setVisibility(View.GONE);
-
             }
         });
         payment3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                OrderPop.payment=1;
-                check3.setVisibility(View.VISIBLE);
-                check2.setVisibility(View.GONE);
+///Online
+                payment=3;
+                check2.setVisibility(View.VISIBLE);
                 check1.setVisibility(View.GONE);
+                check3.setVisibility(View.GONE);
+
+
+
+                if (isupfront){
+                    upfont=true;
+                    linear_upfront.setVisibility(View.VISIBLE);
+                    upFrontmount.setHint(mount+" ريال ");
+                }
+
+
 
             }
         });
+
 
         Button save=sheetView.findViewById(R.id.save_btn);
         save.setOnClickListener(new View.OnClickListener() {
@@ -519,7 +593,7 @@ this.mcontext=mcontext;
             public void onClick(View view) {
 
                 Log.d("payment", String.valueOf(payment));
-                lisstenner.ongetResult( String.valueOf(payment));
+                lisstenner.ongetResult( String.valueOf(payment),"",upfont);
 
                 mBottomSheetDialog.dismiss();
 

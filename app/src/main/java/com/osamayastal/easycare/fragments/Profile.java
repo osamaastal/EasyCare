@@ -39,6 +39,17 @@ public class Profile extends Fragment implements View.OnClickListener {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        User_info info=new User_info(getContext());
+        name.setText(info.getName());
+        email.setText(info.getEmail());
+        phone.setText(info.getPhone());
+        city.setText(info.getAddress());
+    }
+
     private void Loading_data() {
        User_info info=new User_info(getContext());
         name.setText(info.getName());

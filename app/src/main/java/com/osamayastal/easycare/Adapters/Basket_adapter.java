@@ -37,6 +37,7 @@ public class Basket_adapter extends RecyclerView.Adapter<Basket_adapter.ViewHold
     }
     public static int item_select=-1;
     Selected_item listenner;
+    public Boolean isOrder=false;
     public Basket_adapter(Context context, List<Bascket> names, Selected_item listenner) {
         mItems = names;
         mContext = context;
@@ -74,6 +75,8 @@ public class Basket_adapter extends RecyclerView.Adapter<Basket_adapter.ViewHold
         });
         holder.RV_service.setLayoutManager(new LinearLayoutManager(mContext,RecyclerView.VERTICAL,false));
         holder.RV_service.setAdapter(adapter);
+        adapter.isOrder=isOrder;
+        adapter.notifyDataSetChanged();
 
         Basket_Products_adapter adapter2=new Basket_Products_adapter(mContext, mItems.get(position).getProducts(), new Basket_Products_adapter.Selected_item() {
             @Override
@@ -84,7 +87,8 @@ public class Basket_adapter extends RecyclerView.Adapter<Basket_adapter.ViewHold
         });
         holder.RV_product.setLayoutManager(new LinearLayoutManager(mContext,RecyclerView.VERTICAL,false));
         holder.RV_product.setAdapter(adapter2);
-
+        adapter2.isOrder=isOrder;
+        adapter2.notifyDataSetChanged();
         mview.setOnClickListener(new View.OnClickListener() {
 
             @Override

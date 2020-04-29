@@ -64,7 +64,7 @@ if(new User_info(mContext).getLanguage().equals("en")){
 }else {
     holder.name.setText(mItems.get(position).getSubCategory_id().getNameAr());
 }
-        holder.price.setText(mItems.get(position).getPrice().toString());
+        holder.price.setText(String.format("%.2f",mItems.get(position).getPrice()));
 
 
 

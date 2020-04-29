@@ -8,7 +8,7 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:225750972193:android:b95a42676633574f7c7060",
+        "mobilesdk_app_id": "1:225750972193:android:c4723da89ecc888c7c7060",
         "android_client_info": {
           "package_name": "com.osamayastal.easycare"
         }
@@ -29,7 +29,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBMTOtjyLptDlQM89djMRjn5yI6RHTEXzM"
+          "current_key": "AIzaSyA80GWwKzSAcfnkxxOd-EH5hQRHrtiVkyM"
         }
       ],
       "services": {
@@ -38,6 +38,49 @@
             {
               "client_id": "225750972193-2nmffq827fjo4ihksff4v5r56a86uuf7.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "225750972193-nbi74jgk0oitn25pp4e3v4d41c0rrc5k.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.app.EasyCare"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:225750972193:android:e9434f08660fcee97c7060",
+        "android_client_info": {
+          "package_name": "com.oya_android.easycare_driver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "225750972193-2nmffq827fjo4ihksff4v5r56a86uuf7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA80GWwKzSAcfnkxxOd-EH5hQRHrtiVkyM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "225750972193-2nmffq827fjo4ihksff4v5r56a86uuf7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "225750972193-nbi74jgk0oitn25pp4e3v4d41c0rrc5k.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.app.EasyCare"
+              }
             }
           ]
         }

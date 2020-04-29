@@ -20,7 +20,6 @@ import com.osamayastal.easycare.Adapters.Search_adapter;
 import com.osamayastal.easycare.Model.Classes.Categorie;
 import com.osamayastal.easycare.Model.Classes.Favorite_get;
 import com.osamayastal.easycare.Model.Classes.Product;
-import com.osamayastal.easycare.Model.Classes.Search;
 import com.osamayastal.easycare.Model.Controle.Categories;
 import com.osamayastal.easycare.Model.Controle.Favorites;
 import com.osamayastal.easycare.Model.Controle.Favorites_get;
@@ -28,6 +27,7 @@ import com.osamayastal.easycare.Model.Rootes.Categories_root;
 import com.osamayastal.easycare.Model.Rootes.Favorite_root;
 import com.osamayastal.easycare.R;
 import com.osamayastal.easycare.activities.MainActivity;
+import com.osamayastal.easycare.activities.Search;
 import com.osamayastal.easycare.activities.ServiceProfiderDetails;
 import com.osamayastal.easycare.activities.Service_Single;
 
@@ -85,8 +85,9 @@ providerList.addAll(favorites.getItems());
         adapter=new Favorit_adapter(getContext(), providerList, new Favorit_adapter.Selected_item() {
             @Override
             public void Onselcted(Favorite_get favorite_get) {
-                ServiceProfiderDetails.provider_id= favorite_get.getProvider_id().get_id();
-                startActivity(new Intent(getActivity(),ServiceProfiderDetails.class));
+                Intent intent=new Intent(getContext(), ServiceProfiderDetails.class);
+                intent.putExtra("provider_id",favorite_get.getProvider_id().get_id());
+                startActivity(intent);
                 getActivity().finish();
             }
         });

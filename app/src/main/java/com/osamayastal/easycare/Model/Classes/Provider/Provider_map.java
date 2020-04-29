@@ -16,25 +16,89 @@ private float rate;
             return;
         }
         try {
-            _id=provider.getString("_id");
             createAt=provider.getString("createAt");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             name=provider.getString("name");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             email=provider.getString("email");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             address=provider.getString("address");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             phone_number=provider.getString("phone_number");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             category_id=new Categorie(provider.getJSONObject("type_id"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             favorite_id=provider.getString("favorite_id");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
+        try {
             rate=provider.getInt("rate");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
+        try {
             isBlock=provider.getBoolean("isBlock");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
+        try {
             lat=provider.getDouble("lat");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             lng=provider.getDouble("lng");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             profitPercentage=provider.getDouble("profitPercentage");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             orderPercentage=provider.getDouble("orderPercentage");
-            image=provider.getString("image").replace("http", "https");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            image=provider.getString("image");
+            if (!image.contains("https")){
+                image=image.replace("http", "https");
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try {
             password=provider.getString("password");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            _id=provider.getString("_id");
 
         } catch (JSONException e) {
             e.printStackTrace();

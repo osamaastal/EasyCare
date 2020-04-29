@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".fragments.Wallet"
+    tools:context=".activities.Wallet"
     android:layoutDirection="rtl">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraint1"
@@ -24,6 +24,7 @@
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <ImageButton
+            android:id="@+id/back_btn"
             android:layout_width="46dp"
             android:layout_height="46dp"
             android:src="@drawable/ic_back_ar"
@@ -84,6 +85,7 @@
                     android:orientation="vertical"
                     android:rotation="0">
                     <ImageButton
+                        android:visibility="gone"
                         android:layout_width="50dp"
                         android:layout_height="75dp"
                         android:layout_marginStart="12.5dp"
@@ -95,8 +97,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp">
                         <TextView
+                            android:id="@+id/add"
                             android:layout_width="50dp"
-                            android:layout_height="170dp"
+                            android:layout_height="260dp"
                             android:layout_marginTop="0dp"
                             style="@style/text_white_roman_16"
                             android:background="@drawable/bg_req_pink_orders"
@@ -140,7 +143,16 @@
                 style="@style/text_darkblue_bold_18"
                 android:layout_marginStart="12.5dp"
                 />
+            <ProgressBar
+                android:padding="10dp"
+                android:backgroundTint="#F1EBEB"
+                android:layout_gravity="center"
+                android:background="@drawable/bg_circle_gray"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/progress"/>
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/RV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"

@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.osamayastal.easycare">
-    <!--
-         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
-         Google Maps Android API v2, but you must specify either coarse or fine
-         location permissions for the 'MyLocation' functionality.
-    -->
-    <uses-permission android:name="android.permission.CALL_PHONE" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/app_icon_no_text"
@@ -14,11 +10,12 @@
         android:roundIcon="@drawable/app_icon_no_text"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.Auther_activity"></activity>
+        <activity android:name=".activities.Wallet"></activity>
+        <activity android:name=".activities.Chat" />
+        <activity android:name=".activities.OrderDetails" />
+        <activity android:name=".activities.Auther_activity" />
         <activity android:name=".activities.Notifications" />
-
         <activity android:name=".activities.OrderDetails_Create" />
-
         <activity android:name=".activities.AllProducts" />
         <activity android:name=".activities.ServiceProfiderDetails" />
         <activity android:name=".activities.AllServices" />
@@ -37,7 +34,6 @@
              You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
         <activity android:name=".activities.WelcomeActivity" />
-
         <activity android:name=".activities.ConfCode" />
         <activity android:name=".activities.Logo">
             <intent-filter>
@@ -48,9 +44,11 @@
         </activity>
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.MainActivity" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
@@ -58,7 +56,14 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission
+        android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
+
+    <uses-permission
+        android:name="android.permission.WRITE_SECURE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
 
 </manifest>

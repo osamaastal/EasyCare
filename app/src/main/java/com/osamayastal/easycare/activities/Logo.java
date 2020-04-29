@@ -2,10 +2,12 @@ package com.osamayastal.easycare.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.Toast;
 
 import com.osamayastal.easycare.Model.Const.User_info;
 import com.osamayastal.easycare.R;
@@ -13,10 +15,13 @@ import com.osamayastal.easycare.R;
 public class Logo extends AppCompatActivity {
 
     private static final long SPLASH_TIME = 3000;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logo);
+
+
 
     }
 

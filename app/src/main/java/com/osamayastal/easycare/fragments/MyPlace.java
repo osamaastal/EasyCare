@@ -57,6 +57,7 @@ import com.osamayastal.easycare.Model.Rootes.Favorite_root;
 import com.osamayastal.easycare.Model.Rootes.Maps_root;
 import com.osamayastal.easycare.R;
 import com.osamayastal.easycare.activities.Search;
+import com.osamayastal.easycare.activities.ServiceProfiderDetails;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
@@ -79,12 +80,10 @@ public class MyPlace extends Fragment implements OnMapReadyCallback, View.OnClic
         mapFragment.getMapAsync(this);
 
         if (mLatLng != null) {
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(mLatLng));
+//            mMap.moveCamera(CameraUpdateFactory.newLatLng(mLatLng));
             Show_nearServic(mLatLng);
         } else {
-            dialog = new ProgressDialog(getContext());
-            dialog.setMessage("يرجي الانتظار حتى يتم تحديد موقعك..");
-            dialog.show();
+
             locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
             GetLocation(getContext());
         }
@@ -139,6 +138,7 @@ public class MyPlace extends Fragment implements OnMapReadyCallback, View.OnClic
         }
     }
 
+
     private FusedLocationProviderClient fusedLocationClient;
 
     private void getCurrentLocation() {
@@ -163,15 +163,23 @@ public class MyPlace extends Fragment implements OnMapReadyCallback, View.OnClic
         search_btn = view.findViewById(R.id.search_btn);
         /****************************Actions******************************/
         search_btn.setOnClickListener(this);
+        view.findViewById(R.id.provider_inf).setOnClickListener(this);
     }
-
+private String provider_id=null;
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.search_btn:
                 startActivity(new Intent(getContext(), Search.class));
                 break;
+            case R.id.provider_inf:
+                if (provider_id!=null){
+                    Intent intent=new Intent(getContext(), ServiceProfiderDetails.class);
+                    intent.putExtra("provider_id",provider_id);
+                    startActivity(intent);
 
+                }
+                break;
 
         }
     }
@@ -185,11 +193,6 @@ public class MyPlace extends Fragment implements OnMapReadyCallback, View.OnClic
         flag = displayGpsStatus();
         if (flag) {
             locationListener = new MyLocationListener();
-
-
-
-//            locationManager.requestLocationUpdates(LocationManager
-//                    .GPS_PROVIDER, 5000, 10, locationListener);
 
 ///////////////////////////////////////////////////*****************GetLastKnownLocation*****************************************/
             try {
@@ -207,7 +210,6 @@ public class MyPlace extends Fragment implements OnMapReadyCallback, View.OnClic
                                         mMap.moveCamera(CameraUpdateFactory.newLatLng(mLatLng));
                                         Show_nearServic(mLatLng);
                                         Log.d("location",mLatLng.toString());
-                                        dialog.dismiss();
                                         gps=1;
                                     }
 //                                    Toast.makeText(getContext(), "lat: " + mLatLng.latitude + "lng: " + mLatLng.longitude, Toast.LENGTH_SHORT).show();
@@ -237,7 +239,7 @@ public class MyPlace extends Fragment implements OnMapReadyCallback, View.OnClic
         mMap.setOnMarkerClickListener(this);
 
         mMap.getUiSettings().setZoomControlsEnabled(true);
-        mMap.setMinZoomPreference(12);
+//        mMap.setMinZoomPreference(12);
 
     }
     private void makeDrawable(int color, View view, int corner) {
@@ -254,6 +256,7 @@ public class MyPlace extends Fragment implements OnMapReadyCallback, View.OnClic
     @Override
     public boolean onMarkerClick(Marker marker) {
         final Provider_map provider =markersMap_prov.get(marker);
+        provider_id=provider.get_id();
         name.setText(provider.getName());
         address.setText(provider.getAddress());
 if (new User_info(getContext()).getLanguage().equals("en")){
@@ -420,37 +423,49 @@ if (new User_info(getContext()).getLanguage().equals("en")){
      *
      * @return
      */
-    private LatLng mLatLng=null;
+    private LatLng mLatLng=new LatLng(33.39877956546843,6.875997707247734);
     private Map<Marker, Employee> markersMap_emp = new HashMap<Marker, Employee>();
     private Map<Marker, Provider_map> markersMap_prov = new HashMap<Marker, Provider_map>();
     private void make_marke(final Employee emp, Provider_map provider){
+       try {
+           LatLng latLng=mLatLng;
+           if (emp!=null){
+               latLng=new LatLng(emp.getProvider_id().getLat()
+                       ,emp.getProvider_id().getLng());
 
-        if (emp!=null){
-            LatLng latLng=new LatLng(emp.getProvider_id().getLat()
-                    ,emp.getProvider_id().getLng());
+               Marker marker = mMap.addMarker(new MarkerOptions()
+                       .title(emp.getFull_name())
+                       .snippet(emp.getFull_name() )
+                       .position(latLng)
+                       .icon(bitmapDescriptorFromVector(getContext(), R.drawable.ic_icon_emp)));
 
-            Marker marker = mMap.addMarker(new MarkerOptions()
-                    .title(emp.getFull_name())
-                    .snippet(emp.getFull_name() )
-                    .position(latLng)
-            .icon(bitmapDescriptorFromVector(getContext(), R.drawable.ic_icon_emp)));
 
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+
 //            markersMap_prov.put(marker, emp.getProvider_id());
-        }
-        if (provider!=null){
-            LatLng latLng=new LatLng(provider.getLat()
-                    ,provider.getLng());
+           }
+           if (provider!=null){
+               latLng=new LatLng(provider.getLat()
+                       ,provider.getLng());
 
-            Marker marker = mMap.addMarker(new MarkerOptions()
-                    .title(provider.getName())
-                    .snippet(provider.getName() )
-                    .position(latLng)
-                    .icon(bitmapDescriptorFromVector(getContext(), R.drawable.ic_icon_prov)));
+               Marker marker = mMap.addMarker(new MarkerOptions()
+                       .title(provider.getName())
+                       .snippet(provider.getName() )
+                       .position(latLng)
+                       .icon(bitmapDescriptorFromVector(getContext(), R.drawable.ic_icon_prov)));
 
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-            markersMap_prov.put(marker, provider);
-        }
+
+               markersMap_prov.put(marker, provider);
+           }
+
+           mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+           float zoomLevel = 8.0f; //This goes up to 21
+           mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel));
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
+
+
+
     }
     private BitmapDescriptor bitmapDescriptorFromVector(Context context, int vectorResId) {
         Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorResId);
@@ -508,7 +523,7 @@ if (new User_info(getContext()).getLanguage().equals("en")){
 
     private LocationManager locationManager = null;
     private LocationListener locationListener = null;
-    private ProgressDialog dialog;
+
 
 
 
@@ -535,6 +550,7 @@ if (new User_info(getContext()).getLanguage().equals("en")){
 
                 }
             };
+
 
 
 }

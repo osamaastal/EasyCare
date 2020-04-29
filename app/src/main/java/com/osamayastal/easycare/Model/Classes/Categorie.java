@@ -3,7 +3,9 @@ package com.osamayastal.easycare.Model.Classes;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Categorie {
+import java.io.Serializable;
+
+public class Categorie implements Serializable {
     private String _id,arName,enName,image;
     private String color;
     private boolean isActive;
@@ -14,10 +16,35 @@ public class Categorie {
         }
         try {
             _id=jsonObject.getString("_id");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             arName=jsonObject.getString("arName");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             enName=jsonObject.getString("enName");
-            image=jsonObject.getString("image").replace("http", "https");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            image=jsonObject.getString("image");
+            if (!image.contains("https")){
+                image=image.replace("http", "https");
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try {
             isActive=jsonObject.getBoolean("isActive");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+
             color= jsonObject.getString("color");
 
 

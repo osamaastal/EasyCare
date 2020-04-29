@@ -230,7 +230,10 @@ public class User {
         createAt = jsonObject.optString("createAt");
         email = jsonObject.optString("email");
         fullName = jsonObject.optString("full_name");
-        image = jsonObject.optString("image").replace("http", "https");
+        image=jsonObject.optString("image");
+        if (!image.contains("https")){
+            image=image.replace("http", "https");
+        }
         isBlock = jsonObject.optBoolean("isBlock");
         isVerify = jsonObject.optBoolean("isVerify");
         lat = jsonObject.optDouble("lat");

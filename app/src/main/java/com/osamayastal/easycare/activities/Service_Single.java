@@ -33,12 +33,17 @@ import java.util.List;
 
 public class Service_Single extends AppCompatActivity implements View.OnClickListener {
 
-    public static Categorie categorie=null;
+    private Categorie categorie=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_service__single);
+
+        Intent intent = this.getIntent();
+        Bundle bundle = intent.getExtras();
+        categorie= (Categorie) bundle.getSerializable("categorie");
+
         init();
         Loading();
     }
@@ -91,8 +96,9 @@ public class Service_Single extends AppCompatActivity implements View.OnClickLis
 
             @Override
             public void Onselcted(com.osamayastal.easycare.Model.Classes.Provider.Provider provider) {
-                ServiceProfiderDetails.provider_id= provider.get_id();
-                startActivity(new Intent(Service_Single.this,ServiceProfiderDetails.class));
+                Intent intent=new Intent(Service_Single.this, ServiceProfiderDetails.class);
+                intent.putExtra("provider_id",provider.get_id());
+                startActivity(intent);
                 finish();
             }
         });

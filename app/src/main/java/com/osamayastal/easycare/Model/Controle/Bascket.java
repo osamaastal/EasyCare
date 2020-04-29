@@ -23,16 +23,34 @@ private Double total_price;
         items=new ArrayList<>();
         try {
             message=jsonObject.getString("message");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             status=jsonObject.getBoolean("status");
-            Log.d("message",message);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try {
             status_code=jsonObject.getInt("status_code");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
 
-
-            JSONArray jsonArray2=jsonObject.getJSONArray("items");
-            for(int i=0;i<jsonArray2.length();i++){
-                items.add(new com.osamayastal.easycare.Model.Classes.Basket.Bascket(jsonArray2.getJSONObject(i)));
+        JSONArray jsonArray= null;
+        try {
+            jsonArray = jsonObject.getJSONArray("items");
+            for(int i=0;i<jsonArray.length();i++){
+                items.add(new com.osamayastal.easycare.Model.Classes.Basket.Bascket(jsonArray.getJSONObject(i)));
             }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        try {
 
             total_price=jsonObject.getDouble("total_price");
 

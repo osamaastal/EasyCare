@@ -92,7 +92,12 @@ private Button login_btn;
                                 Toast.makeText(getContext(),new_account.getMessageAr(),Toast.LENGTH_SHORT).show();
                             }
                             if (!new_account.isStatus()){
-                                return;
+                                if (new_account.getItems()!=null){
+                                    if (!new_account.getItems().isIsVerify()){
+                                        startActivity(new Intent(getActivity(), ConfCode.class));
+                                        getActivity().finish();
+                                    }
+                                }
                             }
                             if (new_account.getItems().isIsVerify()) {
 

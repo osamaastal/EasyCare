@@ -73,9 +73,9 @@ Double price=mItems.get(position).getSize().getPrice();
         holder.name.setText(mItems.get(position).getCar_name());
 
         if (new User_info(mContext).getLanguage().equals("en")){
-            holder.size.setText(mItems.get(position).getSize().getEnName()+" - "+price+mContext.getString(R.string.RS_chort));
+            holder.size.setText(mItems.get(position).getSize().getEnName()+" - "+String.format("%.2f",price)+mContext.getString(R.string.RS_short2));
         }else {
-            holder.size.setText(mItems.get(position).getSize().getArName()+" - "+price+mContext.getString(R.string.RS_chort));
+            holder.size.setText(mItems.get(position).getSize().getArName()+" - "+String.format("%.2f",price)+mContext.getString(R.string.RS_short2));
         }
 Basket_car_details_adapter adapter=new Basket_car_details_adapter(mContext,mItems.get(position).getSubCategory_basketList(),null);
         holder.RV.setLayoutManager(new LinearLayoutManager(mContext,RecyclerView.VERTICAL,false));

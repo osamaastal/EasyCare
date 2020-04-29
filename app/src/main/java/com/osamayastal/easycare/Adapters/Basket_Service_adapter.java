@@ -42,6 +42,7 @@ import top.defaults.drawabletoolbox.DrawableBuilder;
 public class Basket_Service_adapter extends RecyclerView.Adapter<Basket_Service_adapter.ViewHolder> {
 
     private static final String TAG = "RecyclerViewAdapter";
+    public boolean isOrder=false;
 
     //vars
     private List<categories_basket> mItems = new ArrayList<>();
@@ -101,7 +102,9 @@ public class Basket_Service_adapter extends RecyclerView.Adapter<Basket_Service_
             });
             holder.RV.setLayoutManager(new LinearLayoutManager(mContext,RecyclerView.VERTICAL,false));
             holder.RV.setAdapter(adapter);
-
+        if (isOrder){
+            holder.delete.setVisibility(View.GONE);
+        }
         holder.delete.setOnClickListener(new View.OnClickListener() {
 
             @Override

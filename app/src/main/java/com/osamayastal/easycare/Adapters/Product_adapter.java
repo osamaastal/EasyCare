@@ -23,6 +23,7 @@ import com.osamayastal.easycare.Model.Classes.Product;
 import com.osamayastal.easycare.Model.Const.User_info;
 import com.osamayastal.easycare.Model.Controle.Result;
 import com.osamayastal.easycare.Model.Rootes.Bascket_root;
+import com.osamayastal.easycare.Popups.AppPop;
 import com.osamayastal.easycare.R;
 import com.osamayastal.easycare.activities.LoginActivity;
 import com.osamayastal.easycare.activities.MainActivity;
@@ -67,32 +68,23 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.ViewHo
         mview=view;
         return new ViewHolder(view); // Inflater means reading a layout XML
     }
-    public void LoginAlert(){
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(mContext);
-        alertDialogBuilder.setMessage("قم بتسجيل الدخول ")
-                .setPositiveButton("تسجيل الدخول", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        mContext.startActivity(new Intent(mContext, LoginActivity.class));
 
-                    }
-                })
-                .setNegativeButton("إلغاء", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                }).create().show();
-    }
     @RequiresApi(api = Build.VERSION_CODES.M)
     @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
             holder.name.setText(mItems.get(position).getName());
-      
-        holder.old_price.setText(mItems.get(position).getDiscountPrice().toString());
-        holder.new_price.setText(mItems.get(position).getPrice().toString());
+        Double price=mItems.get(position).getDiscountPrice();
+        if (price==0){
+            price=mItems.get(position).getPrice();
+            holder.old_price.setText(String.format("%.2f",mItems.get(position).getDiscountPrice()));
+            holder.new_price.setText(String.format("%.2f",mItems.get(position).getPrice()));
+        }else {
+            holder.old_price.setText(String.format("%.2f",mItems.get(position).getPrice()));
+            holder.new_price.setText(String.format("%.2f",mItems.get(position).getDiscountPrice()));
+        }
+
 
         Picasso .with(mContext)
                 .load(mItems.get(position).getImage())
@@ -103,7 +95,10 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.ViewHo
             @Override
             public void onClick(View view) {
                 if (new User_info(mContext).getId()==null){
-                   LoginAlert();
+
+                    AppPop pop=new AppPop();
+                    pop.Login_POP(mContext);
+
                 }else {
                     Bascket_root root = new Bascket_root();
                     root.PostProduct(mContext, mItems.get(position).get_id(), 1, new Bascket_root.PostbasketListener() {

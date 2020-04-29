@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -87,36 +88,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     User_info user_info;
     public static int item_select;
     public static FrameLayout frameLayout;
-
+    TextView user_name_tv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         frameLayout = findViewById(R.id.mainContainer);
-/******************************Test Fore user_Login*************************************/
-        user_info = new User_info(this);
-        if (user_info.getId() == null) {
-            user root = new user();
-            root.Get_Token(this);
-        } else {
-            Bascket_root root = new Bascket_root();
-            root.GetItemCount(this, new Bascket_root.Basket_count_Listener() {
-                @Override
-                public void onSuccess(int nb) {
 
-                }
+          user_info = new User_info(this);
+        if (user_info.getId()!=null){
 
-                @Override
-                public void onStart() {
+            Log.d("users_id",user_info.getId());
+            if (!user_info.CONF_phone(this))
+            {
+                startActivity(new Intent(MainActivity.this, ConfCode.class));
+                finish();
+            }
 
-                }
-
-                @Override
-                public void onFailure(String msg) {
-
-                }
-            });
         }
+
 /********************************Get Contact*************************************/
         Get_Contact();
         /************************* Drawer*******************/
@@ -158,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         TextView drawer_call_tv = navigation.findViewById(R.id.drawer_call_tv);
         TextView drawer_wallet_tv = navigation.findViewById(R.id.drawer_wallet_tv);
         TextView edit_profile_tv = navigation.findViewById(R.id.edit_profile_tv);
-        TextView user_name_tv = navigation.findViewById(R.id.user_name_tv);
+         user_name_tv = navigation.findViewById(R.id.user_name_tv);
         CircleImageView user_img = navigation.findViewById(R.id.user_img);
         langu = navigation.findViewById(R.id.language);
         ImageButton logout = navigation.findViewById(R.id.logout_btn);
@@ -179,7 +169,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (user_info.getId() == null) {
             logout.setVisibility(View.GONE);
         }
-        user_name_tv.setText(user_info.getName());
+
         getLanguge();
         /********************Bottom nav view**********************/
 //        item_select=R.id.home;
@@ -251,18 +241,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         transaction.commit();
         bottom_navigation.setSelectedItemId(R.id.home);
 
+        new com.osamayastal.easycare.Model.Classes.GPS(this).
+                turnGPSOn(new com.osamayastal.easycare.Model.Classes.GPS.onGpsListener() {
+                    @Override
+                    public void gpsStatus(boolean isGPSEnable) {
+                        // turn on GPS
+                        isGPS = isGPSEnable;
+//                        Toast.makeText(Logo.this, "isGPS = " +isGPS, Toast.LENGTH_SHORT).show();
+                    }
+                });
 
     }
 
+    private Boolean isGPS;
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == 15) {
+                isGPS = true; // flag maintain before get location
+            }
+        }
+    }
     @Override
     protected void onResume() {
         super.onResume();
         bottom_navigation.setSelectedItemId(item_select);
+        user_name_tv.setText(new User_info(this).getName());
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        finishAffinity();
     }
 
     public static void SetVisibillty(int visibl) {
@@ -279,22 +290,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+
     public void LoginAlert() {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setMessage("قم بتسجيل الدخول ")
-                .setPositiveButton("تسجيل الدخول", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                        finish();
-                    }
-                })
-                .setNegativeButton("إلغاء", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                }).create().show();
+        AppPop pop=new AppPop();
+        pop.Login_POP(MainActivity.this);
     }
 
     public void switchFGM(Fragment fragment) {
@@ -317,6 +316,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 break;
             case R.id.drawer_chat_tv:
+                startActivity(new Intent(MainActivity.this, Messages.class));
 
                 break;
             case R.id.drawer_notification_tv:
@@ -339,6 +339,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 break;
             case R.id.drawer_wallet_tv:
+                startActivity(new Intent(MainActivity.this, Wallet.class));
 
                 break;
             case R.id.edit_profile_tv:
@@ -362,16 +363,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         @Override
                         public void onSave(Boolean v) {
 
-                            if (v) langu.setText("Ar");
-                            finishAffinity();
+                            if (v) {
+                                langu.setText("Ar");
+                                finishAffinity();
+
+                            }
                         }
                     });
                 } else {
                     ChangeLanguge_pop("en", this, new chang() {
                         @Override
                         public void onSave(Boolean v) {
-                            if (v) langu.setText("En");
-                            finishAffinity();
+                            if (v) {
+                                langu.setText("En");
+                                finishAffinity();
+
+                            }
                         }
                     });
 
@@ -393,7 +400,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         if (!new_account.isStatus()) {
                             return;
                         }
-                        new User_info(new User(), MainActivity.this);
+                        new User_info(MainActivity.this,true);
+                        startActivity(new Intent(MainActivity.this,LoginActivity.class));
                         finish();
                     }
 
@@ -578,6 +586,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case 15:
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Permission Granted
+                   make_call();
+                }
+                break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
     ///Calling
     private String[] callPermissions = {Manifest.permission.CALL_PHONE};
 
@@ -585,20 +608,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void Callpermissien() {
 
         if (EasyPermissions.hasPermissions(this, callPermissions)) {
-            String posted_by = phone;
-
-            String uri = "tel:" + posted_by.trim();
-            Intent intent = new Intent(Intent.ACTION_CALL);
-            intent.setData(Uri.parse(uri));
-            startActivity(intent);
-
-
+            make_call();
         } else {
             EasyPermissions.requestPermissions(this, "Access for Call phone",
-                    1000, callPermissions);
+                    15, callPermissions);
         }
 
 
+    }
+
+    @SuppressLint("MissingPermission")
+    private void make_call() {
+        String posted_by = phone;
+
+        String uri = "tel:" + posted_by.trim();
+        Intent intent = new Intent(Intent.ACTION_CALL);
+        intent.setData(Uri.parse(uri));
+        startActivity(intent);
     }
 
     private void Get_all_categories(final List<City> cityArrayList, final City_adapter adaptercity) {

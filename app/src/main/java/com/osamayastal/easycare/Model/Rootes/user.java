@@ -33,9 +33,12 @@ public class user {
         void onFailure(String msg);
     }
 
+    public interface Token_Listener{
+        void onSuccess(String token);
 
+    }
     RequestQueue queue=null;
-    public void Get_Token(final Context mcontext){
+    public void Get_Token(final Context mcontext, final Token_Listener listener){
         if (queue==null) {
             queue = Volley.newRequestQueue(mcontext);  // this = context
         }
@@ -53,6 +56,7 @@ public class user {
                         try {
                             Jobject = new JSONObject(jsonData);
                             new User_info().Token(Jobject.getString("items"),mcontext);
+                            listener.onSuccess(Jobject.getString("items"));
                         } catch (JSONException e1) {
                             e1.printStackTrace();
                         }
@@ -305,14 +309,8 @@ public class user {
                         } catch (JSONException e1) {
                             e1.printStackTrace();
                         }
-                        try {
 
-                            String mssg=Jobject.getString("message");
-                            Log.d("Response_mssg",mssg );
-                            lisenner.onSuccess(new users(Jobject));
-                        } catch (JSONException e1) {
-                            e1.printStackTrace();
-                        }
+                        lisenner.onSuccess(new users(Jobject));
 
                     }
                 },

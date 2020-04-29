@@ -14,6 +14,8 @@ import com.android.volley.toolbox.Volley;
 import com.osamayastal.easycare.Model.Const.Server_info;
 import com.osamayastal.easycare.Model.Const.User_info;
 import com.osamayastal.easycare.Model.Controle.Bascket;
+import com.osamayastal.easycare.Model.Controle.Order_Details;
+import com.osamayastal.easycare.Model.Controle.Orders;
 import com.osamayastal.easycare.Model.Controle.Result;
 
 import org.json.JSONException;
@@ -23,8 +25,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Order_root {
-    public interface GetbasketListener{
-        void onSuccess(Bascket bascket);
+    public interface GetOrderListener{
+        void onSuccess(Orders orders);
         void onStart();
         void onFailure(String msg);
     }
@@ -33,15 +35,22 @@ public class Order_root {
         void onStart();
         void onFailure(String msg);
     }
+
+    public interface GetOrderDetailsListener{
+        void onSuccess(Order_Details order_details);
+        void onStart();
+        void onFailure(String msg);
+    }
     private RequestQueue queue;
 
 
     public void PostOrder(final Context mcontext,
-                          final String provider_id,final String locationType,
+                          final String provider_id,final int locationType,
                           final String lat,final String lng,
                           final String date,final String time,
                           final String upfrontAmount,final String couponCode,
                           final String paymentType,
+                          final Boolean isUpfront,
                           final PostOrderListener listener)
     {
 
@@ -81,19 +90,80 @@ public class Order_root {
                 Map<String, String> parameters = new HashMap<>();
 
                 parameters.put("provider_id",provider_id);
-                parameters.put("locationType", locationType);
-                parameters.put("lat",lat);
-                parameters.put("lng", lng);
+                parameters.put("locationType", String.valueOf(locationType));
+               if (locationType==1){
+                   parameters.put("lat",lat);
+                   parameters.put("lng", lng);
+               }
                 parameters.put("date",date);
                 parameters.put("time",time);
-                parameters.put("upfrontAmount", upfrontAmount);
+
                 parameters.put("couponCode", couponCode);
-                parameters.put("paymentType", paymentType);
+                parameters.put("PaymentType", paymentType);
+
+                if (isUpfront){
+                    parameters.put("upfrontAmount", upfrontAmount);
+                    parameters.put("isUpfront", String.valueOf(isUpfront));
+                }else {
+                    parameters.put("upfrontAmount", "0");
+                    parameters.put("isUpfront", String.valueOf(isUpfront));
+                }
 
                 Log.d("parameters", parameters.toString());
 
                 return  parameters;
             }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> parameters = new HashMap<>();
+
+                parameters.put("token",token);
+                Log.d("token", parameters.toString());
+
+                return  parameters;
+            }
+        };
+        queue.add(request);
+
+    }
+
+    public void GetAllOrder(final Context mcontext,
+                          final int page,final int statusID,
+                          final GetOrderListener listener)
+    {
+
+        listener.onStart();
+        String url= Server_info.API +"api/mobile/getUserOrder?StatusId="+statusID+"&page="+page+"&limit=10";
+        final String token=new User_info(mcontext).getToken();
+        Log.d("token", token);
+        Log.d("statusID", statusID+"");
+        if (queue == null) {
+            queue = Volley.newRequestQueue(mcontext);  // this = context
+        }
+        // prepare the Request
+        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                JSONObject Jobject = null;
+                try {
+                    Jobject = new JSONObject(response);
+                    Log.d("Response", response.toString());
+                    listener.onSuccess(new Orders(Jobject));
+
+                } catch (JSONException e1) {
+                    e1.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("error",error.toString());
+            }
+        }){
+
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -107,7 +177,100 @@ public class Order_root {
 
     }
 
+    public void GetOrderDetails(final Context mcontext,
+                          final String id,
+                          final GetOrderDetailsListener listener)
+    {
+
+        listener.onStart();
+        String url= Server_info.API +"api/mobile/getOrderDetails/"+id;
+        final String token=new User_info(mcontext).getToken();
+        Log.d("token", token);
+        if (queue == null) {
+            queue = Volley.newRequestQueue(mcontext);
+        }
+        // prepare the Request
+        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                JSONObject Jobject = null;
+                try {
+                    Jobject = new JSONObject(response);
+                    Log.d("Response", response.toString());
+                    listener.onSuccess(new Order_Details(Jobject));
+
+                } catch (JSONException e1) {
+                    e1.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("error",error.toString());
+            }
+        }){
 
 
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> parameters = new HashMap<>();
+
+                parameters.put("token",token);
+                return  parameters;
+            }
+        };
+        queue.add(request);
+
+    }
+
+    public void CancelOrder(final Context mcontext,
+                                final String id,
+                                final PostOrderListener listener)
+    {
+
+        listener.onStart();
+        String url= Server_info.API +"api/mobile/updateOrder/"+id;
+        final String token=new User_info(mcontext).getToken();
+        Log.d("token", token);
+        if (queue == null) {
+            queue = Volley.newRequestQueue(mcontext);
+        }
+        // prepare the Request
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                JSONObject Jobject = null;
+                try {
+                    Jobject = new JSONObject(response);
+                    Log.d("Response", response.toString());
+                    listener.onSuccess(new Result(Jobject));
+
+                } catch (JSONException e1) {
+                    e1.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("error",error.toString());
+            }
+        }){
+
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> parameters = new HashMap<>();
+
+                parameters.put("token",token);
+                return  parameters;
+            }
+        };
+        queue.add(request);
+
+    }
 
 }

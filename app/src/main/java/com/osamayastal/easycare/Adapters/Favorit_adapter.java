@@ -3,6 +3,8 @@ package com.osamayastal.easycare.Adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +30,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import top.defaults.drawabletoolbox.DrawableBuilder;
 
 /**
  * Created by User on 26/02/2020.
@@ -72,13 +76,21 @@ public class Favorit_adapter extends RecyclerView.Adapter<Favorit_adapter.ViewHo
         holder.address.setText(mItems.get(position).getProvider_id().getAddress());
 holder.ratingBar.setRating(mItems.get(position).getProvider_id().getRate());
         holder.type.setVisibility(View.GONE);
-//if (new User_info(mContext).getLanguage().equals("en")) {
-//    holder.type.setText(mItems.get(position).getProvider_id().getCategory_id().getEnName());
-//}else {
-//    holder.type.setText(mItems.get(position).getProvider_id().getCategory_id().getArName());
-//
-//}
 
+        ///type is not exist in favorit
+
+//        try{
+//            if (new User_info(mContext).getLanguage().equals("en")) {
+//                holder.type.setText(mItems.get(position).getProvider_id().getCategory_id().getEnName());
+//            }else {
+//                holder.type.setText(mItems.get(position).getProvider_id().getCategory_id().getArName());
+//
+//            }
+//            String color=mItems.get(position).getProvider_id().getCategory_id().getColor();
+//            makeDrawable(Color.parseColor(color),holder.type,18);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
        try {
            Picasso.with(mContext)
                    .load(mItems.get(position).getProvider_id().getImage())
@@ -164,7 +176,17 @@ if (!mItems.get(position).getProvider_id().getFavorite_id().equals("null")){
            }
        });
     }
-
+    private void makeDrawable(int color, View view, int corner) {
+        Drawable drawable = new DrawableBuilder()
+                .rectangle()
+                .solidColor(color)//0xffe67e22
+//                .height(90)
+//                .width(90)
+                .cornerRadii(corner, corner, corner, corner)// pixel
+                // top-left  top-right  bottom-right   bottom-left
+                .build();
+        view.setBackground(drawable);
+    }
     @Override
     public int getItemCount() {
         return mItems.size();

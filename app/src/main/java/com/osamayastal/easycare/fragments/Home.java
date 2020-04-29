@@ -19,7 +19,10 @@ import com.osamayastal.easycare.Adapters.Provider_adapter;
 import com.osamayastal.easycare.Model.Classes.Categorie;
 import com.osamayastal.easycare.Model.Classes.Provider.Provider;
 import com.osamayastal.easycare.Model.Classes.Slider;
+import com.osamayastal.easycare.Model.Const.User_info;
+import com.osamayastal.easycare.Model.Rootes.Bascket_root;
 import com.osamayastal.easycare.Model.Rootes.Home_root;
+import com.osamayastal.easycare.Model.Rootes.user;
 import com.osamayastal.easycare.R;
 import com.osamayastal.easycare.activities.AllServices;
 import com.osamayastal.easycare.activities.Search;
@@ -29,6 +32,8 @@ import com.osamayastal.easycare.activities.Service_Single;
 
 import java.util.ArrayList;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Home extends Fragment implements View.OnClickListener {
@@ -39,7 +44,44 @@ public class Home extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
          view= inflater.inflate(R.layout.fragment_home, container, false);
         init(view);
-        Loading_data();
+
+        /******************************Test Fore user_Login*************************************/
+      User_info  user_info = new User_info(getContext());
+        if (user_info.getId()== null) {
+            if (user_info.getToken() == null) {
+                user root = new user();
+                root.Get_Token(getContext(), new user.Token_Listener() {
+                    @Override
+                    public void onSuccess(String token) {
+                        Loading_data();
+                    }
+                });
+            }else {
+                Loading_data();
+            }
+
+        } else {
+            Bascket_root root = new Bascket_root();
+            root.GetItemCount(getContext(), new Bascket_root.Basket_count_Listener() {
+                @Override
+                public void onSuccess(int nb) {
+
+                }
+
+                @Override
+                public void onStart() {
+
+                }
+
+                @Override
+                public void onFailure(String msg) {
+
+                }
+            });
+
+            Loading_data();
+        }
+
         return view;
 
     }
@@ -66,8 +108,21 @@ public class Home extends Fragment implements View.OnClickListener {
                 sliderList.addAll(home.getSliders());
                 adapter_rate.notifyDataSetChanged();
                 adapter_req.notifyDataSetChanged();
-                categories_adapter.notifyDataSetChanged();
                 Slide_adapter.notifyDataSetChanged();
+/////Sort by isActive
+
+List<Categorie> categorieList=new ArrayList<>();
+                for (Categorie c:categories
+                     ) {
+                    if (c.isActive()){
+                        categorieList.add(c);
+                        categories.remove(c);
+                    }
+                }
+                categorieList.addAll(categories);
+                categories.clear();
+                categories.addAll(categorieList);
+                categories_adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -115,8 +170,10 @@ private ImageButton search_btn;
         adapter_rate=new Provider_adapter(getContext(), top_rate_list, new Provider_adapter.Selected_item() {
             @Override
             public void Onselcted(Provider provider) {
-                ServiceProfiderDetails.provider_id= provider.get_id();
-                startActivity(new Intent(getContext(),ServiceProfiderDetails.class));
+
+                Intent intent=new Intent(getContext(), ServiceProfiderDetails.class);
+                intent.putExtra("provider_id",provider.get_id());
+                startActivity(intent);
 
             }
         });
@@ -124,8 +181,9 @@ private ImageButton search_btn;
             @Override
             public void Onselcted(Provider provider) {
 
-                ServiceProfiderDetails.provider_id= provider.get_id();
-                startActivity(new Intent(getContext(),ServiceProfiderDetails.class));
+                Intent intent=new Intent(getContext(), ServiceProfiderDetails.class);
+                intent.putExtra("provider_id",provider.get_id());
+                startActivity(intent);
             }
         });
         categories_adapter=new Categories_adapter(getContext(),categories,null);

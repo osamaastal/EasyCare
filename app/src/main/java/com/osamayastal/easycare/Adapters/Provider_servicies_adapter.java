@@ -84,18 +84,16 @@ if (new User_info(mContext).getLanguage().equals("en")){
 
 try{
     String color=mItems.get(position).getColor();
-
     makeDrawable(Color.parseColor(color),holder.img,0);
-//   makeDrawable(Integer.parseInt(mItems.get(position).getColor()),holder.img,0);
 } catch (Exception e) {
     e.printStackTrace();
 }
         if (mItems.get(position).isActive()){
-    holder.soon.setVisibility(View.GONE);
-}else {
-    holder.soon.setVisibility(View.VISIBLE);
-
-}
+            holder.soon.setVisibility(View.GONE);
+        }else {
+            holder.soon.setVisibility(View.VISIBLE);
+            makeDrawable(Color.parseColor("#C2C2C2"),holder.img,0);
+        }
 
         mview.setOnClickListener(new View.OnClickListener() {
 
@@ -111,32 +109,7 @@ try{
             }
         });
     }
-//    public static Drawable setTint(Drawable drawable, int color) {
-//        final Drawable newDrawable = DrawableCompat.wrap(drawable);
-//        DrawableCompat.setTint(newDrawable, color);
-//        return newDrawable;
-//    }
-//    private void makeDrawable(int color, TextView view, boolean isChoose) {
-//        if (isChoose){
-//            Drawable drawable = new DrawableBuilder()
-//                    .rectangle()
-//                    .solidColor(color)//0xffe67e22
-//                    .cornerRadii(18, 18, 18, 18)// pixel
-//                    // top-left  top-right  bottom-right   bottom-left
-//                    .build();
-//            view.setBackground(drawable);
-//        }else {
-//            Drawable drawable = new DrawableBuilder()
-//                    .rectangle()
-//                    .strokeColor(0xffffffff)//0xffe67e22
-//                    .strokeWidth(1)
-//                    .cornerRadii(18, 18, 18, 18)// pixel
-//                    // top-left  top-right  bottom-right   bottom-left
-//                    .build();
-//            view.setBackground(drawable);
-//        }
-//
-//    }
+
     private void makeDrawable(int color, View view, int corner) {
         Drawable drawable = new DrawableBuilder()
                 .oval()

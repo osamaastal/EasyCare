@@ -6,13 +6,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Provider {
+public class Provider implements Serializable {
     private String _id,createAt,name,email,address,phone_number,password,category_id,image,favorite_id;
-    private boolean isBlock;
-    private double lat,lng,profitPercentage,orderPercentage;
+    private boolean isBlock,isUpfront;
+    private double lat,lng,profitPercentage,orderPercentage,upfrontAmount;
 private float rate;
 private List<String> images;
     public Provider(JSONObject provider) {
@@ -21,34 +22,112 @@ private List<String> images;
         }
         try {
             _id=provider.getString("_id");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             createAt=provider.getString("createAt");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             name=provider.getString("name");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             email=provider.getString("email");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             address=provider.getString("address");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             phone_number=provider.getString("phone_number");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             category_id=provider.getString("category_id");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             favorite_id=provider.getString("favorite_id");
-
-            rate=provider.getInt("rate");
-
-            isBlock=provider.getBoolean("isBlock");
-
-            lat=provider.getDouble("lat");
-            lng=provider.getDouble("lng");
-            profitPercentage=provider.getDouble("profitPercentage");
-            orderPercentage=provider.getDouble("orderPercentage");
-            image=provider.getString("image").replace("http", "https");
-            password=provider.getString("password");
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+        try {
+            rate=provider.getInt("rate");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            isBlock=provider.getBoolean("isBlock");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            lat=provider.getDouble("lat");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            lng=provider.getDouble("lng");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            profitPercentage=provider.getDouble("profitPercentage");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            orderPercentage=provider.getDouble("orderPercentage");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            image=provider.getString("image");
+
+            if (!image.contains("https")){
+                image=image.replace("http", "https");
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            password=provider.getString("password");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            upfrontAmount=provider.getDouble("upfrontAmount");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            isUpfront=provider.getBoolean("isUpfront");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         images=new ArrayList<>();
         try {
             JSONArray jsonArray=provider.getJSONArray("images");
             for (int i=0;i<jsonArray.length();i++){
-                images.add(jsonArray.getString(i).replace("http", "https"));
+                String img=jsonArray.getString(i);
+                    if (!img.contains("https")){
+                        img=img.replace("http", "https");
+                    }
+                images.add(img);
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -71,6 +150,22 @@ public Search toProvider(){
     provider.setImages(images);
     return provider;
 }
+
+    public boolean isUpfront() {
+        return isUpfront;
+    }
+
+    public void setUpfront(boolean upfront) {
+        isUpfront = upfront;
+    }
+
+    public double getUpfrontAmount() {
+        return upfrontAmount;
+    }
+
+    public void setUpfrontAmount(double upfrontAmount) {
+        this.upfrontAmount = upfrontAmount;
+    }
 
     public List<String> getImages() {
         return images;

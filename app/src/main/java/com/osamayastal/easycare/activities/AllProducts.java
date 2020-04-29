@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -25,10 +26,15 @@ public class AllProducts extends AppCompatActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_products);
+
+        Intent intent = this.getIntent();
+        Bundle bundle = intent.getExtras();
+        provider_id=bundle.getString("provider_id");
+
         init();
         Loading();
     }
-public static String provider_id="";
+private String provider_id="";
     private void Loading() {
         Categories_root root=new Categories_root();
         root.GetProducts(this, provider_id, 0, new Categories_root.product_Listener() {
@@ -64,7 +70,12 @@ public static String provider_id="";
         /******************Actions*******************/
         back.setOnClickListener(this);
         productList=new ArrayList<>();
-        adapter=new Product_adapter(this,productList,null);
+        adapter=new Product_adapter(this, productList, new Product_adapter.Selected_item() {
+            @Override
+            public void Onselcted(Product product) {
+
+            }
+        });
         RV.setLayoutManager(new GridLayoutManager(this,2));
         RV.setAdapter(adapter);
 

@@ -36,6 +36,7 @@ import java.util.List;
 public class Basket_Products_adapter extends RecyclerView.Adapter<Basket_Products_adapter.ViewHolder> {
 
     private static final String TAG = "RecyclerViewAdapter";
+    public Boolean isOrder=false;
 
     //vars
     private List<Product> mItems = new ArrayList<>();
@@ -72,12 +73,20 @@ public class Basket_Products_adapter extends RecyclerView.Adapter<Basket_Product
 
         holder.name.setText(mItems.get(position).getName());
         holder.qty.setText(mItems.get(position).getQty()+"");
-        holder.price.setText(mItems.get(position).getPrice().toString());
+        Double price=mItems.get(position).getDiscountPrice();
+        if (price==0){
+            price=mItems.get(position).getPrice();
+        }
+        holder.price.setText(String.format("%.2f",price));
 
         Picasso.with(mContext)
                 .load(mItems.get(position).getImage())
         .into(holder.img);
-
+if (isOrder){
+    holder.add.setVisibility(View.GONE);
+    holder.mines.setVisibility(View.GONE);
+    holder.delete.setVisibility(View.GONE);
+}
 
 
         holder.delete.setOnClickListener(new View.OnClickListener() {

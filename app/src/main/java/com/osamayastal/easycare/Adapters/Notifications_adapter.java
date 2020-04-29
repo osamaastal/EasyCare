@@ -3,6 +3,7 @@ package com.osamayastal.easycare.Adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.osamayastal.easycare.Model.Classes.Categorie;
 import com.osamayastal.easycare.Model.Classes.Notification;
+import com.osamayastal.easycare.Model.Const.User_info;
 import com.osamayastal.easycare.R;
 import com.squareup.picasso.Picasso;
 
@@ -48,18 +50,33 @@ public class Notifications_adapter extends RecyclerView.Adapter<Notifications_ad
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) { //parent = theme type
 
         View view;
+switch (viewType){//حالات التنبيهات: type
+                     //١- طلبات
 
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_notification_accept, parent, false);
+    case 1:
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_notification_accept, parent, false);
+        break;
+    case 2://٢- تقييمات
+    case 4://٤- مسجات عامة من لوحة التحكم — مابفتح اي شي
+    case 3://٣- كوبونات او عروض — مابفتح اي شي
+
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_notification_wallet, parent, false);
+        break;
+    default:
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_notification_accept, parent, false);
+
+}
 
         mview=view;
         return new ViewHolder(view); // Inflater means reading a layout XML
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    @SuppressLint("ResourceAsColor")
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-//        holder.name.setText(mItems.get(position).getTitle());
+        holder.main.setText(mItems.get(position).getMsg());
+        holder.date.setText(getdate(mItems.get(position).getDt_date()));
 
 
 
@@ -72,21 +89,26 @@ public class Notifications_adapter extends RecyclerView.Adapter<Notifications_ad
             }
         });
     }
-
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static String getdate(String date_){
+        Log.e("date_", date_.substring(0, date_.indexOf("T")));
+        return date_.substring(0, date_.indexOf("T"));
+    }
     @Override
     public int getItemCount() {
         return mItems.size();
     }
-
+    @Override
+    public int getItemViewType(int position) {
+        return mItems.get(position).getType();
+    }
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-     ImageView Img;
-      TextView name,soon;
+      TextView main,date;
       public ViewHolder(View itemView) {
             super(itemView);
-//          name = itemView.findViewById(R.id.name);
-//          Img = itemView.findViewById(R.id.Img);
-//          soon= itemView.findViewById(R.id.soon_tv);
+          main = itemView.findViewById(R.id.main_tv);
+         date= itemView.findViewById(R.id.date_tv);
 
 
         }

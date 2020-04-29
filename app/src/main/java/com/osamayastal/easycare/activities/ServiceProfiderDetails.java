@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -49,6 +50,7 @@ import com.osamayastal.easycare.Model.Controle.Provider_Details;
 import com.osamayastal.easycare.Model.Rootes.Bascket_root;
 import com.osamayastal.easycare.Model.Rootes.Favorite_root;
 import com.osamayastal.easycare.Model.Rootes.ProviderDetails_root;
+import com.osamayastal.easycare.Popups.AppPop;
 import com.osamayastal.easycare.Popups.OrderPop;
 import com.osamayastal.easycare.R;
 import com.squareup.picasso.Picasso;
@@ -57,18 +59,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import top.defaults.drawabletoolbox.DrawableBuilder;
 
 public class ServiceProfiderDetails extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback {
 
-    public static String provider_id;
+   private String provider_id;
     private Search provider=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_service_profider_details);
+
+        Intent intent = this.getIntent();
+        Bundle bundle = intent.getExtras();
+        provider_id=bundle.getString("provider_id");
+
         init();
         FetchData();
+
     }
 
     private void FetchData() {
@@ -94,6 +103,10 @@ public class ServiceProfiderDetails extends AppCompatActivity implements View.On
                 product_adapter.notifyDataSetChanged();
                 progressBar1.setVisibility(View.GONE);
                 progressBar2.setVisibility(View.GONE);
+
+                if (productList.size()==0){
+                    findViewById(R.id.linear_product).setVisibility(View.GONE);
+                }
 /******************************From ...To *********************************/
                 providerSettingList.addAll(details.getProviderSettingList());
                 if (providerSettingList.size()!=0){
@@ -127,6 +140,17 @@ public class ServiceProfiderDetails extends AppCompatActivity implements View.On
            title.setText(provider.getName());
            address.setText(provider.getAddress());
            ratingBar.setRating(provider.getRate());
+           if (new User_info(this).getLanguage().equals("en")){
+               type.setText(provider.getCategory_id().getEnName());
+           }else {
+               type.setText(provider.getCategory_id().getArName());
+           }
+           try{
+               String color=provider.getCategory_id().getColor();
+               makeDrawable(Color.parseColor(color),type,18);
+           } catch (Exception e) {
+               e.printStackTrace();
+           }
            Log.d("favorite_id ", provider.getFavorite_id().toString());
 
            if (!provider.getFavorite_id().equals("null")){
@@ -168,7 +192,17 @@ public class ServiceProfiderDetails extends AppCompatActivity implements View.On
 
        }
     }
-
+    private void makeDrawable(int color, View view, int corner) {
+        Drawable drawable = new DrawableBuilder()
+                .rectangle()
+                .solidColor(color)//0xffe67e22
+//                .height(90)
+//                .width(90)
+                .cornerRadii(corner, corner, corner, corner)// pixel
+                // top-left  top-right  bottom-right   bottom-left
+                .build();
+        view.setBackground(drawable);
+    }
     private void basket_count() {
         Bascket_root root=new Bascket_root();
         root.GetItemCount(this, new Bascket_root.Basket_count_Listener() {
@@ -200,7 +234,7 @@ public class ServiceProfiderDetails extends AppCompatActivity implements View.On
 
     private SliderLayout mDemoSlider;
     ProgressBar progressBar1,progressBar2;
-
+Context mcontext=ServiceProfiderDetails.this;
     ImageButton like_btn,basket_btn,back_btn;
     CircleImageView img;
     TextView name,address,from,to,type,more_pro,basket_nb,title;
@@ -278,22 +312,16 @@ public class ServiceProfiderDetails extends AppCompatActivity implements View.On
 
     }
     public void LoginAlert(){
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setMessage("قم بتسجيل الدخول ")
-                .setPositiveButton("تسجيل الدخول", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        startActivity(new Intent(ServiceProfiderDetails.this, LoginActivity.class));
-                        finish();
-                    }
-                })
-                .setNegativeButton("إلغاء", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                }).create().show();
+        AppPop pop=new AppPop();
+        pop.Login_POP(ServiceProfiderDetails.this);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        basket_count();
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()){
@@ -366,8 +394,12 @@ public class ServiceProfiderDetails extends AppCompatActivity implements View.On
                 finish();
                 break;
             case R.id.more_product:
-                AllProducts.provider_id=provider.get_id();
-                startActivity(new Intent(ServiceProfiderDetails.this,AllProducts.class));
+                Bundle bundle = new Bundle();
+                bundle.putString("provider_id",provider.get_id());
+                Intent intent=new Intent(mcontext, AllProducts.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+
                 break;
         }
     }
@@ -389,7 +421,7 @@ if (provider!=null) {
             .title(provider.getName())
             .snippet(provider.getName())
             .position(latLng)
-            .icon(bitmapDescriptorFromVector(this, R.drawable.ic_marker_wash)));
+            .icon(bitmapDescriptorFromVector(this, R.drawable.ic_mark)));
 
     mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
 

@@ -19,7 +19,7 @@ private  int point,basket;
         try {
             final SharedPreferences sp=mcontext.getSharedPreferences("Login", MODE_PRIVATE);
             id=sp.getString("id",null);
-            token=sp.getString("token","");
+            token=sp.getString("token",null);
             phone=sp.getString("phone","+966 000-0000-00");
             name=sp.getString("name","إسم العميل");
             email=sp.getString("email","mail@email.com");
@@ -105,6 +105,8 @@ private  int point,basket;
         Ed.putString("email",null);
         Ed.putString("city",null);
         Ed.putLong("wallet", (long) 0.0);
+        Ed.putBoolean("conf_phone",false);
+
         Ed.commit();
 
     }

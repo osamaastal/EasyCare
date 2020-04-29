@@ -24,14 +24,39 @@ public class SubCategory_basket {
         if (jsonObject==null){
             return;
         }
-        sizeList=new ArrayList<>();
         try {
             _id=jsonObject.getString("_id");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             provider_id=jsonObject.getString("provider_id");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             price=jsonObject.getDouble("price");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             category_id=jsonObject.getString("category_id");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             subCategory_id=new Sub_categorie(jsonObject.getJSONObject("subCategory_id"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             isActive=jsonObject.getBoolean("isActive");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        sizeList=new ArrayList<>();
+        try {
+
             JSONArray jsonArray=jsonObject.getJSONArray("sizes");
             for (int i=0;i<jsonArray.length();i++){
                 sizeList.add(new Size(jsonArray.getJSONObject(i)));

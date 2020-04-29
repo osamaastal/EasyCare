@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.osamayastal.easycare.Model.Classes.Categorie;
 import com.osamayastal.easycare.Model.Const.User_info;
 import com.osamayastal.easycare.R;
+import com.osamayastal.easycare.activities.OrderDetails_Create;
 import com.osamayastal.easycare.activities.ServiceProfiderDetails;
 import com.osamayastal.easycare.activities.Service_Single;
 import com.squareup.picasso.Picasso;
@@ -72,8 +74,11 @@ if(new User_info(mContext).getLanguage().equals("en")){
 }
         if (mItems.get(position).isActive()){
             holder.soon.setVisibility(View.GONE);
+            holder.Img.setBackground(mContext.getDrawable(R.drawable.bg_circle_home_service));
+
         }else {
-            holder.Img.setBackground(mContext.getDrawable(R.drawable.bg_circle_gray));
+            holder.Img.setBackground(mContext.getDrawable(R.drawable.bg_circle_trans_blue));
+
         }
 
        try {
@@ -92,8 +97,12 @@ if(new User_info(mContext).getLanguage().equals("en")){
             @Override
             public void onClick(View view) {
 if (mItems.get(position).isActive()) {
-    Service_Single.categorie = mItems.get(position);
-    mContext.startActivity(new Intent(mContext, Service_Single.class));
+    Bundle bundle = new Bundle();
+    bundle.putSerializable("categorie",mItems.get(position));
+    Intent intent=new Intent(mContext, Service_Single.class);
+    intent.putExtras(bundle);
+    mContext.startActivity(intent);
+
 }
             }
         });

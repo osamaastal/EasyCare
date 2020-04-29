@@ -7,6 +7,20 @@
     android:background="@drawable/bg_req_white_30dp"
     android:layoutDirection="rtl">
     <TextView
+        android:visibility="gone"
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/dane"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:gravity="center"
+        style="@style/text_darkblue_bold_18"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+    <TextView
         android:id="@+id/contentTV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,7 +30,7 @@
         android:layout_marginEnd="15dp"
         android:gravity="center"
         style="@style/text_darkblue_bold_16"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         />
@@ -44,15 +58,15 @@
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:background="@color/gray_e1"/>
+
         <Button
             android:id="@+id/cancelBtn"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:text="@string/cancel"
             style="@style/text_darkblue_bold_16"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:background="@drawable/bg_req_trans_blue_30dp_left"
-            />
+            android:text="@string/cancel" />
 
 
     </LinearLayout>

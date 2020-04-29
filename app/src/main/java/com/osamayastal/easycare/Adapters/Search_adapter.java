@@ -3,6 +3,8 @@ package com.osamayastal.easycare.Adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +29,8 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import top.defaults.drawabletoolbox.DrawableBuilder;
+
 /**
  * Created by User on 26/02/2020.
  */
@@ -40,7 +44,7 @@ public class Search_adapter extends RecyclerView.Adapter<Search_adapter.ViewHold
     private Context mContext;
     private View mview;
     public interface Selected_item{
-        void Onselcted(Categorie categorie);
+        void Onselcted(Search search);
     }
     public static int item_select=-1;
     Selected_item listenner;
@@ -70,11 +74,17 @@ public class Search_adapter extends RecyclerView.Adapter<Search_adapter.ViewHold
         holder.address.setText(mItems.get(position).getAddress());
 holder.ratingBar.setRating(mItems.get(position).getRate());
 if (new User_info(mContext).getLanguage().equals("en")) {
-    holder.type.setText(mItems.get(position).getCategory_id().getArName());
-}else {
     holder.type.setText(mItems.get(position).getCategory_id().getEnName());
+}else {
+    holder.type.setText(mItems.get(position).getCategory_id().getArName());
 
 }
+        try{
+            String color=mItems.get(position).getCategory_id().getColor();
+            makeDrawable(Color.parseColor(color),holder.type,18);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
        try {
            Picasso.with(mContext)
@@ -89,12 +99,12 @@ if (!mItems.get(position).getFavorite_id().equals("null")){
     holder.like_btn.setImageDrawable(mContext.getDrawable(R.drawable.ic_unlike));
 
 }
+
         mview.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                ServiceProfiderDetails.provider_id=mItems.get(position).get_id();
-                mContext.startActivity(new Intent(mContext,ServiceProfiderDetails.class));
+                listenner.Onselcted(mItems.get(position));
             }
         });
 
@@ -162,7 +172,17 @@ if (!mItems.get(position).getFavorite_id().equals("null")){
             }
         });
     }
-
+    private void makeDrawable(int color, View view, int corner) {
+        Drawable drawable = new DrawableBuilder()
+                .rectangle()
+                .solidColor(color)//0xffe67e22
+//                .height(90)
+//                .width(90)
+                .cornerRadii(corner, corner, corner, corner)// pixel
+                // top-left  top-right  bottom-right   bottom-left
+                .build();
+        view.setBackground(drawable);
+    }
     @Override
     public int getItemCount() {
         return mItems.size();

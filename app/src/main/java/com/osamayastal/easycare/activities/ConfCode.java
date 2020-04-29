@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chaos.view.PinView;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -69,24 +70,17 @@ private ImageView back_btn;
                 Timer_resendButton();
                 break;
                 case R.id.conf_btn:
-//                    user user=new user();
-//                    final User_info user_info=new User_info(this);
-//                    user_info.DO_CONF_phone(ConfCode.this);
-//                    startActivity(new Intent(ConfCode.this,MainActivity.class));
-
                     Conferme_fun();
 
                 break;
             case R.id.back_btn:
+                startActivity(new Intent(ConfCode.this,LoginActivity.class));
                 finish();
                 break;
         }
     }
 
     private void Conferme_fun() {
-
-
-
         user user=new user();
         final User_info user_info=new User_info(this);
         String tokenFCM = FirebaseInstanceId.getInstance().getToken();
@@ -94,6 +88,11 @@ private ImageView back_btn;
                 , new user.user_Listener() {
                     @Override
                     public void onSuccess(users new_account) {
+                        if (new User_info(ConfCode.this).getLanguage().equals("en")){
+                            Toast.makeText(ConfCode.this,new_account.getMessageEn(),Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(ConfCode.this,new_account.getMessageAr(),Toast.LENGTH_SHORT).show();
+                        }
                         if (new_account.isStatus()){
                             new User_info(new_account.getItems(),ConfCode.this);
                             user_info.DO_CONF_phone(ConfCode.this);

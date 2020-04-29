@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -60,6 +61,7 @@ public class AllServices extends AppCompatActivity  implements View.OnClickListe
     List<Categorie> categories;
     Provider_servicies_adapter adapter;
     TextView title;
+    Context mcontext=AllServices.this;
     private void init() {
         progressBar=findViewById(R.id.progress);
         back=findViewById(R.id.back_btn);
@@ -71,8 +73,11 @@ public class AllServices extends AppCompatActivity  implements View.OnClickListe
         adapter=new Provider_servicies_adapter(this, categories, new Provider_servicies_adapter.Selected_item() {
             @Override
             public void Onselcted(Categorie categorie) {
-                Service_Single.categorie = categorie;
-                startActivity(new Intent(AllServices.this, Service_Single.class));
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("categorie",categorie);
+                Intent intent=new Intent(mcontext, Service_Single.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
                 finish();
             }
         });

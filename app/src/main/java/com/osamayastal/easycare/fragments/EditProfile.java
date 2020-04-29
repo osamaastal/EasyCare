@@ -72,7 +72,7 @@ public class EditProfile extends Fragment implements View.OnClickListener {
         mBottomSheetDialog.show();
         final Wheel3DView wheel3DView=sheetView.findViewById(R.id.wheel);
         final ProgressBar progressBar=sheetView.findViewById(R.id.progress);
-
+progressBar.setVisibility(View.GONE);
         wheel3DView.setEntries(cities);
         Button save=sheetView.findViewById(R.id.save_btn);
         save.setOnClickListener(new View.OnClickListener() {

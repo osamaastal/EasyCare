@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#ED4482</color>
+    <color name="colorAccent">#033064</color>
 
     <color name="trans">#00FFFFFF</color>
     <color name="white">#FFFFFF</color>
@@ -40,6 +40,7 @@
     <color name="midblue">#417ABD</color>
     <color name="midblue_pressed">#2F598B</color>
     <color name="blue_op20">#33342DEC</color>
+    <color name="blue_op8">#14B7B5EA</color>
 
     <color name="gray_menu">#818181</color>
     <color name="blue_menu">#395DEF</color>

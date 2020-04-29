@@ -4,10 +4,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Product {
+public class Product implements Serializable {
     private String _id,name,description,image,by_user_id,createat,cart_id;
     private  Double price,discountPrice,Total;
     private int upFront,qty;
@@ -18,27 +19,83 @@ public class Product {
         if (jsonObject==null){
             return;
         }
-        images=new ArrayList<>();
         try {
             _id=jsonObject.getString("_id");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             name=jsonObject.getString("name");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             description=jsonObject.getString("description");
-            image=jsonObject.getString("image").replace("http", "https");
-            by_user_id=jsonObject.getString("by_user_id");
-            by_user_id=jsonObject.getString("by_user_id");
-            createat=jsonObject.getString("createat");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            image=jsonObject.getString("image");
+            if (!image.contains("https")){
+                image=image.replace("http", "https");
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
+        try {
+            by_user_id=jsonObject.getString("by_user_id");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            by_user_id=jsonObject.getString("by_user_id");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            createat=jsonObject.getString("createat");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try {
             isUpFront=jsonObject.getBoolean("isUpFront");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             status=jsonObject.getBoolean("status");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             upFront=jsonObject.getInt("upFront");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             price=jsonObject.getDouble("price");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             discountPrice=jsonObject.getDouble("discountPrice");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        images=new ArrayList<>();
+
+        try {
 
             JSONArray jsonArray=jsonObject.getJSONArray("images");
             for (int i=0;i<jsonArray.length();i++){
-                jsonArray.getString(i).replace("http", "https");
-
-                images.add(jsonArray.getString(i).replace("http", "https"));
+               String img=jsonArray.getString(i);
+                if (!img.contains("https")){
+                    img=img.replace("http", "https");
+                }
+                images.add(img);
             }
 
 

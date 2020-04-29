@@ -2,8 +2,10 @@ package com.osamayastal.easycare.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -63,6 +65,7 @@ public class Notifications extends AppCompatActivity implements View.OnClickList
     RecyclerView RV;
     List<Notification> notifications;
     Notifications_adapter adapter;
+    Context mcontext=Notifications.this;
     private void init() {
         progressBar=findViewById(R.id.progress);
         back=findViewById(R.id.back_btn);
@@ -98,7 +101,7 @@ public class Notifications extends AppCompatActivity implements View.OnClickList
         back.setOnClickListener(this);
         notifications=new ArrayList<>();
         adapter=new Notifications_adapter(this,notifications,null);
-        RV.setLayoutManager(new GridLayoutManager(this,2));
+        RV.setLayoutManager(new LinearLayoutManager(mcontext,RecyclerView.VERTICAL,false));
         RV.setAdapter(adapter);
 
     }

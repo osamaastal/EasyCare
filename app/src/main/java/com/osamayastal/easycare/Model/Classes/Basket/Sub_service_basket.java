@@ -6,10 +6,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Sub_service_basket {
+public class Sub_service_basket implements Serializable {
     private String cart_id,car_name;
     private List<SubCategory_basket> subCategory_basketList;
 private Size size;
@@ -17,10 +18,19 @@ private Size size;
         if (jsonObject==null){
             return;
         }
-        subCategory_basketList=new ArrayList<>();
         try {
             cart_id=jsonObject.getString("cart_id");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             car_name=jsonObject.getString("car_name");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        subCategory_basketList=new ArrayList<>();
+        try {
+
             size=new Size(jsonObject.getJSONObject("size"));
 
             JSONArray jsonArray=jsonObject.getJSONArray("SubCategory");

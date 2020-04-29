@@ -68,6 +68,8 @@ public class Search extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         init();
+
+
     }
 private EditText name;
     private ImageView filter,search,close,back;
@@ -94,7 +96,15 @@ private EditText name;
         close.setOnClickListener(this);
         back.setOnClickListener(this);
         searchList=new ArrayList<>();
-        adapter=new Search_adapter(this,searchList,null);
+        adapter=new Search_adapter(this, searchList, new Search_adapter.Selected_item() {
+            @Override
+            public void Onselcted(com.osamayastal.easycare.Model.Classes.Search search) {
+                Intent intent=new Intent(Search.this, ServiceProfiderDetails.class);
+                intent.putExtra("provider_id",search.get_id());
+                startActivity(intent);
+                finish();
+            }
+        });
         RV.setLayoutManager(new LinearLayoutManager(this,RecyclerView.VERTICAL,false));
         RV.setAdapter(adapter);
 
@@ -108,7 +118,6 @@ mypopupWindow_filter=setPopUpWindow();
     String rat ="";
     String raduis ="";
     private PopupWindow setPopUpWindow() {
-//        LayoutInflater inflater = (LayoutInflater).getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         LayoutInflater inflater=(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view1 = inflater.inflate(R.layout.popup_filter, null);
 
@@ -151,22 +160,26 @@ default_tv.setOnClickListener(new View.OnClickListener() {
         city.setAdapter(adaptercity);
         Get_all_city(cityArrayList,adaptercity);
         /****************************************Rating****************************************/
-        rang.setOnSeekChangeListener(new OnSeekChangeListener() {
-            @Override
-            public void onSeeking(SeekParams seekParams) {
+        try {
+            rang.setOnSeekChangeListener(new OnSeekChangeListener() {
+                @Override
+                public void onSeeking(SeekParams seekParams) {
 
-            }
+                }
 
-            @Override
-            public void onStartTrackingTouch(IndicatorSeekBar seekBar) {
+                @Override
+                public void onStartTrackingTouch(IndicatorSeekBar seekBar) {
 
-            }
+                }
 
-            @Override
-            public void onStopTrackingTouch(IndicatorSeekBar seekBar) {
-                raduis=seekBar.getProgress()+"";
-            }
-        });
+                @Override
+                public void onStopTrackingTouch(IndicatorSeekBar seekBar) {
+                    raduis=seekBar.getProgress()+"";
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 /***********************************************************************************/
         save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -373,12 +386,7 @@ default_tv.setOnClickListener(new View.OnClickListener() {
 
         flag = displayGpsStatus();
         if (flag) {
-            dialog=new ProgressDialog(mcontext);
-            dialog.setMessage("يرجي الانتظار حتى يتم تحديد موقعك..");
-            dialog.show();
-            locationListener = new MyLocationListener();
-            locationManager.requestLocationUpdates(LocationManager
-                    .GPS_PROVIDER, 5000, 10, locationListener);
+
 ///////////////////////////////////////////////////*****************GetLastKnownLocation*****************************************/
            try {
                fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
@@ -390,7 +398,7 @@ default_tv.setOnClickListener(new View.OnClickListener() {
                                if (location != null) {
                                    mLatLng = new LatLng(location.getLatitude(),location.getLongitude());
                                    Log.d("location",mLatLng.toString());
-                                   dialog.dismiss();
+
 //                                   Toast.makeText(Search.this, "lat: " + mLatLng.latitude + "lng: " + mLatLng.longitude, Toast.LENGTH_SHORT).show();
 
                                }
@@ -405,42 +413,23 @@ default_tv.setOnClickListener(new View.OnClickListener() {
 
         } else {
 
-            alertbox("Gps Status!!", "Your GPS is: OFF");
+            new com.osamayastal.easycare.Model.Classes.GPS(this).
+                    turnGPSOn(new com.osamayastal.easycare.Model.Classes.GPS.onGpsListener() {
+                        @Override
+                        public void gpsStatus(boolean isGPSEnable) {
+                            // turn on GPS
+                            flag = isGPSEnable;
+//                        Toast.makeText(Logo.this, "isGPS = " +isGPS, Toast.LENGTH_SHORT).show();
+                        }
+                    });
         }
 
     }
-    /*---------- Listener class to get coordinates ------------- */
-    int gps=0;
-    private class MyLocationListener implements LocationListener {
-
-        @Override
-        public void onLocationChanged(Location loc) {
 
 
 
-            mLatLng= new LatLng(loc.getLatitude(),loc.getLongitude());
-            Log.d("myLocation",mLatLng.toString());
-            dialog.dismiss();
+    private LatLng mLatLng=new LatLng(33.39877956546843,6.875997707247734);
 
-
-        }
-
-        @Override
-        public void onProviderDisabled(String provider) {}
-
-        @Override
-        public void onProviderEnabled(String provider) {}
-
-
-
-        @Override
-        public void onStatusChanged(String provider, int status, Bundle extras) {}
-
-
-    }
-
-
-    private LatLng mLatLng=null;
 
     /*----Method to Check GPS is enable or disable ----- */
     private Boolean displayGpsStatus() {
@@ -489,5 +478,5 @@ default_tv.setOnClickListener(new View.OnClickListener() {
 
     private LocationManager locationManager = null;
     private LocationListener locationListener = null;
-    private ProgressDialog dialog;
+
 }

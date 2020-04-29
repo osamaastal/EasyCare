@@ -7,20 +7,25 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class categories_basket {
+public class categories_basket implements Serializable {
     private Categorie category_id;
     private List<Sub_service_basket> sub_services;
     public categories_basket(JSONObject jsonObject) {
         if (jsonObject==null){
             return;
         }
-        sub_services=new ArrayList<>();
+
         try {
             category_id=new Categorie(jsonObject.getJSONObject("category_id"));
-
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        sub_services=new ArrayList<>();
+        try {
             JSONArray jsonArray=jsonObject.getJSONArray("sub_services");
             for (int i=0;i<jsonArray.length();i++){
                 sub_services.add(new Sub_service_basket(jsonArray.getJSONObject(i)));

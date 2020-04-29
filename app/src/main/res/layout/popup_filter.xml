@@ -146,7 +146,6 @@
                     app:isb_tick_texts_color="@color/white"
                     app:isb_thumb_color="@color/white"
                     app:isb_thumb_size="20dp"
-                    app:isb_show_indicator="rounded_rectangle"
                     app:isb_indicator_color="@color/white"
                     app:isb_indicator_text_color="@color/white"
                     app:isb_indicator_text_size="18sp"

@@ -205,7 +205,6 @@
                             app:layout_constraintBottom_toBottomOf="@+id/type_tv"/>
 
                         <TextView
-                            android:visibility="gone"
                             android:id="@+id/type_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -313,6 +312,7 @@
                     android:layout_marginBottom="30dp"
                     />
                 <LinearLayout
+                    android:id="@+id/linear_product"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"

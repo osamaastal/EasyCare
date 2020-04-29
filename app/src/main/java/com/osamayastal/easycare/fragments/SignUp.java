@@ -2,6 +2,7 @@ package com.osamayastal.easycare.fragments;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -12,6 +13,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -83,7 +85,33 @@ private AppCompatCheckBox accept;
         super.onResume();
         GetLocation(getContext());
     }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == 15) {
+                Toast.makeText(getContext(), "result .... ", Toast.LENGTH_SHORT).show();
 
+                flag = true; // flag maintain before get location
+                fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
+                fusedLocationClient.getLastLocation()
+                        .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
+                            @Override
+                            public void onSuccess(Location location) {
+                                // Got last known location. In some rare situations this can be null.
+                                if (location != null) {
+                                    mLatLng = new LatLng(location.getLatitude(),location.getLongitude());
+                                    Log.d("location",mLatLng.toString());
+
+                                    Toast.makeText(getContext(), "lat: " + mLatLng.latitude + "lng: " + mLatLng.longitude, Toast.LENGTH_SHORT).show();
+
+                                }
+                            }
+                        });
+
+            }
+        }
+    }
     private void init(View view) {
         term_btn=view.findViewById(R.id.term);
         city=view.findViewById(R.id.city_tv);
@@ -149,6 +177,7 @@ private AppCompatCheckBox accept;
     public void onClick(View view) {
     switch (view.getId()){
         case R.id.login_btn:
+            GetLocation(getContext());
             switchFGM(new LoginFrag());
             break;
         case R.id.logup_btn:
@@ -262,6 +291,8 @@ private AppCompatCheckBox accept;
 
 
         }
+
+
         private String[] LocationPermissions = {Manifest.permission.ACCESS_FINE_LOCATION};
 
     private void enableMyLocationIfPermitted() {
@@ -281,112 +312,84 @@ private AppCompatCheckBox accept;
             }
         }
     }
-    private FusedLocationProviderClient fusedLocationClient;
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
             case 15:
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // Permission Granted
-
-
-
                    get_location();
                 } else {
-                  enableMyLocationIfPermitted();
+//                    switchFGM(new LoginFrag());
                 }
                 break;
             default:
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
+
+    private FusedLocationProviderClient fusedLocationClient;
         private Boolean flag;
         private Context mcontext;
-        @SuppressLint("MissingPermission")
+    private LatLng mLatLng=new LatLng(33.39877956546843,6.875997707247734);
+
+    /*----Method to Check GPS is enable or disable ----- */
+    private Boolean displayGpsStatus() {
+        ContentResolver contentResolver = mcontext.getContentResolver();
+        boolean gpsStatus = Settings.Secure
+                .isLocationProviderEnabled(contentResolver,
+                        LocationManager.GPS_PROVIDER);
+        if (gpsStatus) {
+            return true;
+
+        } else {
+            return false;
+        }
+    }
+
+    @SuppressLint("MissingPermission")
         private void get_location() {
 
             flag = displayGpsStatus();
             if (flag) {
-                dialog=new ProgressDialog(mcontext);
-                dialog.setMessage("يرجي الانتظار حتى يتم تحديد موقعك..");
-                dialog.show();
-                locationListener = new MyLocationListener();
-                locationManager.requestLocationUpdates(LocationManager
-                        .GPS_PROVIDER, 5000, 10, locationListener);
+
+
+
 ///////////////////////////////////////////////////*****************GetLastKnownLocation*****************************************/
-                try {
-                    fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
-                    fusedLocationClient.getLastLocation()
-                            .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
-                                @Override
-                                public void onSuccess(Location location) {
-                                    // Got last known location. In some rare situations this can be null.
-                                    if (location != null) {
-                                        mLatLng = new LatLng(location.getLatitude(),location.getLongitude());
-                                        Log.d("location",mLatLng.toString());
-                                        dialog.dismiss();
+                fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
+                fusedLocationClient.getLastLocation()
+                        .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
+                            @Override
+                            public void onSuccess(Location location) {
+                                // Got last known location. In some rare situations this can be null.
+                                if (location != null) {
+                                    mLatLng = new LatLng(location.getLatitude(),location.getLongitude());
+                                    Log.d("location",mLatLng.toString());
+//                                    dialog.dismiss();
 //                                        Toast.makeText(getContext(), "lat: " + mLatLng.latitude + "lng: " + mLatLng.longitude, Toast.LENGTH_SHORT).show();
 
-                                    }
                                 }
-                            });
-                    ;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                            }
+                        });
 
             } else {
-
-                alertbox("Gps Status!!", "Your GPS is: OFF");
+                new com.osamayastal.easycare.Model.Classes.GPS(getContext()).
+                        turnGPSOn(new com.osamayastal.easycare.Model.Classes.GPS.onGpsListener() {
+                            @Override
+                            public void gpsStatus(boolean isGPSEnable) {
+                                // turn on GPS
+                                flag = isGPSEnable;
+                            }
+                        });
             }
 
         }
+
         /*---------- Listener class to get coordinates ------------- */
-        int gps=0;
-        private class MyLocationListener implements LocationListener {
-
-            @Override
-            public void onLocationChanged(Location loc) {
 
 
-
-                mLatLng= new LatLng(loc.getLatitude(),loc.getLongitude());
-                Log.d("myLocation",mLatLng.toString());
-                dialog.dismiss();
-
-
-            }
-
-            @Override
-            public void onProviderDisabled(String provider) {}
-
-            @Override
-            public void onProviderEnabled(String provider) {}
-
-
-
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {}
-
-
-        }
-
-
-        private LatLng mLatLng=null;
-
-        /*----Method to Check GPS is enable or disable ----- */
-        private Boolean displayGpsStatus() {
-            ContentResolver contentResolver = mcontext.getContentResolver();
-            boolean gpsStatus = Settings.Secure
-                    .isLocationProviderEnabled(contentResolver,
-                            LocationManager.GPS_PROVIDER);
-            if (gpsStatus) {
-                return true;
-
-            } else {
-                return false;
-            }
-        }
 
         /*----------Method to create an AlertBox ------------- */
         protected void alertbox(String title, String mymessage) {
@@ -421,7 +424,7 @@ private AppCompatCheckBox accept;
 
         private LocationManager locationManager = null;
         private LocationListener locationListener = null;
-        private ProgressDialog dialog;
+
 
 
 }

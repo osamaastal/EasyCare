@@ -141,7 +141,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/last_saved_place"
+                        android:text="@string/in_provider_location"
                         style="@style/text_darkblue_roman_14"
                         />
                     <Space
@@ -149,7 +149,7 @@
                         android:layout_weight="1"
                         android:layout_height="match_parent"/>
                     <com.suke.widget.SwitchButton
-                        android:id="@+id/notification_switch"
+                        android:id="@+id/prov_location_switch"
                         android:layout_width="40dp"
                         android:layout_height="25dp"
                         app:sb_uncheck_color="@color/gray_8F"
@@ -500,6 +500,23 @@
                     android:layout_marginStart="8dp"
                     android:text="@string/rial" />
             </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/linear_wait"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center|top"
+            android:background="@color/white_op95"
+            >
+            <ProgressBar
+                android:padding="10dp"
+                android:backgroundTint="#F1EBEB"
+
+                android:background="@drawable/bg_circle_gray"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/progress"/>
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -38,6 +38,7 @@
         android:layout_height="1dp"
         android:background="@color/line_lightgray"/>
     <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:gravity="center"
@@ -48,6 +49,8 @@
         android:background="@drawable/bg_req_lightgray_stroke">
 
         <LinearLayout
+            android:focusedByDefault="true"
+            android:id="@+id/wait_req"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -68,6 +71,8 @@
                 />
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/current_req"
+
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -89,6 +94,8 @@
                 />
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/complet_req"
+
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -110,6 +117,7 @@
                 />
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/cancel_req"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -131,6 +139,15 @@
         </LinearLayout>
 
     </LinearLayout>
+    <ProgressBar
+        android:visibility="gone"
+        android:padding="10dp"
+        android:backgroundTint="#F1EBEB"
+        android:layout_gravity="center"
+        android:background="@drawable/bg_circle_gray"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/progress"/>
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -142,7 +159,8 @@
             android:layout_height="match_parent"
             android:layout_marginTop="13dp"
             android:layout_marginEnd="18dp"
-            android:layout_marginStart="18dp"/>
+            android:layout_marginStart="18dp"
+            android:layout_marginBottom="50dp"/>
     </androidx.core.widget.NestedScrollView>
 
 

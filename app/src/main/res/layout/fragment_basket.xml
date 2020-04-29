@@ -225,6 +225,7 @@
         android:background="@color/white_op85"
         app:layout_constraintBottom_toBottomOf="parent">
         <Button
+            android:visibility="gone"
             android:id="@+id/save_btn"
             android:layout_width="0dp"
             android:layout_weight="1"
