@@ -9,6 +9,7 @@
     android:id="@+id/type_tv"
     android:text="@string/products"
     android:paddingBottom="4dp"
+    android:gravity="center_vertical"
     style="@style/text_white_roman_12"
     android:drawableEnd="@drawable/ic_true_circle"
     android:drawablePadding="5dp"/>

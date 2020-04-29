@@ -88,6 +88,7 @@
                         android:visibility="gone"
                         android:layout_width="50dp"
                         android:layout_height="75dp"
+                        android:visibility="gone"
                         android:layout_marginStart="12.5dp"
                         android:src="@drawable/ic_plus_white"
                         android:background="@drawable/bg_req_orange_16dp"
@@ -99,7 +100,7 @@
                         <TextView
                             android:id="@+id/add"
                             android:layout_width="50dp"
-                            android:layout_height="260dp"
+                            android:layout_height="240dp"
                             android:layout_marginTop="0dp"
                             style="@style/text_white_roman_16"
                             android:background="@drawable/bg_req_pink_orders"
@@ -109,6 +110,7 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             />
                         <TextView
+                            android:id="@+id/addCredit_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/add_money"
@@ -120,7 +122,17 @@
                             app:layout_constraintStart_toStartOf="parent"
                             android:elevation="0dp"
                             android:paddingBottom="8dp"
+                            android:layout_marginTop="30dp"
                             />
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_plus_white"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toTopOf="@+id/addCredit_tv"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"/>
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -128,6 +140,9 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    tools:listitem="@layout/row_wallet_credit"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:orientation="horizontal"
                     />
             </LinearLayout>
             <View
