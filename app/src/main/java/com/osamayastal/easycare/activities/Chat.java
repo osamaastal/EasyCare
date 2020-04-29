@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -106,11 +107,29 @@ public class Chat extends AppCompatActivity implements View.OnClickListener {
                     e.printStackTrace();
                 }
 
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (adapter.getItemCount() > 0) {
+                            RV.smoothScrollToPosition(adapter.getItemCount()-1);
+                        }
+                    }
+                }, 300);
+
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (adapter.getItemCount() > 0) {
+                            RV.smoothScrollToPosition(adapter.getItemCount()-1);
+                        }
+                    }
+                }, 300);
             }
 
             @Override
@@ -161,8 +180,12 @@ public class Chat extends AppCompatActivity implements View.OnClickListener {
 private void Driver_info(){
 
     if (driver!=null){
+        String image=driver.getImg();
+        if (!image.contains("https")){
+            image=image.replace("http", "https");
+        }
         Picasso.with(mcontext)
-                .load(driver.getImg())
+                .load(image)
                 .into(img);
         name.setText(driver.getName());
     }
@@ -207,6 +230,16 @@ private void Driver_info(){
                     parameters.put("isRead_driver",false);
                     parameters.put("isRead_user",true);
                     reference.updateChildren(parameters);
+
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (adapter.getItemCount() > 0) {
+                                RV.smoothScrollToPosition(adapter.getItemCount()-1);
+                            }
+                        }
+                    }, 300);
                 }
             }
         });

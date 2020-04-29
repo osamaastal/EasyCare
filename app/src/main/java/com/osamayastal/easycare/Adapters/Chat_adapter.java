@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.github.marlonlom.utilities.timeago.TimeAgo;
+import com.github.marlonlom.utilities.timeago.TimeAgoMessages;
 import com.osamayastal.easycare.Model.Classes.Message.Message;
 import com.osamayastal.easycare.Model.Classes.Message.Messages;
 import com.osamayastal.easycare.Model.Const.User_info;
@@ -16,6 +18,7 @@ import com.osamayastal.easycare.R;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by User on 26/02/2020.
@@ -69,6 +72,10 @@ public class Chat_adapter extends RecyclerView.Adapter<Chat_adapter.MyViewHolder
             holder.msg.setText(mDataset.get(position).getContent());
             String dateString = DateFormat.format("yyyy/MM/dd hh:mm aa",
                     new Date(mDataset.get(position).getTime_long())).toString();
+            /******* TimeAgo *******/
+            Locale LocaleBylanguageTag = Locale.forLanguageTag(new User_info(mcontext).getLanguage());
+            TimeAgoMessages messages = new TimeAgoMessages.Builder().withLocale(LocaleBylanguageTag).build();
+            dateString= TimeAgo.using(mDataset.get(position).getTime_long(),messages);
             holder.msg_time.setText(dateString);
         } catch (Exception e) {
             e.printStackTrace();

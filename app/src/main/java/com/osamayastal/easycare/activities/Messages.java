@@ -9,11 +9,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
+import com.github.marlonlom.utilities.timeago.TimeAgo;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,9 +37,17 @@ public class Messages extends AppCompatActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_messages);
         init();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         Loading();
     }
+
     private void Loading() {
+        messageList.clear();
         FirebaseDatabase database=FirebaseDatabase.getInstance();
         DatabaseReference reference=database.getReference().child("chat");
         reference.addChildEventListener(new ChildEventListener() {
@@ -48,21 +58,66 @@ public class Messages extends AppCompatActivity implements View.OnClickListener 
                         dataSnapshot.getValue(com.osamayastal.easycare.Model.Classes.Message.Messages.class);
 
                 Log.d("dataSnapshot",dataSnapshot.toString());
+                Log.d("dataSnapshot",dataSnapshot.child("isRead_user").toString());
 
               try {
                   if (messages.getUser().get_id().equals(new User_info(mcontext).getId())){
+                      messages.setRead_user(dataSnapshot.child("isRead_user").getValue(Boolean.class));
                       messages.setOrder_id(dataSnapshot.getKey());
                       messageList.add(messages);
                       adapter.notifyDataSetChanged();
+//                      RV.smoothScrollToPosition(messageList.size()-1);
                   }
               } catch (Exception e) {
                   e.printStackTrace();
               }
+
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (adapter.getItemCount() > 0) {
+                            RV.smoothScrollToPosition(adapter.getItemCount()-1);
+                        }
+                    }
+                }, 300);
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                findViewById(R.id.progress).setVisibility(View.GONE);
+                com.osamayastal.easycare.Model.Classes.Message.Messages  messages=
+                        dataSnapshot.getValue(com.osamayastal.easycare.Model.Classes.Message.Messages.class);
 
+                Log.d("dataSnapshot",dataSnapshot.toString());
+                Log.d("dataSnapshot",dataSnapshot.child("isRead_user").toString());
+
+                try {
+                    if (messages.getUser().get_id().equals(new User_info(mcontext).getId())){
+                        for (com.osamayastal.easycare.Model.Classes.Message.Messages m:messageList
+                             ) {
+                            if (m.getOrder_id().equals(dataSnapshot.getKey())){
+                                messageList.remove(m);
+                            }
+                        }
+                        messages.setRead_user(dataSnapshot.child("isRead_user").getValue(Boolean.class));
+                        messages.setOrder_id(dataSnapshot.getKey());
+                        messageList.add(messages);
+                        adapter.notifyDataSetChanged();
+//                      RV.smoothScrollToPosition(messageList.size()-1);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (adapter.getItemCount() > 0) {
+                            RV.smoothScrollToPosition(adapter.getItemCount()-1);
+                        }
+                    }
+                }, 300);
             }
 
             @Override

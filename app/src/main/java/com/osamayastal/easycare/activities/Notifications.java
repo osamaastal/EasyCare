@@ -20,6 +20,7 @@ import com.osamayastal.easycare.Model.Const.User_info;
 import com.osamayastal.easycare.Model.Controle.Products;
 import com.osamayastal.easycare.Model.Controle.Result;
 import com.osamayastal.easycare.Model.Controle.notification;
+import com.osamayastal.easycare.Model.Controle.users;
 import com.osamayastal.easycare.Model.Rootes.Categories_root;
 import com.osamayastal.easycare.R;
 import com.suke.widget.SwitchButton;
@@ -53,9 +54,11 @@ public class Notifications extends AppCompatActivity implements View.OnClickList
             }
 
             @Override
-            public void onFailure(String msg) {
+            public void onSuccess(users users) {
 
             }
+
+
         });
 
     }
@@ -72,30 +75,39 @@ public class Notifications extends AppCompatActivity implements View.OnClickList
         RV=findViewById(R.id.RV);
         switchButton=findViewById(R.id.notification_switch);
         /******************Actions*******************/
+        switchButton.setChecked(new User_info(mcontext).isEnableNotifications());
         switchButton.setOnCheckedChangeListener(new SwitchButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(SwitchButton view, boolean isChecked) {
+
                 com.osamayastal.easycare.Model.Rootes.Notifications root=new com.osamayastal.easycare.Model.Rootes.Notifications();
-                root.Putnotification(Notifications.this, isChecked, new com.osamayastal.easycare.Model.Rootes.Notifications.notificationListener() {
-                    @Override
-                    public void onSuccess(notification show_notif) {
+                root.Putnotification(Notifications.this, isChecked,
+                        new com.osamayastal.easycare.Model.Rootes.Notifications.notificationListener() {
+                            @Override
+                            public void onSuccess(notification show_notif) {
 
-                    }
+                            }
 
-                    @Override
-                    public void onSuccess(Result result) {
-                        if (new User_info(Notifications.this).getLanguage().equals("en")){
-                            Toast.makeText(Notifications.this,result.getMessageEn(),Toast.LENGTH_SHORT).show();
-                        }else {
-                            Toast.makeText(Notifications.this,result.getMessageAr(),Toast.LENGTH_SHORT).show();
-                        }
-                    }
+                            @Override
+                            public void onSuccess(Result result) {
 
-                    @Override
-                    public void onFailure(String msg) {
+                            }
 
-                    }
-                });
+                            @Override
+                            public void onSuccess(users users) {
+                                if (new User_info(Notifications.this).getLanguage().equals("en")){
+                                    Toast.makeText(Notifications.this,users.getMessageEn(),Toast.LENGTH_SHORT).show();
+                                }else {
+                                    Toast.makeText(Notifications.this,users.getMessageAr(),Toast.LENGTH_SHORT).show();
+                                }
+                                if (users.isStatus()){
+                                    new User_info(users.getItems(),mcontext);
+                                }
+                            }
+
+
+                        });
+
             }
         });
         back.setOnClickListener(this);

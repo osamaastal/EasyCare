@@ -40,6 +40,7 @@ public class MyOrders extends Fragment implements View.OnTouchListener {
         Loading(1);
         return view;
     }
+    private int statusID=1;
 private LinearLayout wait,current,complete,cancel;
     private RecyclerView RV;
     List<Order> orderList;
@@ -57,36 +58,38 @@ private Context mcontext;
         complete.setOnTouchListener(this);
         current.setOnTouchListener(this);
         cancel.setOnTouchListener(this);
-        orderList=new ArrayList<>();
-        adapter=new Order_adapter(mcontext, orderList, new Order_adapter.Selected_item() {
-            @Override
-            public void Onselcted(Order order) {
-                Intent intent=new Intent(mcontext, OrderDetails.class);
-                intent.putExtra("order_id",order.get_id());
-                startActivity(intent);
-            }
-        });
+        wait.requestFocus();
         RV.setLayoutManager(new LinearLayoutManager(mcontext,LinearLayoutManager.VERTICAL,false));
-        RV.setAdapter(adapter);
     }
 
 
 
 
-    private void Loading(int i) {
+    private void Loading(final int i) {
+
         view.findViewById(R.id.progress).setVisibility(View.VISIBLE);
-        Order_root root=new Order_root();
+        Order_root root=new Order_root(mcontext);
         root.GetAllOrder(mcontext, 0, i, new Order_root.GetOrderListener() {
             @Override
             public void onSuccess(Orders orders) {
-                view.findViewById(R.id.progress).setVisibility(View.GONE);
 
-                orderList.clear();
-                orderList.addAll(orders.getItems());
-                adapter.notifyDataSetChanged();
-                if (orders.getStatus()){
+                if (i==statusID){
+                    view.findViewById(R.id.progress).setVisibility(View.GONE);
+
+                    orderList=new ArrayList<>();
+                    orderList.addAll(orders.getItems());
+                    adapter=new Order_adapter(mcontext, orderList, new Order_adapter.Selected_item() {
+                        @Override
+                        public void Onselcted(Order order) {
+                            Intent intent=new Intent(mcontext, OrderDetails.class);
+                            intent.putExtra("order_id",order.get_id());
+                            startActivity(intent);
+                        }
+                    });
+                    RV.setAdapter(adapter);
 
                 }
+
             }
 
             @Override
@@ -106,15 +109,21 @@ private Context mcontext;
         switch (view.getId()){
             case R.id.wait_req:
                 Loading(1);
+                statusID=1;
                 break;
             case R.id.current_req:
                 Loading(3);
+                statusID=3;
                 break;
             case R.id.complet_req:
                 Loading(4);
+                statusID=4;
+
                 break;
             case R.id.cancel_req:
                 Loading(5);
+                statusID=5;
+
                 break;
         }
         return false;

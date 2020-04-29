@@ -28,7 +28,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardImg"
         />
     <TextView
-        android:id="@+id/balance_tv"
+        android:id="@+id/wallet_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="199.99"
@@ -45,15 +45,15 @@
         style="@style/text_white_bold_18"
         android:layout_marginTop="0dp"
         android:layout_marginEnd="5dp"
-        app:layout_constraintEnd_toStartOf="@id/balance_tv"
-        app:layout_constraintTop_toTopOf="@+id/balance_tv"
+        app:layout_constraintEnd_toStartOf="@id/wallet_price"
+        app:layout_constraintTop_toTopOf="@+id/wallet_price"
         />
     <ImageView
         android:layout_width="40dp"
         android:layout_height="30dp"
         android:src="@drawable/sim"
         android:layout_marginEnd="20dp"
-        app:layout_constraintTop_toBottomOf="@id/balance_tv"
+        app:layout_constraintTop_toBottomOf="@id/wallet_price"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
     <LinearLayout

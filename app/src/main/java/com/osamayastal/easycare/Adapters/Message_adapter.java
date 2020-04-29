@@ -15,9 +15,12 @@ import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.github.marlonlom.utilities.timeago.TimeAgo;
+import com.github.marlonlom.utilities.timeago.TimeAgoMessages;
 import com.osamayastal.easycare.Model.Classes.Categorie;
 import com.osamayastal.easycare.Model.Classes.Message.Message;
 import com.osamayastal.easycare.Model.Classes.Notification;
+import com.osamayastal.easycare.Model.Const.User_info;
 import com.osamayastal.easycare.R;
 import com.osamayastal.easycare.activities.Messages;
 import com.squareup.picasso.Picasso;
@@ -25,6 +28,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by User on 26/02/2020.
@@ -66,14 +70,23 @@ public class Message_adapter extends RecyclerView.Adapter<Message_adapter.ViewHo
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
-           holder.main.setText(mItems.get(position).getLast_msg());
-           holder.name.setText(mItems.get(position).getDriver().getName());
-           String dateString = DateFormat.format("yyyy/MM/dd hh:mm aa",
-                   new Date(mItems.get(position).getEdit_time_long())).toString();
-           holder.date.setText(dateString);
-           try{
+          try {
+              holder.main.setText(mItems.get(position).getLast_msg());
+              holder.name.setText(mItems.get(position).getDriver().getName());
+              String dateString = DateFormat.format("yyyy/MM/dd hh:mm aa",
+                      new Date(mItems.get(position).getEdit_time_long())).toString();
+              /******* TimeAgo *******/
+              Locale LocaleBylanguageTag = Locale.forLanguageTag(new User_info(mContext).getLanguage());
+              TimeAgoMessages messages = new TimeAgoMessages.Builder().withLocale(LocaleBylanguageTag).build();
+              dateString= TimeAgo.using(mItems.get(position).getEdit_time_long(),messages);
+              holder.date.setText(dateString);
+          } catch (Exception e) {
+              e.printStackTrace();
+          }
+
+        try{
                Log.d("isread",mItems.get(position).getRead_user().toString());
-               if (mItems.get(position).getRead_user()){
+               if (!mItems.get(position).getRead_user()){
                holder.container.setBackground(mContext.getDrawable(R.drawable.bg_req_gray_28dp_stroke));
            }else {
                holder.container.setBackground(mContext.getDrawable(R.drawable.bg_req_white_30dp));
@@ -82,8 +95,12 @@ public class Message_adapter extends RecyclerView.Adapter<Message_adapter.ViewHo
            } catch (Exception e) {
                e.printStackTrace();
            }
+        String image=mItems.get(position).getDriver().getImg();
+        if (!image.contains("https")){
+            image=image.replace("http", "https");
+        }
            Picasso.with(mContext)
-                   .load(mItems.get(position).getDriver().getImg())
+                   .load(image)
                    .into(holder.image);
 //bg_req_white_30dp  not red
 

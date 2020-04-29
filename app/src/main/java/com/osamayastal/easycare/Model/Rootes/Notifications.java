@@ -15,6 +15,7 @@ import com.osamayastal.easycare.Model.Const.Server_info;
 import com.osamayastal.easycare.Model.Const.User_info;
 import com.osamayastal.easycare.Model.Controle.Result;
 import com.osamayastal.easycare.Model.Controle.notification;
+import com.osamayastal.easycare.Model.Controle.users;
 
 
 import org.json.JSONException;
@@ -27,7 +28,7 @@ public class Notifications {
     public interface notificationListener{
         void onSuccess(notification show_notif);
         void onSuccess(Result result);
-        void onFailure(String msg);
+        void onSuccess(users users);
     }
     private RequestQueue queue;
     public void Getnotification(final Context mcontext, final notificationListener listener)
@@ -93,15 +94,22 @@ public class Notifications {
                 queue = Volley.newRequestQueue(mcontext);  // this = context
                 //Build.logError("Setting a new request queue");
             }
-            // prepare the Request
-            JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.POST, url, null,
-                    new Response.Listener<JSONObject>()
+            StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                    new Response.Listener<String>()
                     {
                         @Override
-                        public void onResponse(JSONObject response) {
-                            // display response
-                            Log.d("Response", response.toString());
-                            listener.onSuccess(new Result(response));
+                        public void onResponse(String response) {
+                            // response
+                            Log.d("Response", response);
+                            String jsonData = response;
+                            JSONObject Jobject = null;
+                            try {
+                                Jobject = new JSONObject(jsonData);
+                                listener.onSuccess(new users(Jobject));
+                            } catch (JSONException e1) {
+                                e1.printStackTrace();
+                            }
+
 
 
                         }
@@ -110,15 +118,15 @@ public class Notifications {
                     {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-
-//                        Log.d("Error.Response", error.getMessage());
                         }
                     }
-            ){
+            ) {
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
                     Map<String, String>  param = new HashMap<String, String>();
                     param.put("isEnableNotifications",status.toString());
+                    Log.d("param", param.toString());
+
                     return  param;
                 }
 
@@ -129,11 +137,8 @@ public class Notifications {
                     return  param;
                 }
             };
+            queue.add(postRequest);
 
-            queue.getCache().initialize();
-// add it to the RequestQueue
-            queue.add(getRequest);
-            queue.getCache().clear();
         }catch (Exception ex){
 
         }}

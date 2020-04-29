@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+
     android:layoutDirection="rtl"
     tools:context=".fragments.AboutUs">
+
+
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraint1"
         android:layout_width="match_parent"
@@ -54,10 +63,10 @@
         android:layout_weight="21"
         android:src="@drawable/about_us_img"
         />
-<!--    <Space-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:layout_weight="2.5"/>-->
+    <!--    <Space-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        android:layout_weight="2.5"/>-->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -98,10 +107,24 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="5"/>
-
-
-
-
-
-
 </LinearLayout>
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/linear_wait"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center|top"
+        android:background="@color/white_op95"
+        >
+        <ProgressBar
+            android:padding="10dp"
+            android:backgroundTint="#F1EBEB"
+
+            android:background="@drawable/bg_circle_gray"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/progress"/>
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,12 +6,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Employee {
-    private String _id,createAt,full_name,email,phone_number,password,image;
+    private String _id,createAt,full_name,email,phone_number,password,image,fcmToken,address;
     private boolean isBlock;
     private Provider provider_id;
 
     public Employee(JSONObject provider) {
-        if (provider!=null){
+        if (provider==null){
             return;
         }
         try {
@@ -45,6 +45,16 @@ public class Employee {
             e.printStackTrace();
         }
         try {
+            fcmToken=provider.getString("fcmToken");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            address=provider.getString("address");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             image=provider.getString("image");
             if (!image.contains("https")){
                 image=image.replace("http", "https");
@@ -67,6 +77,22 @@ public class Employee {
 
 
 
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getFcmToken() {
+        return fcmToken;
+    }
+
+    public void setFcmToken(String fcmToken) {
+        this.fcmToken = fcmToken;
     }
 
     public String getImage() {

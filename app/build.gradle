@@ -101,5 +101,8 @@ dependencies {
 
     //for location services
     api 'com.google.android.gms:play-services-location:15.0.1'
+
+    //TimeAgo
+    implementation 'com.github.marlonlom:timeago:4.0.1'
 }
 apply plugin: 'com.google.gms.google-services'

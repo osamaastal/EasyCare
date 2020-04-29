@@ -29,6 +29,7 @@ public class User {
     private String token;
     private String verifyCode;
     private Long wallet = Long.valueOf(0);
+    private boolean isEnableNotifications;
     private int favoritCount,orderCount;
 
     public int getFavoritCount() {
@@ -250,6 +251,11 @@ public class User {
         }
         verifyCode = jsonObject.optString("verify_code");
         wallet = jsonObject.optLong("wallet");
+        try {
+            isEnableNotifications = jsonObject.getBoolean("isEnableNotifications");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -278,5 +284,13 @@ public class User {
             e.printStackTrace();
         }
         return jsonObject;
+    }
+
+    public boolean isEnableNotifications() {
+        return isEnableNotifications;
+    }
+
+    public void setEnableNotifications(boolean enableNotifications) {
+        isEnableNotifications = enableNotifications;
     }
 }

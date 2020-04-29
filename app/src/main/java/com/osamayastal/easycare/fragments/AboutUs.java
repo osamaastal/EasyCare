@@ -22,23 +22,26 @@ import com.osamayastal.easycare.activities.MainActivity;
 public class AboutUs extends Fragment implements View.OnClickListener {
 
     public static String id;
-
+    View view;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_about_us, container, false);
+         view= inflater.inflate(R.layout.fragment_about_us, container, false);
         init(view);
         Loading();
         return view;
     }
 
     private void Loading() {
+        view.findViewById(R.id.linear_wait).setVisibility(View.VISIBLE);
         StaticPage_root root=new StaticPage_root();
         root.Get_StaticPages(getContext(), new StaticPage_root.StaticPages_Listener() {
             @Override
             public void onSuccess(StaticPages staticPages) {
                 if (staticPages.getStatus_code()==200){
+                    view.findViewById(R.id.linear_wait).setVisibility(View.GONE);
+
                     for (StaticPage staticPage: staticPages.getItems()
                          ) {
                         if (staticPage.get_id().equals(id)){

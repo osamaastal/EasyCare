@@ -224,6 +224,7 @@ public class user {
                 parameters.put("phone_number", phone_number);
                 parameters.put("fcmToken", fcmtoken);
                 parameters.put("os", "Android");
+                Log.d("parameters", parameters.toString());
 
                 return parameters;
             }

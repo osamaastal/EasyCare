@@ -1,6 +1,9 @@
 package com.osamayastal.easycare.Model.Classes.Basket;
 
+import android.util.Log;
+
 import com.osamayastal.easycare.Model.Classes.Categorie;
+import com.osamayastal.easycare.Model.Classes.Employee;
 import com.osamayastal.easycare.Model.Classes.Payment;
 import com.osamayastal.easycare.Model.Classes.Product;
 import com.osamayastal.easycare.Model.Classes.Provider.Provider;
@@ -26,6 +29,7 @@ private Categorie categorie;
     private String time,date,Order_no;
     private int PaymentType,locationType,StatusId;
     private Double Total;
+    private Employee employee_id;
 
     public Bascket() {
     }
@@ -123,6 +127,13 @@ private Categorie categorie;
             e.printStackTrace();
         }
         try{
+            employee_id=new Employee(jsonObject.getJSONObject("employee_id"));
+            Log.d("parameters",jsonObject.getJSONObject("employee_id").toString());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try{
             provider=new Provider(jsonObject);
         } catch (Exception e) {
             e.printStackTrace();
@@ -208,6 +219,14 @@ private Categorie categorie;
 
     public void setLocationType(int locationType) {
         this.locationType = locationType;
+    }
+
+    public Employee getEmployee_id() {
+        return employee_id;
+    }
+
+    public void setEmployee_id(Employee employee_id) {
+        this.employee_id = employee_id;
     }
 
     public int getStatusId() {

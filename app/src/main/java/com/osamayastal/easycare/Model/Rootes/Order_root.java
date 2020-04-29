@@ -43,12 +43,21 @@ public class Order_root {
     }
     private RequestQueue queue;
 
+    public Order_root() {
+    }
+
+    public Order_root(final Context mcontext) {
+        if (queue == null) {
+            queue = Volley.newRequestQueue(mcontext);  // this = context
+            //Build.logError("Setting a new request queue");
+        }
+    }
 
     public void PostOrder(final Context mcontext,
-                          final String provider_id,final int locationType,
-                          final String lat,final String lng,
-                          final String date,final String time,
-                          final String upfrontAmount,final String couponCode,
+                          final String provider_id, final int locationType,
+                          final String lat, final String lng,
+                          final String date, final String time,
+                          final String upfrontAmount, final String couponCode,
                           final String paymentType,
                           final Boolean isUpfront,
                           final PostOrderListener listener)
@@ -132,6 +141,9 @@ public class Order_root {
                           final int page,final int statusID,
                           final GetOrderListener listener)
     {
+        if (queue != null){
+            queue.stop();
+        }
 
         listener.onStart();
         String url= Server_info.API +"api/mobile/getUserOrder?StatusId="+statusID+"&page="+page+"&limit=10";
@@ -173,7 +185,9 @@ public class Order_root {
                 return  parameters;
             }
         };
+        queue.start();
         queue.add(request);
+
 
     }
 

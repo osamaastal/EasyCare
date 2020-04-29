@@ -56,6 +56,7 @@
             android:layout_marginTop="30dp"
             android:layout_marginStart="20dp">
             <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="260dp">
 <!--                <LinearLayout-->
@@ -88,7 +89,6 @@
                         android:visibility="gone"
                         android:layout_width="50dp"
                         android:layout_height="75dp"
-                        android:visibility="gone"
                         android:layout_marginStart="12.5dp"
                         android:src="@drawable/ic_plus_white"
                         android:background="@drawable/bg_req_orange_16dp"
@@ -137,7 +137,14 @@
 
 
                 </LinearLayout>
+                <include
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    layout="@layout/row_wallet_credit"
+                    android:layout_marginEnd="15dp"
+                    />
                 <androidx.recyclerview.widget.RecyclerView
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     tools:listitem="@layout/row_wallet_credit"

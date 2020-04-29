@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -60,7 +61,9 @@ public class Basket_adapter extends RecyclerView.Adapter<Basket_adapter.ViewHold
     @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-
+        if (isOrder){
+            holder.top.setVisibility(View.GONE);
+        }
         holder.nb_products.setText(mItems.get(position).getProducts().size()+"");
         holder.nb_service.setText(mItems.get(position).getCategories().size()+"");
         holder.name.setText(mItems.get(position).getProvider().getName()+"");
@@ -104,7 +107,7 @@ public class Basket_adapter extends RecyclerView.Adapter<Basket_adapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-
+        ConstraintLayout top;
      RecyclerView RV_service,RV_product;
       TextView nb_service,nb_products,name;
       public ViewHolder(View itemView) {
@@ -114,6 +117,7 @@ public class Basket_adapter extends RecyclerView.Adapter<Basket_adapter.ViewHold
           RV_service = itemView.findViewById(R.id.RV_service);
           RV_product = itemView.findViewById(R.id.RV_product);
           name = itemView.findViewById(R.id.name);
+          top = itemView.findViewById(R.id.top);
 
 
 

@@ -59,7 +59,7 @@ public class Wallet extends AppCompatActivity implements View.OnClickListener {
     }
 Context mcontext=Wallet.this;
     private ImageButton back;
-    private TextView add;
+    private TextView add,price;
     RecyclerView RV;
 Wallet_adapter adapter;
 List<com.osamayastal.easycare.Model.Classes.Wallet> walletList;
@@ -67,11 +67,15 @@ List<com.osamayastal.easycare.Model.Classes.Wallet> walletList;
         back=findViewById(R.id.back_btn);
         add=findViewById(R.id.add);
         RV=findViewById(R.id.RV);
+        price=findViewById(R.id.wallet_price);
         /**************************Action***************************/
+        price.setText(new User_info(mcontext).getWallet().toString());//String.format("%.2f",);
         back.setOnClickListener(this);
         add.setOnClickListener(this);
         walletList=new ArrayList<>();
         RV.setLayoutManager(new LinearLayoutManager(mcontext,RecyclerView.VERTICAL,false));
+
+
     }
 
     @Override

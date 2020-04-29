@@ -116,17 +116,8 @@ if (new User_info(mcontext).getLanguage().equals("en")){
             date.setText(getdate(order.getDate()));
             time.setText(order.getTime());
             price.setText(String.format("%.2f",order.getTotal()));
-            if (new User_info(mcontext).getLanguage().equals("en")){
-                type.setText(order.getCategorie().getEnName());
-            }else {
-                type.setText(order.getCategorie().getArName());
-            }
-            try{
-                String color=order.getCategorie().getColor();
-                makeDrawable(Color.parseColor(color),type,18);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            nb_service.setText(order.getCategories().size()+"");
+            nb_product.setText(order.getProducts().size()+"");
 
             try {
                 Picasso.with(mcontext)
@@ -179,7 +170,7 @@ ImageButton back;
     Basket_adapter adapter;
     ImageView Img;
     ImageView order_status;
-    TextView name,date,time,type,id,id_top,price,payment;
+    TextView name,date,time,nb_service,nb_product,id,id_top,price,payment;
 RecyclerView RV;
 Button save;
     Context mcontext=OrderDetails.this;
@@ -191,14 +182,14 @@ Button save;
         order_status = findViewById(R.id.order_status);
         date= findViewById(R.id.date_tv);
         time= findViewById(R.id.time_tv);
-        type= findViewById(R.id.type_tv);
+        nb_product= findViewById(R.id.nb_products);
+        nb_service= findViewById(R.id.nb_service);
         id= findViewById(R.id.order_id);
         id_top= findViewById(R.id.order_id_top);
         price= findViewById(R.id.price);
         RV= findViewById(R.id.RV);
         save= findViewById(R.id.save_btn);
         back= findViewById(R.id.back_btn);
-        type.setVisibility(View.VISIBLE);
         order_status.setVisibility(View.VISIBLE);
         /*****************************Actions*********************/
         save.setOnClickListener(this);
@@ -244,15 +235,18 @@ switch (view.getId()){
                 FirebaseDatabase database=FirebaseDatabase.getInstance();
                 DatabaseReference reference=database.getReference().child("chat").child(order_id);
                 Messages messages=new Messages();
-                messages.setDriver(new User("5e8ca63507f8d278acbe0999",
-                        "Osama Youcef",
-                        "https://res.cloudinary.com/dkos8ethw/image/upload/v1586275893/m1glent9ytswjpl9mtx0.jpg"));
+                //driver
+                messages.setDriver(new User(order.getEmployee_id().get_id(),
+                        order.getEmployee_id().getFull_name(),
+                        order.getEmployee_id().getImage()));
+                //user
                 messages.setUser(new User(new User_info(mcontext).getId(),
                         new User_info(mcontext).getName(),
                         new User_info(mcontext).getImag()));
                 Map<String, Object> parameters = new HashMap<>();
                 parameters.put("driver",messages.getDriver());
                 parameters.put("user",messages.getUser());
+                Log.d("parameters",order.getEmployee_id().getFull_name());
                 reference.updateChildren(parameters)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override

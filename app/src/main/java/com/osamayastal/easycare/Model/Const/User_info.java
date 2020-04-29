@@ -15,6 +15,8 @@ private String lat;
     private String lng;
 private long wallet;
 private  int point,basket;
+    private boolean isEnableNotifications;
+
     public User_info(Context mcontext) {
         try {
             final SharedPreferences sp=mcontext.getSharedPreferences("Login", MODE_PRIVATE);
@@ -31,11 +33,12 @@ private  int point,basket;
             lat=sp.getString("lat","");
             lng=sp.getString("lng","");
             pw=sp.getString("pw","");
-            wallet=sp.getLong("wallet", (long) 0.0);
+            wallet=sp.getLong("wallet", (long) 0.26);
             point=sp.getInt("point", 0);
             basket=sp.getInt("basket", 0);
             language=sp.getString("language","ar");
             pw=sp.getString("pw","");
+            isEnableNotifications=sp.getBoolean("isEnableNotifications",true);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -87,6 +90,7 @@ private  int point,basket;
            Ed.putLong("wallet",user_.getWallet());
            Ed.putString("lat", String.valueOf(user_.getLat()));
            Ed.putString("lng", String.valueOf(user_.getLng()));
+           Ed.putBoolean("isEnableNotifications", user_.isEnableNotifications());
 
            Ed.commit();
            new User_info(context);
@@ -110,7 +114,14 @@ private  int point,basket;
         Ed.commit();
 
     }
+    public void  Change_isEnableNotifications(Context context,Boolean isEnableNotifications) {
+        SharedPreferences sp=context.getSharedPreferences("Login", MODE_PRIVATE);
+        SharedPreferences.Editor Ed=sp.edit();
+        Ed.putBoolean("isEnableNotifications",isEnableNotifications);
 
+        Ed.commit();
+
+    }
     public String getLanguage() {
         return language;
     }
@@ -130,6 +141,14 @@ private  int point,basket;
 //        Ed.putLong("wallet",points.getMoney());
 //        Ed.commit();
 //    }
+
+    public boolean isEnableNotifications() {
+        return isEnableNotifications;
+    }
+
+    public void setEnableNotifications(boolean enableNotifications) {
+        isEnableNotifications = enableNotifications;
+    }
 
     public int getBasket() {
         return basket;

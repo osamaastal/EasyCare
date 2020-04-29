@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,6 +83,7 @@ private Button login_btn;
         if (Verefy(list)){
             final user user=new user();
             String tokenFCM = FirebaseInstanceId.getInstance().getToken();
+            Log.d("tokenFCM",tokenFCM);
             user.Post_Login(getContext(), tokenFCM, passord.getText().toString(),
                     phone.getText().toString(), new user.user_Listener() {
                         @Override
@@ -92,12 +94,7 @@ private Button login_btn;
                                 Toast.makeText(getContext(),new_account.getMessageAr(),Toast.LENGTH_SHORT).show();
                             }
                             if (!new_account.isStatus()){
-                                if (new_account.getItems()!=null){
-                                    if (!new_account.getItems().isIsVerify()){
-                                        startActivity(new Intent(getActivity(), ConfCode.class));
-                                        getActivity().finish();
-                                    }
-                                }
+                                return;
                             }
                             if (new_account.getItems().isIsVerify()) {
 
