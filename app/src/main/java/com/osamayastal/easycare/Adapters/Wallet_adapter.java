@@ -68,7 +68,11 @@ public class Wallet_adapter extends RecyclerView.Adapter<Wallet_adapter.ViewHold
         holder.name.setText(mItems.get(position).getTo());
         holder.id.setText(mItems.get(position).getNo());
         holder.date.setText(getdate(mItems.get(position).getCreateAt()));
-        holder.price.setText(String.format("%.2f",mItems.get(position).getAmount()));
+       try {
+           holder.price.setText(String.format("%.2f",mItems.get(position).getAmount())+mItems.get(position).getType());
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
 
         holder.nb.setVisibility(View.GONE);
         holder.order_status.setVisibility(View.GONE);

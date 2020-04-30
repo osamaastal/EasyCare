@@ -40,9 +40,9 @@ public class Wallet extends AppCompatActivity implements View.OnClickListener {
             @Override
             public void onSuccess(com.osamayastal.easycare.Model.Controle.Wallet wallet) {
                 findViewById(R.id.progress).setVisibility(View.GONE);
-//                walletList.clear();
-//                walletList.addAll(wallet.getItems());
-//                adapter.notifyDataSetChanged();
+                walletList.clear();
+                walletList.addAll(wallet.getItems());
+                adapter.notifyDataSetChanged();
 
             }
 
