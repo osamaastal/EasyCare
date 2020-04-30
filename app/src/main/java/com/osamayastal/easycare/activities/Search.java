@@ -46,6 +46,7 @@ import com.osamayastal.easycare.Adapters.Search_adapter;
 import com.osamayastal.easycare.Adapters.ServicType_adapter;
 import com.osamayastal.easycare.Model.Classes.Categorie;
 import com.osamayastal.easycare.Model.Classes.City;
+import com.osamayastal.easycare.Model.Const.User_info;
 import com.osamayastal.easycare.Model.Controle.Categories;
 import com.osamayastal.easycare.Model.Rootes.Categories_root;
 import com.osamayastal.easycare.Model.Rootes.City_root;
@@ -383,7 +384,13 @@ default_tv.setOnClickListener(new View.OnClickListener() {
     private Context mcontext;
     @SuppressLint("MissingPermission")
     private void get_location() {
-
+        if (new User_info(mcontext).getLat()!=null && new User_info(mcontext).getLng()!=null){
+            mLatLng=new LatLng(Double.parseDouble(new User_info(mcontext).getLat()),
+                    Double.parseDouble(new User_info(mcontext).getLng()));
+        }
+//        Toast.makeText(mcontext, "lat: " + new User_info(mcontext).getLat()
+//                + "lng: " + new User_info(mcontext).getLng() , Toast.LENGTH_SHORT).show();
+////////////////////////////////////////////////////////
         flag = displayGpsStatus();
         if (flag) {
 
@@ -398,8 +405,9 @@ default_tv.setOnClickListener(new View.OnClickListener() {
                                if (location != null) {
                                    mLatLng = new LatLng(location.getLatitude(),location.getLongitude());
                                    Log.d("location",mLatLng.toString());
-
-//                                   Toast.makeText(Search.this, "lat: " + mLatLng.latitude + "lng: " + mLatLng.longitude, Toast.LENGTH_SHORT).show();
+                                   new User_info().SetLocation(mcontext,mLatLng);
+                                   Toast.makeText(Search.this, "lat: " + new User_info(mcontext).getLat()
+                                           + "lng: " + new User_info(mcontext).getLng() , Toast.LENGTH_SHORT).show();
 
                                }
                            }
@@ -428,8 +436,8 @@ default_tv.setOnClickListener(new View.OnClickListener() {
 
 
 
-    private LatLng mLatLng=new LatLng(33.39877956546843,6.875997707247734);
-
+//    private LatLng mLatLng=new LatLng(33.39877956546843,6.875997707247734);
+    private LatLng mLatLng=new LatLng(23.836439,36.699240);
 
     /*----Method to Check GPS is enable or disable ----- */
     private Boolean displayGpsStatus() {

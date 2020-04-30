@@ -52,6 +52,7 @@ import com.osamayastal.easycare.activities.Auther_activity;
 import com.osamayastal.easycare.activities.ConfCode;
 import com.osamayastal.easycare.activities.LoginActivity;
 import com.osamayastal.easycare.activities.MainActivity;
+import com.osamayastal.easycare.activities.Search;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -332,8 +333,8 @@ private AppCompatCheckBox accept;
 
     private FusedLocationProviderClient fusedLocationClient;
         private Boolean flag;
-        private Context mcontext;
-    private LatLng mLatLng=new LatLng(33.39877956546843,6.875997707247734);
+        private Context mcontext=getContext();
+    private LatLng mLatLng=new LatLng(23.836439,36.699240);
 
     /*----Method to Check GPS is enable or disable ----- */
     private Boolean displayGpsStatus() {
@@ -351,6 +352,12 @@ private AppCompatCheckBox accept;
 
     @SuppressLint("MissingPermission")
         private void get_location() {
+        if (new User_info(mcontext).getLat()!=null && new User_info(mcontext).getLng()!=null){
+            mLatLng=new LatLng(Double.parseDouble(new User_info(mcontext).getLat()),
+                    Double.parseDouble(new User_info(mcontext).getLng()));
+        }
+//        Toast.makeText(getContext(), "lat: " + new User_info(mcontext).getLat()
+//                + "lng: " + new User_info(mcontext).getLng() , Toast.LENGTH_SHORT).show();
 
             flag = displayGpsStatus();
             if (flag) {

@@ -40,9 +40,9 @@ public class Wallet extends AppCompatActivity implements View.OnClickListener {
             @Override
             public void onSuccess(com.osamayastal.easycare.Model.Controle.Wallet wallet) {
                 findViewById(R.id.progress).setVisibility(View.GONE);
-                walletList.clear();
-                walletList.addAll(wallet.getItems());
-
+//                walletList.clear();
+//                walletList.addAll(wallet.getItems());
+//                adapter.notifyDataSetChanged();
 
             }
 
@@ -73,8 +73,14 @@ List<com.osamayastal.easycare.Model.Classes.Wallet> walletList;
         back.setOnClickListener(this);
         add.setOnClickListener(this);
         walletList=new ArrayList<>();
-        RV.setLayoutManager(new LinearLayoutManager(mcontext,RecyclerView.VERTICAL,false));
+        adapter=new Wallet_adapter(mcontext, walletList, new Wallet_adapter.Selected_item() {
+            @Override
+            public void Onselcted(com.osamayastal.easycare.Model.Classes.Wallet wallet) {
 
+            }
+        });
+        RV.setLayoutManager(new LinearLayoutManager(mcontext,RecyclerView.VERTICAL,false));
+RV.setAdapter(adapter);
 
     }
 

@@ -55,11 +55,17 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:id="@+id/progress"/>
-
+<androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+
+
         >
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/RV"
@@ -68,8 +74,13 @@
             android:layout_marginTop="13dp"
             android:layout_marginEnd="18dp"
             android:layout_marginStart="18dp"
-            android:layout_marginBottom="50dp"/>
+            android:layout_marginBottom="50dp"
+            tools:listitem="@layout/row_messages"
+
+            />
     </LinearLayout>
+</androidx.core.widget.NestedScrollView>
+
 
 
 </LinearLayout>

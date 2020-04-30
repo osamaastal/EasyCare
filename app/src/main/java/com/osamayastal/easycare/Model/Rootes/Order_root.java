@@ -53,6 +53,70 @@ public class Order_root {
         }
     }
 
+    public void PostOrderRate(final Context mcontext,
+                          final String id,
+                          final String not, final String rat,
+
+                          final PostOrderListener listener)
+    {
+
+        listener.onStart();
+        String url= Server_info.API +"api/mobile/addRateFromUserToProvider/"+id;
+        final String token=new User_info(mcontext).getToken();
+
+        if (queue == null) {
+            queue = Volley.newRequestQueue(mcontext);  // this = context
+            //Build.logError("Setting a new request queue");
+        }
+        // prepare the Request
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("Response", response.toString());
+                JSONObject Jobject = null;
+                try {
+                    Jobject = new JSONObject(response);
+                    Log.d("Response", response.toString());
+
+                    listener.onSuccess(new Result(Jobject));
+
+                } catch (JSONException e1) {
+                    e1.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("error",error.toString());
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> parameters = new HashMap<>();
+
+                parameters.put("rate_from_user_to_provider",rat);
+                parameters.put("note_from_user_to_provider", not);
+
+
+                Log.d("parameters", parameters.toString());
+
+                return  parameters;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> parameters = new HashMap<>();
+
+                parameters.put("token",token);
+                Log.d("token", parameters.toString());
+
+                return  parameters;
+            }
+        };
+        queue.add(request);
+
+    }
     public void PostOrder(final Context mcontext,
                           final String provider_id, final int locationType,
                           final String lat, final String lng,

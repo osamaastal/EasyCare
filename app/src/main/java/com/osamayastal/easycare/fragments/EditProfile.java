@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.cncoderx.wheelview.Wheel3DView;
 import com.deishelon.roundedbottomsheet.RoundedBottomSheetDialog;
+import com.google.android.gms.maps.model.LatLng;
 import com.osamayastal.easycare.Model.Classes.City;
 import com.osamayastal.easycare.Model.Classes.User;
 import com.osamayastal.easycare.Model.Const.User_info;
@@ -180,6 +181,13 @@ progressBar.setVisibility(View.GONE);
                mUser.setLat(Add_New_Address_Map.mLatLng.latitude);
                mUser.setLng(Add_New_Address_Map.mLatLng.longitude);
 
+           }else {
+               if (new User_info(getContext()).getLat()!=null && new User_info(getContext()).getLng()!=null){
+                  LatLng mLatLng=new LatLng(Double.parseDouble(new User_info(getContext()).getLat()),
+                           Double.parseDouble(new User_info(getContext()).getLng()));
+                   mUser.setLat(mLatLng.latitude);
+                   mUser.setLng(mLatLng.longitude);
+               }
            }
             user user=new user();
             user.Post_UPDATE_user(getContext(),mUser , new user.user_Listener() {

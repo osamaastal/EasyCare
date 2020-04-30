@@ -34,6 +34,7 @@ import com.osamayastal.easycare.Model.Const.User_info;
 import com.osamayastal.easycare.Model.Controle.Order_Details;
 import com.osamayastal.easycare.Model.Controle.Result;
 import com.osamayastal.easycare.Model.Rootes.Order_root;
+import com.osamayastal.easycare.Popups.AppPop;
 import com.osamayastal.easycare.R;
 import com.squareup.picasso.Picasso;
 
@@ -142,8 +143,8 @@ if (new User_info(mcontext).getLanguage().equals("en")){
                     break;
                 case 4://  4- Finished
                     order_status.setImageDrawable(mcontext.getDrawable(R.drawable.ic_order_type_finished));
-                    save.setText(mcontext.getString(R.string.conf_finish_order));
-                    save.setBackground(mcontext.getDrawable(R.drawable.bg_req_green_gradiant_30dp));
+                    save.setText(mcontext.getString(R.string.rate_service));
+                    save.setBackground(mcontext.getDrawable(R.drawable.bg_req_darkblue_16dp));
                     break;
 
                 case 5:// 5- Cancled
@@ -234,7 +235,7 @@ switch (view.getId()){
             case 3:// 3- OnProgress
                 FirebaseDatabase database=FirebaseDatabase.getInstance();
                 DatabaseReference reference=database.getReference().child("chat").child(order_id);
-                Messages messages=new Messages();
+                final Messages messages=new Messages();
                 //driver
                 messages.setDriver(new User(order.getEmployee_id().get_id(),
                         order.getEmployee_id().getFull_name(),
@@ -243,30 +244,23 @@ switch (view.getId()){
                 messages.setUser(new User(new User_info(mcontext).getId(),
                         new User_info(mcontext).getName(),
                         new User_info(mcontext).getImag()));
-                Map<String, Object> parameters = new HashMap<>();
-                parameters.put("driver",messages.getDriver());
-                parameters.put("user",messages.getUser());
-                Log.d("parameters",order.getEmployee_id().getFull_name());
-                reference.updateChildren(parameters)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()){
-                            Bundle bundle = new Bundle();
-                            bundle.putSerializable("driver",null);
-                            bundle.putSerializable("order_id",order_id);
-                            Intent intent=new Intent(mcontext, Chat.class);
-                            intent.putExtras(bundle);
-                            startActivity(intent);
-                        }
-                    }
-                });
+
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("driver",messages.getDriver());
+                bundle.putSerializable("user",messages.getUser());
+                bundle.putSerializable("order_id",order_id);
+                Intent intent=new Intent(mcontext, Chat.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+
+
 
 
                 break;
 
             case 4://  4- Finished
-
+                AppPop pop=new AppPop();
+                pop.PostRat_pop(mcontext,order_id);
                 break;
 
             case 5:// 5- Cancled

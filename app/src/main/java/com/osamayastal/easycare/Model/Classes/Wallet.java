@@ -4,8 +4,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Wallet {
-    private String _id,no,user_id,to,amount,type,createAt;
-
+    private String _id,no,user_id,to,type,createAt;
+private Double amount=0.0;
     public Wallet(JSONObject provider) {
         if (provider==null){
             return;
@@ -32,7 +32,7 @@ public class Wallet {
             e.printStackTrace();
         }
         try {
-            amount=provider.getString("amount");
+            amount=provider.getDouble("amount");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -80,11 +80,11 @@ public class Wallet {
         this.to = to;
     }
 
-    public String getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    public void setAmount(String amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.osamayastal.easycare.Model.Classes.User;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -113,6 +114,21 @@ private  int point,basket;
 
         Ed.commit();
 
+    }
+    public void SetLocation(Context context, LatLng mlatLng) {
+        try {
+            SharedPreferences sp=context.getSharedPreferences("Login", MODE_PRIVATE);
+            SharedPreferences.Editor Ed=sp.edit();
+
+            Ed.putString("lat", String.valueOf(mlatLng.latitude));
+            Ed.putString("lng", String.valueOf(mlatLng.longitude));
+
+
+            Ed.commit();
+            new User_info(context);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     public void  Change_isEnableNotifications(Context context,Boolean isEnableNotifications) {
         SharedPreferences sp=context.getSharedPreferences("Login", MODE_PRIVATE);

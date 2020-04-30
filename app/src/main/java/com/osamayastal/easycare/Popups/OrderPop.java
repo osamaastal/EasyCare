@@ -578,7 +578,7 @@ this.mcontext=mcontext;
                 if (isupfront){
                     upfont=true;
                     linear_upfront.setVisibility(View.VISIBLE);
-                    upFrontmount.setHint(mount+" ريال ");
+                    upFrontmount.setHint(String.format("%.2f",mount)+" ريال ");
                 }
 
 

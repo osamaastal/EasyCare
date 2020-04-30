@@ -51,45 +51,43 @@ public class Chat extends AppCompatActivity implements View.OnClickListener {
         Bundle bundle = intent.getExtras();
         order_id=bundle.getString("order_id");
         driver= (User) bundle.getSerializable("driver");
+        user= (User) bundle.getSerializable("user");
 
         init();
+        onstart=true;
         Loading();
     }
     FirebaseDatabase database;
     DatabaseReference reference;
+    Boolean isFirst=true;
+    Boolean onstart;
+
     private void Loading() {
         if (order_id!=null) {
             findViewById(R.id.progress).setVisibility(View.VISIBLE);
             database=FirebaseDatabase.getInstance();
-            if (driver==null){
-                DatabaseReference reference=database.getReference().child("chat").child(order_id);
-                reference.child("driver").addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        findViewById(R.id.progress).setVisibility(View.GONE);
 
-                        if (dataSnapshot.exists()){
-                            driver=dataSnapshot.getValue(User.class);
-                            Driver_info();
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-            }else {
-                findViewById(R.id.progress).setVisibility(View.GONE);
+               //driver info
                 Driver_info();
-            }
+
+
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    findViewById(R.id.progress).setVisibility(View.GONE);
+
+                }
+            }, 600);
 
          reference=database.getReference().child("chat").child(order_id);
         reference.child("conversation").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 findViewById(R.id.progress).setVisibility(View.GONE);
-
+                if (!onstart){
+                    return;
+                }
                 try {
                     com.osamayastal.easycare.Model.Classes.Message.Message  message=
                             dataSnapshot.getValue(com.osamayastal.easycare.Model.Classes.Message.Message.class);
@@ -98,11 +96,13 @@ public class Chat extends AppCompatActivity implements View.OnClickListener {
                     Log.d("dataSnapshot",dataSnapshot.toString());
                     messageList.add(message);
                     adapter.notifyDataSetChanged();
+                    isFirst=false;
 
-
-                    Map<String, Object> parameters = new HashMap<>();
-                    parameters.put("isRead_user",true);
-                    reference.updateChildren(parameters);
+                    if (message.getIs_driver()){
+                        Map<String, Object> parameters = new HashMap<>();
+                        parameters.put("isRead_user",true);
+                        reference.updateChildren(parameters);
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -192,12 +192,26 @@ private void Driver_info(){
 }
     private String order_id=null;
     private User driver=null;
+    private User user=null;
 
     @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.back_btn:
-                finish();
+                onstart=false;
+                reference.removeEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+                FirebaseDatabase.getInstance().goOffline();
+                Chat.this.finish();
                 break;
             case R.id.send_btn:
                try {
@@ -214,15 +228,24 @@ private void Driver_info(){
             msg.setError(msg.getHint());
             return;
         }
+        send.setEnabled(false);
         final String msg_=msg.getText().toString();
         final Message message=new Message(msg_,new Date().getTime());
         Log.d("order_id",reference.toString());
+        if (isFirst){
+            Map<String, Object> parameters = new HashMap<>();
+            parameters.put("driver",driver);
+            parameters.put("user",user);
+            reference.updateChildren(parameters);
+        }
         reference.child("conversation").push().setValue(message)
         .addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){
                     msg.setText("");
+                    send.setEnabled(true);
+
 
                     Map<String, Object> parameters = new HashMap<>();
                     parameters.put("last_msg",message.getContent());
@@ -231,17 +254,29 @@ private void Driver_info(){
                     parameters.put("isRead_user",true);
                     reference.updateChildren(parameters);
 
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (adapter.getItemCount() > 0) {
-                                RV.smoothScrollToPosition(adapter.getItemCount()-1);
-                            }
-                        }
-                    }, 300);
+
                 }
             }
         });
+    }
+
+    @Override
+    public void onPause() {
+
+        super.onPause();
+
+        if(FirebaseDatabase.getInstance()!=null)
+        {
+            FirebaseDatabase.getInstance().goOffline();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(FirebaseDatabase.getInstance()!=null)
+        {
+            FirebaseDatabase.getInstance().goOnline();
+        }
     }
 }

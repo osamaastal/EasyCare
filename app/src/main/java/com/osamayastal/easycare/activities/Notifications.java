@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
@@ -112,7 +114,27 @@ public class Notifications extends AppCompatActivity implements View.OnClickList
         });
         back.setOnClickListener(this);
         notifications=new ArrayList<>();
-        adapter=new Notifications_adapter(this,notifications,null);
+        adapter=new Notifications_adapter(this, notifications, new Notifications_adapter.Selected_item() {
+            @Override
+            public void Onselcted(Notification notification) {
+                switch (notification.getType()){//حالات التنبيهات: type
+                    //١- طلبات
+
+                    case 1:
+                        Intent intent=new Intent(mcontext, OrderDetails.class);
+                        intent.putExtra("order_id",notification.getBody_parms());
+                        startActivity(intent);
+
+                        break;
+                    case 2://٢- تقييمات
+                    case 4://٤- مسجات عامة من لوحة التحكم — مابفتح اي شي
+                    case 3://٣- كوبونات او عروض — مابفتح اي شي
+                                break;
+
+                }
+
+            }
+        });
         RV.setLayoutManager(new LinearLayoutManager(mcontext,RecyclerView.VERTICAL,false));
         RV.setAdapter(adapter);
 

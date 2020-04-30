@@ -189,6 +189,12 @@ private String provider_id=null;
     private Boolean flag;
 
     private void get_location() {
+        if (new User_info(getContext()).getLat()!=null && new User_info(getContext()).getLng()!=null){
+            mLatLng=new LatLng(Double.parseDouble(new User_info(getContext()).getLat()),
+                    Double.parseDouble(new User_info(getContext()).getLng()));
+        }
+//        Toast.makeText(getContext(), "lat: " + new User_info(getContext()).getLat()
+//                + "lng: " + new User_info(getContext()).getLng() , Toast.LENGTH_SHORT).show();
 
         flag = displayGpsStatus();
         if (flag) {
@@ -211,6 +217,11 @@ private String provider_id=null;
                                         Show_nearServic(mLatLng);
                                         Log.d("location",mLatLng.toString());
                                         gps=1;
+
+                                        new User_info().SetLocation(getContext(),mLatLng);
+                                        Toast.makeText(getContext(), "lat: " + new User_info(getContext()).getLat()
+                                                + "lng: " + new User_info(getContext()).getLng() , Toast.LENGTH_SHORT).show();
+
                                     }
 //                                    Toast.makeText(getContext(), "lat: " + mLatLng.latitude + "lng: " + mLatLng.longitude, Toast.LENGTH_SHORT).show();
 
@@ -423,7 +434,8 @@ if (new User_info(getContext()).getLanguage().equals("en")){
      *
      * @return
      */
-    private LatLng mLatLng=new LatLng(33.39877956546843,6.875997707247734);
+//    private LatLng mLatLng=new LatLng(33.39877956546843,6.875997707247734);
+    private LatLng mLatLng=new LatLng(23.836439,36.699240);
     private Map<Marker, Employee> markersMap_emp = new HashMap<Marker, Employee>();
     private Map<Marker, Provider_map> markersMap_prov = new HashMap<Marker, Provider_map>();
     private void make_marke(final Employee emp, Provider_map provider){

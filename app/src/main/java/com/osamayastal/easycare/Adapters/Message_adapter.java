@@ -58,7 +58,13 @@ public class Message_adapter extends RecyclerView.Adapter<Message_adapter.ViewHo
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) { //parent = theme type
 
         View view;
-        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_messages_readed, parent, false);
+        if(viewType == 1){
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_messages_readed, parent, false);
+
+        }else{
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_messages, parent, false);
+
+        }
 
 
         mview=view;
@@ -84,17 +90,7 @@ public class Message_adapter extends RecyclerView.Adapter<Message_adapter.ViewHo
               e.printStackTrace();
           }
 
-        try{
-               Log.d("isread",mItems.get(position).getRead_user().toString());
-               if (!mItems.get(position).getRead_user()){
-               holder.container.setBackground(mContext.getDrawable(R.drawable.bg_req_gray_28dp_stroke));
-           }else {
-               holder.container.setBackground(mContext.getDrawable(R.drawable.bg_req_white_30dp));
 
-           }
-           } catch (Exception e) {
-               e.printStackTrace();
-           }
         String image=mItems.get(position).getDriver().getImg();
         if (!image.contains("https")){
             image=image.replace("http", "https");
@@ -124,7 +120,13 @@ public class Message_adapter extends RecyclerView.Adapter<Message_adapter.ViewHo
     public int getItemCount() {
         return mItems.size();
     }
+    @Override
+    public int getItemViewType(int position) {
+        if (mItems.get(position).getRead_user())
+      return 1;
+        else return 0;
 
+    }
     public class ViewHolder extends RecyclerView.ViewHolder{
 
       TextView main,date,name;

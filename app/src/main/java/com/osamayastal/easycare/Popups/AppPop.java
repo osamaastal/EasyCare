@@ -28,6 +28,7 @@ import com.osamayastal.easycare.Model.Controle.Complains;
 import com.osamayastal.easycare.Model.Controle.Result;
 import com.osamayastal.easycare.Model.Rootes.Bascket_root;
 import com.osamayastal.easycare.Model.Rootes.Complain_root;
+import com.osamayastal.easycare.Model.Rootes.Order_root;
 import com.osamayastal.easycare.R;
 import com.osamayastal.easycare.activities.LoginActivity;
 import com.osamayastal.easycare.activities.MainActivity;
@@ -91,22 +92,52 @@ public interface gobasket{
         });
         dialog.show();
     }
-    public void PostRat_pop( Context mcontext){
+    public void PostRat_pop(final Context mcontext, final String orderID){
 
         final RoundedBottomSheetDialog mBottomSheetDialog = new RoundedBottomSheetDialog(mcontext);
         LayoutInflater inflater = (LayoutInflater) mcontext.getSystemService(LAYOUT_INFLATER_SERVICE);
         final View sheetView = inflater.inflate(R.layout.bottom_sheet_rate_service, null);
         mBottomSheetDialog.setContentView(sheetView);
         mBottomSheetDialog.show();
-       EditText text=sheetView.findViewById(R.id.details);
-        RatingBar ratingBar=sheetView.findViewById(R.id.ratingBar_popup);
+       final EditText text=sheetView.findViewById(R.id.details);
+        final RatingBar ratingBar=sheetView.findViewById(R.id.ratingBar_popup);
 
         Button save=sheetView.findViewById(R.id.save_btn);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (text.getText().toString().isEmpty()){
+                    text.setError(text.getHint());
+                    return;
+                }
+                Order_root order_root=new Order_root();
+                order_root.PostOrderRate(mcontext, orderID, text.getText().toString(), String.valueOf(ratingBar.getProgress())
+                        , new Order_root.PostOrderListener() {
+                            @Override
+                            public void onSuccess(Result result) {
+                                try {
+                                    if (new User_info(mcontext).getLanguage().equals("en")){
+                                        Toast.makeText(mcontext,result.getMessageEn(),Toast.LENGTH_LONG).show();
+                                    }else {
+                                        Toast.makeText(mcontext,result.getMessageAr(),Toast.LENGTH_LONG).show();
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                mBottomSheetDialog.dismiss();
+                            }
 
-                mBottomSheetDialog.dismiss();
+                            @Override
+                            public void onStart() {
+
+                            }
+
+                            @Override
+                            public void onFailure(String msg) {
+
+                            }
+                        });
+
 
 
             }

@@ -43,14 +43,27 @@ public class Messages extends AppCompatActivity implements View.OnClickListener 
     @Override
     protected void onResume() {
         super.onResume();
+        if (FirebaseDatabase.getInstance() != null)
+        {
+            FirebaseDatabase.getInstance().goOnline();
+        }
         Loading();
     }
 
     private void Loading() {
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                findViewById(R.id.progress).setVisibility(View.GONE);
+
+            }
+        }, 2000);
+
         messageList.clear();
         FirebaseDatabase database=FirebaseDatabase.getInstance();
         DatabaseReference reference=database.getReference().child("chat");
-        reference.addChildEventListener(new ChildEventListener() {
+        reference.orderByChild("edit_time_long").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 findViewById(R.id.progress).setVisibility(View.GONE);
@@ -65,8 +78,21 @@ public class Messages extends AppCompatActivity implements View.OnClickListener 
                       messages.setRead_user(dataSnapshot.child("isRead_user").getValue(Boolean.class));
                       messages.setOrder_id(dataSnapshot.getKey());
                       messageList.add(messages);
-                      adapter.notifyDataSetChanged();
-//                      RV.smoothScrollToPosition(messageList.size()-1);
+                      Log.d("messageList",messageList.size()+"");
+
+                      adapter=new Message_adapter(mcontext, messageList, new Message_adapter.Selected_item() {
+                          @Override
+                          public void Onselcted(com.osamayastal.easycare.Model.Classes.Message.Messages messages) {
+                              Bundle bundle = new Bundle();
+                              bundle.putSerializable("user",messages.getUser());
+                              bundle.putSerializable("driver",messages.getDriver());
+                              bundle.putString("order_id",messages.getOrder_id());
+                              Intent intent=new Intent(mcontext, Chat.class);
+                              intent.putExtras(bundle);
+                              startActivity(intent);
+                          }
+                      });
+                      RV.setAdapter(adapter);
                   }
               } catch (Exception e) {
                   e.printStackTrace();
@@ -77,7 +103,7 @@ public class Messages extends AppCompatActivity implements View.OnClickListener 
                     @Override
                     public void run() {
                         if (adapter.getItemCount() > 0) {
-                            RV.smoothScrollToPosition(adapter.getItemCount()-1);
+                            RV.smoothScrollToPosition(0);
                         }
                     }
                 }, 300);
@@ -103,8 +129,19 @@ public class Messages extends AppCompatActivity implements View.OnClickListener 
                         messages.setRead_user(dataSnapshot.child("isRead_user").getValue(Boolean.class));
                         messages.setOrder_id(dataSnapshot.getKey());
                         messageList.add(messages);
-                        adapter.notifyDataSetChanged();
-//                      RV.smoothScrollToPosition(messageList.size()-1);
+                        adapter=new Message_adapter(mcontext, messageList, new Message_adapter.Selected_item() {
+                            @Override
+                            public void Onselcted(com.osamayastal.easycare.Model.Classes.Message.Messages messages) {
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable("user",messages.getUser());
+                                bundle.putSerializable("driver",messages.getDriver());
+                                bundle.putString("order_id",messages.getOrder_id());
+                                Intent intent=new Intent(mcontext, Chat.class);
+                                intent.putExtras(bundle);
+                                startActivity(intent);
+                            }
+                        });
+                        RV.setAdapter(adapter);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -114,7 +151,7 @@ public class Messages extends AppCompatActivity implements View.OnClickListener 
                     @Override
                     public void run() {
                         if (adapter.getItemCount() > 0) {
-                            RV.smoothScrollToPosition(adapter.getItemCount()-1);
+                            RV.smoothScrollToPosition(0);
                         }
                     }
                 }, 300);
@@ -150,19 +187,9 @@ public class Messages extends AppCompatActivity implements View.OnClickListener 
         /******************Actions*******************/
         back.setOnClickListener(this);
         messageList=new ArrayList<>();
-        adapter=new Message_adapter(mcontext, messageList, new Message_adapter.Selected_item() {
-            @Override
-            public void Onselcted(com.osamayastal.easycare.Model.Classes.Message.Messages messages) {
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("driver",messages.getDriver());
-                bundle.putString("order_id",messages.getOrder_id());
-                Intent intent=new Intent(mcontext, Chat.class);
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
-        });
-        RV.setLayoutManager(new LinearLayoutManager(mcontext,RecyclerView.VERTICAL,false));
-        RV.setAdapter(adapter);
+
+        RV.setLayoutManager(new LinearLayoutManager(mcontext,RecyclerView.VERTICAL,true));
+
 
     }
 
@@ -170,8 +197,23 @@ public class Messages extends AppCompatActivity implements View.OnClickListener 
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.back_btn:
-                finish();
+                FirebaseDatabase.getInstance().goOffline();
+
+                Messages.this.finish();
                 break;
+        }
+    }
+
+
+
+    @Override
+    public void onPause() {
+
+        super.onPause();
+
+        if(FirebaseDatabase.getInstance()!=null)
+        {
+            FirebaseDatabase.getInstance().goOffline();
         }
     }
 }

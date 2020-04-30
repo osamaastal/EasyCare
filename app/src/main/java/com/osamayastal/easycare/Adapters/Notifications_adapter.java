@@ -35,7 +35,7 @@ public class Notifications_adapter extends RecyclerView.Adapter<Notifications_ad
     private Context mContext;
     private View mview;
     public interface Selected_item{
-        void Onselcted(Categorie categorie);
+        void Onselcted(Notification notification);
     }
     public static int item_select=-1;
     Selected_item listenner;
@@ -75,7 +75,12 @@ switch (viewType){//حالات التنبيهات: type
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.main.setText(mItems.get(position).getMsg());
+        if (mItems.get(position).getMsg().isEmpty()){
+            holder.main.setText(mItems.get(position).getTitle());
+        }else {
+            holder.main.setText(mItems.get(position).getMsg());
+        }
+
         holder.date.setText(getdate(mItems.get(position).getDt_date()));
 
 
@@ -84,7 +89,7 @@ switch (viewType){//حالات التنبيهات: type
 
             @Override
             public void onClick(View view) {
-
+listenner.Onselcted(mItems.get(position));
 
             }
         });
