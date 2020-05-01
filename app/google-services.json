@@ -1,0 +1,91 @@
+{
+  "project_info": {
+    "project_number": "225750972193",
+    "firebase_url": "https://easycare-53f9d.firebaseio.com",
+    "project_id": "easycare-53f9d",
+    "storage_bucket": "easycare-53f9d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:225750972193:android:c4723da89ecc888c7c7060",
+        "android_client_info": {
+          "package_name": "com.osamayastal.easycare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "225750972193-jtekq44g2jtaktfob0veu0sgrkmkc7of.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.osamayastal.easycare",
+            "certificate_hash": "b2ea0853a82af272c3a80ce5013b22f6abd8fa9f"
+          }
+        },
+        {
+          "client_id": "225750972193-2nmffq827fjo4ihksff4v5r56a86uuf7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA80GWwKzSAcfnkxxOd-EH5hQRHrtiVkyM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "225750972193-2nmffq827fjo4ihksff4v5r56a86uuf7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "225750972193-nbi74jgk0oitn25pp4e3v4d41c0rrc5k.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.app.EasyCare"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:225750972193:android:e9434f08660fcee97c7060",
+        "android_client_info": {
+          "package_name": "com.oya_android.easycare_driver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "225750972193-2nmffq827fjo4ihksff4v5r56a86uuf7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA80GWwKzSAcfnkxxOd-EH5hQRHrtiVkyM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "225750972193-2nmffq827fjo4ihksff4v5r56a86uuf7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "225750972193-nbi74jgk0oitn25pp4e3v4d41c0rrc5k.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.app.EasyCare"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
