@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
@@ -36,16 +37,20 @@ public class Car_adapter extends RecyclerView.Adapter<Car_adapter.ViewHolder> {
     private List<Car_servece> mItems = new ArrayList<>();
     private Context mContext;
     private View mview;
-    public interface Selected_item{
+
+    public interface Selected_item {
         void Onselcted(Car_servece car_servece);
+
         void Ondelete(Car_servece car_servece);
     }
-    public static int item_select=-1;
+
+    public static int item_select = -1;
     Selected_item listenner;
+
     public Car_adapter(Context context, List<Car_servece> names, Selected_item listenner) {
         mItems = names;
         mContext = context;
-        this.listenner=listenner;
+        this.listenner = listenner;
 
     }
 
@@ -54,9 +59,9 @@ public class Car_adapter extends RecyclerView.Adapter<Car_adapter.ViewHolder> {
 
         View view;
 
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_add_car, parent, false);
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_add_car, parent, false);
 
-        mview=view;
+        mview = view;
         return new ViewHolder(view); // Inflater means reading a layout XML
     }
 
@@ -64,26 +69,26 @@ public class Car_adapter extends RecyclerView.Adapter<Car_adapter.ViewHolder> {
     @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        int k=position+1;
-        mItems.get(position).setCar_name(mContext.getString(R.string.car_name)+" "+k);
-holder.price.setText(String.format("%.2f",mItems.get(position).getTotal())+mContext.getString(R.string.RS_short2));
-    holder.name.setText(mItems.get(position).getCar_name());
-    holder.delet.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-
-            mItems.remove(mItems.get(position));
-            listenner.Ondelete(null);
-            notifyDataSetChanged();
-        }
-    });
+        int k = position + 1;
+        mItems.get(position).setCar_name(mContext.getString(R.string.car_name) + " " + k);
+        holder.price.setText(String.format("%.2f", mItems.get(position).getTotal()) + mContext.getString(R.string.RS_short2));
+        holder.name.setText(mItems.get(position).getCar_name());
+        holder.delet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mItems.remove(mItems.get(position));
+                listenner.Ondelete(null);
+                notifyDataSetChanged();
+            }
+        });
         mview.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                item_select=position;
-                listenner.Onselcted(mItems.get(position));
-                notifyDataSetChanged();
+                Toast.makeText(mContext, R.string.you_cant_edit_this_service, Toast.LENGTH_SHORT).show();
+//                item_select=position;
+//                listenner.Onselcted(mItems.get(position));
+//                notifyDataSetChanged();
             }
         });
     }
@@ -93,16 +98,16 @@ holder.price.setText(String.format("%.2f",mItems.get(position).getTotal())+mCont
         return mItems.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
-     ImageView delet;
-      TextView name,price;
-      public ViewHolder(View itemView) {
+        ImageView delet;
+        TextView name, price;
+
+        public ViewHolder(View itemView) {
             super(itemView);
-          name = itemView.findViewById(R.id.name);
-          delet = itemView.findViewById(R.id.delete_btn);
-          price = itemView.findViewById(R.id.price_tv);
-
+            name = itemView.findViewById(R.id.name);
+            delet = itemView.findViewById(R.id.delete_btn);
+            price = itemView.findViewById(R.id.price_tv);
 
 
         }

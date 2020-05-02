@@ -4,11 +4,13 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,15 +44,18 @@ public class SubCategories_adapter extends RecyclerView.Adapter<SubCategories_ad
     private List<Sub_service> mItems = new ArrayList<>();
     private Context mContext;
     private View mview;
-    public interface Selected_item{
+
+    public interface Selected_item {
         void Onselcted(Sub_service sub_service);
     }
-    public static int item_select=-1;
+
+    public static int item_select = -1;
     Selected_item listenner;
+
     public SubCategories_adapter(Context context, List<Sub_service> names, Selected_item listenner) {
         mItems = names;
         mContext = context;
-        this.listenner=listenner;
+        this.listenner = listenner;
 
     }
 
@@ -59,9 +64,9 @@ public class SubCategories_adapter extends RecyclerView.Adapter<SubCategories_ad
 
         View view;
 
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_service_details, parent, false);
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_service_details, parent, false);
 
-        mview=view;
+        mview = view;
         return new ViewHolder(view); // Inflater means reading a layout XML
     }
 
@@ -69,23 +74,43 @@ public class SubCategories_adapter extends RecyclerView.Adapter<SubCategories_ad
     @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-if(new User_info(mContext).getLanguage().equals("en")){
-    holder.name.setText(mItems.get(position).getNameEn());
-}else {
-    holder.name.setText(mItems.get(position).getNameAr());
-}
-        holder.price.setText(String.format("%.2f",mItems.get(position).getPrice()));
+        if (new User_info(mContext).getLanguage().equals("en")) {
+            holder.name.setText(mItems.get(position).getNameEn());
+        } else {
+            holder.name.setText(mItems.get(position).getNameAr());
+        }
+        holder.price.setText(String.format("%.2f", mItems.get(position).getPrice()));
         holder.checkBox.setChecked(mItems.get(position).isActive());
-holder.checkBox.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-        mItems.get(position).setActive(holder.checkBox.isChecked());
-        listenner.Onselcted(mItems.get(position));
-        notifyDataSetChanged();
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    mItems.get(position).setActive(true);
+                    listenner.Onselcted(mItems.get(position));
+//                    notifyDataSetChanged();
+                }else {
+                    mItems.get(position).setActive(false);
+                    listenner.Onselcted(mItems.get(position));
+//                    notifyDataSetChanged();
+                }
+//                try{
+//                    notifyDataSetChanged();
+//                }catch (Exception e){
+//                    Log.e(TAG, ""+e.getMessage());
+//                    Toast.makeText(mContext, "notifyDataSetChanged() error", Toast.LENGTH_SHORT).show();
+//                }
 
-    }
-});
-
+            }
+        });
+//        holder.checkBox.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                mItems.get(position).setActive(holder.checkBox.isChecked());
+//                listenner.Onselcted(mItems.get(position));
+//                notifyDataSetChanged();
+//
+//            }
+//        });
 
 
         mview.setOnClickListener(new View.OnClickListener() {
@@ -101,16 +126,17 @@ holder.checkBox.setOnClickListener(new View.OnClickListener() {
         return mItems.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
 
-      TextView name,price;
+        TextView name, price;
         AppCompatCheckBox checkBox;
-      public ViewHolder(View itemView) {
+
+        public ViewHolder(View itemView) {
             super(itemView);
-          name = itemView.findViewById(R.id.name);
-          price = itemView.findViewById(R.id.price);
-          checkBox= itemView.findViewById(R.id.checkbox);
+            name = itemView.findViewById(R.id.name);
+            price = itemView.findViewById(R.id.price);
+            checkBox = itemView.findViewById(R.id.checkbox);
 
 
         }

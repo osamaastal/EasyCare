@@ -35,15 +35,18 @@ public class Size_adapter extends RecyclerView.Adapter<Size_adapter.ViewHolder> 
     private List<Size> mItems = new ArrayList<>();
     private Context mContext;
     private View mview;
-    public interface Selected_item{
+
+    public interface Selected_item {
         void Onselcted(Size size);
     }
-    public  int item_select=-1;
+
+    public int item_select = -1;
     Selected_item listenner;
+
     public Size_adapter(Context context, List<Size> names, Selected_item listenner) {
         mItems = names;
         mContext = context;
-        this.listenner=listenner;
+        this.listenner = listenner;
 
     }
 
@@ -52,9 +55,9 @@ public class Size_adapter extends RecyclerView.Adapter<Size_adapter.ViewHolder> 
 
         View view;
 
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_service_type, parent, false);
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_service_type, parent, false);
 
-        mview=view;
+        mview = view;
         return new ViewHolder(view); // Inflater means reading a layout XML
     }
 
@@ -62,27 +65,28 @@ public class Size_adapter extends RecyclerView.Adapter<Size_adapter.ViewHolder> 
     @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        Double price=mItems.get(position).getPrice();
-if(new User_info(mContext).getLanguage().equals("en")){
-    holder.name.setText(mItems.get(position).getEnName()+" - "+price+mContext.getString(R.string.RS_short2));
-}else {
-    holder.name.setText(mItems.get(position).getArName()+" - "+price+mContext.getString(R.string.RS_short2));
 
-}
+        Double price = mItems.get(position).getPrice();
+        if (new User_info(mContext).getLanguage().equals("en")) {
+            holder.name.setText(mItems.get(position).getEnName() + " - " + price + mContext.getString(R.string.RS_short2));
+        } else {
+            holder.name.setText(mItems.get(position).getArName() + " - " + price + mContext.getString(R.string.RS_short2));
 
-if (item_select==position){
-    holder.name.setBackground(mContext.getDrawable(R.drawable.bg_req_green_gradiant_30dp));
-}else {
-    holder.name.setBackground(mContext.getDrawable(R.drawable.bg_req_gray_50dp));
+        }
 
-}
+        if (item_select == position) {
+            holder.name.setBackground(mContext.getDrawable(R.drawable.bg_req_green_gradiant_30dp));
+        } else {
+            holder.name.setBackground(mContext.getDrawable(R.drawable.bg_req_gray_50dp));
+
+        }
 
 
         mview.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                item_select=position;
+                item_select = position;
                 listenner.Onselcted(mItems.get(position));
                 notifyDataSetChanged();
             }
@@ -94,15 +98,16 @@ if (item_select==position){
         return mItems.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
-     ImageView Img;
-      TextView name,soon;
-      public ViewHolder(View itemView) {
+        ImageView Img;
+        TextView name, soon;
+
+        public ViewHolder(View itemView) {
             super(itemView);
-          name = itemView.findViewById(R.id.name);
-          Img = itemView.findViewById(R.id.Img);
-          soon= itemView.findViewById(R.id.soon_tv);
+            name = itemView.findViewById(R.id.name);
+            Img = itemView.findViewById(R.id.Img);
+            soon = itemView.findViewById(R.id.soon_tv);
 
 
         }

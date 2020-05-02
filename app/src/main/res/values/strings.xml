@@ -149,6 +149,7 @@
     <string name="upfront">العربون</string>
     <string name="in_provider_location">في مكان مزود الخدمة</string>
     <string name="RS_short2">ريال</string>
+    <string name="you_cant_edit_this_service">You can\'t edit this service</string>
 
 
 </resources>

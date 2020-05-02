@@ -76,50 +76,52 @@ public class OrderDetails_Create extends AppCompatActivity implements View.OnCli
         Intent intent = this.getIntent();
 
         Bundle bundle = intent.getExtras();
-        index=bundle.getInt("bascket_index");
+        index = bundle.getInt("bascket_index");
 
         init();
         loading();
 
 
     }
-    private Double Caculate_Tot(){
-        Double tot=0.0;
-        if (bascket!=null){
-            for (Product p:bascket.getProducts()
-                 ) {
-                Double price=p.getDiscountPrice();
-                if (price==0){
-                   price=p.getPrice();
+
+    private Double Caculate_Tot() {
+        Double tot = 0.0;
+        if (bascket != null) {
+            for (Product p : bascket.getProducts()
+            ) {
+                Double price = p.getDiscountPrice();
+                if (price == 0) {
+                    price = p.getPrice();
                 }
-                tot=tot+(p.getQty()*price);
+                tot = tot + (p.getQty() * price);
             }
-            for (categories_basket s:bascket.getCategories()
-                 ) {
-                for (Sub_service_basket sub:s.getSub_services()
-                     ) {
-                    tot=tot+sub.getSize().getPrice();
-                    for (SubCategory_basket subcat:sub.getSubCategory_basketList()
-                         ) {
-                        tot=tot+subcat.getPrice();
+            for (categories_basket s : bascket.getCategories()
+            ) {
+                for (Sub_service_basket sub : s.getSub_services()
+                ) {
+                    tot = tot + sub.getSize().getPrice();
+                    for (SubCategory_basket subcat : sub.getSubCategory_basketList()
+                    ) {
+                        tot = tot + subcat.getPrice();
                     }
                 }
             }
         }
         return tot;
     }
+
     private void loading() {
         findViewById(R.id.linear_wait).setVisibility(View.VISIBLE);
-        Bascket_root root=new Bascket_root();
+        Bascket_root root = new Bascket_root();
         root.GetBasket(this, 0, new Bascket_root.GetbasketListener() {
             @Override
             public void onSuccess(com.osamayastal.easycare.Model.Controle.Bascket bascket_) {
                 if (bascket_.getStatus()) {
                     findViewById(R.id.linear_wait).setVisibility(View.GONE);
-                    if (bascket_.getItems().size()!=0){
-                        bascket=bascket_.getItems().get(index);
+                    if (bascket_.getItems().size() != 0) {
+                        bascket = bascket_.getItems().get(index);
                         FetchDATA();
-                    }else {
+                    } else {
                         finish();
                     }
 
@@ -137,36 +139,38 @@ public class OrderDetails_Create extends AppCompatActivity implements View.OnCli
             }
         });
     }
-    private Context mcontext=OrderDetails_Create.this;
+
+    private Context mcontext = OrderDetails_Create.this;
     private String date;
-    private String time="09:12";
-    private int payment,location_typ=2;
+    private String time = "09:12";
+    private int payment, location_typ = 2;
     private int index;
-    private ImageButton back_btn,date_btn,time_btn;
+    private ImageButton back_btn, date_btn, time_btn;
     private SwitchButton provider_location;
     private Button save;
-    private TextView name,item_nb,sub_tot,discount,tot_price,totale,date_tv,time_tv;
-    private RecyclerView service_RV,product_RV;
-    private Bascket bascket=null;
+    private TextView name, item_nb, sub_tot, discount, tot_price, totale, date_tv, time_tv;
+    private RecyclerView service_RV, product_RV;
+    private Bascket bascket = null;
     private Basket_Service_adapter service_adapter;
     private Basket_Products_adapter products_adapter;
-    private void init(){
-        provider_location=findViewById(R.id.prov_location_switch);
-        back_btn=findViewById(R.id.back_btn);
-        date_btn=findViewById(R.id.date_btn);
-        time_btn=findViewById(R.id.time_btn);
-        save=findViewById(R.id.save_btn);
-        name=findViewById(R.id.provider_name_tv);
-        item_nb=findViewById(R.id.item_nb);
-        sub_tot=findViewById(R.id.price_before_discount_tv);
-        discount=findViewById(R.id.discount_amount_tv);
-        tot_price=findViewById(R.id.total_price_tv);
-        totale=findViewById(R.id.total);
-        time_tv=findViewById(R.id.time_tv);
-        date_tv=findViewById(R.id.date_tv);
-        service_RV=findViewById(R.id.RV_services);
-        product_RV=findViewById(R.id.RV_products);
-     /***************************************************************/
+
+    private void init() {
+        provider_location = findViewById(R.id.prov_location_switch);
+        back_btn = findViewById(R.id.back_btn);
+        date_btn = findViewById(R.id.date_btn);
+        time_btn = findViewById(R.id.time_btn);
+        save = findViewById(R.id.save_btn);
+        name = findViewById(R.id.provider_name_tv);
+        item_nb = findViewById(R.id.item_nb);
+        sub_tot = findViewById(R.id.price_before_discount_tv);
+        discount = findViewById(R.id.discount_amount_tv);
+        tot_price = findViewById(R.id.total_price_tv);
+        totale = findViewById(R.id.total);
+        time_tv = findViewById(R.id.time_tv);
+        date_tv = findViewById(R.id.date_tv);
+        service_RV = findViewById(R.id.RV_services);
+        product_RV = findViewById(R.id.RV_products);
+        /***************************************************************/
         back_btn.setOnClickListener(this);
         date_btn.setOnClickListener(this);
         time_btn.setOnClickListener(this);
@@ -174,10 +178,10 @@ public class OrderDetails_Create extends AppCompatActivity implements View.OnCli
         provider_location.setOnCheckedChangeListener(new SwitchButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(SwitchButton view, boolean isChecked) {
-                if (isChecked){
-                    location_typ=2;
-                }else {
-                    location_typ=1;
+                if (isChecked) {
+                    location_typ = 2;
+                } else {
+                    location_typ = 1;
                 }
             }
         });
@@ -189,111 +193,114 @@ public class OrderDetails_Create extends AppCompatActivity implements View.OnCli
 
 
     }
-private void FetchDATA(){
-        if (bascket!=null){
+
+    private void FetchDATA() {
+        if (bascket != null) {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
             Date d = new Date();
-           date = format.format(d);
+            date = format.format(d);
             name.setText(bascket.getProvider().getName());
-            item_nb.setText(bascket.getCategories().size()+bascket.getProducts().size()+"");
+            item_nb.setText(bascket.getCategories().size() + bascket.getProducts().size() + "");
             date_tv.setText(date);
             time_tv.setText(time);
-            service_adapter=new Basket_Service_adapter(this, bascket.getCategories(), bascket.getCategorie(), new Basket_Service_adapter.Selected_item() {
+            service_adapter = new Basket_Service_adapter(this, bascket.getCategories(), bascket.getCategorie(), new Basket_Service_adapter.Selected_item() {
                 @Override
                 public void Onselcted(Car_servece car_servece) {
                     loading();
                 }
             });
-            service_RV.setLayoutManager(new LinearLayoutManager(this,RecyclerView.VERTICAL,false));
+            service_RV.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
             service_RV.setAdapter(service_adapter);
 
-            products_adapter=new Basket_Products_adapter(this, bascket.getProducts(), new Basket_Products_adapter.Selected_item() {
+            products_adapter = new Basket_Products_adapter(this, bascket.getProducts(), new Basket_Products_adapter.Selected_item() {
                 @Override
                 public void Onselcted(Car_servece car_servece) {
                     loading();
                 }
             });
-            product_RV.setLayoutManager(new LinearLayoutManager(this,RecyclerView.VERTICAL,false));
+            product_RV.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
             product_RV.setAdapter(products_adapter);
 
-            sub_tot.setText(String.format("%.2f",Caculate_Tot()));
-            tot_price.setText(String.format("%.2f",Caculate_Tot()));
-            totale.setText(String.format("%.2f",Caculate_Tot()));
+            sub_tot.setText(String.format("%.2f", Caculate_Tot()));
+            tot_price.setText(String.format("%.2f", Caculate_Tot()));
+            totale.setText(String.format("%.2f", Caculate_Tot()));
 
         }
-}
+    }
+
     @Override
     public void onClick(View view) {
-        OrderPop pop=new OrderPop(this);
-        switch (view.getId()){
+        OrderPop pop = new OrderPop(this);
+        switch (view.getId()) {
             case R.id.back_btn:
                 finish();
                 break;
             case R.id.date_btn:
                 pop.GetDate_pop(new OrderPop.POPLisstenner() {
                     @Override
-                    public void ongetResult(String result,String time,Boolean upfont) {
+                    public void ongetResult(String result, String time, Boolean upfont) {
                         date_tv.setText(result);
                     }
                 });
                 break;
             case R.id.save_btn:
                 pop.GetWay_pop(bascket.getProvider().isUpfront()
-            ,bascket.getProvider().getUpfrontAmount()*Caculate_Tot(),bascket.getPayment_id(),
+                        , bascket.getProvider().getUpfrontAmount() * Caculate_Tot(), bascket.getPayment_id(),
                         new OrderPop.POPLisstenner() {
-                                                        @Override
-                                    public void ongetResult(String result,String time_,Boolean upfont) {
-                                                            findViewById(R.id.linear_wait).setVisibility(View.VISIBLE);
-                                                            Order_root root=new Order_root();
-                                                            root.PostOrder(mcontext,
-                                                                    bascket.getProvider().get_id()
-                                                                    , location_typ,
-                                                                    String.valueOf(mLatLng.latitude),
-                                                                    String.valueOf(mLatLng.longitude),
-                                                                    date,
-                                                                    time,
-                                                                    String.valueOf(bascket.getProvider().getUpfrontAmount()),
-                                                                    "",
-                                                                   result,
-                                                                    upfont
-                                                                    , new Order_root.PostOrderListener() {
-                                                                        @Override
-                                                                        public void onSuccess(Result result) {
-                                                                            findViewById(R.id.linear_wait).setVisibility(View.GONE);
-                                                                           try {
-                                                                               if (new User_info(mcontext).getLanguage().equals("en")){
-                                                                                   Toast.makeText(OrderDetails_Create.this,result.getMessageEn(),Toast.LENGTH_SHORT).show();
-                                                                               }else {
-                                                                                   Toast.makeText(OrderDetails_Create.this,result.getMessageAr(),Toast.LENGTH_SHORT).show();
-                                                                               }
-                                                                           } catch (Exception e) {
-                                                                               e.printStackTrace();
-                                                                           }
-                                                                           MainActivity.item_select=R.id.my_orders;
-                                                                            finish();
+                            @Override
+                            public void ongetResult(String result, String time_, Boolean upfont) {
+                                findViewById(R.id.linear_wait).setVisibility(View.VISIBLE);
+                                Order_root root = new Order_root();
+                                root.PostOrder(mcontext,
+                                        bascket.getProvider().get_id()
+                                        , location_typ,
+                                        String.valueOf(mLatLng.latitude),
+                                        String.valueOf(mLatLng.longitude),
+                                        date,
+                                        time,
+                                        String.valueOf(bascket.getProvider().getUpfrontAmount()),
+                                        "",
+                                        result,
+                                        upfont
+                                        , new Order_root.PostOrderListener() {
+                                            @Override
+                                            public void onSuccess(Result result) {
+                                                findViewById(R.id.linear_wait).setVisibility(View.GONE);
+                                                try {
+                                                    if (new User_info(mcontext).getLanguage().equals("en")) {
+                                                        Toast.makeText(OrderDetails_Create.this, result.getMessageEn(), Toast.LENGTH_SHORT).show();
+                                                    } else {
+                                                        Toast.makeText(OrderDetails_Create.this, result.getMessageAr(), Toast.LENGTH_SHORT).show();
+                                                    }
+                                                } catch (Exception e) {
+                                                    e.printStackTrace();
+                                                }
+                                                MainActivity.item_select = R.id.my_orders;
+                                                finish();
 
-                                                                        }
+                                            }
 
-                                                                        @Override
-                                                                        public void onStart() {
+                                            @Override
+                                            public void onStart() {
 
-                                                                        }
+                                            }
 
-                                                                        @Override
-                                                                        public void onFailure(String msg) {
+                                            @Override
+                                            public void onFailure(String msg) {
 
-                                                                        }
-                                                                    }
-                                                            );
-                                    }});
+                                            }
+                                        }
+                                );
+                            }
+                        });
 
                 break;
             case R.id.time_btn:
                 pop.GetTime_pop(new OrderPop.POPLisstenner() {
                     @Override
-                    public void ongetResult(String result,String time_,Boolean upfont) {
+                    public void ongetResult(String result, String time_, Boolean upfont) {
                         time_tv.setText(result);
-                        time=result;
+                        time = result;
                     }
                 });
 
@@ -304,10 +311,11 @@ private void FetchDATA(){
     /**********************************location********************************/
     private Boolean flag;
     private FusedLocationProviderClient fusedLocationClient;
-    int gps=0;
+    int gps = 0;
 
     private GoogleMap mMap;
-    public static LatLng mLatLng=null;
+    public static LatLng mLatLng = null;
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -317,12 +325,13 @@ private void FetchDATA(){
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
-                mLatLng=latLng;
+                mLatLng = latLng;
                 make_marke(latLng);
             }
         });
 
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
@@ -352,12 +361,13 @@ private void FetchDATA(){
                         Manifest.permission.INTERNET
                 }, 15);
 
-            } else{
+            } else {
                 get_location();
 
             }
         }
     }
+
     @SuppressLint("MissingPermission")
     private void get_location() {
 
@@ -370,33 +380,32 @@ private void FetchDATA(){
                     }
                 });
 
-            fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-            fusedLocationClient.getLastLocation()
-                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                        @Override
-                        public void onSuccess(Location location) {
-                            // Got last known location. In some rare situations this can be null.
-                            if (location != null) {
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        fusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
 
 
-                                if (gps==0 && mMap!=null) {
-                                    mLatLng = new LatLng(location.getLatitude(),location.getLongitude());
-                                    gps=1;
-                                    make_marke(mLatLng);
-
-                                }
-//                                    Toast.makeText(getContext(), "lat: " + mLatLng.latitude + "lng: " + mLatLng.longitude, Toast.LENGTH_SHORT).show();
+                            if (gps == 0 && mMap != null) {
+                                mLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+                                gps = 1;
+                                make_marke(mLatLng);
 
                             }
+//                                    Toast.makeText(getContext(), "lat: " + mLatLng.latitude + "lng: " + mLatLng.longitude, Toast.LENGTH_SHORT).show();
+
                         }
-                    });
-
-
+                    }
+                });
 
 
     }
-    private void make_marke(final LatLng latLng){
-        mLatLng=latLng;
+
+    private void make_marke(final LatLng latLng) {
+        mLatLng = latLng;
         mMap.clear();
         mMap.addMarker(new MarkerOptions()
                 .position(latLng)
@@ -405,6 +414,7 @@ private void FetchDATA(){
 
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 18));
     }
+
     private BitmapDescriptor bitmapDescriptorFromVector(Context context, int vectorResId) {
         Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorResId);
         vectorDrawable.setBounds(0, 0, vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight());
