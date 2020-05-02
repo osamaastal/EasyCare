@@ -126,6 +126,8 @@ if (!mItems.get(position).getFavorite_id().equals("null")){
                             }
                             if (favorites.getStatus_code()==200){
                                 holder.like_btn.setImageDrawable(mContext.getDrawable(R.drawable.ic_unlike));
+                                mItems.get(position).setFavorite_id("null");
+                                notifyDataSetChanged();
                             }
 
                         }
@@ -154,6 +156,9 @@ if (!mItems.get(position).getFavorite_id().equals("null")){
                             }
                             if (favorites.getStatus_code()==200){
                                 holder.like_btn.setImageDrawable(mContext.getDrawable(R.drawable.ic_like));
+                                mItems.get(position).setFavorite_id(favorites.get_id());
+                                notifyDataSetChanged();
+
                             }
                         }
 

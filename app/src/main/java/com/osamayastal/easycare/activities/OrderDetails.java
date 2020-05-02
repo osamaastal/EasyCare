@@ -157,9 +157,16 @@ if (new User_info(mcontext).getLanguage().equals("en")){
             bascketList.add(order);
             adapter=new Basket_adapter(mcontext, bascketList, new Basket_adapter.Selected_item() {
                 @Override
-                public void Onselcted(Car_servece car_servece) {
+                public void OnRefresh(Car_servece car_servece) {
 
                 }
+
+                @Override
+                public void Onselcted(int potions) {
+
+                }
+
+
             });
             RV.setAdapter(adapter);
             adapter.isOrder=true;

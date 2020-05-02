@@ -81,7 +81,7 @@ holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeLis
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
 
         if (!listenner.Onselcted(mItems.get(position),b)){
-           holder.checkBox.setChecked(true);
+//           holder.checkBox.setChecked(true);
 
         }
     }

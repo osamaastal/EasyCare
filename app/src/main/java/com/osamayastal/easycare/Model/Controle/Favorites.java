@@ -17,7 +17,8 @@ public class Favorites {
     private int status_code;
     private Pagenation pagenation;
     private List<com.osamayastal.easycare.Model.Classes.Favorite> items;
-
+//////for post
+    private String _id;
     public Favorites(JSONObject jsonObject) {
         if (jsonObject==null){
             return;
@@ -48,9 +49,30 @@ public class Favorites {
         }
 
     }
+    public void Favorites_id(JSONObject jsonObject) {
+        if (jsonObject==null){
+            return;
+        }
+
+        try {
+
+
+            _id = jsonObject.getJSONObject("items").getString("_id");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 
     public String getMessageEn() {
         return messageEn;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
     public void setMessageEn(String messageEn) {

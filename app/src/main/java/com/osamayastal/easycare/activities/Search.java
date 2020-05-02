@@ -406,8 +406,8 @@ default_tv.setOnClickListener(new View.OnClickListener() {
                                    mLatLng = new LatLng(location.getLatitude(),location.getLongitude());
                                    Log.d("location",mLatLng.toString());
                                    new User_info().SetLocation(mcontext,mLatLng);
-                                   Toast.makeText(Search.this, "lat: " + new User_info(mcontext).getLat()
-                                           + "lng: " + new User_info(mcontext).getLng() , Toast.LENGTH_SHORT).show();
+//                                   Toast.makeText(Search.this, "lat: " + new User_info(mcontext).getLat()
+//                                           + "lng: " + new User_info(mcontext).getLng() , Toast.LENGTH_SHORT).show();
 
                                }
                            }

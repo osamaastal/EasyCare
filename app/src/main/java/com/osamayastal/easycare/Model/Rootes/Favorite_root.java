@@ -120,8 +120,9 @@ public class Favorite_root {
                         Log.d("token", token.toString());
 
                         Log.d("provider_id", provider_id.toString());
-
-                        listener.onSuccess(new Favorites(Jobject));
+                        Favorites favorites=new Favorites(Jobject);
+                        favorites.Favorites_id(Jobject);
+                        listener.onSuccess(favorites);
 
                     }
                 },

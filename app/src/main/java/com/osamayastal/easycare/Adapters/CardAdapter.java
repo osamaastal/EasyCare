@@ -1,6 +1,8 @@
 package com.osamayastal.easycare.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,12 +46,20 @@ public class CardAdapter extends com.github.islamkhsh.CardSliderAdapter {
 
 
     @Override
-    public void bindVH(@NotNull RecyclerView.ViewHolder viewHolder, int i) {
+    public void bindVH(@NotNull RecyclerView.ViewHolder viewHolder, final int i) {
        ImageView img=viewHolder.itemView.findViewById(R.id.Img);
       TextView  title=viewHolder.itemView.findViewById(R.id.title_tv);
         TextView   dis =viewHolder.itemView.findViewById(R.id.details_tv);
         TextView  more=viewHolder.itemView.findViewById(R.id.more);
-
+more.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        if (!mItems.get(i).getUrl().isEmpty()){
+            Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(mItems.get(i).getUrl()));
+            mcontext.startActivity(myIntent);
+        }
+    }
+});
         Picasso.with(mcontext)
                 .load(mItems.get(i).getImage())
                 .into(img);

@@ -101,25 +101,31 @@ public class Basket extends Fragment implements View.OnClickListener {
         RV.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false));
          adapter=new Basket_adapter(getContext(), baskets, new Basket_adapter.Selected_item() {
              @Override
-             public void Onselcted(Car_servece car_servece) {
+             public void OnRefresh(Car_servece car_servece) {
 
                  loading(view);
-//
+
+             }
+
+             @Override
+             public void Onselcted(int potions) {
+                 bascket_index=potions;
              }
          });
         RV.setAdapter(adapter);
     }
 
+    int bascket_index=0;
     @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.save_btn:
 
                 Bundle bundle = new Bundle();
-                                        bundle.putInt("bascket_index",0);
-                                        Intent intent=new Intent(getActivity(), OrderDetails_Create.class);
-                                        intent.putExtras(bundle);
-                                        startActivity(intent);
+                bundle.putInt("bascket_index",bascket_index);
+                Intent intent=new Intent(getActivity(), OrderDetails_Create.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
 
 
                 break;

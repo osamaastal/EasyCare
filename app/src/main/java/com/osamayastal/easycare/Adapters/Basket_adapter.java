@@ -6,10 +6,12 @@ import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,7 +36,8 @@ public class Basket_adapter extends RecyclerView.Adapter<Basket_adapter.ViewHold
     private Context mContext;
     private View mview;
     public interface Selected_item{
-        void Onselcted(Car_servece car_servece);
+        void OnRefresh(Car_servece car_servece);
+        void Onselcted(int potions);
     }
     public static int item_select=-1;
     Selected_item listenner;
@@ -72,7 +75,7 @@ public class Basket_adapter extends RecyclerView.Adapter<Basket_adapter.ViewHold
                 ,mItems.get(position).getCategorie(), new Basket_Service_adapter.Selected_item() {
             @Override
             public void Onselcted(Car_servece car_servece) {
-                listenner.Onselcted(null);
+                listenner.OnRefresh(null);
 
             }
         });
@@ -84,7 +87,7 @@ public class Basket_adapter extends RecyclerView.Adapter<Basket_adapter.ViewHold
         Basket_Products_adapter adapter2=new Basket_Products_adapter(mContext, mItems.get(position).getProducts(), new Basket_Products_adapter.Selected_item() {
             @Override
             public void Onselcted(Car_servece car_servece) {
-                listenner.Onselcted(null);
+                listenner.OnRefresh(null);
 
             }
         });
@@ -99,6 +102,15 @@ public class Basket_adapter extends RecyclerView.Adapter<Basket_adapter.ViewHold
 
             }
         });
+
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b){
+                    listenner.Onselcted(position);
+                }
+            }
+        });
     }
 
     @Override
@@ -110,6 +122,7 @@ public class Basket_adapter extends RecyclerView.Adapter<Basket_adapter.ViewHold
         ConstraintLayout top;
      RecyclerView RV_service,RV_product;
       TextView nb_service,nb_products,name;
+        AppCompatCheckBox checkBox;
       public ViewHolder(View itemView) {
             super(itemView);
           nb_service = itemView.findViewById(R.id.nb_service);
@@ -118,6 +131,7 @@ public class Basket_adapter extends RecyclerView.Adapter<Basket_adapter.ViewHold
           RV_product = itemView.findViewById(R.id.RV_product);
           name = itemView.findViewById(R.id.name);
           top = itemView.findViewById(R.id.top);
+          checkBox = itemView.findViewById(R.id.checkbox);
 
 
 

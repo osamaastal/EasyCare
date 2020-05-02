@@ -2,9 +2,11 @@ package com.osamayastal.easycare.Popups;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +46,7 @@ import com.osamayastal.easycare.Model.Rootes.Categories_root;
 import com.osamayastal.easycare.Model.Rootes.City_root;
 import com.osamayastal.easycare.R;
 import com.osamayastal.easycare.activities.MainActivity;
+import com.osamayastal.easycare.activities.OrderDetails_Create;
 import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
@@ -187,20 +190,20 @@ service_for_basket=new Service_for_basket();
                     service_for_basket.getSub_serviceList().remove(sub_service);
                 }
 
-                if (i!=-1){
-
-                        carList.get(i).setService_for_basket(service_for_basket);
-                        carList.get(i).setTotal(Calculate_service_total(service_for_basket));
-                        car_adapter.notifyDataSetChanged();
-                        Calculate_total(carList);
-
-
-                }
-
-                if (service_for_basket.getSub_serviceList().size()==0){
-//                    Toast.makeText(mcontext,"يجب احتيار عنصر على الأقل من نوع الخدمة ",Toast.LENGTH_SHORT).show();
-                    return false;
-                }
+//                if (i!=-1){
+//
+//                        carList.get(i).setService_for_basket(service_for_basket);
+//                        carList.get(i).setTotal(Calculate_service_total(service_for_basket));
+//                        car_adapter.notifyDataSetChanged();
+//                        Calculate_total(carList);
+//
+//
+//                }
+//
+//                if (service_for_basket.getSub_serviceList().size()==0){
+////                    Toast.makeText(mcontext,"يجب احتيار عنصر على الأقل من نوع الخدمة ",Toast.LENGTH_SHORT).show();
+//                    return false;
+//                }
                 return true;
             }
         });
@@ -210,30 +213,30 @@ service_for_basket=new Service_for_basket();
             @Override
             public void Onselcted(Car_servece car_servece,int potions) {
 //////////////////////////////Init////////////////////////////////////
-                service_for_basket=new Service_for_basket();
-                for (Sub_service s:sub_servics
-                ) {
-                    s.setActive(false);
-                }
-Toast.makeText(mcontext,potions+"",Toast.LENGTH_LONG).show();
-                size_adapter.item_select="";
-                subCategories_adapter.notifyDataSetChanged();
-                size_adapter.notifyDataSetChanged();
-                //////////////////////////////////////////////////////////
-
-                i= potions;
-                service_for_basket=carList.get(potions).getService_for_basket();
-
-                for (Sub_service sub:sub_servics
-                     ) {
-                    if (service_for_basket.getSub_serviceList().contains(sub)){
-                        sub.setActive(true);
-                    }
-                }
-                subCategories_adapter.notifyDataSetChanged();
-
-                size_adapter.item_select=service_for_basket.getSize().getSize_id();
-                size_adapter.notifyDataSetChanged();
+//                service_for_basket=new Service_for_basket();
+//                for (Sub_service s:sub_servics
+//                ) {
+//                    s.setActive(false);
+//                }
+//Toast.makeText(mcontext,potions+"",Toast.LENGTH_LONG).show();
+//                size_adapter.item_select="";
+//                subCategories_adapter.notifyDataSetChanged();
+//                size_adapter.notifyDataSetChanged();
+//                //////////////////////////////////////////////////////////
+//
+//                i= potions;
+//                service_for_basket=carList.get(potions).getService_for_basket();
+//
+//                for (Sub_service sub:sub_servics
+//                     ) {
+//                    if (service_for_basket.getSub_serviceList().contains(sub)){
+//                        sub.setActive(true);
+//                    }
+//                }
+//                subCategories_adapter.notifyDataSetChanged();
+//
+//                size_adapter.item_select=service_for_basket.getSize().getSize_id();
+//                size_adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -271,7 +274,7 @@ Toast.makeText(mcontext,potions+"",Toast.LENGTH_LONG).show();
                     servic.setTotal(Calculate_service_total(service_for_basket));
                     servic.setCategory_id(cat_id);
                     carList.add(servic);
-                    Toast.makeText(mcontext,carList.size()+" size list",Toast.LENGTH_LONG).show();
+//                    Toast.makeText(mcontext,carList.size()+" size list",Toast.LENGTH_LONG).show();
 
                     Calculate_total(carList);
 
@@ -326,49 +329,92 @@ Toast.makeText(mcontext,potions+"",Toast.LENGTH_LONG).show();
                 Car_servece car_servece=new Car_servece();
                 Log.d("service", car_servece.Order_JSON(prov_id, carList).toString());
 
-//                root.PostService(mcontext, car_servece.Order_JSON(prov_id, carList), new Bascket_root.PostbasketListener() {
-//                    @Override
-//                    public void onSuccess(Result bascket) {
-//                        String msg="";
-//                        if (new User_info(mcontext).getLanguage().equals("en")) {
-//                            msg=bascket.getMessageEn();
-////                            Toast.makeText(mcontext, bascket.getMessageEn(), Toast.LENGTH_SHORT).show();
-//                        } else {
-//                            msg=bascket.getMessageAr();
-////                            Toast.makeText(mcontext, bascket.getMessageAr(), Toast.LENGTH_SHORT).show();
-//                        }
-//                        AppPop appPop=new AppPop();
-//                        appPop.Conferme_POP(mcontext, msg+"\n"+"هل تريد الإنتقال الى السلة ؟", new AppPop.goListenner() {
-//                            @Override
-//                            public void Go() {
-//
-//                                lisstenner.onGoBasket();
-//                            }
-//
-//                            @Override
-//                            public void Cancel() {
-//                                carList.clear();
-//                                car_adapter.notifyDataSetChanged();
-//                                basket_count(mcontext);
-//                            }
-//                        });
-//                    }
-//                    @Override
-//                    public void onStart() {
-//
-//                    }
-//
-//                    @Override
-//                    public void onFailure(String msg) {
-//
-//                    }
-//                });
+                root.PostService(mcontext, car_servece.Order_JSON(prov_id, carList), new Bascket_root.PostbasketListener() {
+                    @Override
+                    public void onSuccess(Result bascket) {
+                        String msg="";
+                        if (new User_info(mcontext).getLanguage().equals("en")) {
+                            msg=bascket.getMessageEn();
+//                            Toast.makeText(mcontext, bascket.getMessageEn(), Toast.LENGTH_SHORT).show();
+                        } else {
+                            msg=bascket.getMessageAr();
+//                            Toast.makeText(mcontext, bascket.getMessageAr(), Toast.LENGTH_SHORT).show();
+                        }
+                        AppPop appPop=new AppPop();
+                        appPop.Conferme_POP(mcontext, msg+"\n"+"هل تريد الإنتقال الى السلة ؟", new AppPop.goListenner() {
+                            @Override
+                            public void Go() {
+
+                                lisstenner.onGoBasket();
+                            }
+
+                            @Override
+                            public void Cancel() {
+                                carList.clear();
+                                car_adapter.notifyDataSetChanged();
+                                basket_count(mcontext);
+                            }
+                        });
+                    }
+                    @Override
+                    public void onStart() {
+
+                    }
+
+                    @Override
+                    public void onFailure(String msg) {
+
+                    }
+                });
 
 
 
             }
         });
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (carList.size()==0){
+                    Toast.makeText(mcontext,"يجب احتيار عنصر على الأقل",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Bascket_root root=new Bascket_root();
+                Car_servece car_servece=new Car_servece();
+                Log.d("service", car_servece.Order_JSON(prov_id, carList).toString());
 
+                root.PostService(mcontext, car_servece.Order_JSON(prov_id, carList), new Bascket_root.PostbasketListener() {
+                    @Override
+                    public void onSuccess(Result bascket) {
+                        String msg="";
+                        if (new User_info(mcontext).getLanguage().equals("en")) {
+                            msg=bascket.getMessageEn();
+                            Toast.makeText(mcontext, bascket.getMessageEn(), Toast.LENGTH_SHORT).show();
+                        } else {
+                            msg=bascket.getMessageAr();
+                            Toast.makeText(mcontext, bascket.getMessageAr(), Toast.LENGTH_SHORT).show();
+                        }
+
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("bascket_index",0);
+                        Intent intent=new Intent(mcontext, OrderDetails_Create.class);
+                        intent.putExtras(bundle);
+                        mcontext.startActivity(intent);
+                    }
+                    @Override
+                    public void onStart() {
+
+                    }
+
+                    @Override
+                    public void onFailure(String msg) {
+
+                    }
+                });
+
+
+
+            }
+        });
         Categories_root root=new Categories_root();
         root.Get_SubCategories(mcontext, cat_id, prov_id, new Categories_root.cat_Listener2() {
             @Override

@@ -315,6 +315,7 @@ if (new User_info(getContext()).getLanguage().equals("en")){
                         }
                         if (favorites.getStatus_code()==200){
                             like.setImageDrawable(getContext().getDrawable(R.drawable.ic_unlike));
+                            provider.setFavorite_id("null");
                         }
 
                     }
@@ -343,6 +344,7 @@ if (new User_info(getContext()).getLanguage().equals("en")){
                         }
                         if (favorites.getStatus_code()==200){
                             like.setImageDrawable(getContext().getDrawable(R.drawable.ic_like));
+                            provider.setFavorite_id(favorites.get_id());
                         }
                     }
 
