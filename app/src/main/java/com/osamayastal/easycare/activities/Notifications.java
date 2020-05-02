@@ -40,6 +40,7 @@ public class Notifications extends AppCompatActivity implements View.OnClickList
         Loading();
     }
     private void Loading() {
+        findViewById(R.id.no_data).setVisibility(View.GONE);
         com.osamayastal.easycare.Model.Rootes.Notifications root=new com.osamayastal.easycare.Model.Rootes.Notifications();
         root.Getnotification(Notifications.this, new com.osamayastal.easycare.Model.Rootes.Notifications.notificationListener() {
             @Override
@@ -48,6 +49,10 @@ public class Notifications extends AppCompatActivity implements View.OnClickList
                 notifications.clear();
                 notifications.addAll(show_notif.getItems());
                 adapter.notifyDataSetChanged();
+                if (notifications.size()==0){
+                     findViewById(R.id.no_data).setVisibility(View.VISIBLE);
+
+                }
             }
 
             @Override

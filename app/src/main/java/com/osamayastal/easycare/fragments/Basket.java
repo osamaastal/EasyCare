@@ -65,7 +65,7 @@ public class Basket extends Fragment implements View.OnClickListener {
                         view.findViewById(R.id.save_btn).setVisibility(View.VISIBLE);
                     }
                     subtotal.setText(String.format("%.2f", bascket_.getTotal_price()));
-                    discount.setText("00");
+                    discount.setText(String.format("%.2f", 00.0));
                     total.setText(String.format("%.2f", bascket_.getTotal_price()));
                 }
             }

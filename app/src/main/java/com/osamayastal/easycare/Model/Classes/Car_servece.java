@@ -1,5 +1,7 @@
 package com.osamayastal.easycare.Model.Classes;
 
+import com.osamayastal.easycare.Model.Classes.Basket.Service_for_basket;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,6 +13,7 @@ public class Car_servece {
 
     private String size_id="",providerSubCategory_id="",car_name,category_id;
 private Double total=0.0;
+Service_for_basket service_for_basket;
     public Car_servece() {
     }
 public JSONObject Order_JSON(String provider_id,List<Car_servece> car_serveces)  {
@@ -42,12 +45,32 @@ public JSONObject Order_JSON(String provider_id,List<Car_servece> car_serveces) 
 }
 
     private JSONObject toJsonObject() throws JSONException {
+        providerSubCategory_id=null;
+        for (Sub_service sub:service_for_basket.getSub_serviceList()
+             ) {
+            if (providerSubCategory_id==null){
+                providerSubCategory_id=sub.getProvider_subCategory_id();
+            }else {
+                providerSubCategory_id=providerSubCategory_id+","+sub.getProvider_subCategory_id();
+
+            }
+        }
+        size_id=service_for_basket.getSize().getSize_id();
+
         JSONObject jsonObject=new JSONObject();
         jsonObject.put("car_name",car_name);
         jsonObject.put("providerSubCategory_id",providerSubCategory_id);
         jsonObject.put("size_id",size_id);
         jsonObject.put("category_id",category_id);
 return jsonObject;
+    }
+
+    public Service_for_basket getService_for_basket() {
+        return service_for_basket;
+    }
+
+    public void setService_for_basket(Service_for_basket service_for_basket) {
+        this.service_for_basket = service_for_basket;
     }
 
     public Double getTotal() {

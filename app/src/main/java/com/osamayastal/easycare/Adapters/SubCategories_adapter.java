@@ -43,7 +43,7 @@ public class SubCategories_adapter extends RecyclerView.Adapter<SubCategories_ad
     private Context mContext;
     private View mview;
     public interface Selected_item{
-        void Onselcted(Sub_service sub_service);
+        Boolean Onselcted(Sub_service sub_service, boolean b);
     }
     public static int item_select=-1;
     Selected_item listenner;
@@ -76,13 +76,14 @@ if(new User_info(mContext).getLanguage().equals("en")){
 }
         holder.price.setText(String.format("%.2f",mItems.get(position).getPrice()));
         holder.checkBox.setChecked(mItems.get(position).isActive());
-holder.checkBox.setOnClickListener(new View.OnClickListener() {
+holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
     @Override
-    public void onClick(View view) {
-        mItems.get(position).setActive(holder.checkBox.isChecked());
-        listenner.Onselcted(mItems.get(position));
-        notifyDataSetChanged();
+    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
 
+        if (!listenner.Onselcted(mItems.get(position),b)){
+           holder.checkBox.setChecked(true);
+
+        }
     }
 });
 

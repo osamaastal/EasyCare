@@ -1,6 +1,7 @@
 package com.osamayastal.easycare.Popups;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -26,6 +27,7 @@ import com.deishelon.roundedbottomsheet.RoundedBottomSheetDialog;
 import com.osamayastal.easycare.Adapters.Car_adapter;
 import com.osamayastal.easycare.Adapters.Size_adapter;
 import com.osamayastal.easycare.Adapters.SubCategories_adapter;
+import com.osamayastal.easycare.Model.Classes.Basket.Service_for_basket;
 import com.osamayastal.easycare.Model.Classes.Car_servece;
 import com.osamayastal.easycare.Model.Classes.Categorie;
 import com.osamayastal.easycare.Model.Classes.City;
@@ -70,9 +72,17 @@ public class OrderPop {
     Double Total=0.0;
     TextView price,basket_nb;
     ImageButton basket;
+     Double size_price =0.0;
+     String size_id = "";
      int i=-1;
+     Car_adapter car_adapter;
+     SubCategories_adapter subCategories_adapter;
+     Size_adapter size_adapter;
+     Service_for_basket service_for_basket;
+     List<Car_servece>  carList;
      public interface OrderLisstenner{
          void onGoBasket();
+         void onCancel();
      }
     public interface POPLisstenner{
         void ongetResult(String  result,String time,Boolean upfont);
@@ -96,6 +106,16 @@ public class OrderPop {
              basket.setBackground(mcontext.getDrawable(R.drawable.bg_circle_basket));
          }
      }
+    private Double Calculate_service_total(Service_for_basket service_for_basket){
+       Double Total=0.0;
+        for (Sub_service s :service_for_basket.getSub_serviceList()
+        ) {
+            Total=Total+s.getPrice();
+        }
+        Total=Total+service_for_basket.getSize().getPrice();
+        return Total;
+
+    }
     private void makeDrawable(int color, View view, int corner) {
         Drawable drawable = new DrawableBuilder()
                 .oval()
@@ -114,7 +134,13 @@ this.mcontext=mcontext;
         final View sheetView = inflater.inflate(R.layout.bottom_sheet_add_car, null);
         mBottomSheetDialog.setContentView(sheetView);
         mBottomSheetDialog.show();
-
+mBottomSheetDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+    @Override
+    public void onDismiss(DialogInterface dialogInterface) {
+        lisstenner.onCancel();
+    }
+});
+service_for_basket=new Service_for_basket();
         ///////RV
         final RecyclerView car,details,type;
         car=sheetView.findViewById(R.id.RV_car);
@@ -124,112 +150,99 @@ this.mcontext=mcontext;
         details.setLayoutManager(new LinearLayoutManager(mcontext,RecyclerView.VERTICAL,false));
         type.setLayoutManager(new LinearLayoutManager(mcontext,RecyclerView.HORIZONTAL,false));
         ///////List Array
-        final List<Car_servece>  carList=new ArrayList<>();
+       carList=new ArrayList<>();
         sub_servics=new ArrayList<>();
         sizeList=new ArrayList<>();
         sub_categorie=new Sub_categorie(null);
-        final Double[] size_price = {0.0};
-        final String[] size_id = {""};
+
         ///////adapters
-        final Size_adapter size_adapter=new Size_adapter(mcontext, sizeList, new Size_adapter.Selected_item() {
+       size_adapter=new Size_adapter(mcontext, sizeList, new Size_adapter.Selected_item() {
             @Override
             public void Onselcted(Size size) {
+                service_for_basket.setSize(size);
+                if (i!=-1){
 
-               if (i!=-1){
-                   carList.get(i).setTotal(carList.get(i).getTotal()- size_price[0] +size.getPrice());
-                   carList.get(i).setSize_id(size.getSize_id());
-                   Calculate_total(carList);
-               }
-               else{
-                   servic.setSize_id(size.getSize_id());
-               }
-               size_price[0] =size.getPrice();
-                size_id[0] =size.getSize_id();
+                    carList.get(i).setService_for_basket(service_for_basket);
+                    carList.get(i).setTotal(Calculate_service_total(service_for_basket));
+                    car_adapter.notifyDataSetChanged();
+                    Calculate_total(carList);
 
+                }
             }
         });
         type.setAdapter(size_adapter);
         /////////
-        final SubCategories_adapter subCategories_adapter=new SubCategories_adapter(mcontext, sub_servics, new SubCategories_adapter.Selected_item() {
+         subCategories_adapter=new SubCategories_adapter(mcontext, sub_servics, new SubCategories_adapter.Selected_item() {
             @Override
-            public void Onselcted(Sub_service sub_service) {
-                String id=servic.getProviderSubCategory_id();
-                Double tot= size_price[0];
-                for (Sub_service s:sub_servics
-                ) {
-                    if (s.isActive()){
+            public Boolean Onselcted(Sub_service sub_service, boolean b) {
+//
 
-                        tot=tot+s.getPrice();
-                        if (id.isEmpty()){
-                            id=s.getProvider_subCategory_id();
-
-                        }else {
-                            if (!id.contains(s.getProvider_subCategory_id())){
-                                id=id+","+s.getProvider_subCategory_id();
-                            }
-
-                        }
+                if (b ){
+                    if (!service_for_basket.getSub_serviceList().contains(sub_service)){
+                        service_for_basket.getSub_serviceList().add(sub_service);
                     }
 
-                }
-
-
-                if (i!=-1) {
-                    if (id.isEmpty()){
-                        Toast.makeText(mcontext,"يجب احتيار عنصر على الأقل من نوع الخدمة ",Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    carList.get(i).setProviderSubCategory_id(id);
-                    carList.get(i).setTotal(tot);
-                    Calculate_total(carList);
                 }else {
-                    servic.setProviderSubCategory_id(id);
+
+                    service_for_basket.getSub_serviceList().remove(sub_service);
                 }
 
+                if (i!=-1){
+
+                        carList.get(i).setService_for_basket(service_for_basket);
+                        carList.get(i).setTotal(Calculate_service_total(service_for_basket));
+                        car_adapter.notifyDataSetChanged();
+                        Calculate_total(carList);
+
+
+                }
+
+                if (service_for_basket.getSub_serviceList().size()==0){
+//                    Toast.makeText(mcontext,"يجب احتيار عنصر على الأقل من نوع الخدمة ",Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                return true;
             }
         });
         details.setAdapter(subCategories_adapter);
         /////
-        final Car_adapter car_adapter=new Car_adapter(mcontext, carList, new Car_adapter.Selected_item() {
+         car_adapter=new Car_adapter(mcontext, carList, new Car_adapter.Selected_item() {
             @Override
-            public void Onselcted(Car_servece car_servece) {
-
-                i= Car_adapter.item_select;
-
+            public void Onselcted(Car_servece car_servece,int potions) {
+//////////////////////////////Init////////////////////////////////////
+                service_for_basket=new Service_for_basket();
                 for (Sub_service s:sub_servics
-                     ) {
-                    if (car_servece.getProviderSubCategory_id().contains(s.getProvider_subCategory_id())){
-                        s.setActive(true);
-                    }else {
-                        s.setActive(false);
-                    }
-                }
-
-                for (int i=0;i<sub_categorie.getSizes().size();i++
                 ) {
-                    if (car_servece.getSize_id().equals(sub_categorie.getSizes().get(i).getSize_id())){
-                        size_adapter.item_select=i;
+                    s.setActive(false);
+                }
+Toast.makeText(mcontext,potions+"",Toast.LENGTH_LONG).show();
+                size_adapter.item_select="";
+                subCategories_adapter.notifyDataSetChanged();
+                size_adapter.notifyDataSetChanged();
+                //////////////////////////////////////////////////////////
+
+                i= potions;
+                service_for_basket=carList.get(potions).getService_for_basket();
+
+                for (Sub_service sub:sub_servics
+                     ) {
+                    if (service_for_basket.getSub_serviceList().contains(sub)){
+                        sub.setActive(true);
                     }
                 }
-
                 subCategories_adapter.notifyDataSetChanged();
+
+                size_adapter.item_select=service_for_basket.getSize().getSize_id();
                 size_adapter.notifyDataSetChanged();
             }
 
             @Override
             public void Ondelete(Car_servece car_servece) {
+
                 Calculate_total(carList);
-                i=-1;
-//////////////////////////////Init////////////////////////////////////
-                for (Sub_service s:sub_servics
-                ) {
-                    s.setActive(false);
-                }
+                car_adapter.notifyDataSetChanged();
+                Toast.makeText(mcontext,carList.size()+" size list",Toast.LENGTH_LONG).show();
 
-                size_adapter.item_select=-1;
-
-                subCategories_adapter.notifyDataSetChanged();
-                size_adapter.notifyDataSetChanged();
             }
         });
         car.setAdapter(car_adapter);
@@ -248,40 +261,31 @@ this.mcontext=mcontext;
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("size*******",servic.getSize_id()+"SubC********"+servic.getProviderSubCategory_id());
+               // Log.d("size*******",servic.getSize_id()+"SubC********"+servic.getProviderSubCategory_id());
 
-                String id=servic.getProviderSubCategory_id();
-                Double tot= size_price[0];
-                for (Sub_service s:sub_servics
-                ) {
-                    if (s.isActive()){
-                        tot=tot+s.getPrice();
-                        if (id.isEmpty()){
-                            id=s.getProvider_subCategory_id();
+                if (service_for_basket.getSize()!=null &&
+                        service_for_basket.getSub_serviceList().size()!=0){
 
-                        }else {
-                            if (!id.contains(s.getProvider_subCategory_id())){
-                                id=id+","+s.getProvider_subCategory_id();
-                            }
-                        }
-                    }
-                    s.setActive(false);
-                }
-                servic.setProviderSubCategory_id(id);
-                servic.setTotal(tot);
-                servic.setSize_id(size_id[0]);
-                if (!servic.getSize_id().isEmpty() && !servic.getProviderSubCategory_id().isEmpty()){
-
+                    Car_servece servic=new Car_servece();
+                    servic.setService_for_basket(service_for_basket);
+                    servic.setTotal(Calculate_service_total(service_for_basket));
+                    servic.setCategory_id(cat_id);
                     carList.add(servic);
+                    Toast.makeText(mcontext,carList.size()+" size list",Toast.LENGTH_LONG).show();
+
                     Calculate_total(carList);
-                    servic=new Car_servece();
-                    servic.setCategory_id(sub_categorie.get_id());
 
-
+                    for (Sub_service s:sub_servics
+                    ) {
+                        s.setActive(false);
+                    }
+                    i=-1;
+                    service_for_basket=new Service_for_basket();
+                    size_adapter.item_select="";
                     subCategories_adapter.notifyDataSetChanged();
-                    car_adapter.notifyDataSetChanged();
-                    size_adapter.item_select=-1;
                     size_adapter.notifyDataSetChanged();
+                    car_adapter.notifyDataSetChanged();
+
 
 
                 }else {
@@ -307,14 +311,8 @@ this.mcontext=mcontext;
         price=sheetView.findViewById(R.id.price_tv);
 
         service_details.setText("");
-        int nb=new User_info(mcontext).getBasket();
-        basket.setBackground(mcontext.getDrawable(R.drawable.bg_circle_gray));
-        if (nb==0){
-            basket_nb.setVisibility(View.GONE);
-        }
-        else {
-            basket_nb.setText(nb+"");
-        }
+
+        basket_count(mcontext);
         ////////save data
         Button save=sheetView.findViewById(R.id.save_btn);
         basket.setOnClickListener(new View.OnClickListener() {
@@ -326,35 +324,45 @@ this.mcontext=mcontext;
                 }
                 Bascket_root root=new Bascket_root();
                 Car_servece car_servece=new Car_servece();
-                root.PostService(mcontext, car_servece.Order_JSON(prov_id, carList), new Bascket_root.PostbasketListener() {
-                    @Override
-                    public void onSuccess(Result bascket) {
-                        String msg="";
-                        if (new User_info(mcontext).getLanguage().equals("en")) {
-                            msg=bascket.getMessageEn();
-//                            Toast.makeText(mcontext, bascket.getMessageEn(), Toast.LENGTH_SHORT).show();
-                        } else {
-                            msg=bascket.getMessageAr();
-//                            Toast.makeText(mcontext, bascket.getMessageAr(), Toast.LENGTH_SHORT).show();
-                        }
-                        AppPop appPop=new AppPop();
-                        appPop.GoBasket_POP(mcontext, msg, new AppPop.gobasket() {
-                            @Override
-                            public void Go() {
-                                lisstenner.onGoBasket();
-                            }
-                        });
-                    }
-                    @Override
-                    public void onStart() {
+                Log.d("service", car_servece.Order_JSON(prov_id, carList).toString());
 
-                    }
-
-                    @Override
-                    public void onFailure(String msg) {
-
-                    }
-                });
+//                root.PostService(mcontext, car_servece.Order_JSON(prov_id, carList), new Bascket_root.PostbasketListener() {
+//                    @Override
+//                    public void onSuccess(Result bascket) {
+//                        String msg="";
+//                        if (new User_info(mcontext).getLanguage().equals("en")) {
+//                            msg=bascket.getMessageEn();
+////                            Toast.makeText(mcontext, bascket.getMessageEn(), Toast.LENGTH_SHORT).show();
+//                        } else {
+//                            msg=bascket.getMessageAr();
+////                            Toast.makeText(mcontext, bascket.getMessageAr(), Toast.LENGTH_SHORT).show();
+//                        }
+//                        AppPop appPop=new AppPop();
+//                        appPop.Conferme_POP(mcontext, msg+"\n"+"هل تريد الإنتقال الى السلة ؟", new AppPop.goListenner() {
+//                            @Override
+//                            public void Go() {
+//
+//                                lisstenner.onGoBasket();
+//                            }
+//
+//                            @Override
+//                            public void Cancel() {
+//                                carList.clear();
+//                                car_adapter.notifyDataSetChanged();
+//                                basket_count(mcontext);
+//                            }
+//                        });
+//                    }
+//                    @Override
+//                    public void onStart() {
+//
+//                    }
+//
+//                    @Override
+//                    public void onFailure(String msg) {
+//
+//                    }
+//                });
 
 
 
@@ -385,19 +393,14 @@ this.mcontext=mcontext;
                 }else {
                     service_name.setText(sub_categorie.getNameAr());
                 }
-                ////////creat new car
-                servic=new Car_servece();
-                int k=carList.size()+1;
-                servic.setCar_name(mcontext.getString(R.string.car_name)+" "+k);
-                try {
-                    servic.setCategory_id(sub_categories.getItems().get_id());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-//                carList.add(servic);
+
                 ////notify
                 sub_servics.clear();
                 sub_servics.addAll(sub_categorie.getSub_services());
+                for (Sub_service s:sub_servics
+                ) {
+                    s.setActive(false);
+                }
                 sizeList.clear();
                 sizeList.addAll(sub_categorie.getSizes());
                 subCategories_adapter.notifyDataSetChanged();
@@ -419,7 +422,36 @@ this.mcontext=mcontext;
         });
 
     }
-   public void GetDate_pop( final POPLisstenner lisstenner){
+    private void basket_count(final Context mcontext) {
+        Bascket_root root=new Bascket_root();
+        root.GetItemCount(mcontext, new Bascket_root.Basket_count_Listener() {
+            @Override
+            public void onSuccess(int nb) {
+                if (nb ==0){
+                    basket.setBackground(mcontext.getDrawable(R.drawable.bg_circle_gray));
+                    basket_nb.setVisibility(View.GONE);
+                }
+                else {
+                    basket_nb.setText(nb +"");
+                    basket.setBackground(mcontext.getDrawable(R.drawable.bg_circle_basket));
+                    basket_nb.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onFailure(String msg) {
+
+            }
+        });
+
+    }
+
+    public void GetDate_pop( final POPLisstenner lisstenner){
 
        final RoundedBottomSheetDialog mBottomSheetDialog = new RoundedBottomSheetDialog(mcontext);
        LayoutInflater inflater = (LayoutInflater) mcontext.getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -497,7 +529,8 @@ this.mcontext=mcontext;
 
 
     }
-    public void GetWay_pop(final Boolean isupfront, final Double mount, List<Payment> payment_id, final POPLisstenner lisstenner){
+    public void GetWay_pop(final Boolean isupfront, final Double mount,
+                           List<Payment> payment_id, final POPLisstenner lisstenner){
 
         final RoundedBottomSheetDialog mBottomSheetDialog = new RoundedBottomSheetDialog(mcontext);
         LayoutInflater inflater = (LayoutInflater) mcontext.getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -519,17 +552,20 @@ this.mcontext=mcontext;
         payment2.setEnabled(false);
         payment3.setEnabled(false);
 
-        payment=1;//default
+        payment=0;//default
         for (Payment p:payment_id
              ) {
             switch (p.getId()){
                 case "1":
+                    payment1.setBackground(mcontext.getDrawable(R.drawable.bg_circle_green_gradiant));
                     payment1.setEnabled(true);
                     break;
                 case "2":
+                    payment2.setBackground(mcontext.getDrawable(R.drawable.bg_circle_purple));
                     payment2.setEnabled(true);
                     break;
                 case "3":
+                    payment3.setBackground(mcontext.getDrawable(R.drawable.bg_circle_orang));
                     payment3.setEnabled(true);
                     break;
             }
@@ -591,7 +627,10 @@ this.mcontext=mcontext;
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if (payment==0){
+                    Toast.makeText(mcontext,"إختار وسيلة الدفع",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Log.d("payment", String.valueOf(payment));
                 lisstenner.ongetResult( String.valueOf(payment),"",upfont);
 

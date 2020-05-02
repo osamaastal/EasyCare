@@ -37,7 +37,7 @@ public class Car_adapter extends RecyclerView.Adapter<Car_adapter.ViewHolder> {
     private Context mContext;
     private View mview;
     public interface Selected_item{
-        void Onselcted(Car_servece car_servece);
+        void Onselcted(Car_servece car_servece,int potion);
         void Ondelete(Car_servece car_servece);
     }
     public static int item_select=-1;
@@ -71,19 +71,19 @@ holder.price.setText(String.format("%.2f",mItems.get(position).getTotal())+mCont
     holder.delet.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-
-            mItems.remove(mItems.get(position));
+            mItems.remove(position);
             listenner.Ondelete(null);
-            notifyDataSetChanged();
+//            notifyDataSetChanged();
+
         }
     });
         mview.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                item_select=position;
-                listenner.Onselcted(mItems.get(position));
-                notifyDataSetChanged();
+                item_select = position;
+                listenner.Onselcted(mItems.get(position),position);
+
             }
         });
     }

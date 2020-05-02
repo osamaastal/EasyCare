@@ -35,7 +35,6 @@ public class Profile extends Fragment implements View.OnClickListener {
         User_info user_info=new User_info();
 
         init(view);
-        Loading_data();
         return view;
     }
 
@@ -43,11 +42,8 @@ public class Profile extends Fragment implements View.OnClickListener {
     public void onResume() {
         super.onResume();
 
-        User_info info=new User_info(getContext());
-        name.setText(info.getName());
-        email.setText(info.getEmail());
-        phone.setText(info.getPhone());
-        city.setText(info.getAddress());
+        Loading_data();
+
     }
 
     private void Loading_data() {

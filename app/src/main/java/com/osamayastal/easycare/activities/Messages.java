@@ -56,6 +56,8 @@ public class Messages extends AppCompatActivity implements View.OnClickListener 
             @Override
             public void run() {
                 findViewById(R.id.progress).setVisibility(View.GONE);
+                if (messageList.size()==0)
+                findViewById(R.id.no_data).setVisibility(View.VISIBLE);
 
             }
         }, 2000);
@@ -66,15 +68,19 @@ public class Messages extends AppCompatActivity implements View.OnClickListener 
         reference.orderByChild("edit_time_long").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                findViewById(R.id.progress).setVisibility(View.GONE);
-                com.osamayastal.easycare.Model.Classes.Message.Messages  messages=
-                        dataSnapshot.getValue(com.osamayastal.easycare.Model.Classes.Message.Messages.class);
 
-                Log.d("dataSnapshot",dataSnapshot.toString());
-                Log.d("dataSnapshot",dataSnapshot.child("isRead_user").toString());
 
               try {
+
+                  findViewById(R.id.progress).setVisibility(View.GONE);
+                  com.osamayastal.easycare.Model.Classes.Message.Messages  messages=
+                          dataSnapshot.getValue(com.osamayastal.easycare.Model.Classes.Message.Messages.class);
+
+                  Log.d("dataSnapshot",dataSnapshot.toString());
+                  Log.d("dataSnapshot",dataSnapshot.child("isRead_user").toString());
+
                   if (messages.getUser().get_id().equals(new User_info(mcontext).getId())){
+                      findViewById(R.id.no_data).setVisibility(View.GONE);
                       messages.setRead_user(dataSnapshot.child("isRead_user").getValue(Boolean.class));
                       messages.setOrder_id(dataSnapshot.getKey());
                       messageList.add(messages);
@@ -93,32 +99,36 @@ public class Messages extends AppCompatActivity implements View.OnClickListener 
                           }
                       });
                       RV.setAdapter(adapter);
+
+                      Handler handler = new Handler();
+                      handler.postDelayed(new Runnable() {
+                          @Override
+                          public void run() {
+                              if (adapter.getItemCount() > 0) {
+                                  RV.smoothScrollToPosition(0);
+                              }
+                          }
+                      }, 300);
                   }
               } catch (Exception e) {
                   e.printStackTrace();
               }
 
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (adapter.getItemCount() > 0) {
-                            RV.smoothScrollToPosition(0);
-                        }
-                    }
-                }, 300);
+
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                findViewById(R.id.progress).setVisibility(View.GONE);
-                com.osamayastal.easycare.Model.Classes.Message.Messages  messages=
-                        dataSnapshot.getValue(com.osamayastal.easycare.Model.Classes.Message.Messages.class);
 
-                Log.d("dataSnapshot",dataSnapshot.toString());
-                Log.d("dataSnapshot",dataSnapshot.child("isRead_user").toString());
 
                 try {
+                    findViewById(R.id.progress).setVisibility(View.GONE);
+                    com.osamayastal.easycare.Model.Classes.Message.Messages  messages=
+                            dataSnapshot.getValue(com.osamayastal.easycare.Model.Classes.Message.Messages.class);
+
+                    Log.d("dataSnapshot",dataSnapshot.toString());
+                    Log.d("dataSnapshot",dataSnapshot.child("isRead_user").toString());
+
                     if (messages.getUser().get_id().equals(new User_info(mcontext).getId())){
                         for (com.osamayastal.easycare.Model.Classes.Message.Messages m:messageList
                              ) {
@@ -142,19 +152,20 @@ public class Messages extends AppCompatActivity implements View.OnClickListener 
                             }
                         });
                         RV.setAdapter(adapter);
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (adapter.getItemCount() > 0) {
+                                    RV.smoothScrollToPosition(0);
+                                }
+                            }
+                        }, 300);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (adapter.getItemCount() > 0) {
-                            RV.smoothScrollToPosition(0);
-                        }
-                    }
-                }, 300);
+
             }
 
             @Override
@@ -188,7 +199,7 @@ public class Messages extends AppCompatActivity implements View.OnClickListener 
         back.setOnClickListener(this);
         messageList=new ArrayList<>();
 
-        RV.setLayoutManager(new LinearLayoutManager(mcontext,RecyclerView.VERTICAL,true));
+        RV.setLayoutManager(new LinearLayoutManager(mcontext,RecyclerView.VERTICAL,false));
 
 
     }

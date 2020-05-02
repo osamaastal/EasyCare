@@ -70,8 +70,7 @@
             android:layout_height="match_parent"
             android:layout_marginTop="13dp"
             android:layout_marginEnd="18dp"
-            android:layout_marginStart="18dp"
-            android:layout_marginBottom="50dp"/>
+            android:layout_marginStart="18dp"/>
         <ProgressBar
             android:layout_marginTop="10dp"
             app:layout_constraintTop_toTopOf="parent"
@@ -85,6 +84,19 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:id="@+id/progress"/>
+        <TextView
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:visibility="gone"
+            android:id="@+id/no_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_data"
+            style="@style/text_darkblue_1_bold_14"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

@@ -76,7 +76,8 @@ public class Chat extends AppCompatActivity implements View.OnClickListener {
                 @Override
                 public void run() {
                     findViewById(R.id.progress).setVisibility(View.GONE);
-
+                    if (messageList.size()==0)
+                        findViewById(R.id.no_data).setVisibility(View.VISIBLE);
                 }
             }, 600);
 
@@ -84,11 +85,13 @@ public class Chat extends AppCompatActivity implements View.OnClickListener {
         reference.child("conversation").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                findViewById(R.id.progress).setVisibility(View.GONE);
-                if (!onstart){
-                    return;
-                }
+
                 try {
+                    findViewById(R.id.no_data).setVisibility(View.GONE);
+                    findViewById(R.id.progress).setVisibility(View.GONE);
+                    if (!onstart){
+                        return;
+                    }
                     com.osamayastal.easycare.Model.Classes.Message.Message  message=
                             dataSnapshot.getValue(com.osamayastal.easycare.Model.Classes.Message.Message.class);
 
@@ -103,33 +106,40 @@ public class Chat extends AppCompatActivity implements View.OnClickListener {
                         parameters.put("isRead_user",true);
                         reference.updateChildren(parameters);
                     }
+
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (adapter.getItemCount() > 0) {
+                                RV.smoothScrollToPosition(adapter.getItemCount()-1);
+                            }
+                        }
+                    }, 300);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (adapter.getItemCount() > 0) {
-                            RV.smoothScrollToPosition(adapter.getItemCount()-1);
-                        }
-                    }
-                }, 300);
+
 
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (adapter.getItemCount() > 0) {
-                            RV.smoothScrollToPosition(adapter.getItemCount()-1);
-                        }
-                    }
-                }, 300);
+               try {
+                   Handler handler = new Handler();
+                   handler.postDelayed(new Runnable() {
+                       @Override
+                       public void run() {
+                           if (adapter.getItemCount() > 0) {
+                               RV.smoothScrollToPosition(adapter.getItemCount()-1);
+                           }
+                       }
+                   }, 300);
+               } catch (Exception e) {
+                   e.printStackTrace();
+               }
+
             }
 
             @Override

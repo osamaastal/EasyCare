@@ -217,6 +217,7 @@ private void FetchDATA(){
             product_RV.setAdapter(products_adapter);
 
             sub_tot.setText(String.format("%.2f",Caculate_Tot()));
+            discount.setText(String.format("%.2f",00.0));
             tot_price.setText(String.format("%.2f",Caculate_Tot()));
             totale.setText(String.format("%.2f",Caculate_Tot()));
 

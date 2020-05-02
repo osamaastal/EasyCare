@@ -38,7 +38,7 @@ public class Size_adapter extends RecyclerView.Adapter<Size_adapter.ViewHolder> 
     public interface Selected_item{
         void Onselcted(Size size);
     }
-    public  int item_select=-1;
+    public  String item_select="";
     Selected_item listenner;
     public Size_adapter(Context context, List<Size> names, Selected_item listenner) {
         mItems = names;
@@ -70,7 +70,7 @@ if(new User_info(mContext).getLanguage().equals("en")){
 
 }
 
-if (item_select==position){
+if (item_select.equals(mItems.get(position).getSize_id())){
     holder.name.setBackground(mContext.getDrawable(R.drawable.bg_req_green_gradiant_30dp));
 }else {
     holder.name.setBackground(mContext.getDrawable(R.drawable.bg_req_gray_50dp));
@@ -82,7 +82,7 @@ if (item_select==position){
 
             @Override
             public void onClick(View view) {
-                item_select=position;
+                item_select=mItems.get(position).getSize_id();
                 listenner.Onselcted(mItems.get(position));
                 notifyDataSetChanged();
             }

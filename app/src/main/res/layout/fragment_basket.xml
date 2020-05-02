@@ -70,6 +70,7 @@
     android:layout_height="50dp"
     android:id="@+id/progress"/>
             <androidx.recyclerview.widget.RecyclerView
+            android:visibility="visible"
                 android:id="@+id/RV_basket"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -82,9 +83,10 @@
                android:visibility="gone"
                 android:id="@+id/linear_no_results"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:gravity="center"
+                android:layout_gravity="center"
                 app:layout_constraintVertical_bias="0.15"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent">

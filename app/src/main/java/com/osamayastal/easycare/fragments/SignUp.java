@@ -284,34 +284,35 @@ private AppCompatCheckBox accept;
 
 /******************************************FIND LOCATION*****************************************************************/
         public void GetLocation( Context mcontext) {
-            this.mcontext = mcontext;
-
-            locationManager = (LocationManager) mcontext.getSystemService(Context.LOCATION_SERVICE);
-            enableMyLocationIfPermitted();
-
-
-
+           try {
+               this.mcontext = mcontext;
+               enableMyLocationIfPermitted();
+           } catch (Exception e) {
+               e.printStackTrace();
+           }
         }
 
-
-        private String[] LocationPermissions = {Manifest.permission.ACCESS_FINE_LOCATION};
 
     private void enableMyLocationIfPermitted() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
-                    != PackageManager.PERMISSION_GRANTED &&
-                    ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
-                            != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(new String[]{
-                        Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,
-                        Manifest.permission.INTERNET
-                }, 15);
+       try {
+           if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+               if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+                       != PackageManager.PERMISSION_GRANTED &&
+                       ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
+                               != PackageManager.PERMISSION_GRANTED) {
+                   requestPermissions(new String[]{
+                           Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,
+                           Manifest.permission.INTERNET
+                   }, 15);
 
-            } else  {
+               } else  {
 
-               get_location();
-            }
-        }
+                   get_location();
+               }
+           }
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
     }
 
     @Override
@@ -323,7 +324,7 @@ private AppCompatCheckBox accept;
                     // Permission Granted
                    get_location();
                 } else {
-//                    switchFGM(new LoginFrag());
+
                 }
                 break;
             default:
@@ -352,12 +353,7 @@ private AppCompatCheckBox accept;
 
     @SuppressLint("MissingPermission")
         private void get_location() {
-        if (new User_info(mcontext).getLat()!=null && new User_info(mcontext).getLng()!=null){
-            mLatLng=new LatLng(Double.parseDouble(new User_info(mcontext).getLat()),
-                    Double.parseDouble(new User_info(mcontext).getLng()));
-        }
-//        Toast.makeText(getContext(), "lat: " + new User_info(mcontext).getLat()
-//                + "lng: " + new User_info(mcontext).getLng() , Toast.LENGTH_SHORT).show();
+
 
             flag = displayGpsStatus();
             if (flag) {
@@ -394,43 +390,7 @@ private AppCompatCheckBox accept;
 
         }
 
-        /*---------- Listener class to get coordinates ------------- */
 
-
-
-        /*----------Method to create an AlertBox ------------- */
-        protected void alertbox(String title, String mymessage) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(mcontext);
-            final Dialog dialog = new Dialog(mcontext);
-            dialog .setContentView(R.layout.popup_opengps);
-            dialog.setCancelable(false);
-            Button cancel=(Button)dialog.findViewById(R.id.cancel_btn);
-            TextView tex1=(TextView)dialog.findViewById(R.id.tx1_tv);
-            TextView tex2=(TextView)dialog.findViewById(R.id.tx2_tv);
-
-            cancel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
-                }
-            });
-            Button go_sitting=(Button)dialog.findViewById(R.id.open_sitting_btn);
-            go_sitting.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent myIntent = new Intent(
-                            Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                    mcontext.startActivity(myIntent);
-                    dialog.cancel();
-                }
-            });
-            dialog.show();
-
-
-        }
-
-        private LocationManager locationManager = null;
-        private LocationListener locationListener = null;
 
 
 

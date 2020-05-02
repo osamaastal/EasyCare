@@ -293,11 +293,16 @@ Context mcontext=ServiceProfiderDetails.this;
                ,new OrderPop.OrderLisstenner() {
                         @Override
                         public void onGoBasket() {
-                            basket_count();
+
                             MainActivity.item_select=R.id.basket;
                              finish();
                         }
-                    });
+
+                                @Override
+                                public void onCancel() {
+                                    basket_count();
+                                }
+                            });
                 }
             }
         });

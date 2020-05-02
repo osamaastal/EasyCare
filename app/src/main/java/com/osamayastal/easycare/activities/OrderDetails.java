@@ -200,36 +200,48 @@ Button save;
     }
     @Override
     public void onClick(View view) {
+        AppPop pop=new AppPop();
 switch (view.getId()){
     case R.id.save_btn:
         switch (order.getStatusId()){
             case 1://1- Pending
-                Order_root root=new Order_root();
-                root.CancelOrder(mcontext, order_id, new Order_root.PostOrderListener() {
+                pop.Conferme_POP(mcontext, "هل انت متأكد انك تريد إلغاء هذا الطلب", new AppPop.goListenner() {
                     @Override
-                    public void onSuccess(Result result) {
-                        try {
-                            if (new User_info(mcontext).getLanguage().equals("en")){
-                                Toast.makeText(mcontext,result.getMessageEn(),Toast.LENGTH_LONG).show();
-                            }else {
-                                Toast.makeText(mcontext,result.getMessageAr(),Toast.LENGTH_LONG).show();
+                    public void Go() {
+                        Order_root root=new Order_root();
+                        root.CancelOrder(mcontext, order_id, new Order_root.PostOrderListener() {
+                            @Override
+                            public void onSuccess(Result result) {
+                                try {
+                                    if (new User_info(mcontext).getLanguage().equals("en")){
+                                        Toast.makeText(mcontext,result.getMessageEn(),Toast.LENGTH_LONG).show();
+                                    }else {
+                                        Toast.makeText(mcontext,result.getMessageAr(),Toast.LENGTH_LONG).show();
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                Loading();
                             }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        Loading();
+
+                            @Override
+                            public void onStart() {
+
+                            }
+
+                            @Override
+                            public void onFailure(String msg) {
+
+                            }
+                        });
                     }
 
                     @Override
-                    public void onStart() {
-
-                    }
-
-                    @Override
-                    public void onFailure(String msg) {
+                    public void Cancel() {
 
                     }
                 });
+
                 break;
             case 2://2- Accepted
             case 3:// 3- OnProgress
@@ -259,7 +271,7 @@ switch (view.getId()){
                 break;
 
             case 4://  4- Finished
-                AppPop pop=new AppPop();
+
                 pop.PostRat_pop(mcontext,order_id);
                 break;
 

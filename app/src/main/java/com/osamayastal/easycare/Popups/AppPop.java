@@ -40,8 +40,9 @@ import java.util.Locale;
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 public class AppPop {
-public interface gobasket{
+public interface goListenner{
     void Go();
+    void Cancel();
 }
     public void Login_POP(final Context mContext){
         final Dialog dialog=new Dialog(mContext);
@@ -66,7 +67,7 @@ public interface gobasket{
         });
         dialog.show();
     }
-    public void GoBasket_POP(final Context mContext, String msg, final gobasket listenner){
+    public void GoBasket_POP(final Context mContext, String msg, final goListenner listenner){
         final Dialog dialog=new Dialog(mContext);
         dialog.setContentView(R.layout.popup_conf);
         Button conf=dialog.findViewById(R.id.confBtn);
@@ -145,6 +146,28 @@ public interface gobasket{
 
 
     }
-
+    public void Conferme_POP(final Context mContext, String msg, final goListenner listenner ){
+        final Dialog dialog=new Dialog(mContext);
+        dialog.setContentView(R.layout.popup_conf);
+        Button conf=dialog.findViewById(R.id.confBtn);
+        TextView content=dialog.findViewById(R.id.contentTV);
+        content.setText(msg);
+        Button cancel=dialog.findViewById(R.id.cancelBtn);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listenner.Cancel();
+                dialog.dismiss();
+            }
+        });
+        conf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               listenner.Go();
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
 
 }

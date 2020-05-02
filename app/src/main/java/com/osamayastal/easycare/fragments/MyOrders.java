@@ -37,9 +37,16 @@ public class MyOrders extends Fragment implements View.OnTouchListener {
         // Inflate the layout for this fragment
          view= inflater.inflate(R.layout.fragment_my_orders, container, false);
         init(view);
-        Loading(1);
+
         return view;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Loading(1);
+    }
+
     private int statusID=1;
 private LinearLayout wait,current,complete,cancel;
     private RecyclerView RV;
@@ -66,7 +73,7 @@ private Context mcontext;
 
 
     private void Loading(final int i) {
-
+        view. findViewById(R.id.no_data).setVisibility(View.GONE);
         view.findViewById(R.id.progress).setVisibility(View.VISIBLE);
         Order_root root=new Order_root(mcontext);
         root.GetAllOrder(mcontext, 0, i, new Order_root.GetOrderListener() {
@@ -87,7 +94,10 @@ private Context mcontext;
                         }
                     });
                     RV.setAdapter(adapter);
+                    if (orderList.size()==0){
+                        view. findViewById(R.id.no_data).setVisibility(View.VISIBLE);
 
+                    }
                 }
 
             }

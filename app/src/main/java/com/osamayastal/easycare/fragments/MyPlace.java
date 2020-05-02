@@ -284,7 +284,7 @@ if (new User_info(getContext()).getLanguage().equals("en")){
         loc2.setLongitude(provider.getLng());
 
         float distanceInMeters = loc1.distanceTo(loc2)/1000;
-        dis.setText(distanceInMeters+"");
+        dis.setText(String.format("%.2f",distanceInMeters));
         try{
             String color=provider.getCategory_id().getColor();
             makeDrawable(Color.parseColor(color),type,18);
@@ -447,7 +447,6 @@ if (new User_info(getContext()).getLanguage().equals("en")){
 
                Marker marker = mMap.addMarker(new MarkerOptions()
                        .title(emp.getFull_name())
-                       .snippet(emp.getFull_name() )
                        .position(latLng)
                        .icon(bitmapDescriptorFromVector(getContext(), R.drawable.ic_icon_emp)));
 
@@ -461,7 +460,6 @@ if (new User_info(getContext()).getLanguage().equals("en")){
 
                Marker marker = mMap.addMarker(new MarkerOptions()
                        .title(provider.getName())
-                       .snippet(provider.getName() )
                        .position(latLng)
                        .icon(bitmapDescriptorFromVector(getContext(), R.drawable.ic_icon_prov)));
 

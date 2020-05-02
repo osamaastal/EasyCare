@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -46,11 +47,13 @@ import com.osamayastal.easycare.Model.Const.Server_info;
 import com.osamayastal.easycare.Model.Const.User_info;
 import com.osamayastal.easycare.Model.Controle.Complains;
 import com.osamayastal.easycare.Model.Controle.Contact;
+import com.osamayastal.easycare.Model.Controle.Result;
 import com.osamayastal.easycare.Model.Controle.users;
 import com.osamayastal.easycare.Model.Rootes.Bascket_root;
 import com.osamayastal.easycare.Model.Rootes.City_root;
 import com.osamayastal.easycare.Model.Rootes.Complain_root;
 import com.osamayastal.easycare.Model.Rootes.Contact_root;
+import com.osamayastal.easycare.Model.Rootes.Order_root;
 import com.osamayastal.easycare.Model.Rootes.user;
 import com.osamayastal.easycare.Popups.AppPop;
 import com.osamayastal.easycare.R;
@@ -138,6 +141,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        toolbar.setOverflowIcon(ContextCompat.getDrawable(this, R.drawable.ic_menu_));
 
         View navigation = findViewById(R.id.nav_view);
+//
+//        if(!toolbar.isDrawerOpen(GravityCompat.START))
+//            navDrawer.openDrawer(GravityCompat.START);
+//        else navDrawer.closeDrawer(GravityCompat.END);
         TextView drawer_offers_tv = navigation.findViewById(R.id.drawer_offers_tv);
         TextView drawer_points_tv = navigation.findViewById(R.id.drawer_points_tv);
         TextView drawer_chat_tv = navigation.findViewById(R.id.drawer_chat_tv);
@@ -301,7 +308,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         MainActivity.transaction.replace(R.id.mainContainer, fragment);
         MainActivity.transaction.commit();
     }
-
+   Context mcontext=MainActivity.this;
     @Override
     public void onClick(View v) {
         AppPop appPop = new AppPop();
@@ -388,33 +395,45 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 break;
             case R.id.logout_btn:
-                user user = new user();
-                user.Post_Logout(this, new user.user_Listener() {
+                AppPop pop=new AppPop();
+                pop.Conferme_POP(mcontext, "هل انت متأكد انك تريد تسجيل الخروج", new AppPop.goListenner() {
                     @Override
-                    public void onSuccess(users new_account) {
-                        if (new User_info(MainActivity.this).getLanguage().equals("en")) {
-                            Toast.makeText(MainActivity.this, new_account.getMessageEn(), Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(MainActivity.this, new_account.getMessageAr(), Toast.LENGTH_SHORT).show();
-                        }
-                        if (!new_account.isStatus()) {
-                            return;
-                        }
-                        new User_info(MainActivity.this,true);
-                        startActivity(new Intent(MainActivity.this,LoginActivity.class));
-                        finish();
+                    public void Go() {
+                        user user = new user();
+                        user.Post_Logout(mcontext, new user.user_Listener() {
+                            @Override
+                            public void onSuccess(users new_account) {
+                                if (new User_info(MainActivity.this).getLanguage().equals("en")) {
+                                    Toast.makeText(MainActivity.this, new_account.getMessageEn(), Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(MainActivity.this, new_account.getMessageAr(), Toast.LENGTH_SHORT).show();
+                                }
+                                if (!new_account.isStatus()) {
+                                    return;
+                                }
+                                new User_info(MainActivity.this,true);
+                                startActivity(new Intent(MainActivity.this,LoginActivity.class));
+                                finish();
+                            }
+
+                            @Override
+                            public void onStart() {
+
+                            }
+
+                            @Override
+                            public void onFailure(String msg) {
+
+                            }
+                        });
                     }
 
                     @Override
-                    public void onStart() {
-
-                    }
-
-                    @Override
-                    public void onFailure(String msg) {
+                    public void Cancel() {
 
                     }
                 });
+
                 break;
 
         }

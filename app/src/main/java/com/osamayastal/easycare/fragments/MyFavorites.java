@@ -36,12 +36,12 @@ import java.util.List;
 
 public class MyFavorites extends Fragment implements View.OnClickListener {
 
-
+    View view;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_my_favorites, container, false);
+         view= inflater.inflate(R.layout.fragment_my_favorites, container, false);
         init(view);
         Loading();
         return view;
@@ -56,6 +56,10 @@ public class MyFavorites extends Fragment implements View.OnClickListener {
                 providerList.clear();
 providerList.addAll(favorites.getItems());
                 adapter.notifyDataSetChanged();
+                if (providerList.size()==0){
+                   view. findViewById(R.id.no_data).setVisibility(View.VISIBLE);
+
+                }
             }
 
             @Override

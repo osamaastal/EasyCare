@@ -31,31 +31,40 @@
         android:layout_marginEnd="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="40dp">
+<!--        bg_circle_purple-->
         <ImageView
-
+android:background="@drawable/bg_circle_gray"
             android:id="@+id/payment_img1"
             android:layout_width="80dp"
             android:layout_height="80dp"
-
-            android:src="@drawable/payment_way1"
-
+            android:src="@drawable/ic_payment1"
+            android:padding="20dp"
+android:scaleType="centerInside"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             />
+<!--        bg_circle_orang-->
         <ImageView
             android:id="@+id/payment_img2"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:src="@drawable/payment_way2"
+            android:src="@drawable/ic_payment2"
+            android:background="@drawable/bg_circle_gray"
+            android:scaleType="centerInside"
+            android:padding="20dp"
             app:layout_constraintStart_toEndOf="@+id/payment_img1"
             app:layout_constraintEnd_toStartOf="@+id/payment_img3"
             app:layout_constraintTop_toTopOf="parent"
             />
+<!--        //bg_circle_green_gradiant-->
         <ImageView
             android:id="@+id/payment_img3"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:src="@drawable/payment_way3"
+            android:src="@drawable/ic_payment3"
+            android:scaleType="centerInside"
+            android:padding="20dp"
+            android:background="@drawable/bg_circle_gray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             />

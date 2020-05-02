@@ -93,7 +93,7 @@ private Button login_btn;
                             }else {
                                 Toast.makeText(getContext(),new_account.getMessageAr(),Toast.LENGTH_SHORT).show();
                             }
-                            if (!new_account.isStatus()){
+                            if (new_account.getItems()==null){
                                 return;
                             }
                             if (new_account.getItems().isIsVerify()) {
