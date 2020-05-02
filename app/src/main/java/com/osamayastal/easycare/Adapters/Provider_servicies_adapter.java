@@ -111,7 +111,6 @@ public class Provider_servicies_adapter extends RecyclerView.Adapter<Provider_se
             @Override
             public void onClick(View view) {
                 if (mItems.get(position).isActive()) {
-//                    show_bottomSheet();
                    item_select=position;
                    listenner.Onselcted(mItems.get(position));
                 }
@@ -150,27 +149,6 @@ public class Provider_servicies_adapter extends RecyclerView.Adapter<Provider_se
             soon = itemView.findViewById(R.id.soon_tv);
         }
     }
-//    private void show_bottomSheet() {
-//        RoundedBottomSheetDialog mBottomSheetDialog = new RoundedBottomSheetDialog(mContext);
-//        LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
-//        View sheetView = inflater.inflate(R.layout.bottom_sheet_add_car, null);
-//        RecyclerView RV_car = sheetView.findViewById(R.id.RV_car);
-//        RecyclerView RV_services = sheetView.findViewById(R.id.RV_services);
-//        RecyclerView RV_services_type = sheetView.findViewById(R.id.RV_services_type);
-//        LinearLayoutManager layoutManager_car = new LinearLayoutManager(mContext,RecyclerView.HORIZONTAL,false);
-//        LinearLayoutManager layoutManager_services = new LinearLayoutManager(mContext);
-//        LinearLayoutManager layoutManager_services_type = new LinearLayoutManager(mContext,RecyclerView.HORIZONTAL,false);
-//        Car_adapter car_adapter = new Car_adapter();
-//        mBottomSheetDialog.setContentView(sheetView);
-//        mBottomSheetDialog.show();
-//    }
-//
-//    private static void updateTypePrice(double amount, int operation){
-//        if (operation==0)
-//            type_price += amount;
-//        else if (type_price >= 0)
-//            type_price -= amount;
-//    }
 
 
 }
