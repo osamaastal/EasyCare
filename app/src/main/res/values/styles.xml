@@ -28,7 +28,7 @@
 <!--        <item name="android:dateTextAppearance">@style/text_darkblue_roman_12</item>-->
     </style>
     <!--        **************************Spinner***************-->
-    <style name="filterSpinnerTheam" parent="android:Widget.Spinner">
+    <style name="filterSpinnerTheam" parent="android:Widget.Spinner.DropDown">
         <item name="android:background">@drawable/bg_spinner</item>
     </style>
     <style name="ContactUs_SpinnerTheam" parent="android:Widget.Spinner">

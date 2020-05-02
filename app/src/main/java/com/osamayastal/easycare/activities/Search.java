@@ -24,6 +24,7 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -157,8 +158,9 @@ default_tv.setOnClickListener(new View.OnClickListener() {
         GEt_all_saervic(categories,adaptertype);
         /*************************************City*********************************/
         List<City> cityArrayList=new ArrayList<City>();
-        City_adapter adaptercity=new City_adapter(Search.this,R.layout.row_city_text,R.id.type_tv, cityArrayList);
+        City_adapter adaptercity=new City_adapter(Search.this,R.layout.row_city_text_for_filter,R.id.type_tv, cityArrayList);
         city.setAdapter(adaptercity);
+        city.setPopupBackgroundResource(R.drawable.bg_gray_darkblue_strock);
         Get_all_city(cityArrayList,adaptercity);
         /****************************************Rating****************************************/
         try {
