@@ -107,9 +107,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:id="@+id/RV_car"
-                            tools:listitem="@layout/row_add_car"
-                            android:orientation="horizontal"
-                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+                            />
                     </LinearLayout>
                 </androidx.core.widget.NestedScrollView>
                 <TextView
@@ -128,11 +126,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/RV_services"
-                    tools:listitem="@layout/row_service_details"
-                    android:orientation="vertical"
-                    tools:itemCount="3"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+                    android:id="@+id/RV_services"/>
 
 
                 <TextView
@@ -153,10 +147,7 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/RV_services_type"
-                        tools:listitem="@layout/row_service_type"
-                        android:orientation="horizontal"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+                        android:id="@+id/RV_services_type"/>
 
 
 

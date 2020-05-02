@@ -133,4 +133,18 @@
     <string name="confirm">تأكيد</string>
     <string name="cancel">إلغاء</string>
     <string name="new_service">خدمة جديدة</string>
+    <string name="you_cant_edit_this_service">You can\'t edit this service</string>
+    <string name="Execus">عذرا  ....!</string>
+    <string name="open_gps">قم بفتح ال GPS من الإعدادات</string>
+    <string name="go_to_sitting">الذهاب الى الإعدادات</string>
+    <string name="no_whatsapp">no what\'up</string>
+    <string name="car_name">الخدمة</string>
+    <string name="RS">ريال سعودي</string>
+    <string name="RS_short">ر.س</string>
+    <string name="take_location_map">تعديل العنوان</string>
+    <string name="no_basket_item">لا يوجد عناصر بالسلة</string>
+    <string name="dane">تم</string>
+    <string name="upfront">العربون</string>
+    <string name="in_provider_location">في مكان مزود الخدمة</string>
+    <string name="RS_short2">ريال</string>
 </resources>
