@@ -73,7 +73,7 @@
                     android:id="@+id/location_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="مثال : الرياض، حي السعادة، 38372"
+                    android:text=" "
                     android:textSize="17sp"
                     android:textColor="#848282"
                     android:layout_marginStart="10dp"

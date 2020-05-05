@@ -323,11 +323,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 break;
             case R.id.drawer_chat_tv:
-                startActivity(new Intent(MainActivity.this, Messages.class));
+                if (user_info.getId() == null) {
+                    LoginAlert();
+                } else {
+                    startActivity(new Intent(MainActivity.this, Messages.class));
+                }
 
                 break;
             case R.id.drawer_notification_tv:
-                startActivity(new Intent(MainActivity.this, Notifications.class));
+                if (user_info.getId() == null) {
+                    LoginAlert();
+                } else {
+                    startActivity(new Intent(MainActivity.this, Notifications.class));
+                }
                 break;
             case R.id.drawer_settings_tv:
 
@@ -346,7 +354,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 break;
             case R.id.drawer_wallet_tv:
+                if (user_info.getId() == null) {
+                    LoginAlert();
+                } else {
                 startActivity(new Intent(MainActivity.this, Wallet.class));
+                }
 
                 break;
             case R.id.edit_profile_tv:
@@ -560,6 +572,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (user_info.getId() == null) {
+                    LoginAlert();
+                    return;
+                }
                 if (title.getText().toString().isEmpty()) {
                     title.setError(title.getHint());
                     return;

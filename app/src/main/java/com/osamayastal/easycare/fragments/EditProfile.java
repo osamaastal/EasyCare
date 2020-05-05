@@ -1,5 +1,6 @@
 package com.osamayastal.easycare.fragments;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -26,8 +27,8 @@ import com.osamayastal.easycare.Model.Controle.users;
 import com.osamayastal.easycare.Model.Rootes.City_root;
 import com.osamayastal.easycare.Model.Rootes.user;
 import com.osamayastal.easycare.R;
+import com.osamayastal.easycare.activities.Add_New_Address_Map;
 import com.osamayastal.easycare.activities.Auther_activity;
-import com.osamayastal.easycare.activities.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,9 +38,30 @@ import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 public class EditProfile extends Fragment implements View.OnClickListener {
 
+LatLng mlatlng=null;
 
-
-
+//        new LatLng(Double.parseDouble(new User_info(getContext()).getLat()),
+//        Double.parseDouble(new User_info(getContext()).getLng()));;
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode) {
+            case 1: {
+                if (resultCode == Activity.RESULT_OK) {
+                    // TODO Extract the data returned from the child Activity.
+                   mlatlng  = new LatLng(data.getDoubleExtra("lat",0.0),
+                           data.getDoubleExtra("lng",0.0));
+                    String Location=data.getStringExtra("Location");
+                    if (Location!=null){
+                        address.setText(Location);
+                    }else {
+                        address.setText(new User_info(getContext()).getAddress());
+                    }
+                }
+                break;
+            }
+        }
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -54,11 +76,8 @@ public class EditProfile extends Fragment implements View.OnClickListener {
     private void Loading_data() {
         User_info user_info=new User_info(getContext());
         fullname.setText(user_info.getName());
-        if (Add_New_Address_Map.Location!=null){
-            address.setText(Add_New_Address_Map.Location);
-        }else {
-            address.setText(user_info.getAddress());
-        }
+        address.setText(user_info.getAddress());
+
         email.setText(user_info.getEmail());
 
         city_id=user_info.getCityID();
@@ -156,7 +175,8 @@ progressBar.setVisibility(View.GONE);
              show_bottomSheet();
               break;
           case R.id.address_ed:
-             switchFGM(new Add_New_Address_Map());
+              Intent intent=new Intent(getContext(),Add_New_Address_Map.class);
+              startActivityForResult(intent, 1);
               break;
 
       }
@@ -177,18 +197,10 @@ progressBar.setVisibility(View.GONE);
            mUser.setFullName(fullname.getText().toString());
            mUser.setAddress(address.getText().toString());
            mUser.setEmail(email.getText().toString());
-           if (Add_New_Address_Map.mLatLng!=null){
-               mUser.setLat(Add_New_Address_Map.mLatLng.latitude);
-               mUser.setLng(Add_New_Address_Map.mLatLng.longitude);
-
-           }else {
-               if (new User_info(getContext()).getLat()!=null && new User_info(getContext()).getLng()!=null){
-                  LatLng mLatLng=new LatLng(Double.parseDouble(new User_info(getContext()).getLat()),
-                           Double.parseDouble(new User_info(getContext()).getLng()));
-                   mUser.setLat(mLatLng.latitude);
-                   mUser.setLng(mLatLng.longitude);
-               }
-           }
+            if (mlatlng!=null){
+                mUser.setLat(mlatlng.latitude);
+                mUser.setLng(mlatlng.longitude);
+            }
             user user=new user();
             user.Post_UPDATE_user(getContext(),mUser , new user.user_Listener() {
                 @Override
@@ -204,8 +216,6 @@ progressBar.setVisibility(View.GONE);
                         user1.setCity(city.getText().toString());
                         new User_info(user1,getContext());
 
-                        Add_New_Address_Map.Location=null;
-                        Add_New_Address_Map.mLatLng=null;
 
                         getActivity().finish();
                     }

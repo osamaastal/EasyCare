@@ -244,7 +244,7 @@ service_for_basket=new Service_for_basket();
 
                 Calculate_total(carList);
                 car_adapter.notifyDataSetChanged();
-                Toast.makeText(mcontext,carList.size()+" size list",Toast.LENGTH_LONG).show();
+//                Toast.makeText(mcontext,carList.size()+" size list",Toast.LENGTH_LONG).show();
 
             }
         });

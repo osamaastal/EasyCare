@@ -54,7 +54,15 @@ private  int point,basket;
         Ed.commit();
 
     }
+    public void Password(String pw, Context context) {
+        SharedPreferences sp=context.getSharedPreferences("Login", MODE_PRIVATE);
+        SharedPreferences.Editor Ed=sp.edit();
 
+        Ed.putString("pw", pw);
+
+        Ed.commit();
+
+    }
     public void Token(String token, Context context) {
         SharedPreferences sp=context.getSharedPreferences("Login", MODE_PRIVATE);
         SharedPreferences.Editor Ed=sp.edit();
@@ -82,7 +90,7 @@ private  int point,basket;
            Ed.putString("token",user_.getToken());
            Ed.putString("name",user_.getFullName());
            Ed.putString("image",user_.getImage());
-           Ed.putString("pw",user_.getPassword());
+
 
            Ed.putString("email",user_.getEmail());
            Ed.putString("city",user_.getCity());
@@ -111,6 +119,8 @@ private  int point,basket;
         Ed.putString("city",null);
         Ed.putLong("wallet", (long) 0.0);
         Ed.putBoolean("conf_phone",false);
+        Ed.putInt("basket", 0);
+
 
         Ed.commit();
 

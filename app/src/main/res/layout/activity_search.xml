@@ -30,10 +30,10 @@
             android:layout_height="46dp"
             android:src="@drawable/ic_back_ar"
             android:background="@drawable/bg_circle_blue_gradiant"
-            android:layout_marginStart="18dp"
+            android:layout_marginRight="18dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             />

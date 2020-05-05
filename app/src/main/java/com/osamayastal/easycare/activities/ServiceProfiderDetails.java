@@ -204,6 +204,11 @@ public class ServiceProfiderDetails extends AppCompatActivity implements View.On
         view.setBackground(drawable);
     }
     private void basket_count() {
+        if (new User_info(mcontext).getId()==null){
+            basket_btn.setBackground(getDrawable(R.drawable.bg_circle_gray));
+            basket_nb.setVisibility(View.GONE);
+            return;
+        }
         Bascket_root root=new Bascket_root();
         root.GetItemCount(this, new Bascket_root.Basket_count_Listener() {
             @Override

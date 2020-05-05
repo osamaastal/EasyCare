@@ -468,10 +468,12 @@ if (new User_info(getContext()).getLanguage().equals("en")){
 
                markersMap_prov.put(marker, provider);
            }
+//
+//           mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+//           float zoomLevel = 8.0f; //This goes up to 21
+//           mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel));
+           mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12));
 
-           mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-           float zoomLevel = 8.0f; //This goes up to 21
-           mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel));
        } catch (Exception e) {
            e.printStackTrace();
        }

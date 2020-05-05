@@ -46,7 +46,7 @@ import java.util.Map;
 import top.defaults.drawabletoolbox.DrawableBuilder;
 
 public class OrderDetails extends AppCompatActivity implements View.OnClickListener {
-
+    private  int TEN_MINUTES = 30 * 60 * 1000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -132,10 +132,23 @@ if (new User_info(mcontext).getLanguage().equals("en")){
             switch (order.getStatusId()){
                 case 1://1- Pending
                     order_status.setImageDrawable(mcontext.getDrawable(R.drawable.ic_order_type_waiting));
-                save.setText(mcontext.getString(R.string.cancel_order));
-                save.setBackground(mcontext.getDrawable(R.drawable.bg_req_orange_30dp));
+                    save.setText(mcontext.getString(R.string.cancel_order));
+                    save.setBackground(mcontext.getDrawable(R.drawable.bg_req_orange_30dp));
+//                    long tenAgo = System.currentTimeMillis() - TEN_MINUTES;
+//                    if (order.getDateLong() < tenAgo) {
+//                        System.out.println("searchTimestamp is older than 10 minutes");
+//                        save.setText(mcontext.getString(R.string.contact_with_provider));
+//                        save.setBackground(mcontext.getDrawable(R.drawable.bg_req_purple_30dp));
+//                    }else {
+//
+//                        save.setText(mcontext.getString(R.string.cancel_order));
+//                        save.setBackground(mcontext.getDrawable(R.drawable.bg_req_orange_30dp));
+//                    }
+
                 break;
                 case 2://2- Accepted
+//                    save.setVisibility(View.GONE);
+//                    break;
                 case 3:// 3- OnProgress
                     order_status.setImageDrawable(mcontext.getDrawable(R.drawable.ic_order_type_current));
                     save.setText(mcontext.getString(R.string.contact_with_provider));
@@ -143,13 +156,17 @@ if (new User_info(mcontext).getLanguage().equals("en")){
                     break;
                 case 4://  4- Finished
                     order_status.setImageDrawable(mcontext.getDrawable(R.drawable.ic_order_type_finished));
-                    save.setText(mcontext.getString(R.string.rate_service));
-                    save.setBackground(mcontext.getDrawable(R.drawable.bg_req_darkblue_16dp));
+                    save.setText(mcontext.getString(R.string.reOrder));
+                    save.setBackground(mcontext.getDrawable(R.drawable.bg_req_pink_30dp));
+                    rate.setVisibility(View.VISIBLE);
+
                     break;
 
                 case 5:// 5- Cancled
                     order_status.setImageDrawable(mcontext.getDrawable(R.drawable.ic_order_type_canceled));
-                    save.setVisibility(View.GONE);
+                    save.setText(mcontext.getString(R.string.reOrder));
+                    save.setBackground(mcontext.getDrawable(R.drawable.bg_req_pink_30dp));
+
                     break;
             }
             /************************************RV*****************************************/
@@ -180,7 +197,8 @@ ImageButton back;
     ImageView order_status;
     TextView name,date,time,nb_service,nb_product,id,id_top,price,payment;
 RecyclerView RV;
-Button save;
+Button save,rate;
+
     Context mcontext=OrderDetails.this;
 
     private void init() {
@@ -197,10 +215,12 @@ Button save;
         price= findViewById(R.id.price);
         RV= findViewById(R.id.RV);
         save= findViewById(R.id.save_btn);
+        rate= findViewById(R.id.rate_btn);
         back= findViewById(R.id.back_btn);
         order_status.setVisibility(View.VISIBLE);
         /*****************************Actions*********************/
         save.setOnClickListener(this);
+        rate.setOnClickListener(this);
         back.setOnClickListener(this);
         RV.setLayoutManager(new LinearLayoutManager(mcontext,RecyclerView.VERTICAL,false));
 
@@ -250,7 +270,7 @@ switch (view.getId()){
                 });
 
                 break;
-            case 2://2- Accepted
+//            case 2://2- Accepted
             case 3:// 3- OnProgress
                 FirebaseDatabase database=FirebaseDatabase.getInstance();
                 DatabaseReference reference=database.getReference().child("chat").child(order_id);
@@ -278,17 +298,22 @@ switch (view.getId()){
                 break;
 
             case 4://  4- Finished
-
-                pop.PostRat_pop(mcontext,order_id);
-                break;
-
             case 5:// 5- Cancled
 
+                Bundle bundle2 = new Bundle();
+                bundle2.putInt("bascket_index",0);
+                bundle2.putString("order_id",order_id);
+                Intent intent2=new Intent(mcontext, OrderDetails_Create.class);
+                intent2.putExtras(bundle2);
+                startActivity(intent2);
                 break;
         }
         break;
     case R.id.back_btn:
         finish();
+        break;
+    case R.id.rate_btn:
+        pop.PostRat_pop(mcontext,order_id);
         break;
 }
     }

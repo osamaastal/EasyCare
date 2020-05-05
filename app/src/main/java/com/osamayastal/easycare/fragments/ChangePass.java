@@ -80,11 +80,11 @@ public class ChangePass extends Fragment implements View.OnClickListener {
         list.add(confPW);
         Log.d("pw",new User_info(getContext()).getPw());
         if (Verefy(list)){
-//            if (!lastPW.getText().toString().equals(new User_info(getContext()).getPw())){
-//
-//                lastPW.setError("يرجى ادخال معلومات صحيحة");
-//                return;
-//            }
+            if (!lastPW.getText().toString().equals(new User_info(getContext()).getPw())){
+
+                lastPW.setError("يرجى ادخال معلومات صحيحة");
+                return;
+            }
             if (!newPW.getText().toString().equals(confPW.getText().toString())){
                 newPW.setError("يرجى ادخال معلومات صحيحة");
                 confPW.setError("يرجى ادخال معلومات صحيحة");
@@ -102,7 +102,9 @@ public class ChangePass extends Fragment implements View.OnClickListener {
                        }else {
                            Toast.makeText(getContext(),new_account.getMessageAr(),Toast.LENGTH_SHORT).show();
                        }
-                       new User_info(new_account.getItems(),getContext());
+                      if (new_account.isStatus()){
+                          new User_info().Password(newPW.getText().toString(),getContext());
+                      }
 
 
                        getActivity().finish();

@@ -3,32 +3,25 @@ package com.osamayastal.easycare.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.ContentResolver;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,7 +34,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.osamayastal.easycare.Adapters.Basket_Products_adapter;
@@ -51,20 +43,19 @@ import com.osamayastal.easycare.Model.Classes.Basket.SubCategory_basket;
 import com.osamayastal.easycare.Model.Classes.Basket.Sub_service_basket;
 import com.osamayastal.easycare.Model.Classes.Basket.categories_basket;
 import com.osamayastal.easycare.Model.Classes.Car_servece;
+import com.osamayastal.easycare.Model.Classes.Order;
 import com.osamayastal.easycare.Model.Classes.Product;
 import com.osamayastal.easycare.Model.Const.User_info;
+import com.osamayastal.easycare.Model.Controle.Order_Details;
 import com.osamayastal.easycare.Model.Controle.Result;
 import com.osamayastal.easycare.Model.Rootes.Bascket_root;
 import com.osamayastal.easycare.Model.Rootes.Order_root;
 import com.osamayastal.easycare.Popups.OrderPop;
 import com.osamayastal.easycare.R;
-import com.osamayastal.easycare.fragments.Add_New_Address_Map;
 import com.suke.widget.SwitchButton;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 public class OrderDetails_Create extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback {
@@ -77,9 +68,15 @@ public class OrderDetails_Create extends AppCompatActivity implements View.OnCli
 
         Bundle bundle = intent.getExtras();
         index=bundle.getInt("bascket_index");
+        order_id=bundle.getString("order_id");
 
         init();
-        loading();
+        if (order_id==null){
+            loading();
+        }else {
+            reOrder=true;
+            Reorder_loading();
+        }
 
 
     }
@@ -137,8 +134,43 @@ public class OrderDetails_Create extends AppCompatActivity implements View.OnCli
             }
         });
     }
+    private void Reorder_loading() {
+        findViewById(R.id.linear_wait).setVisibility(View.VISIBLE);
+        Order_root root=new Order_root();
+        root.GetOrderDetails(mcontext, order_id, new Order_root.GetOrderDetailsListener() {
+            @Override
+            public void onSuccess(Order_Details order_details) {
+                if (order_details.getStatus()) {
+                    findViewById(R.id.linear_wait).setVisibility(View.GONE);
+                    if (order_details.getItems().size()!=0){
+                        bascket=order_details.getItems().get(0);
+                        date=bascket.getDate();
+                        time=bascket.getTime();
+
+                        FetchDATA();
+                    }else {
+                        finish();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onFailure(String msg) {
+
+            }
+        });
+
+    }
+    private Boolean reOrder=false;
     private Context mcontext=OrderDetails_Create.this;
     private String date;
+    private String order_id=null;
     private String time="09:12";
     private int payment,location_typ=2;
     private int index;
@@ -150,6 +182,8 @@ public class OrderDetails_Create extends AppCompatActivity implements View.OnCli
     private Bascket bascket=null;
     private Basket_Service_adapter service_adapter;
     private Basket_Products_adapter products_adapter;
+    private SupportMapFragment mapFragment;
+
     private void init(){
         provider_location=findViewById(R.id.prov_location_switch);
         back_btn=findViewById(R.id.back_btn);
@@ -183,7 +217,7 @@ public class OrderDetails_Create extends AppCompatActivity implements View.OnCli
         });
 
 /**********************************Maps*******************************/
-        SupportMapFragment mapFragment = (SupportMapFragment) this.getSupportFragmentManager()
+         mapFragment = (SupportMapFragment) this.getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
@@ -215,7 +249,12 @@ private void FetchDATA(){
             });
             product_RV.setLayoutManager(new LinearLayoutManager(this,RecyclerView.VERTICAL,false));
             product_RV.setAdapter(products_adapter);
-
+            if (order_id!=null){
+                products_adapter.isOrder=true;
+                service_adapter.isOrder=true;
+                products_adapter.notifyDataSetChanged();
+                service_adapter.notifyDataSetChanged();
+            }
             sub_tot.setText(String.format("%.2f",Caculate_Tot()));
             discount.setText(String.format("%.2f",00.0));
             tot_price.setText(String.format("%.2f",Caculate_Tot()));
@@ -227,6 +266,7 @@ private void FetchDATA(){
     public void onClick(View view) {
         OrderPop pop=new OrderPop(this);
         switch (view.getId()){
+
             case R.id.back_btn:
                 finish();
                 break;
@@ -256,7 +296,9 @@ private void FetchDATA(){
                                                                     String.valueOf(bascket.getProvider().getUpfrontAmount()),
                                                                     "",
                                                                    result,
-                                                                    upfont
+                                                                    upfont,
+                                                                    reOrder
+
                                                                     , new Order_root.PostOrderListener() {
                                                                         @Override
                                                                         public void onSuccess(Result result) {
@@ -301,7 +343,22 @@ private void FetchDATA(){
                 break;
         }
     }
-
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode) {
+            case 1: {
+                if (resultCode == Activity.RESULT_OK) {
+                    // TODO Extract the data returned from the child Activity.
+                    mLatLng  = new LatLng(data.getDoubleExtra("lat",0.0),
+                            data.getDoubleExtra("lng",0.0));
+                    String Location=data.getStringExtra("Location");
+                    make_marke(mLatLng);
+                }
+                break;
+            }
+        }
+    }
     /**********************************location********************************/
     private Boolean flag;
     private FusedLocationProviderClient fusedLocationClient;
@@ -318,10 +375,12 @@ private void FetchDATA(){
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
-                mLatLng=latLng;
-                make_marke(latLng);
+                Intent intent=new Intent(mcontext,Add_New_Address_Map.class);
+                startActivityForResult(intent, 1);
+
             }
         });
+
 
     }
     @Override

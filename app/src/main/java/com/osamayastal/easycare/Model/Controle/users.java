@@ -8,7 +8,7 @@ import org.json.JSONObject;
 
 public class users {
 
-    private User items;
+    private User items=null;
     private String messageAr,messageEn;
     private boolean status;
     private int statusCode;

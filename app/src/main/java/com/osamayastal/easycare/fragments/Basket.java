@@ -123,6 +123,7 @@ public class Basket extends Fragment implements View.OnClickListener {
 
                 Bundle bundle = new Bundle();
                 bundle.putInt("bascket_index",bascket_index);
+                bundle.putString("order_id",null);
                 Intent intent=new Intent(getActivity(), OrderDetails_Create.class);
                 intent.putExtras(bundle);
                 startActivity(intent);

@@ -41,6 +41,8 @@ public class Basket_Car_adapter extends RecyclerView.Adapter<Basket_Car_adapter.
     private List<Sub_service_basket> mItems = new ArrayList<>();
     private Context mContext;
     private View mview;
+    public boolean isOrder=false;
+
     public interface Selected_item{
         void Onselcted(Car_servece car_servece);
     }
@@ -70,7 +72,9 @@ public class Basket_Car_adapter extends RecyclerView.Adapter<Basket_Car_adapter.
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
 Double price=mItems.get(position).getSize().getPrice();
-        holder.name.setText(mItems.get(position).getCar_name());
+        int k=position+1;
+        holder.name.setText(mContext.getString(R.string.car_name)+" "+k);
+
 
         if (new User_info(mContext).getLanguage().equals("en")){
             holder.size.setText(mItems.get(position).getSize().getEnName()+" - "+String.format("%.2f",price)+mContext.getString(R.string.RS_short2));
@@ -80,6 +84,59 @@ Double price=mItems.get(position).getSize().getPrice();
 Basket_car_details_adapter adapter=new Basket_car_details_adapter(mContext,mItems.get(position).getSubCategory_basketList(),null);
         holder.RV.setLayoutManager(new LinearLayoutManager(mContext,RecyclerView.VERTICAL,false));
         holder.RV.setAdapter(adapter);
+
+        if (isOrder){
+            holder.delete.setVisibility(View.GONE);
+        }
+        holder.delete.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                final Dialog dialog=new Dialog(mContext);
+                dialog.setContentView(R.layout.popup_conf);
+                Button conf=dialog.findViewById(R.id.confBtn);
+                Button cancel=dialog.findViewById(R.id.cancelBtn);
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+                conf.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Bascket_root root=new Bascket_root();
+                        root.Delete(mContext, mItems.get(position).getCart_id(), new Bascket_root.PostbasketListener() {
+                            @Override
+                            public void onSuccess(Result bascket) {
+                                if (new User_info(mContext).getLanguage().equals("en")){
+                                    Toast.makeText(mContext,bascket.getMessageEn(),Toast.LENGTH_SHORT).show();
+                                }else {
+                                    Toast.makeText(mContext,bascket.getMessageAr(),Toast.LENGTH_SHORT).show();
+                                }
+                                if (bascket.isStatus()){
+                                    listenner.Onselcted(null);
+                                }
+                                dialog.dismiss();
+                            }
+
+                            @Override
+                            public void onStart() {
+
+                            }
+
+                            @Override
+                            public void onFailure(String msg) {
+
+                            }
+                        });
+
+                    }
+                });
+                dialog.show();
+
+            }
+        });
 
     }
 
@@ -92,12 +149,14 @@ Basket_car_details_adapter adapter=new Basket_car_details_adapter(mContext,mItem
 
      RecyclerView RV;
       TextView name,size,price;
+        ImageButton delete;
 
         public ViewHolder(View itemView) {
             super(itemView);
           name = itemView.findViewById(R.id.name);
           size = itemView.findViewById(R.id.car_size_tv);
           RV = itemView.findViewById(R.id.RV);
+            delete = itemView.findViewById(R.id.delete_btn);
 
           price = itemView.findViewById(R.id.price);
 

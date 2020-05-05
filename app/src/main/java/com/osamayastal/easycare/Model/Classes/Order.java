@@ -1,5 +1,9 @@
 package com.osamayastal.easycare.Model.Classes;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import com.osamayastal.easycare.Model.Classes.Basket.categories_basket;
 import com.osamayastal.easycare.Model.Classes.Provider.Provider;
 
@@ -8,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,8 +24,9 @@ private Provider provider_id;
     private boolean isUpfront;
     private double lat,lng,provider_Total,Admin_Total,Remain,Total;
     private int upfrontAmount,PaymentType,locationType,StatusId;
+private Long dateLong;
 
-
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public Order(JSONObject jsonObject) {
         if (jsonObject==null){
             return;
@@ -39,6 +45,7 @@ private Provider provider_id;
         }
         try {
             createAt=jsonObject.getString("createAt");
+//          dateLong=Instant.parse("2020-10-31T00:00:00Z").toEpochMilli();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -123,6 +130,14 @@ private Provider provider_id;
             e.printStackTrace();
         }
 
+    }
+
+    public Long getDateLong() {
+        return dateLong;
+    }
+
+    public void setDateLong(Long dateLong) {
+        this.dateLong = dateLong;
     }
 
     public Provider getProvider_id() {

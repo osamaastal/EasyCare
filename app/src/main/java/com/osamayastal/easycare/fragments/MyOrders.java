@@ -37,7 +37,7 @@ public class MyOrders extends Fragment implements View.OnTouchListener {
         // Inflate the layout for this fragment
          view= inflater.inflate(R.layout.fragment_my_orders, container, false);
         init(view);
-        Loading(1);
+
 
 
         return view;
@@ -46,6 +46,23 @@ public class MyOrders extends Fragment implements View.OnTouchListener {
     @Override
     public void onResume() {
         super.onResume();
+        Loading(statusID);
+        switch (statusID){
+            case 1:
+                wait.requestFocus();
+                break;
+
+            case 3:
+                current.requestFocus();
+                break;
+            case 4:
+                complete.requestFocus();
+                break;
+            case 5:
+                cancel.requestFocus();
+                break;
+        }
+
     }
 
     private int statusID=1;

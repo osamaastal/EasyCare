@@ -1,6 +1,9 @@
 package com.osamayastal.easycare.Model.Classes.Basket;
 
+import android.os.Build;
 import android.util.Log;
+
+import androidx.annotation.RequiresApi;
 
 import com.osamayastal.easycare.Model.Classes.Categorie;
 import com.osamayastal.easycare.Model.Classes.Employee;
@@ -13,6 +16,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,19 +30,25 @@ private Categorie categorie;
 
 
 //for Order
-    private String time,date,Order_no;
+    private String time,date,Order_no,createAt;
     private int PaymentType,locationType,StatusId;
     private Double Total;
     private Employee employee_id;
-
+private Long dateLong;
     public Bascket() {
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public Bascket(JSONObject jsonObject) {
         if (jsonObject==null){
             return;
         }
-
+        try {
+            createAt=jsonObject.getString("createAt");
+//            dateLong= Instant.parse("2020-10-31T00:00:00Z").toEpochMilli();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         categories=new ArrayList<>();
         products=new ArrayList<>();
         payment_id=new ArrayList<>();
@@ -171,6 +181,22 @@ private Categorie categorie;
             e.printStackTrace();
         }
 
+    }
+
+    public String getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(String createAt) {
+        this.createAt = createAt;
+    }
+
+    public Long getDateLong() {
+        return dateLong;
+    }
+
+    public void setDateLong(Long dateLong) {
+        this.dateLong = dateLong;
     }
 
     public List<Payment> getPayment_id() {

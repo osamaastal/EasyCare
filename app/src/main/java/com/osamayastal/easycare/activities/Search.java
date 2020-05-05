@@ -187,8 +187,13 @@ default_tv.setOnClickListener(new View.OnClickListener() {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                City city1=(City) city.getSelectedItem();
-                city_id=city1.get_id();
+                try {
+                    City city1 = (City) city.getSelectedItem();
+                    city_id = city1.get_id();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 rat= String.valueOf(rang.getProgress());
                 Search_fun(name,categorie_id,city_id,rat,raduis);
                 mypopupWindow_filter.dismiss();
@@ -324,7 +329,6 @@ default_tv.setOnClickListener(new View.OnClickListener() {
     public void GetLocation( Context mcontext) {
         this.mcontext = mcontext;
 
-        locationManager = (LocationManager) mcontext.getSystemService(Context.LOCATION_SERVICE);
         enableMyLocationIfPermitted();
 
 
@@ -454,39 +458,5 @@ default_tv.setOnClickListener(new View.OnClickListener() {
             return false;
         }
     }
-
-    /*----------Method to create an AlertBox ------------- */
-    protected void alertbox(String title, String mymessage) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(mcontext);
-        final Dialog dialog = new Dialog(mcontext);
-        dialog .setContentView(R.layout.popup_opengps);
-        dialog.setCancelable(false);
-        Button cancel=(Button)dialog.findViewById(R.id.cancel_btn);
-        TextView tex1=(TextView)dialog.findViewById(R.id.tx1_tv);
-        TextView tex2=(TextView)dialog.findViewById(R.id.tx2_tv);
-
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-            }
-        });
-        Button go_sitting=(Button)dialog.findViewById(R.id.open_sitting_btn);
-        go_sitting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent myIntent = new Intent(
-                        Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                mcontext.startActivity(myIntent);
-                dialog.cancel();
-            }
-        });
-        dialog.show();
-
-
-    }
-
-    private LocationManager locationManager = null;
-    private LocationListener locationListener = null;
 
 }

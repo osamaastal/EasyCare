@@ -11,6 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activities.Wallet"></activity>
+        <activity android:name=".activities.Add_New_Address_Map"></activity>
         <activity android:name=".activities.Chat" />
         <activity android:name=".activities.OrderDetails" />
         <activity android:name=".activities.Auther_activity" />

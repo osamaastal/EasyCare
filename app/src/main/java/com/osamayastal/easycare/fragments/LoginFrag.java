@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.osamayastal.easycare.Model.Const.User_info;
 import com.osamayastal.easycare.Model.Controle.users;
@@ -90,13 +91,15 @@ private Button login_btn;
                         public void onSuccess(users new_account) {
                             if (new User_info(getContext()).getLanguage().equals("en")){
                                 Toast.makeText(getContext(),new_account.getMessageEn(),Toast.LENGTH_SHORT).show();
+
                             }else {
                                 Toast.makeText(getContext(),new_account.getMessageAr(),Toast.LENGTH_SHORT).show();
                             }
-                            if (new_account.getItems()==null){
+                            if (new_account.getItems().getId()==null){
                                 return;
                             }
-                            if (new_account.getItems().isIsVerify()) {
+                            new User_info().Password(passord.getText().toString(),getContext());
+                            if (new_account.getItems().isIsVerify() ) {
 
                                 new User_info(new_account.getItems(),getContext());
                                 new User_info().DO_CONF_phone(getContext());

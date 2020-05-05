@@ -124,7 +124,7 @@ public class Order_root {
                           final String upfrontAmount, final String couponCode,
                           final String paymentType,
                           final Boolean isUpfront,
-                          final PostOrderListener listener)
+                          final Boolean reOrder, final PostOrderListener listener)
     {
 
         listener.onStart();
@@ -163,6 +163,7 @@ public class Order_root {
                 Map<String, String> parameters = new HashMap<>();
 
                 parameters.put("provider_id",provider_id);
+                parameters.put("reOrder",String.valueOf(reOrder));
                 parameters.put("locationType", String.valueOf(locationType));
                if (locationType==1){
                    parameters.put("lat",lat);

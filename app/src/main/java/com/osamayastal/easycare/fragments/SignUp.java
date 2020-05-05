@@ -219,7 +219,7 @@ private AppCompatCheckBox accept;
                 Toast.makeText(getContext(),"لم يتم أخذ إحداثياتك بعد",Toast.LENGTH_SHORT).show();
                 return;
             }
-            User user_=new User();
+            final User user_=new User();
             user_.setFullName(name.getText().toString());
             user_.setPhoneNumber(phone.getText().toString());
             user_.setEmail(email.getText().toString());
@@ -240,6 +240,9 @@ private AppCompatCheckBox accept;
                     if (!new_account.isStatus()){
                         return;
                     }
+                    //save Pw
+                    new User_info().Password(user_.getPassword(),getContext());
+//save user info
                     new User_info(new_account.getItems(),getContext());
                     startActivity(new Intent(getActivity(), ConfCode.class));
                     getActivity().finish();

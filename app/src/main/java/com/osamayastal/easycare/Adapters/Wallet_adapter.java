@@ -74,18 +74,7 @@ public class Wallet_adapter extends RecyclerView.Adapter<Wallet_adapter.ViewHold
            e.printStackTrace();
        }
 
-        holder.nb.setVisibility(View.GONE);
-        holder.order_status.setVisibility(View.GONE);
         holder.time.setVisibility(View.GONE);
-
-
-//        try {
-//           Picasso.with(mContext)
-//                   .load(mItems.get(position).getProvider_id().getImage())
-//                   .into(holder.Img);
-//       } catch (Exception e) {
-//           e.printStackTrace();
-//       }
 
         mview.setOnClickListener(new View.OnClickListener() {
 
@@ -106,18 +95,15 @@ public class Wallet_adapter extends RecyclerView.Adapter<Wallet_adapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-     ImageView Img;
+
       TextView name,date,time,type,id,price,payment;
-      ImageView order_status;
-        LinearLayout nb;
+
+
       public ViewHolder(View itemView) {
             super(itemView);
-          nb = itemView.findViewById(R.id.nb);
+
           payment = itemView.findViewById(R.id.payment_way_tv);
-          Img = itemView.findViewById(R.id.userImg);
-          order_status = itemView.findViewById(R.id.order_status);
           name = itemView.findViewById(R.id.userName_tv);
-          Img = itemView.findViewById(R.id.userImg);
           date= itemView.findViewById(R.id.date_tv);
           time= itemView.findViewById(R.id.time_tv);
           type= itemView.findViewById(R.id.type_tv);
