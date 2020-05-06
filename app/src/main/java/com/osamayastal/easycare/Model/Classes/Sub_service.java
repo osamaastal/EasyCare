@@ -8,7 +8,7 @@ import java.util.List;
 public class Sub_service {
     private String _id,nameAr,nameEn,image,category_id,provider_subCategory_id;
     private boolean isActive;
-private Double price;
+private Double price=0.0;
     public Sub_service(JSONObject jsonObject) {
         if (jsonObject==null){
             return;

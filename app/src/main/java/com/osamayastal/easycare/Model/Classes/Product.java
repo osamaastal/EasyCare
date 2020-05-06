@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Product implements Serializable {
     private String _id,name,description,image,by_user_id,createat,cart_id;
-    private  Double price,discountPrice,Total;
+    private  Double price=0.0,discountPrice=0.0,Total=0.0;
     private int upFront,qty;
     private boolean isUpFront,status;
     private List<String> images;

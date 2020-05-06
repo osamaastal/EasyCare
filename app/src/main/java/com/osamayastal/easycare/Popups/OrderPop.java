@@ -352,6 +352,7 @@ service_for_basket=new Service_for_basket();
                             public void Cancel() {
                                 carList.clear();
                                 car_adapter.notifyDataSetChanged();
+                                Calculate_total(carList);
                                 basket_count(mcontext);
                             }
                         });
@@ -399,6 +400,11 @@ service_for_basket=new Service_for_basket();
                         Intent intent=new Intent(mcontext, OrderDetails_Create.class);
                         intent.putExtras(bundle);
                         mcontext.startActivity(intent);
+
+                        carList.clear();
+                        car_adapter.notifyDataSetChanged();
+                        Calculate_total(carList);
+                        basket_count(mcontext);
                     }
                     @Override
                     public void onStart() {

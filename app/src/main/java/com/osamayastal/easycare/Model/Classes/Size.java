@@ -5,7 +5,7 @@ import org.json.JSONObject;
 
 public class Size {
     private String _id,arName,enName,size_id;
-    private Double price;
+    private Double price=0.0;
 
     public Size(JSONObject jsonObject) {
         if (jsonObject==null){
