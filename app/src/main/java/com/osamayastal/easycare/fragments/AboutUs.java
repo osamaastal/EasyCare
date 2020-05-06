@@ -1,9 +1,12 @@
 package com.osamayastal.easycare.fragments;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +16,9 @@ import android.widget.TextView;
 
 import com.osamayastal.easycare.Model.Classes.StaticPage;
 import com.osamayastal.easycare.Model.Const.User_info;
+import com.osamayastal.easycare.Model.Controle.Contact;
 import com.osamayastal.easycare.Model.Controle.StaticPages;
+import com.osamayastal.easycare.Model.Rootes.Contact_root;
 import com.osamayastal.easycare.Model.Rootes.StaticPage_root;
 import com.osamayastal.easycare.R;
 import com.osamayastal.easycare.activities.MainActivity;
@@ -32,8 +37,39 @@ public class AboutUs extends Fragment implements View.OnClickListener {
         Loading();
         return view;
     }
+    String sit_url=null;
+    private void Get_Contact() {
+        Contact_root root=new Contact_root();
+        root.GetContact(getContext(), new Contact_root.Contact_Listener() {
+            @Override
+            public void onSuccess(Contact contact) {
+                for (com.osamayastal.easycare.Model.Classes.Contact c:contact.getItems()
+                ) {
+                    switch (c.get_id()){
+                        case "5eb1065b9ab447d96d25d01a":
+                            sit_url=c.getData();
+                            Log.d("email",sit_url);
+                            web_sit_btn.setText(sit_url);
 
+                            break;
+
+                    }
+                }
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onFailure(String msg) {
+
+            }
+        });
+    }
     private void Loading() {
+        Get_Contact();
         view.findViewById(R.id.linear_wait).setVisibility(View.VISIBLE);
         StaticPage_root root=new StaticPage_root();
         root.Get_StaticPages(getContext(), new StaticPage_root.StaticPages_Listener() {
@@ -89,6 +125,10 @@ public class AboutUs extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.web_site_btn:
+                if (sit_url!=null){
+                    Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(sit_url));
+                    startActivity(myIntent);
+                }
                 break;
             case R.id.back_btn:
                getActivity().finish();

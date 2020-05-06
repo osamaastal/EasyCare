@@ -1,5 +1,6 @@
 package com.osamayastal.easycare.Model.Rootes;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
 
@@ -17,6 +18,8 @@ import com.osamayastal.easycare.Model.Controle.Bascket;
 import com.osamayastal.easycare.Model.Controle.Favorites_get;
 import com.osamayastal.easycare.Model.Controle.Result;
 import com.osamayastal.easycare.Model.Controle.Search;
+import com.osamayastal.easycare.Popups.AppPop;
+import com.osamayastal.easycare.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -138,6 +141,7 @@ public class Bascket_root {
                           final String productID,final int qty,
                           final PostbasketListener listener)
     {
+        final ProgressDialog dialog=new AppPop().Loading_POP(mcontext,mcontext.getString(R.string.posttobasket_progress));
 
         listener.onStart();
         String url= Server_info.API +"api/mobile/addProductCart";
@@ -151,6 +155,7 @@ public class Bascket_root {
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                dialog.dismiss();
                 Log.d("Response", response.toString());
                 JSONObject Jobject = null;
                 try {
@@ -210,6 +215,7 @@ public class Bascket_root {
                             final JSONObject product,
                             final PostbasketListener listener)
     {
+        final ProgressDialog dialog=new AppPop().Loading_POP(mcontext,mcontext.getString(R.string.update_qty_progress));
 
         listener.onStart();
         final String url= Server_info.API +"api/mobile/UpdateCart";
@@ -228,7 +234,7 @@ public class Bascket_root {
                 {
                     @Override
                     public void onResponse(JSONObject response) {
-
+dialog.dismiss();
                         Log.d("Response", response.toString());
 
 
@@ -280,11 +286,11 @@ public class Bascket_root {
                             final JSONObject service,
                             final PostbasketListener listener)
     {
+        final ProgressDialog dialog=new AppPop().Loading_POP(mcontext,mcontext.getString(R.string.posttobasket_progress));
 
         listener.onStart();
         final String url= Server_info.API +"api/mobile/addServiceCart";
         final String token=new User_info(mcontext).getToken();
-
         if (queue == null) {
             queue = Volley.newRequestQueue(mcontext);  // this = context
             //Build.logError("Setting a new request queue");
@@ -298,7 +304,7 @@ public class Bascket_root {
                 {
                     @Override
                     public void onResponse(JSONObject response) {
-
+dialog.dismiss();
                         Log.d("Response", response.toString());
 
                         listener.onSuccess(new Result(response));
@@ -353,6 +359,7 @@ public class Bascket_root {
         listener.onStart();
         String url= Server_info.API +"api/mobile/deleteItemCart/"+ID;
         final String token=new User_info(mcontext).getToken();
+        final ProgressDialog dialog=new AppPop().Loading_POP(mcontext,mcontext.getString(R.string.deletprod_progress));
 
         if (queue == null) {
             queue = Volley.newRequestQueue(mcontext);  // this = context
@@ -362,6 +369,7 @@ public class Bascket_root {
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                dialog.dismiss();
                 Log.d("Response", response.toString());
                 JSONObject Jobject = null;
                 try {
@@ -402,6 +410,80 @@ public class Bascket_root {
                 Map<String, String> parameters = new HashMap<>();
 
                 parameters.put("token",token);
+                return  parameters;
+            }
+        };
+        queue.add(request);
+
+    }
+
+    public void Delete_Service(final Context mcontext,
+                               final String ID,
+                               final String providerSubCategory_id, final PostbasketListener listener)
+    {
+
+        listener.onStart();
+        String url= Server_info.API +"api/mobile/deleteServiceCart/"+ID;
+        final String token=new User_info(mcontext).getToken();
+        final ProgressDialog dialog=new AppPop().Loading_POP(mcontext,mcontext.getString(R.string.deletService_progress));
+
+        if (queue == null) {
+            queue = Volley.newRequestQueue(mcontext);  // this = context
+            //Build.logError("Setting a new request queue");
+        }
+        // prepare the Request
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                dialog.dismiss();
+                Log.d("Response", response.toString());
+                JSONObject Jobject = null;
+                try {
+                    Jobject = new JSONObject(response);
+                    Log.d("Response", response.toString());
+
+                    listener.onSuccess(new Result(Jobject));
+                    GetItemCount(mcontext, new Basket_count_Listener() {
+                        @Override
+                        public void onSuccess(int nb) {
+
+                        }
+
+                        @Override
+                        public void onStart() {
+
+                        }
+
+                        @Override
+                        public void onFailure(String msg) {
+
+                        }
+                    });
+                } catch (JSONException e1) {
+                    e1.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("error",error.toString());
+            }
+        }){
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> parameters = new HashMap<>();
+
+                parameters.put("token",token);
+                return  parameters;
+            }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> parameters = new HashMap<>();
+
+                parameters.put("providerSubCategory_id",providerSubCategory_id);
                 return  parameters;
             }
         };

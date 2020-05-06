@@ -286,49 +286,95 @@ private void FetchDATA(){
                                     public void ongetResult(String result,String time_,Boolean upfont) {
                                                             findViewById(R.id.linear_wait).setVisibility(View.VISIBLE);
                                                             Order_root root=new Order_root();
-                                                            root.PostOrder(mcontext,
-                                                                    bascket.getProvider().get_id()
-                                                                    , location_typ,
-                                                                    String.valueOf(mLatLng.latitude),
-                                                                    String.valueOf(mLatLng.longitude),
-                                                                    date,
-                                                                    time,
-                                                                    String.valueOf(bascket.getProvider().getUpfrontAmount()),
-                                                                    "",
-                                                                   result,
-                                                                    upfont,
-                                                                    reOrder
+                                                           if (reOrder) {
+                                                               root.ReOrder(mcontext,
+                                                                       location_typ,
+                                                                       String.valueOf(mLatLng.latitude),
+                                                                       String.valueOf(mLatLng.longitude),
+                                                                       date,
+                                                                       time,
+                                                                       String.valueOf(bascket.getProvider().getUpfrontAmount()),
+                                                                       "",
+                                                                       result,
+                                                                       upfont,
+                                                                       order_id
 
-                                                                    , new Order_root.PostOrderListener() {
-                                                                        @Override
-                                                                        public void onSuccess(Result result) {
-                                                                            findViewById(R.id.linear_wait).setVisibility(View.GONE);
-                                                                           try {
-                                                                               if (new User_info(mcontext).getLanguage().equals("en")){
-                                                                                   Toast.makeText(OrderDetails_Create.this,result.getMessageEn(),Toast.LENGTH_SHORT).show();
-                                                                               }else {
-                                                                                   Toast.makeText(OrderDetails_Create.this,result.getMessageAr(),Toast.LENGTH_SHORT).show();
+                                                                       , new Order_root.PostOrderListener() {
+                                                                           @Override
+                                                                           public void onSuccess(Result result) {
+                                                                               findViewById(R.id.linear_wait).setVisibility(View.GONE);
+                                                                               try {
+                                                                                   if (new User_info(mcontext).getLanguage().equals("en")){
+                                                                                       Toast.makeText(OrderDetails_Create.this,result.getMessageEn(),Toast.LENGTH_SHORT).show();
+                                                                                   }else {
+                                                                                       Toast.makeText(OrderDetails_Create.this,result.getMessageAr(),Toast.LENGTH_SHORT).show();
+                                                                                   }
+                                                                               } catch (Exception e) {
+                                                                                   e.printStackTrace();
                                                                                }
-                                                                           } catch (Exception e) {
-                                                                               e.printStackTrace();
+                                                                               MainActivity.item_select=R.id.my_orders;
+                                                                               finish();
+
                                                                            }
-                                                                           MainActivity.item_select=R.id.my_orders;
-                                                                            finish();
 
-                                                                        }
+                                                                           @Override
+                                                                           public void onStart() {
 
-                                                                        @Override
-                                                                        public void onStart() {
+                                                                           }
 
-                                                                        }
+                                                                           @Override
+                                                                           public void onFailure(String msg) {
 
-                                                                        @Override
-                                                                        public void onFailure(String msg) {
+                                                                           }
+                                                                       }
+                                                               );
+                                                           }
+                                                           else {
+                                                                   root.PostOrder(mcontext,
+                                                                           bascket.getProvider().get_id()
+                                                                           , location_typ,
+                                                                           String.valueOf(mLatLng.latitude),
+                                                                           String.valueOf(mLatLng.longitude),
+                                                                           date,
+                                                                           time,
+                                                                           String.valueOf(bascket.getProvider().getUpfrontAmount()),
+                                                                           "",
+                                                                           result,
+                                                                           upfont
 
-                                                                        }
-                                                                    }
-                                                            );
-                                    }});
+                                                                           , new Order_root.PostOrderListener() {
+                                                                               @Override
+                                                                               public void onSuccess(Result result) {
+                                                                                   findViewById(R.id.linear_wait).setVisibility(View.GONE);
+                                                                                   try {
+                                                                                       if (new User_info(mcontext).getLanguage().equals("en")){
+                                                                                           Toast.makeText(OrderDetails_Create.this,result.getMessageEn(),Toast.LENGTH_SHORT).show();
+                                                                                       }else {
+                                                                                           Toast.makeText(OrderDetails_Create.this,result.getMessageAr(),Toast.LENGTH_SHORT).show();
+                                                                                       }
+                                                                                   } catch (Exception e) {
+                                                                                       e.printStackTrace();
+                                                                                   }
+                                                                                   MainActivity.item_select=R.id.my_orders;
+                                                                                   finish();
+
+                                                                               }
+
+                                                                               @Override
+                                                                               public void onStart() {
+
+                                                                               }
+
+                                                                               @Override
+                                                                               public void onFailure(String msg) {
+
+                                                                               }
+                                                                           }
+                                                                   );
+
+                                                           }
+                                    }
+        });
 
                 break;
             case R.id.time_btn:

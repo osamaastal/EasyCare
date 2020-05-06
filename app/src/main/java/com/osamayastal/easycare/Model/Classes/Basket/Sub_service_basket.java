@@ -11,12 +11,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Sub_service_basket implements Serializable {
-    private String cart_id,car_name;
+    private String cart_id,car_name,providerSubCategory_id;
     private List<SubCategory_basket> subCategory_basketList;
 private Size size;
     public Sub_service_basket(JSONObject jsonObject) {
         if (jsonObject==null){
             return;
+        }
+        try {
+            providerSubCategory_id=jsonObject.getString("provider_sub_category_id");
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
         try {
             cart_id=jsonObject.getString("cart_id");
@@ -47,6 +52,14 @@ private Size size;
 
     public String getCart_id() {
         return cart_id;
+    }
+
+    public String getProviderSubCategory_id() {
+        return providerSubCategory_id;
+    }
+
+    public void setProviderSubCategory_id(String providerSubCategory_id) {
+        this.providerSubCategory_id = providerSubCategory_id;
     }
 
     public void setCart_id(String cart_id) {

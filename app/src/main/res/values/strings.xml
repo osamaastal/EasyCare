@@ -151,6 +151,16 @@
     <string name="RS_short2">ريال</string>
     <string name="no_data">لايوجد بيانات</string>
     <string name="you_cant_edit_this_service">You can\'t edit this service</string>
+    <string name="Loging_progress">جاري تسجيل الدخول</string>
+    <string name="Logout_progress">جاري تسجبل الخروج</string>
+    <string name="passwordChenge_progress">جاري تعديل كلمة المرور</string>
+    <string name="activate_progress">جاري تفعيل الحساب</string>
+    <string name="updateuser_progress">جاري تعديل الحساب</string>
+    <string name="signup_progress">جاري إنشاء الحساب</string>
+    <string name="deletService_progress">جاري حذف الخدمة</string>
+    <string name="deletprod_progress">جاري حذف المنتج</string>
+    <string name="posttobasket_progress">جاري الإضافة لسلة</string>
+    <string name="update_qty_progress">جاري تعديل العدد</string>
 
 
 </resources>

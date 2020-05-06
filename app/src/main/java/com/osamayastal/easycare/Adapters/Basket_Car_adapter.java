@@ -106,7 +106,7 @@ Basket_car_details_adapter adapter=new Basket_car_details_adapter(mContext,mItem
                     @Override
                     public void onClick(View view) {
                         Bascket_root root=new Bascket_root();
-                        root.Delete(mContext, mItems.get(position).getCart_id(), new Bascket_root.PostbasketListener() {
+                        root.Delete_Service(mContext, mItems.get(position).getCart_id(),mItems.get(position).getProviderSubCategory_id(), new Bascket_root.PostbasketListener() {
                             @Override
                             public void onSuccess(Result bascket) {
                                 if (new User_info(mContext).getLanguage().equals("en")){

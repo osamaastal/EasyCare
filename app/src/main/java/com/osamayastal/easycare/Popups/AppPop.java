@@ -1,6 +1,7 @@
 package com.osamayastal.easycare.Popups;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -168,6 +169,13 @@ public interface goListenner{
             }
         });
         dialog.show();
+    }
+
+    public ProgressDialog Loading_POP(final Context mContext, String msg){
+        ProgressDialog dialog=new ProgressDialog(mContext);
+        dialog.setMessage(msg);
+        dialog.show();
+        return dialog;
     }
 
 }

@@ -1,5 +1,6 @@
 package com.osamayastal.easycare.Model.Rootes;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
@@ -17,6 +18,7 @@ import com.osamayastal.easycare.Model.Const.User_info;
 import com.osamayastal.easycare.Model.Controle.Result;
 import com.osamayastal.easycare.Model.Controle.users;
 import com.osamayastal.easycare.Model.Const.Server_info;
+import com.osamayastal.easycare.Popups.AppPop;
 import com.osamayastal.easycare.R;
 
 
@@ -84,6 +86,8 @@ public class user {
         if (queue==null) {
             queue = Volley.newRequestQueue(mcontext);
         }
+        final ProgressDialog dialog=new AppPop().Loading_POP(mcontext,mcontext.getString(R.string.signup_progress));
+
         String url = Server_info.API+"api/mobile/users";;
         lisenner.onStart();
         StringRequest postRequest = new StringRequest(Request.Method.POST, url,
@@ -91,6 +95,7 @@ public class user {
                 {
                     @Override
                     public void onResponse(String response) {
+                        dialog.dismiss();
                         // response
                         Log.d("Response", response);
                         String jsonData = response;
@@ -139,6 +144,8 @@ public class user {
         if (queue==null) {
             queue = Volley.newRequestQueue(mcontext);
         }
+        final ProgressDialog dialog=new AppPop().Loading_POP(mcontext,mcontext.getString(R.string.updateuser_progress));
+
         String url = Server_info.API+"api/mobile/updateprofileAndroid";
         final String token=new User_info(mcontext).getToken();
         lisenner.onStart();
@@ -147,7 +154,7 @@ public class user {
                 {
                     @Override
                     public void onResponse(JSONObject response) {
-
+dialog.dismiss();
                         Log.d("Response", response.toString());
 
                         lisenner.onSuccess(new users(response));
@@ -186,6 +193,7 @@ public class user {
         if (queue==null) {
             queue = Volley.newRequestQueue(mcontext);  // this = context
         }
+        final ProgressDialog dialog=new AppPop().Loading_POP(mcontext,mcontext.getString(R.string.Loging_progress));
         String url = Server_info. API+"api/mobile/login";
         lisenner.onStart();
         StringRequest postRequest = new StringRequest(Request.Method.POST, url,
@@ -194,6 +202,7 @@ public class user {
                     @Override
                     public void onResponse(String response) {
                         // response
+                        dialog.dismiss();
                         Log.d("Response", response);
                         String jsonData = response;
                         JSONObject Jobject = null;
@@ -289,6 +298,8 @@ public class user {
         if (queue==null) {
             queue = Volley.newRequestQueue(mcontext);  // this = context
         }
+        final ProgressDialog dialog=new AppPop().Loading_POP(mcontext,mcontext.getString(R.string.Logout_progress));
+
         final String token=new User_info(mcontext).getToken();
 
         Log.d("token",token);
@@ -302,6 +313,7 @@ public class user {
                     @Override
                     public void onResponse(String response) {
                         // response
+                        dialog.dismiss();
                         Log.d("Response", response);
                         String jsonData = response;
                         JSONObject Jobject = null;
@@ -343,6 +355,8 @@ public class user {
         if (queue==null) {
             queue = Volley.newRequestQueue(mcontext);  // this = context
         }
+        final ProgressDialog dialog=new AppPop().Loading_POP(mcontext,mcontext.getString(R.string.passwordChenge_progress));
+
         final User_info user_info=new User_info(mcontext);
         final String token=user_info.getToken();
         String url = Server_info.API+"api/mobile/changePassword";
@@ -352,6 +366,7 @@ public class user {
                 {
                     @Override
                     public void onResponse(String response) {
+                        dialog.dismiss();
                         // response
                         Log.d("Response", response);
                         String jsonData = response;
@@ -588,6 +603,7 @@ public class user {
         if (queue==null) {
             queue = Volley.newRequestQueue(mcontext);  // this = context
         }
+        final ProgressDialog dialog=new AppPop().Loading_POP(mcontext,mcontext.getString(R.string.activate_progress));
 
         String url = Server_info.API+"api/mobile/verfiy";
 
@@ -597,6 +613,7 @@ public class user {
                 {
                     @Override
                     public void onResponse(String response) {
+                        dialog.dismiss();
                         // response
                         Log.d("Response", response);
                         String jsonData = response;

@@ -377,36 +377,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 break;
             case R.id.language:
-                if (new User_info(this).getLanguage().equals("en")) {
-                    ChangeLanguge_pop("ar", this, new chang() {
-                        @Override
-                        public void onSave(Boolean v) {
-
-                            if (v) {
-                                langu.setText("Ar");
-                                finishAffinity();
-
-                            }
-                        }
-                    });
-                } else {
-                    ChangeLanguge_pop("en", this, new chang() {
-                        @Override
-                        public void onSave(Boolean v) {
-                            if (v) {
-                                langu.setText("En");
-                                finishAffinity();
-
-                            }
-                        }
-                    });
-
-
-                }
-                getLanguge();
+//                if (new User_info(this).getLanguage().equals("en")) {
+//                    ChangeLanguge_pop("ar", this, new chang() {
+//                        @Override
+//                        public void onSave(Boolean v) {
+//
+//                            if (v) {
+//                                langu.setText("Ar");
+//                                finishAffinity();
+//
+//                            }
+//                        }
+//                    });
+//                } else {
+//                    ChangeLanguge_pop("en", this, new chang() {
+//                        @Override
+//                        public void onSave(Boolean v) {
+//                            if (v) {
+//                                langu.setText("En");
+//                                finishAffinity();
+//
+//                            }
+//                        }
+//                    });
+//
+//
+//                }
+//                getLanguge();
 
                 break;
             case R.id.logout_btn:
+
                 AppPop pop=new AppPop();
                 pop.Conferme_POP(mcontext, "هل انت متأكد انك تريد تسجيل الخروج", new AppPop.goListenner() {
                     @Override

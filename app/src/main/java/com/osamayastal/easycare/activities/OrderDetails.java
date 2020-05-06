@@ -270,7 +270,7 @@ switch (view.getId()){
                 });
 
                 break;
-//            case 2://2- Accepted
+            case 2://2- Accepted
             case 3:// 3- OnProgress
                 FirebaseDatabase database=FirebaseDatabase.getInstance();
                 DatabaseReference reference=database.getReference().child("chat").child(order_id);
