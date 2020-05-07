@@ -42,6 +42,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.osamayastal.easycare.Adapters.City_adapter;
 import com.osamayastal.easycare.Model.Classes.City;
 import com.osamayastal.easycare.Model.Classes.Complain;
+import com.osamayastal.easycare.Model.Classes.LanguageHelper;
 import com.osamayastal.easycare.Model.Classes.User;
 import com.osamayastal.easycare.Model.Const.Server_info;
 import com.osamayastal.easycare.Model.Const.User_info;
@@ -95,6 +96,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.activity_main);
         frameLayout = findViewById(R.id.mainContainer);
 
