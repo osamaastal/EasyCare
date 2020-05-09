@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layoutDirection="rtl"
+    android:layoutDirection="locale"
     android:background="@color/darkblue"
     tools:context=".fragments.LoginFrag">
     <androidx.core.widget.NestedScrollView
@@ -35,7 +35,7 @@
                 android:paddingStart="30dp"
                 android:paddingEnd="30dp"
                 android:gravity="center"
-                android:layout_gravity="right"
+                android:layout_gravity="end"
                 android:paddingBottom="5dp"
                 android:background="@drawable/bg_blue_gradiant_26dp_left"
                 app:layout_constraintEnd_toEndOf="parent"

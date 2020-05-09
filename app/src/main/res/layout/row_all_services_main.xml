@@ -31,7 +31,7 @@
         android:id="@+id/soon_tv"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:text="قريباً"
+        android:text="@string/soon"
         style="@style/text_white_roman_12"
         android:gravity="center"
         android:paddingBottom="5dp"

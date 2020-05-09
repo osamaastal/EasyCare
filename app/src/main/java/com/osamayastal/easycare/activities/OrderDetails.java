@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -41,6 +42,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import top.defaults.drawabletoolbox.DrawableBuilder;
@@ -50,6 +52,7 @@ public class OrderDetails extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setLocale(this);
         setContentView(R.layout.fragment_order_details);
 
         Intent intent = this.getIntent();
@@ -58,6 +61,18 @@ public class OrderDetails extends AppCompatActivity implements View.OnClickListe
 
         init();
         Loading();
+    }
+    public void setLocale(Context context ){
+        User_info user_info;
+        user_info = new User_info(context);
+        String language=user_info.getLanguage();
+        Locale locale = new Locale(language);
+        Configuration config = new Configuration(getResources().getConfiguration());
+        Locale.setDefault(locale);
+        config.setLocale(locale);
+        getBaseContext().getResources().updateConfiguration(config,
+                getBaseContext().getResources().getDisplayMetrics());
+//        Toast.makeText(this, "Language: "+ Locale.getDefault().getLanguage() , Toast.LENGTH_SHORT).show();
     }
 private String order_id=null;
     private void Loading() {

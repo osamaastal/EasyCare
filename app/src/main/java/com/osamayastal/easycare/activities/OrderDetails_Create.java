@@ -13,6 +13,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
@@ -63,6 +64,7 @@ public class OrderDetails_Create extends AppCompatActivity implements View.OnCli
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setLocale(this);
         setContentView(R.layout.activity_order_details__create);
         Intent intent = this.getIntent();
 
@@ -79,6 +81,18 @@ public class OrderDetails_Create extends AppCompatActivity implements View.OnCli
         }
 
 
+    }
+    public void setLocale(Context context ){
+        User_info user_info;
+        user_info = new User_info(context);
+        String language=user_info.getLanguage();
+        Locale locale = new Locale(language);
+        Configuration config = new Configuration(getResources().getConfiguration());
+        Locale.setDefault(locale);
+        config.setLocale(locale);
+        getBaseContext().getResources().updateConfiguration(config,
+                getBaseContext().getResources().getDisplayMetrics());
+//        Toast.makeText(this, "Language: "+ Locale.getDefault().getLanguage() , Toast.LENGTH_SHORT).show();
     }
     private Double Caculate_Tot(){
         Double tot=0.0;

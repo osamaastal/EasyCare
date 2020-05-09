@@ -10,6 +10,7 @@ import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.MailTo;
@@ -27,12 +28,15 @@ import com.osamayastal.easycare.Model.Const.User_info;
 import com.osamayastal.easycare.R;
 import com.osamayastal.easycare.fragments.LoginFrag;
 
+import java.util.Locale;
+
 public class LoginActivity extends AppCompatActivity {
 
     public static FragmentTransaction transaction;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setLocale(this);
         setContentView(R.layout.activity_login);
 
 
@@ -72,7 +76,18 @@ public class LoginActivity extends AppCompatActivity {
                 });
 
     }
-
+    public void setLocale(Context context ){
+        User_info user_info;
+        user_info = new User_info(context);
+        String language=user_info.getLanguage();
+        Locale locale = new Locale(language);
+        Configuration config = new Configuration(getResources().getConfiguration());
+        Locale.setDefault(locale);
+        config.setLocale(locale);
+        getBaseContext().getResources().updateConfiguration(config,
+                getBaseContext().getResources().getDisplayMetrics());
+//        Toast.makeText(this, "Language: "+ Locale.getDefault().getLanguage() , Toast.LENGTH_SHORT).show();
+    }
     private Boolean isGPS;
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

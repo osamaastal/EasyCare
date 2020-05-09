@@ -341,7 +341,7 @@ service_for_basket=new Service_for_basket();
 //                            Toast.makeText(mcontext, bascket.getMessageAr(), Toast.LENGTH_SHORT).show();
                         }
                         AppPop appPop=new AppPop();
-                        appPop.Conferme_POP(mcontext, msg+"\n"+"هل تريد الإنتقال الى السلة ؟", new AppPop.goListenner() {
+                        appPop.Conferme_POP(mcontext, msg+"\n"+mcontext.getString(R.string.go_basket), new AppPop.goListenner() {
                             @Override
                             public void Go() {
 

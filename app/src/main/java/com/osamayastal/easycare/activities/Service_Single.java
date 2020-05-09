@@ -5,12 +5,15 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.osamayastal.easycare.Adapters.Product_adapter;
 import com.osamayastal.easycare.Adapters.Provider_adapter;
@@ -30,6 +33,7 @@ import com.osamayastal.easycare.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class Service_Single extends AppCompatActivity implements View.OnClickListener {
 
@@ -38,6 +42,7 @@ public class Service_Single extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setLocale(this);
         setContentView(R.layout.activity_service__single);
 
         Intent intent = this.getIntent();
@@ -47,7 +52,18 @@ public class Service_Single extends AppCompatActivity implements View.OnClickLis
         init();
         Loading();
     }
-
+    public void setLocale(Context context ){
+        User_info user_info;
+        user_info = new User_info(context);
+        String language=user_info.getLanguage();
+        Locale locale = new Locale(language);
+        Configuration config = new Configuration(getResources().getConfiguration());
+        Locale.setDefault(locale);
+        config.setLocale(locale);
+        getBaseContext().getResources().updateConfiguration(config,
+                getBaseContext().getResources().getDisplayMetrics());
+//        Toast.makeText(this, "Language: "+ Locale.getDefault().getLanguage() , Toast.LENGTH_SHORT).show();
+    }
     private void Loading() {
 
         if (new User_info(this).getLanguage().equals("en")){

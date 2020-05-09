@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layoutDirection="rtl"
+    android:layoutDirection="locale"
     android:background="@color/white"
     android:orientation="vertical"
     tools:context=".fragments.Basket">
@@ -133,7 +133,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="المبلغ قبل الخصم"
+                       android:text="@string/price_before_discount"
                         style="@style/text_darkblue_roman_14" />
                     <Space
                         android:layout_width="0dp"
@@ -148,7 +148,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="ريال سعودي"
+                        android:text="@string/rial"
+
                         android:layout_marginStart="8dp"
                         style="@style/text_darkblue_bold_14" />
                 </LinearLayout>
@@ -161,7 +162,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="قيمة الخصم"
+                        android:text="@string/discount_amount"
                         style="@style/text_darkblue_roman_14" />
                     <Space
                         android:layout_width="0dp"
@@ -176,7 +177,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="ريال سعودي"
+                        android:text="@string/rial"
+
                         android:layout_marginStart="8dp"
                         style="@style/text_darkblue_bold_14" />
                 </LinearLayout>
@@ -193,7 +195,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="المبلغ الاجمالي"
+                        android:text="@string/total_price"
                         style="@style/text_darkblue_bold_18" />
                     <Space
                         android:layout_width="0dp"
@@ -209,7 +211,7 @@
                         android:id="@+id/currency_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="ريال سعودي"
+                        android:text="@string/rial"
                         android:layout_marginStart="8dp"
                         style="@style/text_darkblue_bold_18" />
                 </LinearLayout>

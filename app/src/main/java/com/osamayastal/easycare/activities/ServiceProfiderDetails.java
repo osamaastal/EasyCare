@@ -9,6 +9,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -57,6 +58,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import top.defaults.drawabletoolbox.DrawableBuilder;
@@ -69,6 +71,7 @@ public class ServiceProfiderDetails extends AppCompatActivity implements View.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setLocale(this);
         setContentView(R.layout.activity_service_profider_details);
 
         Intent intent = this.getIntent();
@@ -79,7 +82,18 @@ public class ServiceProfiderDetails extends AppCompatActivity implements View.On
         FetchData();
 
     }
-
+    public void setLocale(Context context ){
+        User_info user_info;
+        user_info = new User_info(context);
+        String language=user_info.getLanguage();
+        Locale locale = new Locale(language);
+        Configuration config = new Configuration(getResources().getConfiguration());
+        Locale.setDefault(locale);
+        config.setLocale(locale);
+        getBaseContext().getResources().updateConfiguration(config,
+                getBaseContext().getResources().getDisplayMetrics());
+//        Toast.makeText(this, "Language: "+ Locale.getDefault().getLanguage() , Toast.LENGTH_SHORT).show();
+    }
     private void FetchData() {
         /*******************Loading********************/
         ProviderDetails_root root=new ProviderDetails_root();

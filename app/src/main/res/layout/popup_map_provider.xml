@@ -8,7 +8,7 @@
     android:paddingEnd="15dp"
     android:paddingStart="15dp"
     android:background="@drawable/bg_req_white_30dp"
-    android:layoutDirection="rtl">
+    android:layoutDirection="locale">
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/provider_Img"
         android:layout_width="80dp"

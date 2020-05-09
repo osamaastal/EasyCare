@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">EasyCare</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="login">تسجيل الدخول</string>
     <string name="login_sub">تطبيق العناية السهلة يلبي احتياجاتك المنزلية من مشاكل تحتاج لمهنيىن محترفين</string>
     <string name="phone">رقم الهاتف</string>
@@ -32,7 +35,7 @@
     <string name="my_orders">طلباتي</string>
     <string name="my_place">مكاني</string>
     <string name="basket">السلة</string>
-    <string name="profile">الملف الشخصي</string>
+    <string name="profile">ملف الشخصي</string>
     <string name="edit_profile">تعديل الملف الشخصي</string>
     <string name="open">open</string>
     <string name="close">close</string>
@@ -40,6 +43,7 @@
     <string name="more">المزيد</string>
     <string name="more_rates">"الأكثر تقيماً "</string>
     <string name="more_asked">الأكثر طلباً</string>
+    <string name="title_activity_maps" translatable="false">Map</string>
     <string name="search_map_hint">ابحت عن مزود الخدمة</string>
     <string name="my_favorites">مفضلتي</string>
     <string name="current_place">مكاني الحالي</string>
@@ -49,9 +53,12 @@
     <string name="order_type_canceled">ملغية</string>
     <string name="about">يبعد</string>
     <string name="km">كيلومتر</string>
-    <string name="num_units">عدد الوحدات</string>
+    <string name="num_units">الوحدات</string>
     <string name="conf_order">تأكيد الطلب</string>
     <string name="rial">ريال سعودي</string>
+    <string name="Execus">عذرا  ....!</string>
+    <string name="open_gps">قم بفتح ال GPS من الإعدادات</string>
+    <string name="go_to_sitting">الذهاب الى الإعدادات</string>
     <string name="about_us">من نحن</string>
     <string name="notification">الاشعارات</string>
     <string name="about_us_main">حتياجاتك المنزلية من مشاكل تحتاج لمهنيىن محترفين هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها. ولذلك يتم استخدام طريقة لوريم إيبسوم لأنها</string>
@@ -128,24 +135,42 @@
     <string name="discount_amount">قيمة الخصم</string>
     <string name="order_date">تاريخ التنفيذ</string>
     <string name="order_time">وقت التنفيذ</string>
-    <string name="soon">قريباً</string>
-    <string name="do_you_want_to_remove_this_item">هل تريد ازالة هذا العنصر؟</string>
-    <string name="confirm">تأكيد</string>
-    <string name="cancel">إلغاء</string>
-    <string name="new_service">خدمة جديدة</string>
-    <string name="you_cant_edit_this_service">You can\'t edit this service</string>
-    <string name="Execus">عذرا  ....!</string>
-    <string name="open_gps">قم بفتح ال GPS من الإعدادات</string>
-    <string name="go_to_sitting">الذهاب الى الإعدادات</string>
     <string name="no_whatsapp">no what\'up</string>
     <string name="car_name">الخدمة</string>
     <string name="RS">ريال سعودي</string>
     <string name="RS_short">ر.س</string>
     <string name="take_location_map">تعديل العنوان</string>
     <string name="no_basket_item">لا يوجد عناصر بالسلة</string>
+    <string name="soon">قريباً</string>
+    <string name="do_you_want_to_remove_this_item">هل تريد ازالة هذا العنصر؟</string>
+    <string name="confirm">تأكيد</string>
+    <string name="cancel">إلغاء</string>
+    <string name="new_service">خدمة جديدة</string>
     <string name="dane">تم</string>
     <string name="upfront">العربون</string>
     <string name="in_provider_location">في مكان مزود الخدمة</string>
     <string name="RS_short2">ريال</string>
     <string name="no_data">لايوجد بيانات</string>
+    <string name="you_cant_edit_this_service">You can\'t edit this service</string>
+    <string name="Loging_progress">جاري تسجيل الدخول</string>
+    <string name="Logout_progress">جاري تسجبل الخروج</string>
+    <string name="passwordChenge_progress">جاري تعديل كلمة المرور</string>
+    <string name="activate_progress">جاري تفعيل الحساب</string>
+    <string name="updateuser_progress">جاري تعديل الحساب</string>
+    <string name="signup_progress">جاري إنشاء الحساب</string>
+    <string name="deletService_progress">جاري حذف الخدمة</string>
+    <string name="deletprod_progress">جاري حذف المنتج</string>
+    <string name="posttobasket_progress">جاري الإضافة لسلة</string>
+    <string name="update_qty_progress">جاري تعديل العدد</string>
+    <string name="Default">الافتراضي</string>
+    <string name="select_by">اختار حسب</string>
+
+    <string name="go_basket">هل تريد الإنتقال الى السلة ؟</string>
+    <string name="app_languge">لغة تطبيق العناية السهلة</string>
+    <string name="conf_languge">هل انت متاكد من تغير لغة التطبيق سيتم إعادة تشغيل التطبيق وإظهار اللغة المختارة</string>
+    <string name="total">| المجموع </string>
+    <string name="getway">وسيلة الدفع</string>
+    <string name="logout">هل انت متأكد انك تريد تسجيل الخروج</string>
+    <string name="operation">عمليات التحويل</string>
+
 </resources>

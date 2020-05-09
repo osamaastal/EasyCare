@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
 
-    android:layoutDirection="rtl"
+    android:layoutDirection="locale"
     tools:context=".fragments.AboutUs">
 
 
@@ -109,7 +109,7 @@
         android:layout_weight="5"/>
 </LinearLayout>
     <LinearLayout
-        android:visibility="visible"
+        android:visibility="gone"
         android:id="@+id/linear_wait"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

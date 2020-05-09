@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layoutDirection="rtl"
+    android:layoutDirection="locale"
     tools:context=".fragments.ChangePass">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraint1"

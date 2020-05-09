@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layoutDirection="rtl"
+    android:layoutDirection="locale"
     android:orientation="vertical"
     android:background="@color/white"
     android:paddingEnd="20dp"
@@ -18,7 +18,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="وسيلة الدفع"
+        android:text="@string/getway"
         style="@style/text_darkblue_bold_24"
         android:layout_marginStart="20dp"
         android:layout_marginTop="15dp"

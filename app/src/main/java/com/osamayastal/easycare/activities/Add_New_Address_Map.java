@@ -10,6 +10,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -42,6 +43,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.osamayastal.easycare.Model.Const.User_info;
 import com.osamayastal.easycare.R;
 import com.osamayastal.easycare.fragments.EditProfile;
 
@@ -120,9 +122,22 @@ private Context mcontext=Add_New_Address_Map.this;
     }
 
 //    private ProgressDialog dialog;
+public void setLocale(Context context ){
+    User_info user_info;
+    user_info = new User_info(context);
+    String language=user_info.getLanguage();
+    Locale locale = new Locale(language);
+    Configuration config = new Configuration(getResources().getConfiguration());
+    Locale.setDefault(locale);
+    config.setLocale(locale);
+    getBaseContext().getResources().updateConfiguration(config,
+            getBaseContext().getResources().getDisplayMetrics());
+//    Toast.makeText(this, "Language: "+ Locale.getDefault().getLanguage() , Toast.LENGTH_SHORT).show();
+}
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setLocale(this);
         setContentView(R.layout.layout_f_add_new_address_map);
         /***************************************************************/
 

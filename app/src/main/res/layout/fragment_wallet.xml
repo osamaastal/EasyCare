@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".activities.Wallet"
-    android:layoutDirection="rtl">
+    android:layoutDirection="locale">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraint1"
         android:layout_width="match_parent"
@@ -161,7 +161,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="عمليات التحويل"
+                android:text="@string/operation"
                 style="@style/text_darkblue_bold_18"
                 android:layout_marginStart="12.5dp"
                 />

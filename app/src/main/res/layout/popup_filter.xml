@@ -36,7 +36,7 @@
                     style="@style/text_white_roman_16"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="اختار حسب"
+                    android:text="@string/select_by"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -51,7 +51,7 @@
                     android:paddingTop="2dp"
                     android:paddingEnd="10dp"
                     android:paddingBottom="6dp"
-                    android:text="الافتراضي"
+                    android:text="@string/Default"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

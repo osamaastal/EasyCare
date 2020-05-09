@@ -17,6 +17,7 @@ import com.github.islamkhsh.CardSliderViewPager;
 import com.osamayastal.easycare.Adapters.Categories_adapter;
 import com.osamayastal.easycare.Adapters.Provider_adapter;
 import com.osamayastal.easycare.Model.Classes.Categorie;
+import com.osamayastal.easycare.Model.Classes.LanguageHelper;
 import com.osamayastal.easycare.Model.Classes.Provider.Provider;
 import com.osamayastal.easycare.Model.Classes.Slider;
 import com.osamayastal.easycare.Model.Const.User_info;
@@ -41,6 +42,9 @@ public class Home extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        //========set default language as persian:start==============
+//        LanguageHelper.changeLocale(this.getResources(), "ar");
+        //========set default language as persian:end================
         // Inflate the layout for this fragment
          view= inflater.inflate(R.layout.fragment_home, container, false);
         init(view);

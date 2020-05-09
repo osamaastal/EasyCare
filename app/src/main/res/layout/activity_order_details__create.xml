@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layoutDirection="rtl"
+    android:layoutDirection="locale"
     android:background="@color/white"
     tools:context=".activities.OrderDetails_Create">
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -365,7 +365,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="ريال سعودي"
+                        android:text="@string/rial"
                         style="@style/text_darkblue_roman_18"
                         android:layout_marginStart="8dp"
                         />
@@ -396,7 +396,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="ريال سعودي"
+                        android:text="@string/rial"
                         style="@style/text_darkblue_roman_18"
                         android:layout_marginStart="8dp"
                         />
@@ -433,7 +433,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="ريال سعودي"
+                        android:text="@string/rial"
                         style="@style/text_darkblue_roman_18"
                         android:layout_marginStart="8dp"
                         />
@@ -484,7 +484,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingBottom="5dp"
-                    android:text="المجموع | " />
+                    android:text="@string/total"
+                    android:layout_marginEnd="5dp"/>
 
                 <TextView
                     android:id="@+id/total"

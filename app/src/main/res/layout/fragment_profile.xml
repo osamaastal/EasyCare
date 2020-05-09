@@ -27,11 +27,11 @@
             android:id="@+id/edit_btn"
             android:layout_width="46dp"
             android:layout_height="46dp"
-            android:layout_marginStart="18dp"
+            android:layout_marginEnd="18dp"
             android:background="@drawable/bg_circle_blue_gradiant"
             android:src="@drawable/ic_edit_profile"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -104,58 +104,13 @@
                 android:layout_marginEnd="20dp"
                 android:columnCount="2"
                 android:rowCount="1">
-
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/favorit_btn"
+                    android:id="@+id/order_btn"
                     android:layout_row="0"
                     android:layout_rowWeight="1"
                     android:layout_column="0"
                     android:layout_columnWeight="1"
                     android:layout_marginEnd="9dp"
-                    android:background="@drawable/bg_req_green_orders">
-
-                    <ImageView
-                        android:id="@+id/img2"
-                        android:layout_width="52dp"
-                        android:layout_height="52dp"
-                        android:layout_marginStart="18dp"
-                        android:src="@drawable/ic_order_green"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:orientation="vertical"
-                        app:layout_constraintBottom_toBottomOf="@id/img2"
-                        app:layout_constraintStart_toEndOf="@id/img2"
-                        app:layout_constraintTop_toTopOf="@+id/img2">
-
-                        <TextView
-                            android:id="@+id/favorit_nb"
-                            style="@style/text_white_bold_20"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="0" />
-
-                        <TextView
-                            style="@style/text_white_roman_16"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="-10dp"
-                            android:text="@string/my_favorites" />
-                    </LinearLayout>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/order_btn"
-                    android:layout_row="0"
-                    android:layout_rowWeight="1"
-                    android:layout_column="1"
-                    android:layout_columnWeight="1"
-                    android:layout_marginStart="9dp"
                     android:background="@drawable/bg_req_pink_orders">
 
                     <ImageView
@@ -190,6 +145,51 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="-10dp"
                             android:text="@string/my_orders" />
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/favorit_btn"
+                    android:layout_row="0"
+                    android:layout_rowWeight="1"
+                    android:layout_column="1"
+                    android:layout_columnWeight="1"
+                    android:layout_marginStart="9dp"
+                    android:background="@drawable/bg_req_green_orders">
+
+                    <ImageView
+                        android:id="@+id/img2"
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:layout_marginStart="18dp"
+                        android:src="@drawable/ic_order_green"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="@id/img2"
+                        app:layout_constraintStart_toEndOf="@id/img2"
+                        app:layout_constraintTop_toTopOf="@+id/img2">
+
+                        <TextView
+                            android:id="@+id/favorit_nb"
+                            style="@style/text_white_bold_20"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0" />
+
+                        <TextView
+                            style="@style/text_white_roman_16"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="-10dp"
+                            android:text="@string/my_favorites" />
                     </LinearLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

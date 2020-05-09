@@ -4,14 +4,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.osamayastal.easycare.Adapters.Product_adapter;
 import com.osamayastal.easycare.Model.Classes.Product;
+import com.osamayastal.easycare.Model.Const.User_info;
 import com.osamayastal.easycare.Model.Controle.Categories;
 import com.osamayastal.easycare.Model.Controle.Products;
 import com.osamayastal.easycare.Model.Rootes.Categories_root;
@@ -19,12 +23,14 @@ import com.osamayastal.easycare.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class AllProducts extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setLocale(this);
         setContentView(R.layout.activity_all_products);
 
         Intent intent = this.getIntent();
@@ -33,6 +39,18 @@ public class AllProducts extends AppCompatActivity implements View.OnClickListen
 
         init();
         Loading();
+    }
+    public void setLocale(Context context ){
+        User_info user_info;
+        user_info = new User_info(context);
+        String language=user_info.getLanguage();
+        Locale locale = new Locale(language);
+        Configuration config = new Configuration(getResources().getConfiguration());
+        Locale.setDefault(locale);
+        config.setLocale(locale);
+        getBaseContext().getResources().updateConfiguration(config,
+                getBaseContext().getResources().getDisplayMetrics());
+//        Toast.makeText(this, "Language: "+ Locale.getDefault().getLanguage() , Toast.LENGTH_SHORT).show();
     }
 private String provider_id="";
     private void Loading() {

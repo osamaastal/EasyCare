@@ -2,7 +2,9 @@ package com.osamayastal.easycare.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -19,14 +21,29 @@ import com.osamayastal.easycare.Model.Controle.users;
 import com.osamayastal.easycare.Model.Rootes.user;
 import com.osamayastal.easycare.R;
 
+import java.util.Locale;
+
 public class ConfCode extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setLocale(this);
         setContentView(R.layout.activity_conf_code);
         init();
         Timer_resendButton();
+    }
+    public void setLocale(Context context ){
+        User_info user_info;
+        user_info = new User_info(context);
+        String language=user_info.getLanguage();
+        Locale locale = new Locale(language);
+        Configuration config = new Configuration(getResources().getConfiguration());
+        Locale.setDefault(locale);
+        config.setLocale(locale);
+        getBaseContext().getResources().updateConfiguration(config,
+                getBaseContext().getResources().getDisplayMetrics());
+//        Toast.makeText(this, "Language: "+ Locale.getDefault().getLanguage() , Toast.LENGTH_SHORT).show();
     }
 private PinView cod;
     private Button conf_btn;

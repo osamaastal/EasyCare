@@ -19,7 +19,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -42,6 +44,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.osamayastal.easycare.Adapters.City_adapter;
 import com.osamayastal.easycare.Model.Classes.City;
 import com.osamayastal.easycare.Model.Classes.Complain;
+import com.osamayastal.easycare.Model.Classes.LanguageHelper;
 import com.osamayastal.easycare.Model.Classes.User;
 import com.osamayastal.easycare.Model.Const.Server_info;
 import com.osamayastal.easycare.Model.Const.User_info;
@@ -73,6 +76,7 @@ import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -95,6 +99,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setLocale(this);
+
         setContentView(R.layout.activity_main);
         frameLayout = findViewById(R.id.mainContainer);
 
@@ -121,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     .withDragDistance(250)
                     .withRootViewScale(1f)
                     .withMenuOpened(false)
-                    .withGravity(SlideGravity.RIGHT)
+                    .withGravity(SlideGravity.LEFT)
                     .withMenuLayout(R.layout.navigation_content)
                     .inject();
         }else {
@@ -277,6 +284,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         user_name_tv.setText(new User_info(this).getName());
     }
 
+    public void setLocale(Context context ){
+            User_info user_info;
+        user_info = new User_info(context);
+        String language=user_info.getLanguage();
+        Locale locale = new Locale(language);
+            Configuration config = new Configuration(getResources().getConfiguration());
+            Locale.setDefault(locale);
+            config.setLocale(locale);
+            getBaseContext().getResources().updateConfiguration(config,
+                    getBaseContext().getResources().getDisplayMetrics());
+//        Toast.makeText(this, "Language: "+ Locale.getDefault().getLanguage() , Toast.LENGTH_SHORT).show();
+        }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -377,39 +397,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 break;
             case R.id.language:
-//                if (new User_info(this).getLanguage().equals("en")) {
-//                    ChangeLanguge_pop("ar", this, new chang() {
-//                        @Override
-//                        public void onSave(Boolean v) {
-//
-//                            if (v) {
-//                                langu.setText("Ar");
-//                                finishAffinity();
-//
-//                            }
-//                        }
-//                    });
-//                } else {
-//                    ChangeLanguge_pop("en", this, new chang() {
-//                        @Override
-//                        public void onSave(Boolean v) {
-//                            if (v) {
-//                                langu.setText("En");
-//                                finishAffinity();
-//
-//                            }
-//                        }
-//                    });
-//
-//
-//                }
-//                getLanguge();
+                if (new User_info(this).getLanguage().equals("en")) {
+                    ChangeLanguge_pop("ar", this, new chang() {
+                        @Override
+                        public void onSave(Boolean v) {
+
+                            if (v) {
+                                langu.setText("Ar");
+                                finishAffinity();
+
+                            }
+                        }
+                    });
+                } else {
+                    ChangeLanguge_pop("en", this, new chang() {
+                        @Override
+                        public void onSave(Boolean v) {
+                            if (v) {
+                                langu.setText("En");
+                                finishAffinity();
+
+                            }
+                        }
+                    });
+
+
+                }
+                getLanguge();
 
                 break;
             case R.id.logout_btn:
 
                 AppPop pop=new AppPop();
-                pop.Conferme_POP(mcontext, "هل انت متأكد انك تريد تسجيل الخروج", new AppPop.goListenner() {
+                pop.Conferme_POP(mcontext, getString(R.string.logout), new AppPop.goListenner() {
                     @Override
                     public void Go() {
                         user user = new user();
