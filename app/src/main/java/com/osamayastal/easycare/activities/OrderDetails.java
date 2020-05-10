@@ -247,7 +247,7 @@ switch (view.getId()){
     case R.id.save_btn:
         switch (order.getStatusId()){
             case 1://1- Pending
-                pop.Conferme_POP(mcontext, "هل انت متأكد انك تريد إلغاء هذا الطلب", new AppPop.goListenner() {
+                pop.Conferme_POP(mcontext, getString(R.string.cancel_order_sure), new AppPop.goListenner() {
                     @Override
                     public void Go() {
                         Order_root root=new Order_root();

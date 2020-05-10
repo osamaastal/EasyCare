@@ -34,46 +34,121 @@ public class Provider_Details {
         providerSetting=new ArrayList<>();
         try {
             _id=jsonObject.getString("_id");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             createAt=jsonObject.getString("createAt");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             name=jsonObject.getString("name");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             image=jsonObject.getString("image").replace("http", "https");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             email=jsonObject.getString("email");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             address=jsonObject.getString("address");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             phone_number=jsonObject.getString("phone_number");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             category_id=new Categorie(jsonObject.getJSONObject("category_id"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
+        try {
             rate=jsonObject.getInt("rate");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
+        try {
             isBlock=jsonObject.getBoolean("isBlock");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
+        try {
             lat=jsonObject.getDouble("lat");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             lng=jsonObject.getDouble("lng");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             profitPercentage=jsonObject.getDouble("profitPercentage");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             orderPercentage=jsonObject.getDouble("orderPercentage");
-            city_id=new City(jsonObject.getJSONObject("city_id"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            city_id=new City(jsonObject.getJSONObject("city_id"),null);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             password=jsonObject.getString("password");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
 
-            JSONArray jsonArray=jsonObject.getJSONArray("subServicesList");
-            JSONArray jsonArray1=jsonObject.getJSONArray("providerProduct");
-            JSONArray jsonArray2=jsonObject.getJSONArray("providerSetting");
-
-
+        JSONArray jsonArray= null;
+        try {
+            jsonArray = jsonObject.getJSONArray("subServicesList");
             for(int i=0;i<jsonArray.length();i++){
                 Sub_services.add(new Sub_servic(jsonArray.getJSONObject(i)));
             }
-
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JSONArray jsonArray1= null;
+        try {
+            jsonArray1 = jsonObject.getJSONArray("providerProduct");
             for(int i=0;i<jsonArray1.length();i++){
                 Products.add(new Product(jsonArray1.getJSONObject(i)));
-            }
-
-            for(int i=0;i<jsonArray2.length();i++){
-                providerSetting.add(new ProviderSetting(jsonArray2.getJSONObject(i)));
             }
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        JSONArray jsonArray2= null;
+        try {
+            jsonArray2 = jsonObject.getJSONArray("providerSetting");
+
+            for(int i=0;i<jsonArray2.length();i++){
+                providerSetting.add(new ProviderSetting(jsonArray2.getJSONObject(i)));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
 
     }
 

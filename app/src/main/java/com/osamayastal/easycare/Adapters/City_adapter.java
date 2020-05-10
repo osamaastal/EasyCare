@@ -31,7 +31,7 @@ import top.defaults.drawabletoolbox.DrawableBuilder;
 public class City_adapter extends ArrayAdapter<City> {
 
     LayoutInflater flater;
-String lang="";
+private String lang="";
     public City_adapter(Activity context,int resouceId, int textviewId, List<City> list){
 
         super(context,resouceId,textviewId, list);

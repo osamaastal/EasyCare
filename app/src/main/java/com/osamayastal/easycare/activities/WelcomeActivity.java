@@ -57,8 +57,8 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
 
         /********************************Actions****************************************/
         skip.setOnClickListener(this);
-//        ar.setOnClickListener(this);
-//        en.setOnClickListener(this);
+        ar.setOnClickListener(this);
+        en.setOnClickListener(this);
 
         wellcomList=new ArrayList<>();
 

@@ -36,6 +36,8 @@
             android:layout_marginStart="18dp"
             android:background="@drawable/bg_circle_blue_gradiant"
             android:src="@drawable/ic_back_ar"
+            android:rotation="@integer/angle_rtl_180"
+
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

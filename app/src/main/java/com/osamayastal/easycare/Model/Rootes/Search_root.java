@@ -61,7 +61,7 @@ public class Search_root {
                     Jobject = new JSONObject(response);
                     Log.d("search name",name);
                     Log.d("Response", response.toString());
-                    listener.onSuccess(new Search(Jobject));
+                    listener.onSuccess(new Search(Jobject,mcontext));
 
                 } catch (JSONException e1) {
                     e1.printStackTrace();

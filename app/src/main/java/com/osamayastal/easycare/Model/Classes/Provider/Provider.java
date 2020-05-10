@@ -136,7 +136,7 @@ private List<String> images;
 
     }
 public Search toProvider(){
-    Search provider=new Search(null);
+    Search provider=new Search(null,null);
     provider.set_id(_id);
     provider.setName(name);
     provider.setAddress(address);

@@ -1,5 +1,6 @@
 package com.osamayastal.easycare.Model.Classes;
 
+import android.content.Context;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -19,7 +20,7 @@ public class Search {
     private List<String> images;
 
 
-    public Search(JSONObject provider) {
+    public Search(JSONObject provider, Context context) {
         if (provider==null){
             return;
         }
@@ -39,7 +40,7 @@ public class Search {
         }
 
         try{
-            city_id=new City(provider.getJSONObject("city_id"));
+            city_id=new City(provider.getJSONObject("city_id"),context);
         } catch (JSONException e) {
             e.printStackTrace();
         }

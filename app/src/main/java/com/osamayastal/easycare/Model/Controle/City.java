@@ -35,11 +35,11 @@ private Boolean status;
 
 
             for(int i=0;i<jsonArray2.length();i++){
-                items.add(new com.osamayastal.easycare.Model.Classes.City(jsonArray2.getJSONObject(i)));
+                items.add(new com.osamayastal.easycare.Model.Classes.City(jsonArray2.getJSONObject(i),mcontext));
                 if (new User_info(mcontext).getLanguage().equals("en")){
-                    cityList.add(new com.osamayastal.easycare.Model.Classes.City(jsonArray2.getJSONObject(i)).getEnName());
+                    cityList.add(new com.osamayastal.easycare.Model.Classes.City(jsonArray2.getJSONObject(i),mcontext).getEnName());
                 }else {
-                    cityList.add(new com.osamayastal.easycare.Model.Classes.City(jsonArray2.getJSONObject(i)).getArName());
+                    cityList.add(new com.osamayastal.easycare.Model.Classes.City(jsonArray2.getJSONObject(i),mcontext).getArName());
                 }
            }
 

@@ -6,7 +6,7 @@
     android:paddingTop="16dp"
     android:layout_marginTop="9dp"
     android:layout_marginBottom="9dp"
-    android:layoutDirection="rtl"
+    android:layoutDirection="locale"
     android:background="@drawable/bg_req_lightgray_stroke">
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/provider_Img"

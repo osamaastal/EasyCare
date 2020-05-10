@@ -1,5 +1,6 @@
 package com.osamayastal.easycare.Model.Controle;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.osamayastal.easycare.Model.Classes.Pagenation;
@@ -17,7 +18,7 @@ public class Search {
     private Pagenation pagenation;
     private List<com.osamayastal.easycare.Model.Classes.Search> items;
 
-    public Search(JSONObject jsonObject) {
+    public Search(JSONObject jsonObject, Context context) {
         if (jsonObject==null){
             return;
         }
@@ -32,7 +33,7 @@ public class Search {
 
 
             for(int i=0;i<jsonArray2.length();i++){
-                items.add(new com.osamayastal.easycare.Model.Classes.Search(jsonArray2.getJSONObject(i)));
+                items.add(new com.osamayastal.easycare.Model.Classes.Search(jsonArray2.getJSONObject(i),context));
             }
 
         } catch (JSONException e) {

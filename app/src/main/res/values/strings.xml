@@ -170,7 +170,10 @@
     <string name = "getway"> payment method </string>
     <string name = "logout"> Are you sure you want to log out? </string>
     <string name = "operation"> transforms </string>
-
+    <string name = "cancel_order_sure"> Are you sure you want to cancel this request? </string>
+         <string name = "maste_select_one"> You must select at least an element </string>
+         <string name = "select_getway"> Choose payment method </string>
+         <string name = "maste_select_one_ser_size"> You must select at least an item of service type and service details  </string>
 
 
 </resources>

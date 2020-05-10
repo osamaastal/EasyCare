@@ -24,10 +24,13 @@
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <ImageButton
+
             android:id="@+id/back_btn"
             android:layout_width="46dp"
             android:layout_height="46dp"
             android:src="@drawable/ic_back_ar"
+            android:rotation="@integer/angle_rtl_180"
+
             android:background="@drawable/bg_circle_blue_gradiant"
             android:layout_marginStart="18dp"
             android:layout_marginTop="10dp"

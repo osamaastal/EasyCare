@@ -21,15 +21,28 @@ public class Favorite {
 
         try {
             _id=jsonObject.getString("_id");
-            user_id=jsonObject.getString("user_id");
-            createAt=jsonObject.getString("createAt");
-
-            provider_id=new Search(jsonObject.getJSONObject("provider_id"));
 
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        try {
+            user_id=jsonObject.getString("user_id");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            createAt=jsonObject.getString("createAt");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            provider_id=new Search(jsonObject.getJSONObject("provider_id"),null);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
 
     }
 

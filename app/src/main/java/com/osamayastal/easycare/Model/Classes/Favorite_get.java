@@ -15,14 +15,26 @@ public class Favorite_get {
         }
         try {
             _id=provider.getString("_id");
-            createAt=provider.getString("createAt");
-            user_id=provider.getString("user_id");
-            provider_id=new Search(provider.getJSONObject("provider_id"));
+
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
+        try {
+            createAt=provider.getString("createAt");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            user_id=provider.getString("user_id");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            provider_id=new Search(provider.getJSONObject("provider_id"),null);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
 
     }

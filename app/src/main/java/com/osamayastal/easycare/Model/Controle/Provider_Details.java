@@ -38,29 +38,58 @@ public class Provider_Details {
         try {
             message=jsonObject.getString("message");
             status=jsonObject.getBoolean("status");
-            Log.d("items",jsonObject.getJSONObject("items").toString());
             status_code=jsonObject.getInt("status_code");
-            JSONObject items=jsonObject.getJSONObject("items");
-            providerDetails= new Search(items); //.getJSONObject("providerDetails")
-            JSONArray jsonArray=items.getJSONArray("subServicesList");
-            JSONArray jsonArray1=items.getJSONArray("providerProduct");
-            JSONArray jsonArray2=items.getJSONArray("providerSetting");
-            JSONArray jsonArray3=items.getJSONArray("category_id");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JSONObject items= null;
+        try {
+            items = jsonObject.getJSONObject("items");
+            providerDetails= new Search(items,null);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JSONArray jsonArray= null;
+        try {
+            jsonArray = items.getJSONArray("subServicesList");
             for (int i=0;i<jsonArray.length();i++){
                 servicList.add(new Sub_servic(jsonArray.getJSONObject(i)));
             }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JSONArray jsonArray1= null;
+        try {
+            jsonArray1 = items.getJSONArray("providerProduct");
             for (int i=0;i<jsonArray1.length();i++){
                 productList.add(new Product(jsonArray1.getJSONObject(i)));
             }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JSONArray jsonArray2= null;
+        try {
+            jsonArray2 = items.getJSONArray("providerSetting");
+
             for (int i=0;i<jsonArray2.length();i++){
                 providerSettingList.add(new ProviderSetting(jsonArray2.getJSONObject(i)));
             }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JSONArray jsonArray3= null;
+        try {
+            jsonArray3 = items.getJSONArray("category_id");
+
             for (int i=0;i<jsonArray3.length();i++){
                 categorieList.add(new Categorie(jsonArray3.getJSONObject(i)));
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+
 
     }
 

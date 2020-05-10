@@ -39,6 +39,8 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:src="@drawable/ic_back_ar"
+                    android:rotation="@integer/angle_rtl_180"
+
                     android:background="@drawable/bg_circle_midblue"/>
 
             </com.chinodev.androidneomorphframelayout.NeomorphFrameLayout>

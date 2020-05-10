@@ -172,5 +172,8 @@
     <string name="getway">وسيلة الدفع</string>
     <string name="logout">هل انت متأكد انك تريد تسجيل الخروج</string>
     <string name="operation">عمليات التحويل</string>
-
+    <string name="cancel_order_sure">هل انت متأكد انك تريد إلغاء هذا الطلب</string>
+    <string name="maste_select_one">يجب احتيار عنصر على الأقل</string>
+    <string name="select_getway">\"إختار وسيلة الدفع\"</string>
+    <string name="maste_select_one_ser_size">\"يجب احتيار عنصر على الأقل من نوع الخدمة و تفاصيل الخدمة\"</string>
 </resources>

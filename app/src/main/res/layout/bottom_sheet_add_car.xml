@@ -182,7 +182,7 @@
                         android:id="@+id/currency_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="ريال سعودي"
+                        android:text="@string/rial"
                         style="@style/text_darkblue_roman_16"
                         />
                 </LinearLayout>

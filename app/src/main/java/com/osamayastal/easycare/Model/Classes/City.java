@@ -1,21 +1,36 @@
 package com.osamayastal.easycare.Model.Classes;
 
+import android.content.Context;
+
+import com.osamayastal.easycare.Model.Const.User_info;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class City {
     private String _id,arName,enName;
-    public City(JSONObject provider) {
+    private Context mcontext;
+    public City(JSONObject provider,Context mcontext) {
         if (provider==null){
             return;
         }
+        this.mcontext=mcontext;
         try {
             _id=provider.getString("_id");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             arName=provider.getString("arName");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
             enName=provider.getString("enName");
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
     }
 
     public String get_id() {
@@ -44,6 +59,11 @@ public class City {
 
     @Override
     public String toString() {
-        return arName;
+        if (new User_info(mcontext).getLanguage().equals("en")){
+            return enName;
+        }else {
+            return arName;
+
+        }
     }
 }

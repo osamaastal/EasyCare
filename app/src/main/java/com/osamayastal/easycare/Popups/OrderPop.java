@@ -292,7 +292,7 @@ service_for_basket=new Service_for_basket();
 
 
                 }else {
-                    Toast.makeText(mcontext,"يجب احتيار عنصر على الأقل من نوع الخدمة و تفاصيل الخدمة",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mcontext,mcontext.getString(R.string.maste_select_one_ser_size),Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -322,7 +322,7 @@ service_for_basket=new Service_for_basket();
             @Override
             public void onClick(View view) {
                 if (carList.size()==0){
-                    Toast.makeText(mcontext,"يجب احتيار عنصر على الأقل",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mcontext,mcontext.getString(R.string.maste_select_one),Toast.LENGTH_SHORT).show();
                     return;
                 }
                 Bascket_root root=new Bascket_root();
@@ -376,7 +376,7 @@ service_for_basket=new Service_for_basket();
             @Override
             public void onClick(View view) {
                 if (carList.size()==0){
-                    Toast.makeText(mcontext,"يجب احتيار عنصر على الأقل",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mcontext,mcontext.getString(R.string.maste_select_one),Toast.LENGTH_SHORT).show();
                     return;
                 }
                 Bascket_root root=new Bascket_root();
@@ -650,6 +650,11 @@ service_for_basket=new Service_for_basket();
                 check1.setVisibility(View.VISIBLE);
                 check2.setVisibility(View.GONE);
                 check3.setVisibility(View.GONE);
+
+                if (isupfront){
+                    linear_upfront.setVisibility(View.GONE);
+                    upfont=false;
+                }
             }
         });
         payment3.setOnClickListener(new View.OnClickListener() {
@@ -680,7 +685,7 @@ service_for_basket=new Service_for_basket();
             @Override
             public void onClick(View view) {
                 if (payment==0){
-                    Toast.makeText(mcontext,"إختار وسيلة الدفع",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mcontext,mcontext.getString(R.string.select_getway),Toast.LENGTH_SHORT).show();
                     return;
                 }
                 Log.d("payment", String.valueOf(payment));
