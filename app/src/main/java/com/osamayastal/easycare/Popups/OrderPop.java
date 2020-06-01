@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cncoderx.wheelview.Wheel3DView;
 import com.deishelon.roundedbottomsheet.RoundedBottomSheetDialog;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.osamayastal.easycare.Adapters.Car_adapter;
 import com.osamayastal.easycare.Adapters.Size_adapter;
 import com.osamayastal.easycare.Adapters.SubCategories_adapter;
@@ -244,7 +245,8 @@ service_for_basket=new Service_for_basket();
 
                 Calculate_total(carList);
                 car_adapter.notifyDataSetChanged();
-//                Toast.makeText(mcontext,carList.size()+" size list",Toast.LENGTH_LONG).show();
+                basket_count(mcontext);
+
 
             }
         });
@@ -289,6 +291,7 @@ service_for_basket=new Service_for_basket();
                     size_adapter.notifyDataSetChanged();
                     car_adapter.notifyDataSetChanged();
 
+                    basket_count(mcontext);
 
 
                 }else {
@@ -389,22 +392,27 @@ service_for_basket=new Service_for_basket();
                         String msg="";
                         if (new User_info(mcontext).getLanguage().equals("en")) {
                             msg=bascket.getMessageEn();
-                            Toast.makeText(mcontext, bascket.getMessageEn(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(mcontext, bascket.getMessageEn(), Toast.LENGTH_SHORT).show();
                         } else {
                             msg=bascket.getMessageAr();
-                            Toast.makeText(mcontext, bascket.getMessageAr(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(mcontext, bascket.getMessageAr(), Toast.LENGTH_SHORT).show();
                         }
+                        AppPop appPop=new AppPop();
+                        appPop.Conferme_POP(mcontext, msg+"\n"+mcontext.getString(R.string.go_basket), new AppPop.goListenner() {
+                            @Override
+                            public void Go() {
 
-                        Bundle bundle = new Bundle();
-                        bundle.putInt("bascket_index",0);
-                        Intent intent=new Intent(mcontext, OrderDetails_Create.class);
-                        intent.putExtras(bundle);
-                        mcontext.startActivity(intent);
+                                lisstenner.onGoBasket();
+                            }
 
-                        carList.clear();
-                        car_adapter.notifyDataSetChanged();
-                        Calculate_total(carList);
-                        basket_count(mcontext);
+                            @Override
+                            public void Cancel() {
+                                carList.clear();
+                                car_adapter.notifyDataSetChanged();
+                                Calculate_total(carList);
+                                basket_count(mcontext);
+                            }
+                        });
                     }
                     @Override
                     public void onStart() {
@@ -416,6 +424,49 @@ service_for_basket=new Service_for_basket();
 
                     }
                 });
+
+
+//                if (carList.size()==0){
+//                    Toast.makeText(mcontext,mcontext.getString(R.string.maste_select_one),Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//                Bascket_root root=new Bascket_root();
+//                Car_servece car_servece=new Car_servece();
+//                Log.d("service", car_servece.Order_JSON(prov_id, carList).toString());
+//
+//                root.PostService(mcontext, car_servece.Order_JSON(prov_id, carList), new Bascket_root.PostbasketListener() {
+//                    @Override
+//                    public void onSuccess(Result bascket) {
+//                        String msg="";
+//                        if (new User_info(mcontext).getLanguage().equals("en")) {
+//                            msg=bascket.getMessageEn();
+//                            Toast.makeText(mcontext, bascket.getMessageEn(), Toast.LENGTH_SHORT).show();
+//                        } else {
+//                            msg=bascket.getMessageAr();
+//                            Toast.makeText(mcontext, bascket.getMessageAr(), Toast.LENGTH_SHORT).show();
+//                        }
+//
+//                        Bundle bundle = new Bundle();
+//                        bundle.putInt("bascket_index",0);
+//                        Intent intent=new Intent(mcontext, OrderDetails_Create.class);
+//                        intent.putExtras(bundle);
+//                        mcontext.startActivity(intent);
+//
+//                        carList.clear();
+//                        car_adapter.notifyDataSetChanged();
+//                        Calculate_total(carList);
+//                        basket_count(mcontext);
+//                    }
+//                    @Override
+//                    public void onStart() {
+//
+//                    }
+//
+//                    @Override
+//                    public void onFailure(String msg) {
+//
+//                    }
+//                });
 
 
 
@@ -475,42 +526,57 @@ service_for_basket=new Service_for_basket();
 
     }
     private void basket_count(final Context mcontext) {
-        Bascket_root root=new Bascket_root();
-        root.GetItemCount(mcontext, new Bascket_root.Basket_count_Listener() {
-            @Override
-            public void onSuccess(int nb) {
-                if (nb ==0){
-                    basket.setBackground(mcontext.getDrawable(R.drawable.bg_circle_gray));
-                    basket_nb.setVisibility(View.GONE);
-                }
-                else {
-                    basket_nb.setText(nb +"");
-                    basket.setBackground(mcontext.getDrawable(R.drawable.bg_circle_basket));
-                    basket_nb.setVisibility(View.VISIBLE);
-                }
-            }
+        int nb=carList.size();
+        if (nb ==0){
+            basket.setBackground(mcontext.getDrawable(R.drawable.bg_circle_gray));
+            basket_nb.setVisibility(View.GONE);
+        }
+        else {
+            basket_nb.setText(nb +"");
+            basket.setBackground(mcontext.getDrawable(R.drawable.bg_circle_basket));
+            basket_nb.setVisibility(View.VISIBLE);
+        }
 
-            @Override
-            public void onStart() {
-
-            }
-
-            @Override
-            public void onFailure(String msg) {
-
-            }
-        });
+//        Bascket_root root=new Bascket_root();
+//        root.GetItemCount(mcontext, new Bascket_root.Basket_count_Listener() {
+//            @Override
+//            public void onSuccess(int nb) {
+//                if (nb ==0){
+//                    basket.setBackground(mcontext.getDrawable(R.drawable.bg_circle_gray));
+//                    basket_nb.setVisibility(View.GONE);
+//                }
+//                else {
+//                    basket_nb.setText(nb +"");
+//                    basket.setBackground(mcontext.getDrawable(R.drawable.bg_circle_basket));
+//                    basket_nb.setVisibility(View.VISIBLE);
+//                }
+//            }
+//
+//            @Override
+//            public void onStart() {
+//
+//            }
+//
+//            @Override
+//            public void onFailure(String msg) {
+//
+//            }
+//        });
 
     }
 
     public void GetDate_pop( final POPLisstenner lisstenner){
 
-       final RoundedBottomSheetDialog mBottomSheetDialog = new RoundedBottomSheetDialog(mcontext);
+       final BottomSheetDialog mBottomSheetDialog = new BottomSheetDialog(mcontext,R.style.BottomSheetDialog);
        LayoutInflater inflater = (LayoutInflater) mcontext.getSystemService(LAYOUT_INFLATER_SERVICE);
        final View sheetView = inflater.inflate(R.layout.bottom_sheet_calender, null);
        mBottomSheetDialog.setContentView(sheetView);
+
        mBottomSheetDialog.show();
        final CalendarView calendarView=sheetView.findViewById(R.id.calendar);
+        calendarView.setMinDate(System.currentTimeMillis() - 1000);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        date = sdf.format(new Date(calendarView.getDate()));
        calendarView.setOnDateChangeListener( new CalendarView.OnDateChangeListener() {
            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
 //               this.calendar = new GregorianCalendar( year, month, dayOfMonth );
@@ -522,8 +588,7 @@ service_for_basket=new Service_for_basket();
            @Override
            public void onClick(View view) {
 
-//               SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//               date = sdf.format(new Date(calendarView.getDate()));
+
                Log.d("date", date);
 
                lisstenner.ongetResult(date,"",false);

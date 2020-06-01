@@ -15,9 +15,11 @@ import com.android.volley.toolbox.Volley;
 import com.osamayastal.easycare.Model.Const.Server_info;
 import com.osamayastal.easycare.Model.Const.User_info;
 import com.osamayastal.easycare.Model.Controle.Bascket;
+import com.osamayastal.easycare.Model.Controle.Basket_prices;
 import com.osamayastal.easycare.Model.Controle.Favorites_get;
 import com.osamayastal.easycare.Model.Controle.Result;
 import com.osamayastal.easycare.Model.Controle.Search;
+import com.osamayastal.easycare.Model.Controle.users;
 import com.osamayastal.easycare.Popups.AppPop;
 import com.osamayastal.easycare.R;
 
@@ -30,6 +32,11 @@ import java.util.Map;
 public class Bascket_root {
     public interface GetbasketListener{
         void onSuccess(Bascket bascket);
+        void onStart();
+        void onFailure(String msg);
+    }
+    public interface GetPricesListener{
+        void onSuccess(Basket_prices bascket);
         void onStart();
         void onFailure(String msg);
     }
@@ -86,6 +93,52 @@ public class Bascket_root {
             }
         };
         queue.add(request);
+
+    }
+    public void GetItemPrices(final Context mcontext,JSONObject pro_id, final GetPricesListener listener)
+    {
+        String url= Server_info.API +"api/mobile/getCartTotals";
+        final String token=new User_info(mcontext).getToken();
+        final ProgressDialog dialog=new AppPop().Loading_POP(mcontext,mcontext.getString(R.string.getprice_service));
+
+        if (queue == null) {
+            queue = Volley.newRequestQueue(mcontext);  // this = context
+            //Build.logError("Setting a new request queue");
+        }
+        // prepare the Request
+        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.POST, url,pro_id ,
+                new Response.Listener<JSONObject>()
+                {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        dialog.dismiss();
+
+                        Log.d("Response", response.toString());
+                        Log.d("token ", token.toString());
+                        listener.onSuccess(new Basket_prices(response));
+
+
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+//                        Log.d("Error.Response", error.getMessage());
+                    }
+                }
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> parameters = new HashMap<>();
+
+                parameters.put("token",token);
+                return  parameters;
+            }
+        };
+
+        queue.add(getRequest);
 
     }
     public void GetBasket(final Context mcontext,

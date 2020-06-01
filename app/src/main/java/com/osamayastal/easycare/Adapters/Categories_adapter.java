@@ -42,7 +42,7 @@ public class Categories_adapter extends RecyclerView.Adapter<Categories_adapter.
     public interface Selected_item{
         void Onselcted(Categorie categorie);
     }
-    public static int item_select=-1;
+    private int item_select=-1;
     Selected_item listenner;
     public Categories_adapter(Context context, List<Categorie> names, Selected_item listenner) {
         mItems = names;

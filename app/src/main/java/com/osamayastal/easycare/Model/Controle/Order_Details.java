@@ -16,7 +16,7 @@ public class Order_Details {
     private int status_code;
     private Boolean status;
     private List<com.osamayastal.easycare.Model.Classes.Basket.Bascket> items;
-private Double total_price;
+private Double total_price=0.0,total_discount=0.0,final_total=0.0,tax=0.0;
     public Order_Details(JSONObject jsonObject) {
         if (jsonObject==null){
             return;
@@ -39,11 +39,54 @@ private Double total_price;
             }
 
             total_price=jsonObject.getDouble("total_price");
-
+            try {
+                total_price=jsonObject.getDouble("total_price");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            try {
+                total_discount=jsonObject.getDouble("total_discount");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            try {
+                final_total=jsonObject.getDouble("final_total");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            try {
+                tax=jsonObject.getDouble("tax");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+    }
+
+    public Double getTotal_discount() {
+        return total_discount;
+    }
+
+    public void setTotal_discount(Double total_discount) {
+        this.total_discount = total_discount;
+    }
+
+    public Double getFinal_total() {
+        return final_total;
+    }
+
+    public void setFinal_total(Double final_total) {
+        this.final_total = final_total;
+    }
+
+    public Double getTax() {
+        return tax;
+    }
+
+    public void setTax(Double tax) {
+        this.tax = tax;
     }
 
     public String getMessage() {

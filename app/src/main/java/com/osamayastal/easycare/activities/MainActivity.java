@@ -95,35 +95,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     User_info user_info;
     public static int item_select;
     public static FrameLayout frameLayout;
-    TextView user_name_tv;
+    TextView user_name_tv,price;
+private  SlidingRootNav nav;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setLocale(this);
+
 
         setContentView(R.layout.activity_main);
         frameLayout = findViewById(R.id.mainContainer);
 
           user_info = new User_info(this);
-        if (user_info.getId()!=null){
-
-            Log.d("users_id",user_info.getId());
-            if (!user_info.CONF_phone(this))
-            {
-                startActivity(new Intent(MainActivity.this, ConfCode.class));
-                finish();
-            }
-
-        }
 
 /********************************Get Contact*************************************/
         Get_Contact();
         /************************* Drawer*******************/
         toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
+
         if (new User_info(this).getLanguage().equals("en")){
-            new SlidingRootNavBuilder(this)
+           nav= new SlidingRootNavBuilder(this)
                     .withToolbarMenuToggle(toolbar)
                     .withDragDistance(250)
                     .withRootViewScale(1f)
@@ -132,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     .withMenuLayout(R.layout.navigation_content)
                     .inject();
         }else {
-            new SlidingRootNavBuilder(this)
+           nav= new SlidingRootNavBuilder(this)
                     .withToolbarMenuToggle(toolbar)
                     .withDragDistance(250)
                     .withRootViewScale(1f)
@@ -144,14 +136,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         }
 
-//        toolbar.setNavigationIcon(R.drawable.ic_menu_);
-//        toolbar.setOverflowIcon(ContextCompat.getDrawable(this, R.drawable.ic_menu_));
 
         View navigation = findViewById(R.id.nav_view);
-//
-//        if(!toolbar.isDrawerOpen(GravityCompat.START))
-//            navDrawer.openDrawer(GravityCompat.START);
-//        else navDrawer.closeDrawer(GravityCompat.END);
         TextView drawer_offers_tv = navigation.findViewById(R.id.drawer_offers_tv);
         TextView drawer_points_tv = navigation.findViewById(R.id.drawer_points_tv);
         TextView drawer_chat_tv = navigation.findViewById(R.id.drawer_chat_tv);
@@ -166,6 +152,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         CircleImageView user_img = navigation.findViewById(R.id.user_img);
         langu = navigation.findViewById(R.id.language);
         ImageButton logout = navigation.findViewById(R.id.logout_btn);
+         price=navigation.findViewById(R.id.wallet_price);
+        /**************************Action***************************/
         langu.setOnClickListener(this);
         logout.setOnClickListener(this);
         drawer_offers_tv.setOnClickListener(this);
@@ -183,6 +171,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (user_info.getId() == null) {
             logout.setVisibility(View.GONE);
         }
+
 
         getLanguge();
         /********************Bottom nav view**********************/
@@ -280,8 +269,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
+
+        setLocale(this);
         bottom_navigation.setSelectedItemId(item_select);
         user_name_tv.setText(new User_info(this).getName());
+        price.setText(new User_info(mcontext).getWallet().toString()+" "+getString(R.string.RS_short));//String.format("%.2f",);
+
     }
 
     public void setLocale(Context context ){
@@ -336,6 +329,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
 
             case R.id.drawer_offers_tv:
+                startActivity(new Intent(MainActivity.this, Ads.class));
 
                 break;
             case R.id.drawer_points_tv:
@@ -351,11 +345,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 break;
             case R.id.drawer_notification_tv:
-                if (user_info.getId() == null) {
-                    LoginAlert();
-                } else {
-                    startActivity(new Intent(MainActivity.this, Notifications.class));
-                }
+
+                startActivity(new Intent(MainActivity.this, Notifications.class));
+
+//                if (user_info.getId() == null) {
+//                    LoginAlert();
+//                } else {
+//                }
                 break;
             case R.id.drawer_settings_tv:
 
@@ -389,6 +385,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     MainActivity.item_select=R.id.profile;
                     MainActivity.bottom_navigation.setSelectedItemId(MainActivity.item_select);
                 }
+
                 break;
             case R.id.user_img:
 
@@ -470,6 +467,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
         }
+        nav.closeMenu();
+
     }
 
     public interface chang {

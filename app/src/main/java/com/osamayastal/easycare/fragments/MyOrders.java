@@ -65,7 +65,7 @@ public class MyOrders extends Fragment implements View.OnTouchListener {
 
     }
 
-    private int statusID=1;
+    public static int statusID=1;
 private LinearLayout wait,current,complete,cancel;
     private RecyclerView RV;
     List<Order> orderList;

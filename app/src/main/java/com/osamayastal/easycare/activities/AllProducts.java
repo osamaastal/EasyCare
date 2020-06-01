@@ -30,7 +30,7 @@ public class AllProducts extends AppCompatActivity implements View.OnClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLocale(this);
+
         setContentView(R.layout.activity_all_products);
 
         Intent intent = this.getIntent();
@@ -40,6 +40,13 @@ public class AllProducts extends AppCompatActivity implements View.OnClickListen
         init();
         Loading();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setLocale(this);
+    }
+
     public void setLocale(Context context ){
         User_info user_info;
         user_info = new User_info(context);

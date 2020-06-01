@@ -1,33 +1,25 @@
 package com.osamayastal.easycare.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.osamayastal.easycare.Adapters.Product_adapter;
-import com.osamayastal.easycare.Adapters.Provider_adapter;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.osamayastal.easycare.Adapters.AdsAdapter;
+import com.osamayastal.easycare.Adapters.CardAdapter;
 import com.osamayastal.easycare.Adapters.Provider_service_adapter;
-import com.osamayastal.easycare.Adapters.Provider_servicies_adapter;
-import com.osamayastal.easycare.Adapters.Search_adapter;
-import com.osamayastal.easycare.Model.Classes.Categorie;
-import com.osamayastal.easycare.Model.Classes.Product;
+import com.osamayastal.easycare.Model.Classes.Slider;
 import com.osamayastal.easycare.Model.Const.User_info;
-import com.osamayastal.easycare.Model.Controle.Categories;
 import com.osamayastal.easycare.Model.Controle.Provider;
-import com.osamayastal.easycare.Model.Controle.Provider_Details;
-import com.osamayastal.easycare.Model.Controle.Search;
-import com.osamayastal.easycare.Model.Rootes.Categories_root;
 import com.osamayastal.easycare.Model.Rootes.ProviderDetails_root;
 import com.osamayastal.easycare.R;
 
@@ -35,9 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class Service_Single extends AppCompatActivity implements View.OnClickListener {
-
-    private Categorie categorie=null;
+public class Ads extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     protected void onResume() {
@@ -51,9 +41,7 @@ public class Service_Single extends AppCompatActivity implements View.OnClickLis
 
         setContentView(R.layout.activity_service__single);
 
-        Intent intent = this.getIntent();
-        Bundle bundle = intent.getExtras();
-        categorie= (Categorie) bundle.getSerializable("categorie");
+
 
         init();
         Loading();
@@ -72,19 +60,16 @@ public class Service_Single extends AppCompatActivity implements View.OnClickLis
     }
     private void Loading() {
 
-        if (new User_info(this).getLanguage().equals("en")){
-            title.setText(categorie.getEnName());
-        }else {
-            title.setText(categorie.getArName());
-        }
         ProviderDetails_root root=new ProviderDetails_root();
-        root.GetALL_pro_By_cat(this, categorie.get_id(), 0, new ProviderDetails_root.AppProv_Listener() {
+        root.GetALL_ADS(this, 0, new ProviderDetails_root.AppADS_Listener() {
+
+
             @Override
-            public void onSuccess(Provider prov) {
+            public void onSuccess(com.osamayastal.easycare.Model.Controle.Ads ads) {
                 progressBar.setVisibility(View.GONE);
-                searchList.clear();
-                searchList.addAll(prov.getItems());
-                adapter.notifyDataSetChanged();
+                sliderList.clear();
+                sliderList.addAll(ads.getItems());
+                Slide_adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -103,29 +88,42 @@ public class Service_Single extends AppCompatActivity implements View.OnClickLis
     private ImageButton back;
     RecyclerView RV;
     TextView title;
-    List<com.osamayastal.easycare.Model.Classes.Provider.Provider> searchList;
-    Provider_service_adapter adapter;
+    private List<Slider> sliderList;
+    private AdsAdapter Slide_adapter;
+    Context mcontext=Ads.this;
     private void init() {
         progressBar=findViewById(R.id.progress);
         back=findViewById(R.id.back_btn);
         RV=findViewById(R.id.RV);
         title=findViewById(R.id.title);
+        title.setText(getString(R.string.menu_last_offers));
+
         /******************Actions*******************/
         back.setOnClickListener(this);
-        searchList=new ArrayList<>();
-        adapter=new Provider_service_adapter(this, searchList, new Provider_service_adapter.Selected_item() {
-
-
+        sliderList=new ArrayList<>();
+        Slide_adapter=new AdsAdapter(this, sliderList, new AdsAdapter.Selected_item() {
             @Override
-            public void Onselcted(com.osamayastal.easycare.Model.Classes.Provider.Provider provider) {
-                Intent intent=new Intent(Service_Single.this, ServiceProfiderDetails.class);
-                intent.putExtra("provider_id",provider.get_id());
-                startActivity(intent);
-                finish();
-            }
+            public void Onselcted(Slider Slider) {
+
+
+                    if (Slider.getAds_for().equals("2")){
+                        Intent intent=new Intent(mcontext, ServiceProfiderDetails.class);
+                        intent.putExtra("provider_id",Slider.getStore_id());
+                        mcontext.startActivity(intent);
+                        finish();
+                    }
+                    if (Slider.getAds_for().equals("3")) {
+                        if (!Slider.getUrl().isEmpty()) {
+                            Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Slider.getUrl()));
+                            mcontext.startActivity(myIntent);
+                            finish();
+                        }
+                    }
+                }
+
         });
         RV.setLayoutManager(new LinearLayoutManager(this,RecyclerView.VERTICAL,false));
-        RV.setAdapter(adapter);
+        RV.setAdapter(Slide_adapter);
 
     }
 

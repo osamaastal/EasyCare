@@ -29,7 +29,7 @@ import java.util.List;
 
 public class Size_adapter extends RecyclerView.Adapter<Size_adapter.ViewHolder> {
 
-    private static final String TAG = "RecyclerViewAdapter";
+    private final String TAG = "RecyclerViewAdapter";
 
     //vars
     private List<Size> mItems = new ArrayList<>();

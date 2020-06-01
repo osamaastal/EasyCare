@@ -25,12 +25,18 @@ import java.util.List;
 import java.util.Locale;
 
 public class Wallet extends AppCompatActivity implements View.OnClickListener {
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setLocale(this);
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setLocale(this);
+
         setContentView(R.layout.fragment_wallet);
         init();
         Loading();

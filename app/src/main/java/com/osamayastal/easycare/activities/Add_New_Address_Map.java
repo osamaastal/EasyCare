@@ -227,11 +227,15 @@ try{
     if (addresses.size()!=0){
         String area=addresses.get(0).getAdminArea();
         String loc=addresses.get(0).getLocality();
+        String line=addresses.get(0).getAddressLine(0);
         if (area!=null){
             Location=area;
         }
         if (loc!=null){
             Location=area+" , "+ loc;
+        }
+        if (line!=null){
+            Location=line;
         }
 
         location_tv.setText(Location);

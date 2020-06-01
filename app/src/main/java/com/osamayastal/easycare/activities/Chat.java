@@ -29,8 +29,13 @@ import com.google.firebase.database.ValueEventListener;
 import com.osamayastal.easycare.Adapters.Chat_adapter;
 import com.osamayastal.easycare.Model.Classes.Message.Message;
 import com.osamayastal.easycare.Model.Classes.Message.User;
+import com.osamayastal.easycare.Model.Classes.Notification;
 import com.osamayastal.easycare.Model.Const.User_info;
 import com.osamayastal.easycare.Model.Controle.Maps;
+import com.osamayastal.easycare.Model.Controle.Result;
+import com.osamayastal.easycare.Model.Controle.notification;
+import com.osamayastal.easycare.Model.Controle.users;
+import com.osamayastal.easycare.Model.Rootes.Notifications;
 import com.osamayastal.easycare.R;
 import com.squareup.picasso.Picasso;
 
@@ -59,12 +64,14 @@ public class Chat extends AppCompatActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLocale(this);
+
         setContentView(R.layout.fragment_chat);
 
         Intent intent = this.getIntent();
         Bundle bundle = intent.getExtras();
         order_id=bundle.getString("order_id");
+        order_number=bundle.getString("order_number");
+
         driver= (User) bundle.getSerializable("driver");
         user= (User) bundle.getSerializable("user");
 
@@ -215,7 +222,7 @@ private void Driver_info(){
         name.setText(driver.getName());
     }
 }
-    private String order_id=null;
+    private String order_id=null,order_number=null;
     private User driver=null;
     private User user=null;
 
@@ -261,6 +268,8 @@ private void Driver_info(){
             Map<String, Object> parameters = new HashMap<>();
             parameters.put("driver",driver);
             parameters.put("user",user);
+            parameters.put("order_number",order_number);
+
             reference.updateChildren(parameters);
         }
         reference.child("conversation").push().setValue(message)
@@ -278,7 +287,29 @@ private void Driver_info(){
                     parameters.put("isRead_driver",false);
                     parameters.put("isRead_user",true);
                     reference.updateChildren(parameters);
+///////// send notification
+                    Notification notification=new Notification();
+                    notification.setTitle(user.getName()+" - "+order_number);
+                    notification.setBody(message.getContent());
+                    notification.setTo(driver.getFcmtoken());
 
+                    Notifications root=new Notifications();
+                    root.Pushnotification(mcontext,notification , new Notifications.notificationListener() {
+                        @Override
+                        public void onSuccess(notification show_notif) {
+
+                        }
+
+                        @Override
+                        public void onSuccess(Result result) {
+
+                        }
+
+                        @Override
+                        public void onSuccess(users users) {
+
+                        }
+                    });
 
                 }
             }
@@ -299,6 +330,7 @@ private void Driver_info(){
     @Override
     protected void onResume() {
         super.onResume();
+        setLocale(this);
         if(FirebaseDatabase.getInstance()!=null)
         {
             FirebaseDatabase.getInstance().goOnline();

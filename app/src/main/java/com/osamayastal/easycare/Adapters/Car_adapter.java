@@ -40,7 +40,7 @@ public class Car_adapter extends RecyclerView.Adapter<Car_adapter.ViewHolder> {
         void Onselcted(Car_servece car_servece,int potion);
         void Ondelete(Car_servece car_servece);
     }
-    public static int item_select=-1;
+    private int item_select=-1;
     Selected_item listenner;
     public Car_adapter(Context context, List<Car_servece> names, Selected_item listenner) {
         mItems = names;

@@ -27,12 +27,12 @@ public class Bascket implements Serializable {
     private List<Payment> payment_id;
 private Provider provider;
 private Categorie categorie;
+private JSONObject mjsonObject=null;
 
-
-//for Order
+//for OrderDetails
     private String time,date,Order_no,createAt;
     private int PaymentType,locationType,StatusId;
-    private Double Total;
+    private Double total_price=0.0,total_discount=0.0,final_total=0.0,tax=0.0;
     private Employee employee_id;
 private Long dateLong;
     public Bascket() {
@@ -43,6 +43,7 @@ private Long dateLong;
         if (jsonObject==null){
             return;
         }
+        mjsonObject=jsonObject;
         try {
             createAt=jsonObject.getString("createAt");
 //            dateLong= Instant.parse("2020-10-31T00:00:00Z").toEpochMilli();
@@ -117,10 +118,11 @@ private Long dateLong;
             e.printStackTrace();
         }
         try {
-            Total=jsonObject.getDouble("Total");
+            total_price=jsonObject.getDouble("Total");
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
         try {
             PaymentType=jsonObject.getInt("PaymentType");
         } catch (JSONException e) {
@@ -181,6 +183,46 @@ private Long dateLong;
             e.printStackTrace();
         }
 
+    }
+
+    public JSONObject getMjsonObject() {
+        return mjsonObject;
+    }
+
+    public void setMjsonObject(JSONObject mjsonObject) {
+        this.mjsonObject = mjsonObject;
+    }
+
+    public Double getTotal_price() {
+        return total_price;
+    }
+
+    public void setTotal_price(Double total_price) {
+        this.total_price = total_price;
+    }
+
+    public Double getTotal_discount() {
+        return total_discount;
+    }
+
+    public Double getFinal_total() {
+        return final_total;
+    }
+
+    public void setFinal_total(Double final_total) {
+        this.final_total = final_total;
+    }
+
+    public Double getTax() {
+        return tax;
+    }
+
+    public void setTax(Double tax) {
+        this.tax = tax;
+    }
+
+    public void setTotal_discount(Double total_discount) {
+        this.total_discount = total_discount;
     }
 
     public String getCreateAt() {
@@ -263,13 +305,7 @@ private Long dateLong;
         StatusId = statusId;
     }
 
-    public Double getTotal() {
-        return Total;
-    }
 
-    public void setTotal(Double total) {
-        Total = total;
-    }
 
     public Categorie getCategorie() {
         return categorie;

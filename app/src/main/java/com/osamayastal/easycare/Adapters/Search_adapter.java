@@ -37,7 +37,7 @@ import top.defaults.drawabletoolbox.DrawableBuilder;
 
 public class Search_adapter extends RecyclerView.Adapter<Search_adapter.ViewHolder> {
 
-    private static final String TAG = "RecyclerViewAdapter";
+    private final String TAG = "RecyclerViewAdapter";
 
     //vars
     private List<Search> mItems = new ArrayList<>();
@@ -46,7 +46,7 @@ public class Search_adapter extends RecyclerView.Adapter<Search_adapter.ViewHold
     public interface Selected_item{
         void Onselcted(Search search);
     }
-    public static int item_select=-1;
+    private int item_select=-1;
     Selected_item listenner;
     public Search_adapter(Context context, List<Search> names, Selected_item listenner) {
         mItems = names;

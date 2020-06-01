@@ -12,6 +12,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.osamayastal.easycare.Model.Const.Server_info;
 import com.osamayastal.easycare.Model.Const.User_info;
+import com.osamayastal.easycare.Model.Controle.Ads;
 import com.osamayastal.easycare.Model.Controle.City;
 import com.osamayastal.easycare.Model.Controle.Provider;
 import com.osamayastal.easycare.Model.Controle.Provider_Details;
@@ -30,6 +31,11 @@ public class ProviderDetails_root {
     }
     public interface AppProv_Listener{
         void onSuccess(Provider prov);
+        void onStart();
+        void onFailure(String msg);
+    }
+    public interface AppADS_Listener{
+        void onSuccess(Ads ads);
         void onStart();
         void onFailure(String msg);
     }
@@ -102,6 +108,154 @@ public class ProviderDetails_root {
                         Log.d("Response", response.toString());
                         Log.d("token ", token.toString());
                         listener.onSuccess(new Provider(response));
+
+
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+//                        Log.d("Error.Response", error.getMessage());
+                    }
+                }
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+
+                Map<String, String>  Headers = new HashMap<String, String>();
+                Headers.put("token",token);
+                return Headers;
+            }
+        };
+
+        queue.getCache().initialize();
+// add it to the RequestQueue
+        queue.add(getRequest);
+        queue.getCache().clear();
+    }
+    public void GetALL_Mor_asked(final Context mcontext,int page,
+                                  final AppProv_Listener listener)
+    {
+
+        listener.onStart();
+        String url= Server_info.API +"api/mobile/moreMostRequest?page="+page+"&limit=10";
+        final String token =new User_info(mcontext).getToken();
+
+
+        if (queue == null) {
+            queue = Volley.newRequestQueue(mcontext);  // this = context
+        }
+        // prepare the Request
+        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>()
+                {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        Log.d("Response", response.toString());
+                        Log.d("token ", token.toString());
+                        listener.onSuccess(new Provider(response));
+
+
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+//                        Log.d("Error.Response", error.getMessage());
+                    }
+                }
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+
+                Map<String, String>  Headers = new HashMap<String, String>();
+                Headers.put("token",token);
+                return Headers;
+            }
+        };
+
+        queue.getCache().initialize();
+// add it to the RequestQueue
+        queue.add(getRequest);
+        queue.getCache().clear();
+    }
+    public void GetALL_Mor_rate(final Context mcontext,int page,
+                                 final AppProv_Listener listener)
+    {
+
+        listener.onStart();
+        String url= Server_info.API +"api/mobile/moreMostRated?page="+page+"&limit=10";
+        final String token =new User_info(mcontext).getToken();
+
+
+        if (queue == null) {
+            queue = Volley.newRequestQueue(mcontext);  // this = context
+        }
+        // prepare the Request
+        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>()
+                {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        Log.d("Response", response.toString());
+                        Log.d("token ", token.toString());
+                        listener.onSuccess(new Provider(response));
+
+
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+//                        Log.d("Error.Response", error.getMessage());
+                    }
+                }
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+
+                Map<String, String>  Headers = new HashMap<String, String>();
+                Headers.put("token",token);
+                return Headers;
+            }
+        };
+
+        queue.getCache().initialize();
+// add it to the RequestQueue
+        queue.add(getRequest);
+        queue.getCache().clear();
+    }
+
+    public void GetALL_ADS(final Context mcontext,int page,
+                                final AppADS_Listener listener)
+    {
+
+        listener.onStart();
+        String url= Server_info.API +"api/mobile/getOffers?page="+page+"&limit=10";
+        final String token =new User_info(mcontext).getToken();
+
+
+        if (queue == null) {
+            queue = Volley.newRequestQueue(mcontext);  // this = context
+        }
+        // prepare the Request
+        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>()
+                {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        Log.d("Response", response.toString());
+                        Log.d("token ", token.toString());
+                        listener.onSuccess(new Ads(response));
 
 
                     }

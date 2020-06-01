@@ -38,7 +38,7 @@ public class Provider_adapter extends RecyclerView.Adapter<Provider_adapter.View
     public interface Selected_item{
         void Onselcted(Provider provider);
     }
-    public static int item_select=-1;
+    private int item_select=-1;
     Selected_item listenner;
     public Provider_adapter(Context context, List<Provider> names, Selected_item listenner) {
         mItems = names;

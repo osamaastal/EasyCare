@@ -37,7 +37,7 @@ public class Notifications_adapter extends RecyclerView.Adapter<Notifications_ad
     public interface Selected_item{
         void Onselcted(Notification notification);
     }
-    public static int item_select=-1;
+    private int item_select=-1;
     Selected_item listenner;
     public Notifications_adapter(Context context, List<Notification> names, Selected_item listenner) {
         mItems = names;

@@ -29,7 +29,7 @@ import top.defaults.drawabletoolbox.DrawableBuilder;
 
 public class ServicType_adapter extends RecyclerView.Adapter<ServicType_adapter.ViewHolder> {
 
-    private static final String TAG = "RecyclerViewAdapter";
+    private final String TAG = "RecyclerViewAdapter";
 
     //vars
     private List<Categorie> mItems = new ArrayList<>();
@@ -38,7 +38,7 @@ public class ServicType_adapter extends RecyclerView.Adapter<ServicType_adapter.
     public interface Selected_item{
         void Onselcted(Categorie categorie);
     }
-    public static int item_select=-1;
+    public int item_select=-1;
     Selected_item listenner;
     public ServicType_adapter(Context context, List<Categorie> names, Selected_item listenner) {
         mItems = names;

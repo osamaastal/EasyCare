@@ -76,8 +76,8 @@
                 android:id="@+id/RV_basket"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="18dp"
-                android:layout_marginEnd="18dp"
+                android:layout_marginStart="3dp"
+                android:layout_marginEnd="3dp"
                 android:layout_marginBottom="0dp"
                 android:layout_marginTop="10dp"/>
 
@@ -172,6 +172,35 @@
                         android:layout_height="wrap_content"/>
                     <TextView
                         android:id="@+id/discount_amount_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="800"
+                        style="@style/text_darkblue_bold_14" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/rial"
+
+                        android:layout_marginStart="8dp"
+                        style="@style/text_darkblue_bold_14" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:layout_marginTop="15dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tax"
+                        style="@style/text_darkblue_roman_14" />
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:id="@+id/tax_amount_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="800"

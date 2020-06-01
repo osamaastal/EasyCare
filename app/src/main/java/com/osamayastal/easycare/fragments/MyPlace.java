@@ -87,19 +87,25 @@ public class MyPlace extends Fragment implements OnMapReadyCallback, View.OnClic
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+
+
+
+        init();
+
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         if (mLatLng != null) {
-//            mMap.moveCamera(CameraUpdateFactory.newLatLng(mLatLng));
+
             Show_nearServic(mLatLng);
         } else {
 
             locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
             GetLocation(getContext());
         }
-
-
-        init();
-
-        return view;
     }
 
     @Override
@@ -221,14 +227,14 @@ private String provider_id=null;
 
                                     if (gps==0 && mMap!=null) {
                                         mLatLng = new LatLng(location.getLatitude(),location.getLongitude());
-                                        mMap.moveCamera(CameraUpdateFactory.newLatLng(mLatLng));
+
                                         Show_nearServic(mLatLng);
                                         Log.d("location",mLatLng.toString());
                                         gps=1;
 
                                         new User_info().SetLocation(getContext(),mLatLng);
-                                        Toast.makeText(getContext(), "lat: " + new User_info(getContext()).getLat()
-                                                + "lng: " + new User_info(getContext()).getLng() , Toast.LENGTH_SHORT).show();
+//                                        Toast.makeText(getContext(), "lat: " + new User_info(getContext()).getLat()
+//                                                + "lng: " + new User_info(getContext()).getLng() , Toast.LENGTH_SHORT).show();
 
                                     }
 //                                    Toast.makeText(getContext(), "lat: " + mLatLng.latitude + "lng: " + mLatLng.longitude, Toast.LENGTH_SHORT).show();
@@ -258,7 +264,11 @@ private String provider_id=null;
         mMap.setOnMarkerClickListener(this);
 
         mMap.getUiSettings().setZoomControlsEnabled(true);
-//        mMap.setMinZoomPreference(12);
+if (mLatLng!=null){
+    mMap.addMarker(new MarkerOptions()
+            .position(mLatLng));
+    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mLatLng, 12));
+}
 
     }
     private void makeDrawable(int color, View view, int corner) {
@@ -409,6 +419,11 @@ if (new User_info(getContext()).getLanguage().equals("en")){
     }
 
     private void Show_nearServic(LatLng mLatLng) {
+        mMap.clear();
+        mMap.addMarker(new MarkerOptions()
+                .position(mLatLng));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mLatLng, 12));
+
         Maps_root maps_root=new Maps_root();
        try {
            maps_root.GetNearServic(getContext(), mLatLng, new Maps_root.MapsListener() {
@@ -445,7 +460,7 @@ if (new User_info(getContext()).getLanguage().equals("en")){
      * @return
      */
 //    private LatLng mLatLng=new LatLng(33.39877956546843,6.875997707247734);
-    private LatLng mLatLng=new LatLng(23.836439,36.699240);
+    private LatLng mLatLng=null;//new LatLng(23.836439,36.699240);
     private Map<Marker, Employee> markersMap_emp = new HashMap<Marker, Employee>();
     private Map<Marker, Provider_map> markersMap_prov = new HashMap<Marker, Provider_map>();
     private void make_marke(final Employee emp, Provider_map provider){
@@ -477,7 +492,7 @@ if (new User_info(getContext()).getLanguage().equals("en")){
                markersMap_prov.put(marker, provider);
            }
 //
-           mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12));
+//           mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12));
 
        } catch (Exception e) {
            e.printStackTrace();
@@ -486,6 +501,7 @@ if (new User_info(getContext()).getLanguage().equals("en")){
 
 
     }
+
     Context mContext=getContext();
 
     // Convert a view to bitmap

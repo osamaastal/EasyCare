@@ -45,7 +45,7 @@ public class Message_adapter extends RecyclerView.Adapter<Message_adapter.ViewHo
     public interface Selected_item{
         void Onselcted(com.osamayastal.easycare.Model.Classes.Message.Messages messages);
     }
-    public static int item_select=-1;
+   private int item_select=-1;
     Selected_item listenner;
     public Message_adapter(Context context, List<com.osamayastal.easycare.Model.Classes.Message.Messages> names, Selected_item listenner) {
         mItems = names;
@@ -78,7 +78,7 @@ public class Message_adapter extends RecyclerView.Adapter<Message_adapter.ViewHo
 
           try {
               holder.main.setText(mItems.get(position).getLast_msg());
-              holder.name.setText(mItems.get(position).getDriver().getName());
+              holder.name.setText(mItems.get(position).getDriver().getName()+" - "+mItems.get(position).getOrder_number());
               String dateString = DateFormat.format("yyyy/MM/dd hh:mm aa",
                       new Date(mItems.get(position).getEdit_time_long())).toString();
               /******* TimeAgo *******/

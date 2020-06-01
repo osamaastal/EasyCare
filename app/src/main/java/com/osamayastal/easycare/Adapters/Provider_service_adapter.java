@@ -35,7 +35,7 @@ public class Provider_service_adapter extends RecyclerView.Adapter<Provider_serv
     public interface Selected_item{
         void Onselcted(Provider provider);
     }
-    public static int item_select=-1;
+    private int item_select=-1;
     Selected_item listenner;
     public Provider_service_adapter(Context context, List<Provider> names, Selected_item listenner) {
         mItems = names;
@@ -61,8 +61,7 @@ public class Provider_service_adapter extends RecyclerView.Adapter<Provider_serv
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.name.setText(mItems.get(position).getName());
         holder.address.setText(mItems.get(position).getAddress());
-holder.ratingBar.setRating(mItems.get(position).getRate());
-
+        holder.ratingBar.setRating(mItems.get(position).getRate());
        try {
            Picasso.with(mContext)
                    .load(mItems.get(position).getImage())
@@ -99,8 +98,6 @@ holder.ratingBar.setRating(mItems.get(position).getRate());
           Img = itemView.findViewById(R.id.Img);
           address= itemView.findViewById(R.id.address_tv);
           ratingBar= itemView.findViewById(R.id.ratingBar);
-
-
         }
     }
 }

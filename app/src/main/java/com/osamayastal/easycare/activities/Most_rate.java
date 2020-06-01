@@ -1,9 +1,5 @@
 package com.osamayastal.easycare.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -12,34 +8,39 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.osamayastal.easycare.Adapters.Categories_adapter;
-import com.osamayastal.easycare.Adapters.Provider_servicies_adapter;
-import com.osamayastal.easycare.Model.Classes.Categorie;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.osamayastal.easycare.Adapters.Provider_service_adapter;
 import com.osamayastal.easycare.Model.Const.User_info;
-import com.osamayastal.easycare.Model.Controle.Categories;
-import com.osamayastal.easycare.Model.Rootes.Categories_root;
+import com.osamayastal.easycare.Model.Controle.Provider;
+import com.osamayastal.easycare.Model.Rootes.ProviderDetails_root;
 import com.osamayastal.easycare.R;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class AllServices extends AppCompatActivity  implements View.OnClickListener {
+public class Most_rate extends AppCompatActivity implements View.OnClickListener {
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setLocale(this);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_all_services);
+        setContentView(R.layout.activity_service__single);
+
+
+
         init();
         Loading();
-    }
-    @Override
-    protected void onResume() {
-        super.onResume();
-        setLocale(this);
     }
     public void setLocale(Context context ){
         User_info user_info;
@@ -54,26 +55,15 @@ public class AllServices extends AppCompatActivity  implements View.OnClickListe
 //        Toast.makeText(this, "Language: "+ Locale.getDefault().getLanguage() , Toast.LENGTH_SHORT).show();
     }
     private void Loading() {
-        Categories_root root=new Categories_root();
-        root.GetCategories(this, new Categories_root.cat_Listener() {
-            @Override
-            public void onSuccess(Categories catego) {
-                progressBar.setVisibility(View.GONE);
-                categories.clear();
-                categories.addAll(catego.getItems());
-                /////Sort by isActive
 
-                List<Categorie> categorieList=new ArrayList<>();
-                for (Categorie c:categories
-                ) {
-                    if (c.isActive()){
-                        categorieList.add(c);
-                        categories.remove(c);
-                    }
-                }
-                categorieList.addAll(categories);
-                categories.clear();
-                categories.addAll(categorieList);
+
+        ProviderDetails_root root=new ProviderDetails_root();
+        root.GetALL_Mor_rate(this, 0, new ProviderDetails_root.AppProv_Listener() {
+            @Override
+            public void onSuccess(Provider prov) {
+                progressBar.setVisibility(View.GONE);
+                searchList.clear();
+                searchList.addAll(prov.getItems());
                 adapter.notifyDataSetChanged();
             }
 
@@ -92,30 +82,31 @@ public class AllServices extends AppCompatActivity  implements View.OnClickListe
     ProgressBar progressBar;
     private ImageButton back;
     RecyclerView RV;
-    List<Categorie> categories;
-    Provider_servicies_adapter adapter;
     TextView title;
-    Context mcontext=AllServices.this;
+    List<com.osamayastal.easycare.Model.Classes.Provider.Provider> searchList;
+    Provider_service_adapter adapter;
     private void init() {
         progressBar=findViewById(R.id.progress);
         back=findViewById(R.id.back_btn);
         RV=findViewById(R.id.RV);
         title=findViewById(R.id.title);
-       /******************Actions*******************/
+        title.setText(getString(R.string.more_rates));
+
+        /******************Actions*******************/
         back.setOnClickListener(this);
-        categories=new ArrayList<>();
-        adapter=new Provider_servicies_adapter(this, categories, new Provider_servicies_adapter.Selected_item() {
+        searchList=new ArrayList<>();
+        adapter=new Provider_service_adapter(this, searchList, new Provider_service_adapter.Selected_item() {
+
+
             @Override
-            public void Onselcted(Categorie categorie) {
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("categorie",categorie);
-                Intent intent=new Intent(mcontext, Service_Single.class);
-                intent.putExtras(bundle);
+            public void Onselcted(com.osamayastal.easycare.Model.Classes.Provider.Provider provider) {
+                Intent intent=new Intent(Most_rate.this, ServiceProfiderDetails.class);
+                intent.putExtra("provider_id",provider.get_id());
                 startActivity(intent);
                 finish();
             }
         });
-        RV.setLayoutManager(new GridLayoutManager(this,3));
+        RV.setLayoutManager(new LinearLayoutManager(this,RecyclerView.VERTICAL,false));
         RV.setAdapter(adapter);
 
     }

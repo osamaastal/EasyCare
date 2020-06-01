@@ -33,11 +33,15 @@ import java.util.List;
 import java.util.Locale;
 
 public class Notifications extends AppCompatActivity implements View.OnClickListener {
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setLocale(this);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLocale(this);
+
         setContentView(R.layout.activity_notifications);
         init();
         Loading();
@@ -138,15 +142,21 @@ public class Notifications extends AppCompatActivity implements View.OnClickList
             @Override
             public void Onselcted(Notification notification) {
                 switch (notification.getType()){//حالات التنبيهات: type
-                    //١- طلبات
 
-                    case 1:
-                        Intent intent=new Intent(mcontext, OrderDetails.class);
-                        intent.putExtra("order_id",notification.getBody_parms());
-                        startActivity(intent);
+
+                    case 1://١- طلبات
+                    case 2://٢- تقييمات
+                        try {
+                            Intent intent=new Intent(mcontext, OrderDetails.class);
+                            intent.putExtra("order_id",notification.getBody_parms());
+                            startActivity(intent);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
 
                         break;
-                    case 2://٢- تقييمات
+
                     case 4://٤- مسجات عامة من لوحة التحكم — مابفتح اي شي
                     case 3://٣- كوبونات او عروض — مابفتح اي شي
                                 break;

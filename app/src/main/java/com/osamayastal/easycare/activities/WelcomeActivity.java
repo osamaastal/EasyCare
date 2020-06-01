@@ -6,11 +6,14 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.osamayastal.easycare.Model.Classes.Wellcom;
 import com.osamayastal.easycare.Model.Const.User_info;
@@ -22,11 +25,37 @@ import com.osamayastal.easycare.fragments.Welcome3;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import me.relex.circleindicator.CircleIndicator;
 
 public class WelcomeActivity extends AppCompatActivity implements View.OnClickListener {
+    @Override
+    protected void onResume() {
+        super.onResume();
 
+
+    }
+    public void setLocale(Context context ){
+        User_info user_info;
+        user_info = new User_info(context);
+        String language=user_info.getLanguage();
+        if (language.equals("ar")){
+            skip.setBackgroundResource(R.drawable.bg_blue_gradiant_26dp_right);
+            skip.setText("تخطي");
+        }else {
+            skip.setText("Skip");
+        }
+
+
+        Locale locale = new Locale(language);
+        Configuration config = new Configuration(getResources().getConfiguration());
+        Locale.setDefault(locale);
+        config.setLocale(locale);
+        getBaseContext().getResources().updateConfiguration(config,
+                getBaseContext().getResources().getDisplayMetrics());
+//        Toast.makeText(this, "Language: "+ Locale.getDefault().getLanguage() , Toast.LENGTH_SHORT).show();
+    }
     private ViewPager mPager;
     private TextView skip,en,ar;
     private ImageView valid_en,valid_ar;
@@ -39,8 +68,10 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_welcome);
         init();
+        setLocale(this);
 
 
     }
@@ -72,6 +103,7 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
         root.Get_WellcomPages(this, new Wellcom_root.Wellcom_Listener() {
             @Override
             public void onSuccess(com.osamayastal.easycare.Model.Controle.Wellcom wellcom) {
+                wellcomList.clear();
                 wellcomList.addAll(wellcom.getItems());
                 mPager.setAdapter( new MyPagerAdapter(getSupportFragmentManager()));
                 CircleIndicator indicator = findViewById(R.id.indicator);
@@ -110,6 +142,8 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
                   if (v){
                       valid_ar.setVisibility(View.VISIBLE);
                       valid_en.setVisibility(View.GONE);
+                      finishAffinity();
+
                   }
               }
           });
@@ -126,6 +160,7 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
                        if (v){
                            valid_en.setVisibility(View.VISIBLE);
                            valid_ar.setVisibility(View.GONE);
+                           finishAffinity();
                        }
                    }
                }));

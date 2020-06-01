@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
+    android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="320dp"
-    android:layout_height="150dp"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/bg_req_white_30dp"
     android:layoutDirection="locale">
@@ -35,11 +36,13 @@
         app:layout_constraintStart_toStartOf="parent"
         />
     <View
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/gray_e1"
         app:layout_constraintTop_toTopOf="@+id/linear"/>
     <LinearLayout
+
         android:id="@+id/linear"
         android:layout_width="match_parent"
         android:layout_height="45dp"
@@ -70,4 +73,4 @@
 
 
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

@@ -36,7 +36,7 @@ import java.util.List;
 
 public class SubCategories_adapter extends RecyclerView.Adapter<SubCategories_adapter.ViewHolder> {
 
-    private static final String TAG = "RecyclerViewAdapter";
+    private final String TAG = "RecyclerViewAdapter";
 
     //vars
     private List<Sub_service> mItems = new ArrayList<>();
@@ -45,7 +45,7 @@ public class SubCategories_adapter extends RecyclerView.Adapter<SubCategories_ad
     public interface Selected_item{
         Boolean Onselcted(Sub_service sub_service, boolean b);
     }
-    public static int item_select=-1;
+    private int item_select=-1;
     Selected_item listenner;
     public SubCategories_adapter(Context context, List<Sub_service> names, Selected_item listenner) {
         mItems = names;

@@ -1,11 +1,9 @@
 package com.osamayastal.easycare.Model.Controle;
 
-import android.os.Build;
 import android.util.Log;
 
-import androidx.annotation.RequiresApi;
-
-import com.osamayastal.easycare.Model.Classes.Order;
+import com.osamayastal.easycare.Model.Classes.Pagenation;
+import com.osamayastal.easycare.Model.Classes.Slider;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,14 +12,13 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Orders {
+public class Ads {
     private String message;
     private int status_code;
-    private Boolean status;
-    private List<com.osamayastal.easycare.Model.Classes.Order> items;
+    private Pagenation pagenation;
+    private List<Slider> items;
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public Orders(JSONObject jsonObject) {
+    public Ads(JSONObject jsonObject) {
         if (jsonObject==null){
             return;
         }
@@ -29,12 +26,14 @@ public class Orders {
         items=new ArrayList<>();
         try {
             message=jsonObject.getString("message");
-            status=jsonObject.getBoolean("status");
             Log.d("message",message);
             status_code=jsonObject.getInt("status_code");
-            JSONArray jsonArray=jsonObject.getJSONArray("items");
-            for(int i=0;i<jsonArray.length();i++){
-                items.add(new com.osamayastal.easycare.Model.Classes.Order(jsonArray.getJSONObject(i)));
+            pagenation=new Pagenation(jsonObject.getJSONObject("pagenation"));
+            JSONArray jsonArray2=jsonObject.getJSONArray("items");
+
+
+            for(int i=0;i<jsonArray2.length();i++){
+                items.add(new Slider(jsonArray2.getJSONObject(i)));
             }
 
         } catch (JSONException e) {
@@ -59,19 +58,19 @@ public class Orders {
         this.status_code = status_code;
     }
 
-    public Boolean getStatus() {
-        return status;
+    public Pagenation getPagenation() {
+        return pagenation;
     }
 
-    public void setStatus(Boolean status) {
-        this.status = status;
+    public void setPagenation(Pagenation pagenation) {
+        this.pagenation = pagenation;
     }
 
-    public List<Order> getItems() {
+    public List<Slider> getItems() {
         return items;
     }
 
-    public void setItems(List<Order> items) {
+    public void setItems(List<Slider> items) {
         this.items = items;
     }
 }

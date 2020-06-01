@@ -38,7 +38,7 @@ public class Messages extends AppCompatActivity implements View.OnClickListener 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLocale(this);
+
         setContentView(R.layout.activity_messages);
         init();
 
@@ -58,6 +58,7 @@ public class Messages extends AppCompatActivity implements View.OnClickListener 
     @Override
     protected void onResume() {
         super.onResume();
+        setLocale(this);
         if (FirebaseDatabase.getInstance() != null)
         {
             FirebaseDatabase.getInstance().goOnline();
@@ -161,6 +162,7 @@ public class Messages extends AppCompatActivity implements View.OnClickListener 
                                 bundle.putSerializable("user",messages.getUser());
                                 bundle.putSerializable("driver",messages.getDriver());
                                 bundle.putString("order_id",messages.getOrder_id());
+                                bundle.putString("order_number",messages.getOrder_number());
                                 Intent intent=new Intent(mcontext, Chat.class);
                                 intent.putExtras(bundle);
                                 startActivity(intent);

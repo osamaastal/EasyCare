@@ -16,7 +16,6 @@ import java.util.Locale;
 
 public class Auther_activity extends AppCompatActivity {
 
-
     public void setLocale(Context context ){
         User_info user_info;
         user_info = new User_info(context);
@@ -32,7 +31,7 @@ public class Auther_activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLocale(this);
+
         setContentView(R.layout.activity_auther_activity);
     }
     public static   FragmentTransaction transaction;
@@ -46,6 +45,7 @@ public class Auther_activity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        setLocale(this);
         if (fragment!=null){
             switchFGM(fragment);
         }

@@ -36,8 +36,8 @@
         android:layout_width="match_parent"
         android:layout_height="170dp"
         android:gravity="center"
-        android:paddingEnd="25dp"
-        android:paddingStart="25dp"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/bg_req_darkblue_50dp_top">
         <Button
@@ -50,7 +50,7 @@
             style="@style/text_darkblue_roman_16"
             android:background="@drawable/bg_req_white_30dp"
             android:drawableEnd="@drawable/ic_check_drawable_1"
-            android:paddingStart="25dp"
+            android:paddingStart="12dp"
             android:paddingEnd="10dp"
             android:layout_marginTop="0dp"
             android:layout_marginBottom="0dp"

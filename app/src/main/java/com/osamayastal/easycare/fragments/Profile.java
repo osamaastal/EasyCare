@@ -118,6 +118,7 @@ private ConstraintLayout favorit,order;
 
                 break;
             case R.id.order_btn:
+                MyOrders.statusID=1;
                 MainActivity.item_select=R.id.my_orders;
                 MainActivity.bottom_navigation.setSelectedItemId(MainActivity.item_select);
 

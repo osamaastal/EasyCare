@@ -31,12 +31,16 @@ import com.osamayastal.easycare.fragments.LoginFrag;
 import java.util.Locale;
 
 public class LoginActivity extends AppCompatActivity {
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setLocale(this);
+    }
     public static FragmentTransaction transaction;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLocale(this);
+
         setContentView(R.layout.activity_login);
 
 

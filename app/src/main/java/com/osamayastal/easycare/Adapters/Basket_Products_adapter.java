@@ -45,7 +45,7 @@ public class Basket_Products_adapter extends RecyclerView.Adapter<Basket_Product
     public interface Selected_item{
         void Onselcted(Car_servece car_servece);
     }
-    public static int item_select=-1;
+   private int item_select=-1;
     Selected_item listenner;
     public Basket_Products_adapter(Context context, List<Product> names, Selected_item listenner) {
         mItems = names;

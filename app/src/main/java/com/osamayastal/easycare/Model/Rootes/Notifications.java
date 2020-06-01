@@ -11,8 +11,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.osamayastal.easycare.Model.Classes.Notification;
 import com.osamayastal.easycare.Model.Const.Server_info;
 import com.osamayastal.easycare.Model.Const.User_info;
+import com.osamayastal.easycare.Model.Controle.Provider;
 import com.osamayastal.easycare.Model.Controle.Result;
 import com.osamayastal.easycare.Model.Controle.notification;
 import com.osamayastal.easycare.Model.Controle.users;
@@ -138,6 +140,46 @@ public class Notifications {
                 }
             };
             queue.add(postRequest);
+
+        }catch (Exception ex){
+
+        }}
+    public void Pushnotification(final Context mcontext, final Notification notification, final notificationListener listener)
+    {
+        final String token=new User_info(mcontext).getToken();
+        try{
+            String url="https://fcm.googleapis.com/fcm/send";
+
+
+            if (queue == null) {
+                queue = Volley.newRequestQueue(mcontext);  // this = context
+                //Build.logError("Setting a new request queue");
+            }
+            JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url, notification.toJsonObject(),
+                    new Response.Listener<JSONObject>()
+                    {
+                        @Override
+                        public void onResponse(JSONObject response) {
+
+                            Log.d("Response", response.toString());
+                            Log.d("token ", token.toString());
+                            listener.onSuccess(new users(null));
+
+
+                        }
+                    },
+                    new Response.ErrorListener()
+                    {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+//                        Log.d("Error.Response", error.getMessage());
+                        }
+                    }
+            ){
+
+            };
+            queue.add(getRequest);
 
         }catch (Exception ex){
 

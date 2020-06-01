@@ -39,13 +39,13 @@ import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 public class Provider_servicies_adapter extends RecyclerView.Adapter<Provider_servicies_adapter.ViewHolder> {
 
-    private static final String TAG = "RecyclerViewAdapter";
+    private final String TAG = "RecyclerViewAdapter";
 
     //vars
     private List<Categorie> mItems = new ArrayList<>();
     private Context mContext;
     private View mview;
-    private static double type_price=0, size_price=0;
+    private double type_price=0, size_price=0;
 
 
 
@@ -55,7 +55,7 @@ public class Provider_servicies_adapter extends RecyclerView.Adapter<Provider_se
     }
 
 
-    public static int item_select = -1;
+    private int item_select = -1;
     Selected_item listenner;
 
     public Provider_servicies_adapter(Context context, List<Categorie> names, Selected_item listenner) {

@@ -173,7 +173,14 @@
     <string name="logout">هل انت متأكد انك تريد تسجيل الخروج</string>
     <string name="operation">عمليات التحويل</string>
     <string name="cancel_order_sure">هل انت متأكد انك تريد إلغاء هذا الطلب</string>
-    <string name="maste_select_one">يجب احتيار عنصر على الأقل</string>
+    <string name="maste_select_one">يجب احتيار عنصر واحد</string>
     <string name="select_getway">\"إختار وسيلة الدفع\"</string>
     <string name="maste_select_one_ser_size">\"يجب احتيار عنصر على الأقل من نوع الخدمة و تفاصيل الخدمة\"</string>
+    <string name="chetout_msg">سيتم تنفيذ الطلب لمزود الخدمة الذي تم تحديده وسيتم الاحتفاظ بباقي طلباتك في السلة</string>
+
+    <string name="check_coupon">التأكد من الكوبون</string>
+    <string name="new_msg">رسالة جديدة</string>
+    <string name="getprice_service">عرض الارقام الخاصة بالسلة بناءا على مزود الخدمات المختارة</string>
+    <string name = "tax"> الضريبة </string>
+
 </resources>

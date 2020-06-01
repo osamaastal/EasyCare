@@ -25,6 +25,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.osamayastal.easycare.Adapters.Basket_adapter;
 import com.osamayastal.easycare.Model.Classes.Basket.Bascket;
 import com.osamayastal.easycare.Model.Classes.Car_servece;
@@ -49,10 +50,16 @@ import top.defaults.drawabletoolbox.DrawableBuilder;
 
 public class OrderDetails extends AppCompatActivity implements View.OnClickListener {
     private  int TEN_MINUTES = 30 * 60 * 1000;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setLocale(this);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLocale(this);
+
         setContentView(R.layout.fragment_order_details);
 
         Intent intent = this.getIntent();
@@ -85,6 +92,11 @@ private String order_id=null;
                public void onSuccess(Order_Details order_details) {
                    findViewById(R.id.linear_wait).setVisibility(View.GONE);
                    order=order_details.getItems().get(0);
+                   price.setText(String.format("%.2f",order_details.getFinal_total()));
+                   subtotal.setText(String.format("%.2f", order_details.getTotal_price()));
+                   tax.setText(String.format("%.2f", order_details.getTax()));
+                   discount.setText(String.format("%.2f", order_details.getTotal_discount()));
+                   total.setText(String.format("%.2f", order_details.getFinal_total()));
                    FetchData();
                }
 
@@ -121,17 +133,20 @@ private String order_id=null;
     private void FetchData() {
         if (order!=null){
             name.setText(order.getProvider().getName());
+            int payment_type=order.getPaymentType();
 if (new User_info(mcontext).getLanguage().equals("en")){
-    payment.setText(order.getPayment_id().get(0).getEnName());
+    payment.setText(order.getPayment_id().get(payment_type-1).getEnName());
 }else {
-    payment.setText(order.getPayment_id().get(0).getArName());
+    payment.setText(order.getPayment_id().get(payment_type-1).getArName());
 
 }
+
+
     id.setText(order.getOrder_no());
-            id_top.setText(order.getOrder_no());
+
             date.setText(getdate(order.getDate()));
             time.setText(order.getTime());
-            price.setText(String.format("%.2f",order.getTotal()));
+
             nb_service.setText(order.getCategories().size()+"");
             nb_product.setText(order.getProducts().size()+"");
 
@@ -215,8 +230,12 @@ RecyclerView RV;
 Button save,rate;
 
     Context mcontext=OrderDetails.this;
-
+    TextView subtotal,discount,total,tax;
     private void init() {
+        tax=findViewById(R.id.tax_amount_tv);
+        subtotal=findViewById(R.id.subtotal);
+        discount=findViewById(R.id.discount_amount_tv);
+        total=findViewById(R.id.total_price_tv);
         name = findViewById(R.id.userName_tv);
         payment = findViewById(R.id.payment_way_tv);
         Img = findViewById(R.id.userImg);
@@ -287,22 +306,26 @@ switch (view.getId()){
                 break;
             case 2://2- Accepted
             case 3:// 3- OnProgress
-                FirebaseDatabase database=FirebaseDatabase.getInstance();
-                DatabaseReference reference=database.getReference().child("chat").child(order_id);
+
                 final Messages messages=new Messages();
                 //driver
                 messages.setDriver(new User(order.getEmployee_id().get_id(),
                         order.getEmployee_id().getFull_name(),
-                        order.getEmployee_id().getImage()));
+                        order.getEmployee_id().getImage()
+                ,order.getEmployee_id().getFcmToken()));
                 //user
-                messages.setUser(new User(new User_info(mcontext).getId(),
-                        new User_info(mcontext).getName(),
-                        new User_info(mcontext).getImag()));
+                User_info user_info=new User_info(mcontext);
+                String tokenFCM = FirebaseInstanceId.getInstance().getToken();
+                messages.setUser(new User(user_info.getId(),
+                        user_info.getName(),
+                       user_info.getImag(),
+                       tokenFCM));
 
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("driver",messages.getDriver());
                 bundle.putSerializable("user",messages.getUser());
-                bundle.putSerializable("order_id",order_id);
+                bundle.putString("order_id",order_id);
+                bundle.putString("order_number",order.getOrder_no());
                 Intent intent=new Intent(mcontext, Chat.class);
                 intent.putExtras(bundle);
                 startActivity(intent);
@@ -321,6 +344,7 @@ switch (view.getId()){
                 Intent intent2=new Intent(mcontext, OrderDetails_Create.class);
                 intent2.putExtras(bundle2);
                 startActivity(intent2);
+                finish();
                 break;
         }
         break;

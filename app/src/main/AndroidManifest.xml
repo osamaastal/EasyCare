@@ -23,6 +23,9 @@
         <activity android:name=".activities.Service_Single" />
         <activity android:name=".activities.Search" />
         <activity android:name=".activities.Messages" />
+        <activity android:name=".activities.Most_rate" />
+        <activity android:name=".activities.Most_request" />
+        <activity android:name=".activities.Ads" />
         <activity
             android:name=".activities.MapsActivity" />
         <!--

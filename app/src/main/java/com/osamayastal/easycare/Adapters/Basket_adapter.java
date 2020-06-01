@@ -39,7 +39,7 @@ public class Basket_adapter extends RecyclerView.Adapter<Basket_adapter.ViewHold
         void OnRefresh(Car_servece car_servece);
         void Onselcted(int potions);
     }
-    public static int item_select=-1;
+    private static int item_select=0;
     Selected_item listenner;
     public Boolean isOrder=false;
     public Basket_adapter(Context context, List<Bascket> names, Selected_item listenner) {
@@ -103,12 +103,23 @@ public class Basket_adapter extends RecyclerView.Adapter<Basket_adapter.ViewHold
             }
         });
 
+//        if (item_select==position){
+//            holder.checkBox.setChecked(true);
+//        }
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b){
-                    listenner.Onselcted(position);
-                }
+                listenner.Onselcted(position);
+
+//                if (b){
+//                    listenner.Onselcted(position);
+////                    item_select=position;
+//
+//                }
+
+//                item_select=position;
+//                notifyDataSetChanged();
+
             }
         });
     }

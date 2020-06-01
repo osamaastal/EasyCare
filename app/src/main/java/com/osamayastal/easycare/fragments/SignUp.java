@@ -41,6 +41,7 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
 import com.osamayastal.easycare.Model.Classes.City;
 import com.osamayastal.easycare.Model.Classes.User;
 import com.osamayastal.easycare.Model.Const.User_info;
@@ -128,6 +129,7 @@ private AppCompatCheckBox accept;
         term_btn.setOnClickListener(this);
         login_btn.setOnClickListener(this);
         logup_btn.setOnClickListener(this);
+        back_btn.setOnClickListener(this);
         city.setOnClickListener(this);
     }
     private void show_bottomSheet(){
@@ -195,33 +197,50 @@ private AppCompatCheckBox accept;
 
             break;
 
-
+        case R.id.back_btn:
+            switchFGM(new LoginFrag());
+            break;
 
     }
     }
+private void ShowMessage(String msg){
+    Snackbar snackbar = Snackbar
+            .make(getView(), msg, Snackbar.LENGTH_LONG);
 
+    snackbar.show();
+}
     private void Logup_fun() {
         List<EditText> list=new ArrayList<>();
         list.add(name);
-        list.add(phone);
         list.add(email);
+        list.add(phone);
         list.add(password);
         if (Verefy(list)){
+            if (phone.getText().toString().length()<9){
+                phone.setError(phone.getHint());
+                ShowMessage(getContext().getString(R.string.phone));
+                return;
+            }
             if (city_id==null){
                 city.setError(city.getText());
+                ShowMessage(getContext().getString(R.string.city));
                 return;
             }
             if (!accept.isChecked()){
                 accept.setError(accept.getText());
+                ShowMessage(getString(R.string.terms));
+
                 return;
             }
             if (mLatLng==null){
                 Toast.makeText(getContext(),"لم يتم أخذ إحداثياتك بعد",Toast.LENGTH_SHORT).show();
+                ShowMessage("لم يتم أخذ إحداثياتك بعد");
+
                 return;
             }
             final User user_=new User();
             user_.setFullName(name.getText().toString());
-            user_.setPhoneNumber(phone.getText().toString());
+            user_.setPhoneNumber("966"+phone.getText().toString());
             user_.setEmail(email.getText().toString());
             user_.setPassword(password.getText().toString());
             user_.setLat(mLatLng.latitude);
@@ -243,8 +262,10 @@ private AppCompatCheckBox accept;
                     //save Pw
                     new User_info().Password(user_.getPassword(),getContext());
 //save user info
-                    new User_info(new_account.getItems(),getContext());
-                    startActivity(new Intent(getActivity(), ConfCode.class));
+//                    new User_info(new_account.getItems(),getContext());
+                    Intent intent=new Intent(getActivity(), ConfCode.class);
+                    intent.putExtra("user_id",new_account.getItems().getId());
+                    startActivity(intent);
                     getActivity().finish();
                 }
 
@@ -271,6 +292,8 @@ private AppCompatCheckBox accept;
         ) {
             if (ed.getText().toString().isEmpty()){
                 ed.setError(ed.getHint());
+                ShowMessage(ed.getHint().toString());
+
                 return false;
             }
         }

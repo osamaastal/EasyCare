@@ -26,7 +26,7 @@ import java.util.List;
 
 public class Basket_car_details_adapter extends RecyclerView.Adapter<Basket_car_details_adapter.ViewHolder> {
 
-    private static final String TAG = "RecyclerViewAdapter";
+    private  final String TAG = "RecyclerViewAdapter";
 
     //vars
     private List<SubCategory_basket> mItems = new ArrayList<>();
@@ -35,7 +35,7 @@ public class Basket_car_details_adapter extends RecyclerView.Adapter<Basket_car_
     public interface Selected_item{
         void Onselcted(Sub_service sub_service);
     }
-    public static int item_select=-1;
+    private int item_select=-1;
     Selected_item listenner;
     public Basket_car_details_adapter(Context context, List<SubCategory_basket> names, Selected_item listenner) {
         mItems = names;

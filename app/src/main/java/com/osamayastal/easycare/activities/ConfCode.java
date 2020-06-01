@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.chaos.view.PinView;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.osamayastal.easycare.Model.Classes.Categorie;
 import com.osamayastal.easycare.Model.Const.User_info;
 import com.osamayastal.easycare.Model.Controle.users;
 import com.osamayastal.easycare.Model.Rootes.user;
@@ -26,13 +27,23 @@ import java.util.Locale;
 public class ConfCode extends AppCompatActivity implements View.OnClickListener {
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        setLocale(this);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLocale(this);
+
         setContentView(R.layout.activity_conf_code);
+        Intent intent = this.getIntent();
+        Bundle bundle = intent.getExtras();
+        user_id=bundle.getString("user_id");
         init();
         Timer_resendButton();
     }
+    String user_id=null;
     public void setLocale(Context context ){
         User_info user_info;
         user_info = new User_info(context);
@@ -79,12 +90,30 @@ private ImageView back_btn;
 
         }.start();
     }
-
+Context mcontext=ConfCode.this;
     @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.resend:
-                Timer_resendButton();
+                user user=new user();
+                user.Post_resend(this, user_id, new user.user_Listener() {
+                    @Override
+                    public void onSuccess(users new_account) {
+//                        Toast.makeText(mcontext,new_account.getMessageAr(),Toast.LENGTH_SHORT).show();
+                        Timer_resendButton();
+                    }
+
+                    @Override
+                    public void onStart() {
+
+                    }
+
+                    @Override
+                    public void onFailure(String msg) {
+
+                    }
+                });
+
                 break;
                 case R.id.conf_btn:
                     Conferme_fun();
@@ -101,7 +130,7 @@ private ImageView back_btn;
         user user=new user();
         final User_info user_info=new User_info(this);
         String tokenFCM = FirebaseInstanceId.getInstance().getToken();
-        user.Put_ActvitPhone_user(this, user_info.getId(), cod.getText().toString(), tokenFCM
+        user.Put_ActvitPhone_user(this, user_id, cod.getText().toString(), tokenFCM
                 , new user.user_Listener() {
                     @Override
                     public void onSuccess(users new_account) {

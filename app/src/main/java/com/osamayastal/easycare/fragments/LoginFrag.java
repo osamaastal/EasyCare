@@ -49,6 +49,9 @@ private Button login_btn;
         login_btn=view.findViewById(R.id.login_btn);
         skip=view.findViewById(R.id.skip);
         /**************************Actions*****************************/
+        if (new User_info(getContext()).getLanguage().equals("ar")){
+            skip.setBackgroundResource(R.drawable.bg_blue_gradiant_26dp_right);
+        }
         login_btn.setOnClickListener(this);
         forget.setOnClickListener(this);
         logup.setOnClickListener(this);
@@ -86,7 +89,7 @@ private Button login_btn;
             String tokenFCM = FirebaseInstanceId.getInstance().getToken();
             Log.d("tokenFCM",tokenFCM);
             user.Post_Login(getContext(), tokenFCM, passord.getText().toString(),
-                    phone.getText().toString(), new user.user_Listener() {
+                   "966"+ phone.getText().toString(), new user.user_Listener() {
                         @Override
                         public void onSuccess(users new_account) {
                             if (new User_info(getContext()).getLanguage().equals("en")){
@@ -108,8 +111,9 @@ private Button login_btn;
                                 getActivity().finish();
                             }
                             else {
-                                new User_info(new_account.getItems(), getContext());
-                                startActivity(new Intent(getContext(), ConfCode.class));
+                                Intent intent=new Intent(getActivity(), ConfCode.class);
+                                intent.putExtra("user_id",new_account.getItems().getId());
+                                startActivity(intent);
                                 getActivity().finish();
                             }
                         }

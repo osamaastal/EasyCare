@@ -49,7 +49,7 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.ViewHo
     public interface Selected_item{
         void Onselcted(Product product);
     }
-    public static int item_select=-1;
+    private int item_select=-1;
     Selected_item listenner;
     public Product_adapter(Context context, List<Product> names, Selected_item listenner) {
         mItems = names;

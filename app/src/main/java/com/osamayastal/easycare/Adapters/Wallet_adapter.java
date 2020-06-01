@@ -28,7 +28,7 @@ import java.util.List;
 
 public class Wallet_adapter extends RecyclerView.Adapter<Wallet_adapter.ViewHolder> {
 
-    private static final String TAG = "RecyclerViewAdapter";
+    private final String TAG = "RecyclerViewAdapter";
 
     //vars
     private List<Wallet> mItems = new ArrayList<>();
@@ -37,7 +37,7 @@ public class Wallet_adapter extends RecyclerView.Adapter<Wallet_adapter.ViewHold
     public interface Selected_item{
         void Onselcted(Wallet wallet);
     }
-    public static int item_select=-1;
+    private int item_select=-1;
     Selected_item listenner;
     public Wallet_adapter(Context context, List<Wallet> names, Selected_item listenner) {
         mItems = names;

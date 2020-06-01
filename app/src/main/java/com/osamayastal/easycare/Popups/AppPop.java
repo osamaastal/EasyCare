@@ -22,6 +22,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.deishelon.roundedbottomsheet.RoundedBottomSheetDialog;
+import com.google.android.material.snackbar.Snackbar;
 import com.osamayastal.easycare.Model.Classes.Complain;
 import com.osamayastal.easycare.Model.Const.Server_info;
 import com.osamayastal.easycare.Model.Const.User_info;
@@ -45,6 +46,12 @@ public interface goListenner{
     void Go();
     void Cancel();
 }
+    public void ShowMessage(String msg,View view){
+        Snackbar snackbar = Snackbar
+                .make(view, msg, Snackbar.LENGTH_LONG);
+
+        snackbar.show();
+    }
     public void Login_POP(final Context mContext){
         final Dialog dialog=new Dialog(mContext);
         dialog.setContentView(R.layout.popup_conf);

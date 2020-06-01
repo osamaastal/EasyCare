@@ -71,7 +71,6 @@ public class ServiceProfiderDetails extends AppCompatActivity implements View.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLocale(this);
         setContentView(R.layout.activity_service_profider_details);
 
         Intent intent = this.getIntent();
@@ -343,6 +342,8 @@ Context mcontext=ServiceProfiderDetails.this;
     @Override
     protected void onResume() {
         super.onResume();
+        setLocale(this);
+
         basket_count();
     }
 

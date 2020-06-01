@@ -70,7 +70,7 @@ public class Search extends AppCompatActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLocale(this);
+
         setContentView(R.layout.activity_search);
         init();
 
@@ -134,6 +134,7 @@ mypopupWindow_filter=setPopUpWindow();
     String city_id="";
     String rat ="";
     String raduis ="";
+    ServicType_adapter adaptertype;
     private PopupWindow setPopUpWindow() {
         LayoutInflater inflater=(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view1 = inflater.inflate(R.layout.popup_filter, null);
@@ -154,15 +155,17 @@ default_tv.setOnClickListener(new View.OnClickListener() {
     public void onClick(View view) {
        rang.setProgress(0);
        rate.setRating(0);
-
          categorie_id="";
          city_id="";
          rat ="";
          raduis ="";
+
+        adaptertype.item_select=-1;
+        adaptertype.notifyDataSetChanged();
     }
 });
         List<Categorie> categories=new ArrayList<>();
-        ServicType_adapter adaptertype=new ServicType_adapter(Search.this, categories, new ServicType_adapter.Selected_item() {
+         adaptertype=new ServicType_adapter(Search.this, categories, new ServicType_adapter.Selected_item() {
             @Override
             public void Onselcted(Categorie categorie) {
                 categorie_id=categorie.get_id();
@@ -337,6 +340,7 @@ default_tv.setOnClickListener(new View.OnClickListener() {
     @Override
     protected void onResume() {
         super.onResume();
+        setLocale(this);
         GetLocation(this);
     }
 

@@ -38,7 +38,7 @@ public class Order_adapter extends RecyclerView.Adapter<Order_adapter.ViewHolder
     public interface Selected_item{
         void Onselcted(Order order);
     }
-    public static int item_select=-1;
+    private int item_select=-1;
     Selected_item listenner;
     public Order_adapter(Context context, List<Order> names, Selected_item listenner) {
         mItems = names;

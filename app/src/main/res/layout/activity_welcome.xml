@@ -108,7 +108,7 @@
             android:layout_height="50dp"
             android:text="@string/skip"
             style="@style/text_white_bold_16"
-            android:drawableEnd="@drawable/ic_back_ar"
+
             android:drawablePadding="15dp"
             android:paddingStart="30dp"
             android:paddingEnd="30dp"

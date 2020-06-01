@@ -265,7 +265,7 @@ public class User {
         JSONObject jsonObject = new JSONObject();
         try {
 //            jsonObject.put("_id", id);
-//            jsonObject.put("address", address);
+            jsonObject.put("address", address);
             jsonObject.put("city_id", city_id);
 //            jsonObject.put("createAt", createAt);
             jsonObject.put("email", email);

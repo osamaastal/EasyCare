@@ -86,7 +86,7 @@
     <string name = "save_profile"> Save edits </string>
          <string name = "more_details"> other details </string>
          <string name = "rate_service"> Service Rating </string>
-         <string name = "report_title"> notification header </string>
+         <string name = "report_title"> message title </string>
          <string name = "report_content"> message text </string>
          <string name = "send_now"> send now </string>
          <string name = "reOrder"> reorder again </string>
@@ -171,9 +171,13 @@
     <string name = "logout"> Are you sure you want to log out? </string>
     <string name = "operation"> transforms </string>
     <string name = "cancel_order_sure"> Are you sure you want to cancel this request? </string>
-         <string name = "maste_select_one"> You must select at least an element </string>
+         <string name = "maste_select_one"> You must select one element </string>
          <string name = "select_getway"> Choose payment method </string>
          <string name = "maste_select_one_ser_size"> You must select at least an item of service type and service details  </string>
-
+    <string name = "chetout_msg"> The request will be executed for the selected service provider and the rest of your requests will be kept in the basket </string>
+    <string name="check_coupon">Checking coupon</string>
+    <string name="new_msg">New message</string>
+    <string name = "getprice_service"> View basket numbers based on service provider selected </string>
+    <string name="tax">tax</string>
 
 </resources>

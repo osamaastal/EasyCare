@@ -3,7 +3,7 @@ package com.osamayastal.easycare.Model.Classes.Message;
 
 
 public class Messages {
-        private String  last_msg,order_id;
+        private String  last_msg,order_id,order_number;
         private Long edit_time_long;
         private Boolean isRead_driver,isRead_user=false;
         private User user;
@@ -65,5 +65,13 @@ public class Messages {
 
         public void setUser(User user) {
                 this.user = user;
+        }
+
+        public String getOrder_number() {
+                return order_number;
+        }
+
+        public void setOrder_number(String order_number) {
+                this.order_number = order_number;
         }
 }

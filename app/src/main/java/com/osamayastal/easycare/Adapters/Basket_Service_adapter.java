@@ -51,7 +51,7 @@ public class Basket_Service_adapter extends RecyclerView.Adapter<Basket_Service_
     public interface Selected_item{
         void Onselcted(Car_servece car_servece);
     }
-    public static int item_select=-1;
+    private int item_select=-1;
     Selected_item listenner;
     Categorie categorie;
     public Basket_Service_adapter(Context context, List<categories_basket> names, Categorie categorie, Selected_item listenner) {

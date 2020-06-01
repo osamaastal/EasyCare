@@ -4,9 +4,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Notification {
-    private String _id, fromId, title, msg, user_id, body_parms, dt_date,fromName;
+    private String _id, fromId, title, msg, user_id, body_parms, dt_date,fromName,to,body;
     private Boolean isRead;
     private int type;
+
+    public Notification() {
+    }
 
     public Notification(JSONObject jsonObject) throws JSONException {
         if (jsonObject == null) {
@@ -27,6 +30,17 @@ public class Notification {
 
         dt_date = jsonObject.optString("dt_date");
         isRead = jsonObject.getBoolean("isRead");
+    }
+    public JSONObject toJsonObject() throws JSONException {
+
+        JSONObject jsonObject=new JSONObject();
+        jsonObject.put("title",title);
+        jsonObject.put("body",body);
+        jsonObject.put("to" ,to);
+
+        JSONObject jsonObjectBig=new JSONObject();
+        jsonObjectBig.put("notification",jsonObject);
+        return jsonObjectBig;
     }
 
     public String get_id() {
@@ -109,5 +123,19 @@ public class Notification {
         isRead = read;
     }
 
+    public String getBody() {
+        return body;
+    }
 
+    public void setBody(String body) {
+        this.body = body;
+    }
+
+    public String getTo() {
+        return to;
+    }
+
+    public void setTo(String to) {
+        this.to = to;
+    }
 }

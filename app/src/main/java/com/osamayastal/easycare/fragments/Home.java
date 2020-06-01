@@ -26,6 +26,8 @@ import com.osamayastal.easycare.Model.Rootes.Home_root;
 import com.osamayastal.easycare.Model.Rootes.user;
 import com.osamayastal.easycare.R;
 import com.osamayastal.easycare.activities.AllServices;
+import com.osamayastal.easycare.activities.Most_rate;
+import com.osamayastal.easycare.activities.Most_request;
 import com.osamayastal.easycare.activities.Search;
 import com.osamayastal.easycare.Adapters.CardAdapter;
 import com.osamayastal.easycare.activities.ServiceProfiderDetails;
@@ -60,7 +62,8 @@ public class Home extends Fragment implements View.OnClickListener {
                         Loading_data();
                     }
                 });
-            }else {
+            }
+            if (user_info.getId()!= null && user_info.CONF_phone(getContext())){
                 Loading_data();
             }
 
@@ -210,8 +213,12 @@ private ImageButton search_btn;
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.more_rate:
+                startActivity(new Intent(getContext(), Most_rate.class));
+
                 break;
             case R.id.more_request:
+                startActivity(new Intent(getContext(), Most_request.class));
+
                 break;
             case R.id.more_server:
                 startActivity(new Intent(getContext(), AllServices.class));

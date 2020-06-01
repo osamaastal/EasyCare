@@ -48,7 +48,7 @@ public class Favorit_adapter extends RecyclerView.Adapter<Favorit_adapter.ViewHo
     public interface Selected_item{
         void Onselcted(Favorite_get favorite_get);
     }
-    public static int item_select=-1;
+   private int item_select=-1;
     Selected_item listenner;
     public Favorit_adapter(Context context, List<Favorite_get> names, Selected_item listenner) {
         mItems = names;
