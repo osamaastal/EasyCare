@@ -261,7 +261,7 @@ Button save,rate;
     }
     @Override
     public void onClick(View view) {
-        AppPop pop=new AppPop();
+        final AppPop pop=new AppPop();
 switch (view.getId()){
     case R.id.save_btn:
         switch (order.getStatusId()){
@@ -274,15 +274,34 @@ switch (view.getId()){
                             @Override
                             public void onSuccess(Result result) {
                                 try {
+                                    String msg=null;
                                     if (new User_info(mcontext).getLanguage().equals("en")){
-                                        Toast.makeText(mcontext,result.getMessageEn(),Toast.LENGTH_LONG).show();
+//                                        Toast.makeText(mcontext,result.getMessageEn(),Toast.LENGTH_LONG).show();
+                                        msg=result.getMessageEn();
                                     }else {
-                                        Toast.makeText(mcontext,result.getMessageAr(),Toast.LENGTH_LONG).show();
+//                                        Toast.makeText(mcontext,result.getMessageAr(),Toast.LENGTH_LONG).show();//
+                                        msg=result.getMessageAr();
+                                    }
+                                    pop.Conferme_POP(mcontext, msg, new AppPop.goListenner() {
+                                        @Override
+                                        public void Go() {
+
+                                        }
+
+                                        @Override
+                                        public void Cancel() {
+
+                                        }
+                                    });
+                                    if (result.isStatus()){
+                                        Loading();
                                     }
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
-                                Loading();
+
+
+
                             }
 
                             @Override

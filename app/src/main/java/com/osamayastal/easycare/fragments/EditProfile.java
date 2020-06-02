@@ -81,6 +81,7 @@ LatLng mlatlng=null;
         email.setText(user_info.getEmail());
 
         city_id=user_info.getCityID();
+        mlatlng=new LatLng(Double.parseDouble(user_info.getLat()),Double.parseDouble(user_info.getLng()));
         Getcity();
     }
     private void show_bottomSheet(){
@@ -176,6 +177,8 @@ progressBar.setVisibility(View.GONE);
               break;
           case R.id.address_ed:
               Intent intent=new Intent(getContext(),Add_New_Address_Map.class);
+              intent.putExtra("lat",mlatlng.latitude);
+              intent.putExtra("lng",mlatlng.longitude);
               startActivityForResult(intent, 1);
               break;
 

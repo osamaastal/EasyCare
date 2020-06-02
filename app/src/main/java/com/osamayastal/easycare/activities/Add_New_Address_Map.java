@@ -78,9 +78,9 @@ private Context mcontext=Add_New_Address_Map.this;
 
 
                                 if (gps==0 && mMap!=null) {
-                                    mLatLng = new LatLng(location.getLatitude(),location.getLongitude());
-                                    gps=1;
-                                    make_marke(mLatLng);
+//                                    mLatLng = new LatLng(location.getLatitude(),location.getLongitude());
+//                                    gps=1;
+//                                    make_marke(mLatLng);
                                 }
 //                                    Toast.makeText(getContext(), "lat: " + mLatLng.latitude + "lng: " + mLatLng.longitude, Toast.LENGTH_SHORT).show();
 
@@ -270,6 +270,13 @@ private LatLng mLatLng=null;
                 make_marke(latLng);
             }
         });
+
+        /***************************************************************/
+        Intent intent = this.getIntent();
+        Bundle bundle = intent.getExtras();
+        mLatLng=new LatLng(bundle.getDouble("lat"),bundle.getDouble("lng"));
+        make_marke(mLatLng);
+        /*****************************************************************/
 
     }
     @Override

@@ -555,6 +555,8 @@ private void FetchDATA(){
             @Override
             public void onMapClick(LatLng latLng) {
                 Intent intent=new Intent(mcontext,Add_New_Address_Map.class);
+                intent.putExtra("lat",mLatLng.latitude);
+                intent.putExtra("lng",mLatLng.longitude);
                 startActivityForResult(intent, 1);
 
             }
