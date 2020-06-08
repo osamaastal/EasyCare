@@ -36,6 +36,8 @@ public class Notifications {
     public void Getnotification(final Context mcontext, final notificationListener listener)
     {
         final String token=new User_info(mcontext).getToken();
+        Log.d("token", token.toString());
+
         try{
             String url= Server_info.API +"api/mobile/notifications";
 

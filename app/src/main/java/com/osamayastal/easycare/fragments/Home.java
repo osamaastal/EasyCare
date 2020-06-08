@@ -54,7 +54,7 @@ public class Home extends Fragment implements View.OnClickListener {
         /******************************Test Fore user_Login*************************************/
       User_info  user_info = new User_info(getContext());
         if (user_info.getId()== null) {
-            if (user_info.getToken() == null) {
+            if (user_info.getToken_home() == null) {
                 user root = new user();
                 root.Get_Token(getContext(), new user.Token_Listener() {
                     @Override
@@ -62,6 +62,8 @@ public class Home extends Fragment implements View.OnClickListener {
                         Loading_data();
                     }
                 });
+            }else {
+                Loading_data();
             }
             if (user_info.getId()!= null && user_info.CONF_phone(getContext())){
                 Loading_data();

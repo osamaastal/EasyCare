@@ -40,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setLocale(this);
         setContentView(R.layout.activity_login);
 
 
@@ -53,18 +53,6 @@ public class LoginActivity extends AppCompatActivity {
 
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
             finish();
-
-
-//            if (user_info.CONF_phone(this))
-//            {
-//                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-//                finish();
-//            }
-//            else {
-////                startActivity(new Intent(LoginActivity.this, ConfCode.class));
-////                finish();
-//            }
-
         }
 
 

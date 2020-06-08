@@ -203,10 +203,14 @@ private String provider_id=null;
     private Boolean flag;
 
     private void get_location() {
-        if (new User_info(getContext()).getLat()!=null && new User_info(getContext()).getLng()!=null){
-            mLatLng=new LatLng(Double.parseDouble(new User_info(getContext()).getLat()),
-                    Double.parseDouble(new User_info(getContext()).getLng()));
-        }
+       try {
+           if (new User_info(getContext()).getLat()!=null && new User_info(getContext()).getLng()!=null){
+               mLatLng=new LatLng(Double.parseDouble(new User_info(getContext()).getLat()),
+                       Double.parseDouble(new User_info(getContext()).getLng()));
+           }
+       } catch (NumberFormatException e) {
+           e.printStackTrace();
+       }
 //        Toast.makeText(getContext(), "lat: " + new User_info(getContext()).getLat()
 //                + "lng: " + new User_info(getContext()).getLng() , Toast.LENGTH_SHORT).show();
 

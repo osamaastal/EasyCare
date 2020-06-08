@@ -26,7 +26,7 @@ public class Bascket implements Serializable {
     private List<categories_basket> categories;
     private List<Payment> payment_id;
 private Provider provider;
-private Categorie categorie;
+    private Categorie categorie;
 private JSONObject mjsonObject=null;
 
 //for OrderDetails
@@ -34,7 +34,9 @@ private JSONObject mjsonObject=null;
     private int PaymentType,locationType,StatusId;
     private Double total_price=0.0,total_discount=0.0,final_total=0.0,tax=0.0;
     private Employee employee_id;
-private Long dateLong;
+    private Boolean isRate=false;
+
+    private Long dateLong;
     public Bascket() {
     }
 
@@ -101,6 +103,12 @@ private Long dateLong;
     public void OrderDetails(JSONObject jsonObject) {
         if (jsonObject==null){
             return;
+        }
+        try {
+            isRate=jsonObject.getBoolean("isRate");
+            Log.d("israte",isRate.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
         try {
             time=jsonObject.getString("time");
@@ -183,6 +191,14 @@ private Long dateLong;
             e.printStackTrace();
         }
 
+    }
+
+    public Boolean getRate() {
+        return isRate;
+    }
+
+    public void setRate(Boolean rate) {
+        isRate = rate;
     }
 
     public JSONObject getMjsonObject() {

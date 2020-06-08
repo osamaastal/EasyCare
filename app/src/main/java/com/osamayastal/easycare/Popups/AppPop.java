@@ -101,7 +101,7 @@ public interface goListenner{
         });
         dialog.show();
     }
-    public void PostRat_pop(final Context mcontext, final String orderID){
+    public void PostRat_pop(final Context mcontext, final String orderID, final goListenner listenner){
 
         final RoundedBottomSheetDialog mBottomSheetDialog = new RoundedBottomSheetDialog(mcontext);
         LayoutInflater inflater = (LayoutInflater) mcontext.getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -129,6 +129,9 @@ public interface goListenner{
                                         Toast.makeText(mcontext,result.getMessageEn(),Toast.LENGTH_LONG).show();
                                     }else {
                                         Toast.makeText(mcontext,result.getMessageAr(),Toast.LENGTH_LONG).show();
+                                    }
+                                    if (result.isStatus()){
+                                       listenner.Go();
                                     }
                                 } catch (Exception e) {
                                     e.printStackTrace();

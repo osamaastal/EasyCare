@@ -1,11 +1,14 @@
 package com.osamayastal.easycare.Model.Const;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.osamayastal.easycare.Model.Classes.User;
+import com.osamayastal.easycare.Popups.AppPop;
+import com.osamayastal.easycare.activities.LoginActivity;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -17,9 +20,10 @@ private String lat;
 private long wallet;
 private  int point,basket;
     private boolean isEnableNotifications;
-
+private Context mcontext;
     public User_info(Context mcontext) {
         try {
+           this.mcontext=mcontext;
             final SharedPreferences sp=mcontext.getSharedPreferences("Login", MODE_PRIVATE);
             id=sp.getString("id",null);
             token=sp.getString("token",null);
@@ -351,9 +355,16 @@ private  int point,basket;
     }
 
     public String getToken() {
+        if (mcontext!=null && token==null){
+           mcontext.startActivity(new Intent(mcontext, LoginActivity.class));
+           return " no token";
+        }
         return token;
     }
+    public String getToken_home() {
 
+        return token;
+    }
     public void setToken(String token) {
         this.token = token;
     }

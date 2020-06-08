@@ -188,7 +188,11 @@ if (new User_info(mcontext).getLanguage().equals("en")){
                     order_status.setImageDrawable(mcontext.getDrawable(R.drawable.ic_order_type_finished));
                     save.setText(mcontext.getString(R.string.reOrder));
                     save.setBackground(mcontext.getDrawable(R.drawable.bg_req_pink_30dp));
-                    rate.setVisibility(View.VISIBLE);
+                    if (order.getRate()){
+                        rate.setVisibility(View.GONE);
+                    }else {
+                        rate.setVisibility(View.VISIBLE);
+                    }
 
                     break;
 
@@ -371,7 +375,17 @@ switch (view.getId()){
         finish();
         break;
     case R.id.rate_btn:
-        pop.PostRat_pop(mcontext,order_id);
+        pop.PostRat_pop(mcontext, order_id, new AppPop.goListenner() {
+            @Override
+            public void Go() {
+                rate.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void Cancel() {
+
+            }
+        });
         break;
 }
     }

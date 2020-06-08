@@ -199,6 +199,10 @@ private  SlidingRootNav nav;
                         item_select = R.id.my_orders;
                         if (user_info.getId() == null) {
                             LoginAlert();
+
+                            item_select = R.id.home;
+                            fragment = home_frag;
+                            toolbar.setBackground(getDrawable(R.drawable.bg_circle_midblue));
                         } else {
                             fragment = myOrders_frag;
                             toolbar.setBackground(getDrawable(R.drawable.bg_circle_blue_gradiant));
@@ -217,6 +221,10 @@ private  SlidingRootNav nav;
 
                         if (user_info.getId() == null) {
                             LoginAlert();
+
+                            item_select = R.id.home;
+                            fragment = home_frag;
+                            toolbar.setBackground(getDrawable(R.drawable.bg_circle_midblue));
                         } else {
                             fragment = basket_frag;
                             toolbar.setBackground(getDrawable(R.drawable.bg_circle_blue_gradiant));
@@ -227,6 +235,10 @@ private  SlidingRootNav nav;
 
                         if (user_info.getId() == null) {
                             LoginAlert();
+
+                            item_select = R.id.home;
+                            fragment = home_frag;
+                            toolbar.setBackground(getDrawable(R.drawable.bg_circle_midblue));
                         } else {
                             fragment = profile_frag;
                             toolbar.setBackground(getDrawable(R.drawable.bg_circle_blue_gradiant));
