@@ -14,9 +14,9 @@ import java.util.List;
 public class Order_Details {
     private String message;
     private int status_code;
-    private Boolean status;
+    private Boolean status,isChatEnabled;
     private List<com.osamayastal.easycare.Model.Classes.Basket.Bascket> items;
-private Double total_price=0.0,total_discount=0.0,final_total=0.0,tax=0.0;
+private Double total_price=0.0,total_discount=0.0,final_total=0.0,tax=0.0,Remain=0.0;
     public Order_Details(JSONObject jsonObject) {
         if (jsonObject==null){
             return;
@@ -59,10 +59,32 @@ private Double total_price=0.0,total_discount=0.0,final_total=0.0,tax=0.0;
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
+            try {
+                Remain =jsonObject.getDouble("Remain");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            try{
+                isChatEnabled=jsonObject.getBoolean("isChatEnabled");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+    }
+
+    public Double getRemain() {
+        return Remain;
+    }
+
+    public void setRemain(Double remain) {
+        Remain = remain;
     }
 
     public Double getTotal_discount() {
@@ -75,6 +97,14 @@ private Double total_price=0.0,total_discount=0.0,final_total=0.0,tax=0.0;
 
     public Double getFinal_total() {
         return final_total;
+    }
+
+    public Boolean getChatEnabled() {
+        return isChatEnabled;
+    }
+
+    public void setChatEnabled(Boolean chatEnabled) {
+        isChatEnabled = chatEnabled;
     }
 
     public void setFinal_total(Double final_total) {

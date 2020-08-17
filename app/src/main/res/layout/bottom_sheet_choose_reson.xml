@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layoutDirection="locale"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:paddingEnd="20dp"
+    android:paddingStart="20dp">
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="150dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <View
+            android:layout_width="50dp"
+            android:layout_height="7dp"
+            android:background="@drawable/bg_line_sheet"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"
+            />
+
+        <TextView
+            style="@style/text_darkblue_bold_16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/why_cancel" />
+        <TextView
+            style="@style/text_darkblue_roman_14"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="0dp"
+            android:text="@string/helus" />
+        <com.cncoderx.wheelview.Wheel3DView
+            android:id="@+id/wheel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/text_black_bold_16"
+            app:wheelItemCount="7"
+            app:wheelCyclic="false"
+            app:wheelItemWidth="160dp"
+            app:wheelItemHeight="40dp"
+            android:layout_marginTop="-30dp"
+            app:wheelTextSize="18sp"
+            app:wheelTextColor="@color/gray_AA"
+            app:wheelSelectedTextColor="@color/black"
+            app:wheelDividerColor="@color/wheel_divider_color"
+            app:wheelHighlightColor="@color/wheel_highlight_color" />
+
+        <com.chinodev.androidneomorphframelayout.NeomorphFrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:neomorph_shadow_type="outer"
+            app:neomorph_layer_type="software"
+            app:neomorph_background_color="@color/white"
+            app:neomorph_corner_radius="35dp"
+            app:neomorph_elevation="@dimen/neomorph_view_elevation"
+            app:neomorph_view_type="rectangular"
+            app:neomorph_shadow_color="@color/light_gray"
+            app:neomorph_highlight_color="@color/neomorph_highlight_color"
+            android:layout_marginTop="0dp">
+            <EditText
+                android:id="@+id/note"
+                android:layout_width="match_parent"
+                android:minHeight="120dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_trans"
+
+
+                android:paddingTop="9dp"
+                android:paddingBottom="9dp"
+                android:drawablePadding="17dp"
+                style="@style/text_black_roman_14"
+                android:inputType="textPostalAddress"
+                android:hint="@string/note"
+                android:maxLength="50"
+                />
+        </com.chinodev.androidneomorphframelayout.NeomorphFrameLayout>
+
+        <Button
+            android:id="@+id/save_btn"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="@string/conf_now"
+            android:textAllCaps="false"
+            style="@style/text_white_roman_18"
+            android:background="@drawable/bg_req_darkblue_50dp_gradiant_x"
+            android:drawableEnd="@drawable/ic_login_drawable"
+            android:paddingStart="60dp"
+            android:paddingEnd="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="50dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

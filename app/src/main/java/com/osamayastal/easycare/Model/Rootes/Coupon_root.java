@@ -34,7 +34,7 @@ public class Coupon_root {
     }
     private RequestQueue queue;
     public void Check_coupon(final Context mcontext, final String coupon,
-                             final String id,final Boolean isReOrder,final String orderId, final Listener listener)
+                             final String id, final Boolean isReOrder, final String orderId, final int payment, final Listener listener)
     {
 
        listener.onStart();
@@ -83,6 +83,7 @@ public class Coupon_root {
                 parameters.put("coupon", coupon);
                 parameters.put("provider_id", id);
                 parameters.put("isReOrder", String.valueOf(isReOrder));
+                parameters.put("PaymentType", String.valueOf(payment));
                 if(isReOrder){
                     parameters.put("orderId", orderId);
 

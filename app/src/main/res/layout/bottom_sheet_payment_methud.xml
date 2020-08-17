@@ -125,27 +125,81 @@ android:scaleType="centerInside"
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     <LinearLayout
-        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:id="@+id/linear_upfront"
+        android:visibility="gone"
+        >
+        <CheckBox
+            android:checked="true"
+            android:id="@+id/payAll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pay_all_amount"
+            style="@style/text_darkblue_bold_18"/>
+        <LinearLayout
+
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="20dp"
+            android:gravity="center_vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/upfront"
+                style="@style/text_darkblue_bold_18"
+                />
+            <TextView
+                android:id="@+id/upfrontMount_tv"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:hint=" 200.00 ريال "
+                android:textColorHint="@color/green_end"
+                style="@style/text_green_roman_14"
+                android:background="@drawable/bg_req_green_stroke"
+                android:paddingTop="5dp"
+                android:paddingBottom="8dp"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:layout_marginStart="20dp"
+                android:gravity="center_horizontal"
+                />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line_lightgray"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="10dp"/>
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="20dp"
+
         android:gravity="center_vertical">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/upfront"
+            android:text="@string/cobon"
             style="@style/text_darkblue_bold_18"
             />
-        <TextView
-            android:id="@+id/upfrontMount_tv"
+        <EditText
+            android:inputType="text"
+            android:imeOptions="actionSend"
+            android:id="@+id/coupon"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:hint=" 200.00 ريال "
+            android:hint="@string/enter_cobon"
             android:textColorHint="@color/green_end"
             style="@style/text_green_roman_14"
             android:background="@drawable/bg_req_green_stroke"
@@ -159,7 +213,9 @@ android:scaleType="centerInside"
 
     </LinearLayout>
 
+
     <Button
+
         android:id="@+id/save_btn"
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -170,7 +226,7 @@ android:scaleType="centerInside"
         android:drawableEnd="@drawable/ic_check_drawable"
         android:paddingStart="60dp"
         android:paddingEnd="15dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="50dp"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"

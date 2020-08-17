@@ -1,15 +1,14 @@
 package com.osamayastal.easycare.activities;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,30 +20,26 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.osamayastal.easycare.Adapters.Basket_adapter;
 import com.osamayastal.easycare.Model.Classes.Basket.Bascket;
 import com.osamayastal.easycare.Model.Classes.Car_servece;
 import com.osamayastal.easycare.Model.Classes.Message.Messages;
 import com.osamayastal.easycare.Model.Classes.Message.User;
-import com.osamayastal.easycare.Model.Classes.Order;
 import com.osamayastal.easycare.Model.Const.User_info;
+import com.osamayastal.easycare.Model.Controle.Getpayment;
 import com.osamayastal.easycare.Model.Controle.Order_Details;
 import com.osamayastal.easycare.Model.Controle.Result;
+import com.osamayastal.easycare.Model.Rootes.Getway;
 import com.osamayastal.easycare.Model.Rootes.Order_root;
 import com.osamayastal.easycare.Popups.AppPop;
+import com.osamayastal.easycare.Popups.OrderPop;
 import com.osamayastal.easycare.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import top.defaults.drawabletoolbox.DrawableBuilder;
 
@@ -82,6 +77,7 @@ public class OrderDetails extends AppCompatActivity implements View.OnClickListe
 //        Toast.makeText(this, "Language: "+ Locale.getDefault().getLanguage() , Toast.LENGTH_SHORT).show();
     }
 private String order_id=null;
+    private Boolean isChatEnabled=false;
     private void Loading() {
        if (order_id!=null){
            findViewById(R.id.linear_wait).setVisibility(View.VISIBLE);
@@ -89,15 +85,55 @@ private String order_id=null;
            root.GetOrderDetails(mcontext, order_id, new Order_root.GetOrderDetailsListener() {
                @RequiresApi(api = Build.VERSION_CODES.O)
                @Override
-               public void onSuccess(Order_Details order_details) {
+               public void onSuccess(final Order_Details order_details) {
+
                    findViewById(R.id.linear_wait).setVisibility(View.GONE);
                    order=order_details.getItems().get(0);
+                   isChatEnabled=order_details.getChatEnabled();
                    price.setText(String.format("%.2f",order_details.getFinal_total()));
                    subtotal.setText(String.format("%.2f", order_details.getTotal_price()));
                    tax.setText(String.format("%.2f", order_details.getTax()));
                    discount.setText(String.format("%.2f", order_details.getTotal_discount()));
                    total.setText(String.format("%.2f", order_details.getFinal_total()));
                    FetchData();
+
+                   if (order.getStatusId()==3 && order.getUpfront() && order_details.getRemain()!=0.0){
+                       AppPop pop=new AppPop();
+                       pop.Getway_POP(mcontext, mcontext.getString(R.string.there_is_upfront),
+                               new AppPop.goListenner() {
+                           @Override
+                           public void Go() {
+                               Getway root=new Getway();
+                               root.GoPayment(mcontext, order_details.getRemain(), null, new Getway.GetwayListener() {
+                                   @Override
+                                   public void onSuccess(Getpayment payment) {
+//                                       payment_id=payment.getPayment_order_id();
+                                       Intent intent=new Intent(mcontext, GetWayActivity.class);
+                                       Bundle bundle = new Bundle();
+                                       bundle.putSerializable("payment",payment);
+                                       intent.putExtras(bundle);
+                                       startActivityForResult(intent, 2);
+                                   }
+
+                                   @Override
+                                   public void onStart() {
+
+                                   }
+
+                                   @Override
+                                   public void onFailure(String msg) {
+
+                                   }
+                               });
+
+                           }
+
+                           @Override
+                           public void Cancel() {
+
+                           }
+                       });
+                   }
                }
 
                @Override
@@ -111,6 +147,36 @@ private String order_id=null;
                }
            });
        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode) {
+            case 2: {
+                if (resultCode == Activity.RESULT_OK) {
+                    Getway root=new Getway();
+                    root.SendUpfront(mcontext, order_id, new Getway.GetwayListener() {
+                        @Override
+                        public void onSuccess(Getpayment payment) {
+
+                        }
+
+                        @Override
+                        public void onStart() {
+
+                        }
+
+                        @Override
+                        public void onFailure(String msg) {
+
+                        }
+                    });
+
+                }
+                break;
+            }
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -141,8 +207,11 @@ if (new User_info(mcontext).getLanguage().equals("en")){
 
 }
 
+////////desabel button  rat
+            rate.setVisibility(View.GONE);
+////////////////////////////////////////////////
 
-    id.setText(order.getOrder_no());
+            id.setText(order.getOrder_no());
 
             date.setText(getdate(order.getDate()));
             time.setText(order.getTime());
@@ -164,25 +233,18 @@ if (new User_info(mcontext).getLanguage().equals("en")){
                     order_status.setImageDrawable(mcontext.getDrawable(R.drawable.ic_order_type_waiting));
                     save.setText(mcontext.getString(R.string.cancel_order));
                     save.setBackground(mcontext.getDrawable(R.drawable.bg_req_orange_30dp));
-//                    long tenAgo = System.currentTimeMillis() - TEN_MINUTES;
-//                    if (order.getDateLong() < tenAgo) {
-//                        System.out.println("searchTimestamp is older than 10 minutes");
-//                        save.setText(mcontext.getString(R.string.contact_with_provider));
-//                        save.setBackground(mcontext.getDrawable(R.drawable.bg_req_purple_30dp));
-//                    }else {
-//
-//                        save.setText(mcontext.getString(R.string.cancel_order));
-//                        save.setBackground(mcontext.getDrawable(R.drawable.bg_req_orange_30dp));
-//                    }
+
 
                 break;
                 case 2://2- Accepted
-//                    save.setVisibility(View.GONE);
-//                    break;
                 case 3:// 3- OnProgress
                     order_status.setImageDrawable(mcontext.getDrawable(R.drawable.ic_order_type_current));
                     save.setText(mcontext.getString(R.string.contact_with_provider));
                     save.setBackground(mcontext.getDrawable(R.drawable.bg_req_purple_30dp));
+
+                    if (!isChatEnabled){
+                        save.setVisibility(View.GONE);
+                    }
                     break;
                 case 4://  4- Finished
                     order_status.setImageDrawable(mcontext.getDrawable(R.drawable.ic_order_type_finished));
@@ -270,33 +332,25 @@ switch (view.getId()){
     case R.id.save_btn:
         switch (order.getStatusId()){
             case 1://1- Pending
-                pop.Conferme_POP(mcontext, getString(R.string.cancel_order_sure), new AppPop.goListenner() {
+
+                OrderPop pop1=new OrderPop(mcontext);
+                pop1.Cancel_order_pop(mcontext, new OrderPop.OrderCanelLisstenner() {
                     @Override
-                    public void Go() {
+                    public void onCancel(String reson) {
                         Order_root root=new Order_root();
-                        root.CancelOrder(mcontext, order_id, new Order_root.PostOrderListener() {
+                        root.CancelOrder(mcontext, order_id,reson, new Order_root.PostOrderListener() {
                             @Override
                             public void onSuccess(Result result) {
                                 try {
                                     String msg=null;
                                     if (new User_info(mcontext).getLanguage().equals("en")){
-//                                        Toast.makeText(mcontext,result.getMessageEn(),Toast.LENGTH_LONG).show();
+                                        Toast.makeText(mcontext,result.getMessageEn(),Toast.LENGTH_LONG).show();
                                         msg=result.getMessageEn();
                                     }else {
-//                                        Toast.makeText(mcontext,result.getMessageAr(),Toast.LENGTH_LONG).show();//
+                                        Toast.makeText(mcontext,result.getMessageAr(),Toast.LENGTH_LONG).show();//
                                         msg=result.getMessageAr();
                                     }
-                                    pop.Conferme_POP(mcontext, msg, new AppPop.goListenner() {
-                                        @Override
-                                        public void Go() {
 
-                                        }
-
-                                        @Override
-                                        public void Cancel() {
-
-                                        }
-                                    });
                                     if (result.isStatus()){
                                         Loading();
                                     }
@@ -319,12 +373,18 @@ switch (view.getId()){
                             }
                         });
                     }
-
-                    @Override
-                    public void Cancel() {
-
-                    }
                 });
+//                pop.Conferme_POP(mcontext, getString(R.string.cancel_order_sure), new AppPop.goListenner() {
+//                    @Override
+//                    public void Go() {
+//
+//                    }
+//
+//                    @Override
+//                    public void Cancel() {
+//
+//                    }
+//                });
 
                 break;
             case 2://2- Accepted

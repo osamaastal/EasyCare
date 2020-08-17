@@ -305,45 +305,7 @@
                     </LinearLayout>
 
                 </LinearLayout>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/line_lightgray"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginBottom="10dp"/>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="35dp"
-                    android:layout_marginEnd="35dp"
-                    android:gravity="center_vertical">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/cobon"
-                        style="@style/text_darkblue_bold_18"
-                        />
-                    <EditText
-                        android:inputType="text"
-                        android:imeOptions="actionSend"
-                        android:id="@+id/coupon"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/enter_cobon"
-                        android:textColorHint="@color/green_end"
-                        style="@style/text_green_roman_14"
-                        android:background="@drawable/bg_req_green_stroke"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="8dp"
-                        android:paddingEnd="10dp"
-                        android:paddingStart="10dp"
-                        android:layout_marginStart="20dp"
-                        android:gravity="center_horizontal"
-                        />
 
-                </LinearLayout>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"

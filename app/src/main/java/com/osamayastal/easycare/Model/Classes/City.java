@@ -10,7 +10,14 @@ import org.json.JSONObject;
 public class City {
     private String _id,arName,enName;
     private Context mcontext;
-    public City(JSONObject provider,Context mcontext) {
+
+    public City(String id,String arName, String enName) {
+        _id=id;
+        this.arName = arName;
+        this.enName = enName;
+    }
+
+    public City(JSONObject provider, Context mcontext) {
         if (provider==null){
             return;
         }

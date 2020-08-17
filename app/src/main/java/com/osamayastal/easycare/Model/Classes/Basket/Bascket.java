@@ -34,7 +34,7 @@ private JSONObject mjsonObject=null;
     private int PaymentType,locationType,StatusId;
     private Double total_price=0.0,total_discount=0.0,final_total=0.0,tax=0.0;
     private Employee employee_id;
-    private Boolean isRate=false;
+    private Boolean isRate=false,isUpfront=false;
 
     private Long dateLong;
     public Bascket() {
@@ -107,6 +107,12 @@ private JSONObject mjsonObject=null;
         try {
             isRate=jsonObject.getBoolean("isRate");
             Log.d("israte",isRate.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            isUpfront=jsonObject.getBoolean("isUpfront");
+            Log.d("isUpfront",isRate.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -195,6 +201,14 @@ private JSONObject mjsonObject=null;
 
     public Boolean getRate() {
         return isRate;
+    }
+
+    public Boolean getUpfront() {
+        return isUpfront;
+    }
+
+    public void setUpfront(Boolean upfront) {
+        isUpfront = upfront;
     }
 
     public void setRate(Boolean rate) {

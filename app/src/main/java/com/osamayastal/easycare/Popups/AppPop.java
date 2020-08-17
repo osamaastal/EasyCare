@@ -46,6 +46,10 @@ public interface goListenner{
     void Go();
     void Cancel();
 }
+    public interface walletListenner{
+        void Go(Double price);
+        void Cancel();
+    }
     public void ShowMessage(String msg,View view){
         Snackbar snackbar = Snackbar
                 .make(view, msg, Snackbar.LENGTH_LONG);
@@ -157,7 +161,7 @@ public interface goListenner{
 
 
     }
-    public void Conferme_POP(final Context mContext, String msg, final goListenner listenner ){
+       public void Conferme_POP(final Context mContext, String msg, final goListenner listenner ){
         final Dialog dialog=new Dialog(mContext);
         dialog.setContentView(R.layout.popup_conf);
         Button conf=dialog.findViewById(R.id.confBtn);
@@ -174,7 +178,55 @@ public interface goListenner{
         conf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               listenner.Go();
+                listenner.Go();
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+    public void Getway_POP(final Context mContext, String msg, final goListenner listenner ){
+        final Dialog dialog=new Dialog(mContext);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.popup_conf);
+        Button conf=dialog.findViewById(R.id.confBtn);
+        conf.setText(mContext.getString(R.string.okey));
+        TextView content=dialog.findViewById(R.id.contentTV);
+        content.setText(msg);
+        Button cancel=dialog.findViewById(R.id.cancelBtn);
+        cancel.setVisibility(View.GONE);
+        conf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listenner.Go();
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+    public void chargeWallet_POP(final Context mContext, final walletListenner listenner ){
+        final Dialog dialog=new Dialog(mContext);
+        dialog.setContentView(R.layout.popup_charge_wallet);
+        Button conf=dialog.findViewById(R.id.ok);
+        final EditText price=dialog.findViewById(R.id.price);
+
+        Button cancel=dialog.findViewById(R.id.cancel_btn);
+        conf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Double amount=0.0;
+                if (price.getText().toString().isEmpty()){
+                  price.setError(price.getHint());
+                  return;
+                }
+                amount=Double.parseDouble(price.getText().toString());
+                listenner.Go(amount);
+                dialog.dismiss();
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listenner.Cancel();
                 dialog.dismiss();
             }
         });

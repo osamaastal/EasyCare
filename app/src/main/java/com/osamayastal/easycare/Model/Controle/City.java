@@ -56,7 +56,14 @@ private Boolean status;
     public void setStatus(Boolean status) {
         this.status = status;
     }
-
+    public List<String> getCityList(com.osamayastal.easycare.Model.Classes.City city,Context mcontext) {
+        if (new User_info(mcontext).getLanguage().equals("en")){
+            cityList.add(city.getEnName());
+        }else {
+            cityList.add(city.getArName());
+        }
+        return cityList;
+    }
     public List<String> getCityList() {
         return cityList;
     }

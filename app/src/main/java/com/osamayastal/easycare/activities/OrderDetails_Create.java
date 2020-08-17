@@ -52,11 +52,15 @@ import com.osamayastal.easycare.Model.Classes.Product;
 import com.osamayastal.easycare.Model.Const.User_info;
 import com.osamayastal.easycare.Model.Controle.Basket_prices;
 import com.osamayastal.easycare.Model.Controle.Coupon;
+import com.osamayastal.easycare.Model.Controle.Getpayment;
 import com.osamayastal.easycare.Model.Controle.Order_Details;
 import com.osamayastal.easycare.Model.Controle.Result;
+import com.osamayastal.easycare.Model.Controle.users;
 import com.osamayastal.easycare.Model.Rootes.Bascket_root;
 import com.osamayastal.easycare.Model.Rootes.Coupon_root;
+import com.osamayastal.easycare.Model.Rootes.Getway;
 import com.osamayastal.easycare.Model.Rootes.Order_root;
+import com.osamayastal.easycare.Model.Rootes.user;
 import com.osamayastal.easycare.Popups.AppPop;
 import com.osamayastal.easycare.Popups.OrderPop;
 import com.osamayastal.easycare.R;
@@ -171,6 +175,8 @@ public class OrderDetails_Create extends AppCompatActivity implements View.OnCli
         tot_price.setText(String.format("%.2f",bascket_.getFinal_total()));
         totale.setText(String.format("%.2f",bascket_.getFinal_total()));
         discount.setText(String.format("%.2f",bascket_.getTotal_discount()));
+
+        bascket.setFinal_total(bascket_.getFinal_total());
     }
 
                 }
@@ -242,13 +248,13 @@ public class OrderDetails_Create extends AppCompatActivity implements View.OnCli
     private Basket_Service_adapter service_adapter;
     private Basket_Products_adapter products_adapter;
     private SupportMapFragment mapFragment;
-private EditText coupon;
+
 private String Coupon_txt="";
 private LinearLayout myplace;
     private void init(){
         provider_location=findViewById(R.id.prov_location_switch);
         back_btn=findViewById(R.id.back_btn);
-        coupon=findViewById(R.id.coupon);
+
         date_btn=findViewById(R.id.date_btn);
         time_btn=findViewById(R.id.time_btn);
         save=findViewById(R.id.save_btn);
@@ -282,72 +288,7 @@ private LinearLayout myplace;
                 }
             }
         });
-        /********************************coupon**********************************/
-       coupon. setOnEditorActionListener(
-                new EditText.OnEditorActionListener() {
 
-
-                    @Override
-                    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                        if (actionId == EditorInfo.IME_ACTION_SEARCH ||
-                                actionId == EditorInfo.IME_ACTION_DONE ||
-                                event != null &&
-                                        event.getAction() == KeyEvent.ACTION_DOWN &&
-                                        event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-                            if (event == null || !event.isShiftPressed()) {
-                                // the user is done typing.
-                                Coupon_root root=new Coupon_root();
-                                String prov_id=null;
-                                prov_id=bascket.getProvider().get_id();
-                                if (bascket==null){
-                                    prov_id=bascket.getProvider().get_id();
-                                }
-                                root.Check_coupon(mcontext, coupon.getText().toString(),prov_id,reOrder,order_id
-                                        , new Coupon_root.Listener() {
-                                    @Override
-                                    public void onSuccess(Coupon coup) {
-                                        String msg=null;
-
-                                        if (new User_info(mcontext).getLanguage().equals("en")){
-                                             msg=coup.getMessageEn();
-                                        }else
-                                        {
-                                            msg=coup.getMessageAr();
-
-                                        }
-                                        if (msg!=null){
-                                            AppPop pop=new AppPop();
-                                            pop.ShowMessage(msg,getCurrentFocus());
-                                        }
-                                        sub_tot.setText(String.format("%.2f",coup.getTotal_price()));
-                                        tax.setText(String.format("%.2f", coup.getTax()));
-                                        tot_price.setText(String.format("%.2f",coup.getFinal_total()));
-                                        totale.setText(String.format("%.2f",coup.getFinal_total()));
-                                        discount.setText(String.format("%.2f",coup.getTotal_discount()));
-                                       if (coup.isStatus()){
-
-                                           Coupon_txt=coupon.getText().toString();
-                                       }
-
-                                    }
-
-                                    @Override
-                                    public void onStart() {
-
-                                    }
-
-                                    @Override
-                                    public void onFailure(String msg) {
-
-                                    }
-                                });
-                                return true; // consume.
-                            }
-                        }
-                        return false; // pass on to other listeners.
-                    }
-                }
-        );
 /**********************************Maps*******************************/
          mapFragment = (SupportMapFragment) this.getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -357,6 +298,7 @@ private LinearLayout myplace;
     }
 private void FetchDATA(){
         if (bascket!=null){
+            upfont=bascket.getUpfront();
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
             Date d = new Date();
            date = format.format(d);
@@ -392,6 +334,8 @@ private void FetchDATA(){
 
         }
 }
+
+Boolean upfont=false;
     @Override
     public void onClick(View view) {
         OrderPop pop=new OrderPop(this);
@@ -402,110 +346,59 @@ private void FetchDATA(){
                 break;
             case R.id.date_btn:
                 pop.GetDate_pop(new OrderPop.POPLisstenner() {
+
                     @Override
-                    public void ongetResult(String result,String time,Boolean upfont) {
+                    public void ongetResult(String result, String time, Boolean upfont, String coupontxt) {
                         date_tv.setText(result);
                     }
                 });
                 break;
             case R.id.save_btn:
+                final Double upfront_amount=bascket.getProvider().getUpfrontAmount()*Caculate_Tot();
+                String prov_id=null;
+                prov_id=bascket.getProvider().get_id();
                 pop.GetWay_pop(bascket.getProvider().isUpfront()
-            ,bascket.getProvider().getUpfrontAmount()*Caculate_Tot(),bascket.getPayment_id(),
+            ,upfront_amount,bascket.getPayment_id(),prov_id,reOrder,order_id,
                         new OrderPop.POPLisstenner() {
                                                         @Override
-                                    public void ongetResult(String result,String time_,Boolean upfont) {
+                                    public void ongetResult(String result, String time_, Boolean upfont_, String coupontxt_) {
+                                                            Coupon_txt=coupontxt_;
+                                                           upfont=upfont_;
                                                             findViewById(R.id.linear_wait).setVisibility(View.VISIBLE);
-                                                            Order_root root=new Order_root();
-                                                           if (reOrder) {
-                                                               root.ReOrder(mcontext,
-                                                                       location_typ,
-                                                                       String.valueOf(mLatLng.latitude),
-                                                                       String.valueOf(mLatLng.longitude),
-                                                                       date,
-                                                                       time,
-                                                                       String.valueOf(bascket.getProvider().getUpfrontAmount()),
-                                                                       Coupon_txt,
-                                                                       result,
-                                                                       upfont,
-                                                                       order_id
+                                                            ///check payment
+                                                            Double payment_amount=bascket.getFinal_total();
+                                                            if(result.equals("3") ){
+                                                                if (upfont ){
+                                                                    payment_amount=upfront_amount;
+                                                                }
+                                                                Getway root=new Getway();
+                                                                root.GoPayment(mcontext, payment_amount,coupontxt_, new Getway.GetwayListener() {
+                                                                    @Override
+                                                                    public void onSuccess(Getpayment payment) {
+                                                                        payment_id=payment.getPayment_order_id();
+                                                                        Intent intent=new Intent(mcontext, GetWayActivity.class);
+                                                                        Bundle bundle = new Bundle();
+                                                                        bundle.putSerializable("payment",payment);
+                                                                        intent.putExtras(bundle);
+                                                                    startActivityForResult(intent, 2);
+                                                                    }
 
-                                                                       , new Order_root.PostOrderListener() {
-                                                                           @Override
-                                                                           public void onSuccess(Result result) {
-                                                                               findViewById(R.id.linear_wait).setVisibility(View.GONE);
-                                                                               try {
-                                                                                   if (new User_info(mcontext).getLanguage().equals("en")){
-                                                                                       Toast.makeText(OrderDetails_Create.this,result.getMessageEn(),Toast.LENGTH_SHORT).show();
-                                                                                   }else {
-                                                                                       Toast.makeText(OrderDetails_Create.this,result.getMessageAr(),Toast.LENGTH_SHORT).show();
-                                                                                   }
-                                                                               } catch (Exception e) {
-                                                                                   e.printStackTrace();
-                                                                               }
-                                                                               MyOrders.statusID=1;
-                                                                               MainActivity.item_select=R.id.my_orders;
-                                                                               finish();
+                                                                    @Override
+                                                                    public void onStart() {
+
+                                                                    }
+
+                                                                    @Override
+                                                                    public void onFailure(String msg) {
+
+                                                                    }
+                                                                });
+
+                                                            }else {
+                                                                Send_order(result,upfont,null);
+                                                            }
 
 
-                                                                           }
-
-                                                                           @Override
-                                                                           public void onStart() {
-
-                                                                           }
-
-                                                                           @Override
-                                                                           public void onFailure(String msg) {
-
-                                                                           }
-                                                                       }
-                                                               );
-                                                           }
-                                                           else {
-                                                                   root.PostOrder(mcontext,
-                                                                           bascket.getProvider().get_id()
-                                                                           , location_typ,
-                                                                           String.valueOf(mLatLng.latitude),
-                                                                           String.valueOf(mLatLng.longitude),
-                                                                           date,
-                                                                           time,
-                                                                           String.valueOf(bascket.getProvider().getUpfrontAmount()),
-                                                                           "",
-                                                                           result,
-                                                                           upfont
-
-                                                                           , new Order_root.PostOrderListener() {
-                                                                               @Override
-                                                                               public void onSuccess(Result result) {
-                                                                                   findViewById(R.id.linear_wait).setVisibility(View.GONE);
-                                                                                   try {
-                                                                                       if (new User_info(mcontext).getLanguage().equals("en")){
-                                                                                           Toast.makeText(OrderDetails_Create.this,result.getMessageEn(),Toast.LENGTH_SHORT).show();
-                                                                                       }else {
-                                                                                           Toast.makeText(OrderDetails_Create.this,result.getMessageAr(),Toast.LENGTH_SHORT).show();
-                                                                                       }
-                                                                                   } catch (Exception e) {
-                                                                                       e.printStackTrace();
-                                                                                   }
-                                                                                   MyOrders.statusID=1;
-                                                                                   MainActivity.item_select=R.id.my_orders;
-                                                                                   finish();
-
-                                                                               }
-
-                                                                               @Override
-                                                                               public void onStart() {
-
-                                                                               }
-
-                                                                               @Override
-                                                                               public void onFailure(String msg) {
-
-                                                                               }
-                                                                           }
-                                                                   );
-
-                                                           }
                                     }
         });
 
@@ -513,7 +406,7 @@ private void FetchDATA(){
             case R.id.time_btn:
                 pop.GetTime_pop(new OrderPop.POPLisstenner() {
                     @Override
-                    public void ongetResult(String result,String time_,Boolean upfont) {
+                    public void ongetResult(String result, String time_, Boolean upfont, String coupontxt) {
                         time_tv.setText(result);
                         time=result;
                     }
@@ -522,6 +415,125 @@ private void FetchDATA(){
                 break;
         }
     }
+
+    private void Send_order(String result,Boolean upfont,String payment_id) {
+        Order_root root=new Order_root();
+        if (reOrder) {
+            root.ReOrder(mcontext,
+                    location_typ,
+                    String.valueOf(mLatLng.latitude),
+                    String.valueOf(mLatLng.longitude),
+                    date,
+                    time,
+                    String.valueOf(bascket.getProvider().getUpfrontAmount()),
+                    Coupon_txt,
+                    result,
+                    upfont,
+                    order_id
+                    ,payment_id
+
+                    , new Order_root.PostOrderListener() {
+                        @Override
+                        public void onSuccess(Result result) {
+                            findViewById(R.id.linear_wait).setVisibility(View.GONE);
+                            try {
+                                if (new User_info(mcontext).getLanguage().equals("en")){
+                                    Toast.makeText(OrderDetails_Create.this,result.getMessageEn(),Toast.LENGTH_SHORT).show();
+                                }else {
+                                    Toast.makeText(OrderDetails_Create.this,result.getMessageAr(),Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            MyOrders.statusID=1;
+                            MainActivity.item_select=R.id.my_orders;
+                            finish();
+
+
+                        }
+
+                        @Override
+                        public void onStart() {
+
+                        }
+
+                        @Override
+                        public void onFailure(String msg) {
+
+                        }
+                    }
+            );
+        }
+        else {
+            root.PostOrder(mcontext,
+                    bascket.getProvider().get_id()
+                    , location_typ,
+                    String.valueOf(mLatLng.latitude),
+                    String.valueOf(mLatLng.longitude),
+                    date,
+                    time,
+                    String.valueOf(bascket.getProvider().getUpfrontAmount()),
+                    "",
+                    result,
+                    upfont
+                    ,payment_id
+
+                    , new Order_root.PostOrderListener() {
+                        @Override
+                        public void onSuccess(Result result) {
+                            findViewById(R.id.linear_wait).setVisibility(View.GONE);
+                            try {
+                                if (new User_info(mcontext).getLanguage().equals("en")){
+                                    Toast.makeText(OrderDetails_Create.this,result.getMessageEn(),Toast.LENGTH_SHORT).show();
+                                }else {
+                                    Toast.makeText(OrderDetails_Create.this,result.getMessageAr(),Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            MyOrders.statusID=1;
+                            MainActivity.item_select=R.id.my_orders;
+                            finish();
+
+                        }
+
+                        @Override
+                        public void onStart() {
+
+                        }
+
+                        @Override
+                        public void onFailure(String msg) {
+
+                        }
+                    }
+            );
+
+        }
+
+        if (result.equals("2")){
+            user user=new user();
+            user.GET_profil(mcontext, new user.user_Listener() {
+                @Override
+                public void onSuccess(users account) {
+
+                    new User_info(account.getItems(),mcontext);
+
+                }
+
+                @Override
+                public void onStart() {
+
+                }
+
+                @Override
+                public void onFailure(String msg) {
+
+                }
+            });
+        }
+    }
+    String payment_id=null;
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -533,6 +545,15 @@ private void FetchDATA(){
                             data.getDoubleExtra("lng",0.0));
                     String Location=data.getStringExtra("Location");
                     make_marke(mLatLng);
+                }
+                break;
+            }
+            case 2: {
+                if (resultCode == Activity.RESULT_OK) {
+
+
+                    Send_order("3",upfont,payment_id);
+
                 }
                 break;
             }

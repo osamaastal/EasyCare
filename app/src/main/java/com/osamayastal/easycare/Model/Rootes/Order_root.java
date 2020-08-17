@@ -1,7 +1,10 @@
 package com.osamayastal.easycare.Model.Rootes;
 
 import android.content.Context;
+import android.os.Build;
 import android.util.Log;
+
+import androidx.annotation.RequiresApi;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -124,7 +127,7 @@ public class Order_root {
                           final String upfrontAmount, final String couponCode,
                           final String paymentType,
                           final Boolean isUpfront,
-                          final PostOrderListener listener)
+                          final String payment_id, final PostOrderListener listener)
     {
 
         listener.onStart();
@@ -181,7 +184,9 @@ public class Order_root {
                     parameters.put("upfrontAmount", "0");
                     parameters.put("isUpfront", String.valueOf(isUpfront));
                 }
-
+                if (payment_id!=null){
+                    parameters.put("_id",payment_id);
+                }
                 Log.d("parameters", parameters.toString());
 
                 return  parameters;
@@ -201,13 +206,13 @@ public class Order_root {
 
     }
     public void ReOrder(final Context mcontext,
-                          final int locationType,
-                          final String lat, final String lng,
-                          final String date, final String time,
-                          final String upfrontAmount, final String couponCode,
-                          final String paymentType,
-                          final Boolean isUpfront,
-                          final String orderId, final PostOrderListener listener)
+                        final int locationType,
+                        final String lat, final String lng,
+                        final String date, final String time,
+                        final String upfrontAmount, final String couponCode,
+                        final String paymentType,
+                        final Boolean isUpfront,
+                        final String orderId, final String payment_id, final PostOrderListener listener)
     {
 
         listener.onStart();
@@ -264,7 +269,9 @@ public class Order_root {
                     parameters.put("upfrontAmount", "0");
                     parameters.put("isUpfront", String.valueOf(isUpfront));
                 }
-
+                if (payment_id!=null){
+                    parameters.put("_id",payment_id);
+                }
                 Log.d("parameters", parameters.toString());
 
                 return  parameters;
@@ -301,6 +308,7 @@ public class Order_root {
         }
         // prepare the Request
         StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onResponse(String response) {
 
@@ -386,8 +394,8 @@ public class Order_root {
     }
 
     public void CancelOrder(final Context mcontext,
-                                final String id,
-                                final PostOrderListener listener)
+                            final String id,
+                            final String reson, final PostOrderListener listener)
     {
 
         listener.onStart();
@@ -419,7 +427,13 @@ public class Order_root {
                 Log.d("error",error.toString());
             }
         }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> parameters = new HashMap<>();
 
+                parameters.put("notes",reson);
+                return  parameters;
+            }
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {

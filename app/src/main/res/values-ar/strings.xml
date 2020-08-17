@@ -182,5 +182,15 @@
     <string name="new_msg">رسالة جديدة</string>
     <string name="getprice_service">عرض الارقام الخاصة بالسلة بناءا على مزود الخدمات المختارة</string>
     <string name = "tax"> الضريبة </string>
+    <string name="okey">حسننا</string>
+    <string name = "add_credit"> إضافة رصيد </string>
+    <string name="there_is_error">حصل خطأ في عملية الدفع</string>
+    <string name="there_is_upfront">لا زال هناك مبلغ متبغي من العربون يجب دفعه حتى يتمكن السائق من توصيل الطلب </string>
+    <string name="checking_payment">التحقق من عملية الدفع</string>
+    <string name = "pay_all_amount"> دفع المبلغ الكامل </string>
+    <string name = "why_cancel"> لماذا تريد إلغاء الطلب؟ </string>
+    <string name = "helus"> ساعدنا في تحسين الخدمة باختيار السبب </string>
+    <string name = "note"> ملاحظة </string>
+
 
 </resources>

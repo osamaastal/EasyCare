@@ -2,16 +2,18 @@ package com.osamayastal.easycare.Popups;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -32,32 +34,26 @@ import com.osamayastal.easycare.Adapters.Size_adapter;
 import com.osamayastal.easycare.Adapters.SubCategories_adapter;
 import com.osamayastal.easycare.Model.Classes.Basket.Service_for_basket;
 import com.osamayastal.easycare.Model.Classes.Car_servece;
-import com.osamayastal.easycare.Model.Classes.Categorie;
 import com.osamayastal.easycare.Model.Classes.City;
 import com.osamayastal.easycare.Model.Classes.Payment;
 import com.osamayastal.easycare.Model.Classes.Size;
 import com.osamayastal.easycare.Model.Classes.Sub_categorie;
-import com.osamayastal.easycare.Model.Classes.Sub_servic;
 import com.osamayastal.easycare.Model.Classes.Sub_service;
 import com.osamayastal.easycare.Model.Const.User_info;
+import com.osamayastal.easycare.Model.Controle.Coupon;
 import com.osamayastal.easycare.Model.Controle.Result;
 import com.osamayastal.easycare.Model.Controle.Sub_categories;
 import com.osamayastal.easycare.Model.Rootes.Bascket_root;
 import com.osamayastal.easycare.Model.Rootes.Categories_root;
 import com.osamayastal.easycare.Model.Rootes.City_root;
+import com.osamayastal.easycare.Model.Rootes.Coupon_root;
 import com.osamayastal.easycare.R;
-import com.osamayastal.easycare.activities.MainActivity;
-import com.osamayastal.easycare.activities.OrderDetails_Create;
 import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Locale;
 
 import top.defaults.drawabletoolbox.DrawableBuilder;
 
@@ -88,8 +84,12 @@ public class OrderPop {
          void onGoBasket();
          void onCancel();
      }
+    public interface OrderCanelLisstenner{
+
+        void onCancel(String reson);
+    }
     public interface POPLisstenner{
-        void ongetResult(String  result,String time,Boolean upfont);
+        void ongetResult(String result, String time, Boolean upfont,String coupontxt);
     }
     public OrderPop(Context mcontext) {
         this.mcontext = mcontext;
@@ -591,7 +591,7 @@ service_for_basket=new Service_for_basket();
 
                Log.d("date", date);
 
-               lisstenner.ongetResult(date,"",false);
+               lisstenner.ongetResult(date,"",false,null);
                mBottomSheetDialog.dismiss();
 
 
@@ -636,7 +636,7 @@ service_for_basket=new Service_for_basket();
 
                 Log.d("date", hour +":"+ minute);//+" "+am_pm
                 time=hour +":"+ minute;//+" "+am_pm;
-                lisstenner.ongetResult(time,time,false);
+                lisstenner.ongetResult(time,time,false,null);
 
                 mBottomSheetDialog.dismiss();
 
@@ -647,7 +647,9 @@ service_for_basket=new Service_for_basket();
 
     }
     public void GetWay_pop(final Boolean isupfront, final Double mount,
-                           List<Payment> payment_id, final POPLisstenner lisstenner){
+                           List<Payment> payment_id, final String provID,
+                           final Boolean reOrder, final String order_id,
+                           final POPLisstenner lisstenner){
 
         final RoundedBottomSheetDialog mBottomSheetDialog = new RoundedBottomSheetDialog(mcontext);
         LayoutInflater inflater = (LayoutInflater) mcontext.getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -657,6 +659,8 @@ service_for_basket=new Service_for_basket();
         final ImageView payment1,payment2,payment3,check1,check2,check3;
         final TextView upFrontmount;
       final LinearLayout linear_upfront;
+         final EditText coupon=sheetView.findViewById(R.id.coupon);
+        CheckBox payall =sheetView.findViewById(R.id.payAll);
         linear_upfront=sheetView.findViewById(R.id.linear_upfront);
         upFrontmount=sheetView.findViewById(R.id.upfrontMount_tv);
         check1=sheetView.findViewById(R.id.checked_1);
@@ -670,6 +674,13 @@ service_for_basket=new Service_for_basket();
         payment3.setEnabled(false);
 
         payment=0;//default
+        final Boolean[] payAll_amount = {true};
+        payall.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                payAll_amount[0] =b;
+            }
+        });
         for (Payment p:payment_id
              ) {
             switch (p.getId()){
@@ -744,7 +755,7 @@ service_for_basket=new Service_for_basket();
             }
         });
 
-
+        final String[] Coupon_txt = {null};
         Button save=sheetView.findViewById(R.id.save_btn);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -754,7 +765,10 @@ service_for_basket=new Service_for_basket();
                     return;
                 }
                 Log.d("payment", String.valueOf(payment));
-                lisstenner.ongetResult( String.valueOf(payment),"",upfont);
+                if (payAll_amount[0]){
+                    upfont=false;
+                }
+                lisstenner.ongetResult( String.valueOf(payment),"",upfont,Coupon_txt[0]);
 
                 mBottomSheetDialog.dismiss();
 
@@ -762,6 +776,142 @@ service_for_basket=new Service_for_basket();
             }
         });
 
+        /********************************coupon**********************************/
+        coupon. setOnEditorActionListener(
+                new EditText.OnEditorActionListener() {
+
+
+                    @Override
+                    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                        if (actionId == EditorInfo.IME_ACTION_SEARCH ||
+                                actionId == EditorInfo.IME_ACTION_DONE ||
+                                event != null &&
+                                        event.getAction() == KeyEvent.ACTION_DOWN &&
+                                        event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                            if (event == null || !event.isShiftPressed()) {
+
+                                if (payment==0){
+                                    Toast.makeText(mcontext,mcontext.getString(R.string.select_getway),Toast.LENGTH_SHORT).show();
+                                    return false;
+                                }
+                                // the user is done typing.
+                                Coupon_root root=new Coupon_root();
+
+                                root.Check_coupon(mcontext, coupon.getText().toString(),provID,reOrder,order_id,payment
+                                        , new Coupon_root.Listener() {
+                                            @Override
+                                            public void onSuccess(Coupon coup) {
+                                                String msg=null;
+
+                                                if (new User_info(mcontext).getLanguage().equals("en")){
+                                                    msg=coup.getMessageEn();
+                                                }else
+                                                {
+                                                    msg=coup.getMessageAr();
+
+                                                }
+                                                if (msg!=null){
+//                                                    AppPop pop=new AppPop();
+//                                                    pop.ShowMessage(msg,sheetView);
+
+                                                    Toast.makeText(mcontext,msg,Toast.LENGTH_SHORT).show();
+
+                                                }
+
+
+                                                if (coup.isStatus()){
+
+                                                    Coupon_txt[0] =coupon.getText().toString();
+                                                }
+
+                                            }
+
+                                            @Override
+                                            public void onStart() {
+
+                                            }
+
+                                            @Override
+                                            public void onFailure(String msg) {
+
+                                            }
+                                        });
+                                return true; // consume.
+                            }
+                        }
+                        return false; // pass on to other listeners.
+                    }
+                }
+        );
+
 
     }
+
+    /***********************************************************/
+    final List<City> cityList=new ArrayList<>();
+    List<String> cities=new ArrayList<>();
+    public  void Cancel_order_pop(final Context mcontext, final OrderCanelLisstenner lisstenner){
+
+        final RoundedBottomSheetDialog mBottomSheetDialog = new RoundedBottomSheetDialog(mcontext);
+        LayoutInflater inflater = (LayoutInflater) mcontext.getSystemService(LAYOUT_INFLATER_SERVICE);
+        final View sheetView = inflater.inflate(R.layout.bottom_sheet_choose_reson, null);
+        mBottomSheetDialog.setContentView(sheetView);
+        mBottomSheetDialog.show();
+        final Wheel3DView wheel3DView=sheetView.findViewById(R.id.wheel);
+        final ProgressBar progressBar=sheetView.findViewById(R.id.progress);
+        final EditText note=sheetView.findViewById(R.id.note);
+            City_root root=new City_root();
+            root.GetResons(mcontext, new City_root.cityListener() {
+                @Override
+                public void onSuccess(final com.osamayastal.easycare.Model.Controle.City cities_) {
+
+
+                    cityList.clear();
+                    cityList.addAll(cities_.getItems());
+                    cityList.add(new City("0","آخر","other"));
+                    cities=cities_.getCityList(new City("0","آخر","other"),mcontext);
+                    progressBar.setVisibility(View.GONE);
+                    wheel3DView.setEntries(cities);
+                }
+
+                @Override
+                public void onStart() {
+
+                }
+
+                @Override
+                public void onFailure(String msg) {
+
+                }
+            });
+
+        Button save=sheetView.findViewById(R.id.save_btn);
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               String reson=null;
+               if (new User_info(mcontext).getLanguage().equals("en")){
+                   reson=cityList.get(wheel3DView.getCurrentIndex()).getEnName();
+
+               }else {
+                   reson=cityList.get(wheel3DView.getCurrentIndex()).getArName();
+
+               }
+                Log.d("reson", reson);
+               if (cityList.get(wheel3DView.getCurrentIndex()).get_id().equals("0") ){
+                   if ( note.getText().toString().isEmpty()){
+                       note.setError(note.getHint());
+                       return;
+                   }else {
+                       reson=note.getText().toString();
+                   }
+
+               }
+                lisstenner.onCancel(reson);
+                mBottomSheetDialog.dismiss();
+            }
+        });
+
+    }
+
 }
