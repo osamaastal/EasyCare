@@ -71,7 +71,7 @@ public class Chat extends AppCompatActivity implements View.OnClickListener {
         Bundle bundle = intent.getExtras();
         order_id=bundle.getString("order_id");
         order_number=bundle.getString("order_number");
-
+        is_driver_delete=bundle.getBoolean("is_driver_delete");
         driver= (User) bundle.getSerializable("driver");
         user= (User) bundle.getSerializable("user");
 
@@ -225,6 +225,7 @@ private void Driver_info(){
     private String order_id=null,order_number=null;
     private User driver=null;
     private User user=null;
+    private Boolean is_driver_delete=false;
 
     @Override
     public void onClick(View view) {
@@ -285,32 +286,35 @@ private void Driver_info(){
                     parameters.put("last_msg",message.getContent());
                     parameters.put("edit_time_long",message.getTime_long());
                     parameters.put("isRead_driver",false);
+                    parameters.put("is_user_delete",false);
                     parameters.put("isRead_user",true);
                     reference.updateChildren(parameters);
 ///////// send notification
-                    Notification notification=new Notification();
-                    notification.setTitle(user.getName()+" - "+order_number);
-                    notification.setBody(message.getContent());
-                    notification.setTo(driver.getFcmtoken());
 
-                    Notifications root=new Notifications();
-                    root.Pushnotification(mcontext,notification , new Notifications.notificationListener() {
-                        @Override
-                        public void onSuccess(notification show_notif) {
+                    if (!is_driver_delete) {
+                        Notification notification = new Notification();
+                        notification.setTitle(user.getName() + " - " + order_number);
+                        notification.setBody(message.getContent());
+                        notification.setTo(driver.getFcmtoken());
 
-                        }
+                        Notifications root = new Notifications();
+                        root.Pushnotification(mcontext, notification, new Notifications.notificationListener() {
+                            @Override
+                            public void onSuccess(notification show_notif) {
 
-                        @Override
-                        public void onSuccess(Result result) {
+                            }
 
-                        }
+                            @Override
+                            public void onSuccess(Result result) {
 
-                        @Override
-                        public void onSuccess(users users) {
+                            }
 
-                        }
-                    });
+                            @Override
+                            public void onSuccess(users users) {
 
+                            }
+                        });
+                    }
                 }
             }
         });

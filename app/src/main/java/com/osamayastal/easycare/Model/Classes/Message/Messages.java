@@ -5,12 +5,37 @@ package com.osamayastal.easycare.Model.Classes.Message;
 public class Messages {
         private String  last_msg,order_id,order_number;
         private Long edit_time_long;
-        private Boolean isRead_driver,isRead_user=false;
+        private Boolean isRead_driver,isRead_user=false,is_driver_delete=false,is_user_delete=false,can_open=true;
         private User user;
         private User driver;
         public Messages() {
 
         }
+
+        public Boolean getCan_open() {
+                return can_open;
+        }
+
+        public void setCan_open(Boolean can_open) {
+                this.can_open = can_open;
+        }
+
+        public Boolean getIs_driver_delete() {
+                return is_driver_delete;
+        }
+
+        public void setIs_driver_delete(Boolean is_driver_delete) {
+                this.is_driver_delete = is_driver_delete;
+        }
+
+        public Boolean getIs_user_delete() {
+                return is_user_delete;
+        }
+
+        public void setIs_user_delete(Boolean is_user_delete) {
+                this.is_user_delete = is_user_delete;
+        }
+
         public String getLast_msg() {
                 return last_msg;
         }

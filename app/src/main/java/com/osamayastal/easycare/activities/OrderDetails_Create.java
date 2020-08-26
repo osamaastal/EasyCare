@@ -70,6 +70,7 @@ import com.suke.widget.SwitchButton;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -409,6 +410,42 @@ Boolean upfont=false;
                     public void ongetResult(String result, String time_, Boolean upfont, String coupontxt) {
                         time_tv.setText(result);
                         time=result;
+
+                        //test time
+                        String pattern = "HH:mm";
+                        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+                        try {
+                            Date start = sdf.parse(bascket.getProviderSettingList().get(0).getMin());
+                            Date end = sdf.parse(bascket.getProviderSettingList().get(0).getMax());
+                            Date now = sdf.parse(result);
+                            if (now.before(start) || now.after(end)){
+                                AppPop pop=new AppPop();
+                                pop.Show_mssg_POP(mcontext, mcontext.getString(R.string.time_rong), new AppPop.goListenner() {
+                                    @Override
+                                    public void Go() {
+
+                                    }
+
+                                    @Override
+                                    public void Cancel() {
+
+                                    }
+                                });
+                            }
+                            // Outputs -1 as date1 is before date2
+//                            System.out.println(date1.compareTo(date2));
+//
+//                            // Outputs 1 as date1 is after date1
+//                            System.out.println(date2.compareTo(date1));
+//
+//                            date2 = sdf.parse("19:28");
+//                            // Outputs 0 as the dates are now equal
+//                            System.out.println(date1.compareTo(date2));
+
+                        } catch (ParseException e){
+                            // Exception handling goes here
+                        }
+
                     }
                 });
 

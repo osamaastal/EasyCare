@@ -79,13 +79,14 @@ public interface goListenner{
         });
         dialog.show();
     }
-    public void GoBasket_POP(final Context mContext, String msg, final goListenner listenner){
+    public void Show_mssg_POP(final Context mContext, String msg, final goListenner listenner){
         final Dialog dialog=new Dialog(mContext);
         dialog.setContentView(R.layout.popup_conf);
         Button conf=dialog.findViewById(R.id.confBtn);
         conf.setText("نعم");
         TextView content=dialog.findViewById(R.id.contentTV);
         TextView title=dialog.findViewById(R.id.title);
+        title.setText(mContext.getString(R.string.attention));
         title.setVisibility(View.VISIBLE);
         content.setText(msg);
         Button cancel=dialog.findViewById(R.id.cancelBtn);

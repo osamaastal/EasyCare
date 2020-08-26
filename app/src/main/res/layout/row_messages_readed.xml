@@ -33,8 +33,20 @@
         android:maxLength="20"
         android:text="Osama yousef"
         app:layout_constraintStart_toEndOf="@+id/user_img"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/delete_btn" />
+    <ImageButton
+        android:layout_marginEnd="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/delete_btn"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_gravity="top"
+        android:visibility="visible"
+        android:src="@drawable/ic_delete_small"
 
+        android:background="@drawable/bg_circle_pink"
+        />
     <!--    TODO programmatically >> if length > 40   content + ... -->
     <TextView
         android:id="@+id/main_tv"
@@ -63,6 +75,8 @@
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toEndOf="@+id/user_img"
         app:layout_constraintTop_toBottomOf="@+id/main_tv" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout><!--</com.chinodev.androidneomorphframelayout.NeomorphFrameLayout>-->
 
 

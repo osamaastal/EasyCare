@@ -104,7 +104,8 @@ dependencies {
 
     //TimeAgo
     implementation 'com.github.marlonlom:timeago:4.0.1'
-
+//swipe to delete
+    implementation 'com.github.zerobranch:SwipeLayout:1.3.1'
 //    //GetWay
 //    implementation 'com.mastercard.gateway:gateway-android:19.0.0'
 }

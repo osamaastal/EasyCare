@@ -42,7 +42,7 @@
                 android:id="@+id/edit_profile_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
-                android:text="@string/profile"
+                android:text="@string/edit_profile"
                 style="@style/text_white_roman_12"
                 android:layout_gravity="center"
                 android:paddingEnd="22dp"

@@ -191,6 +191,10 @@
     <string name = "why_cancel"> لماذا تريد إلغاء الطلب؟ </string>
     <string name = "helus"> ساعدنا في تحسين الخدمة باختيار السبب </string>
     <string name = "note"> ملاحظة </string>
+    <string name="order_dane">لا يمكن فتح المحادثة بعد انتهاء الطلب</string>
+    <string name = "delet_convercition"> هل تريد حذف هذه المحادثة </string>
+    <string name="time_rong">طلبك في خارج اوقات العمل يستغرق بعض الوقت لتنفيذه</string>
+        <string name="attention">انتباه</string>
 
 
 </resources>

@@ -191,20 +191,7 @@ service_for_basket=new Service_for_basket();
                     service_for_basket.getSub_serviceList().remove(sub_service);
                 }
 
-//                if (i!=-1){
-//
-//                        carList.get(i).setService_for_basket(service_for_basket);
-//                        carList.get(i).setTotal(Calculate_service_total(service_for_basket));
-//                        car_adapter.notifyDataSetChanged();
-//                        Calculate_total(carList);
-//
-//
-//                }
-//
-//                if (service_for_basket.getSub_serviceList().size()==0){
-////                    Toast.makeText(mcontext,"يجب احتيار عنصر على الأقل من نوع الخدمة ",Toast.LENGTH_SHORT).show();
-//                    return false;
-//                }
+
                 return true;
             }
         });
@@ -213,31 +200,7 @@ service_for_basket=new Service_for_basket();
          car_adapter=new Car_adapter(mcontext, carList, new Car_adapter.Selected_item() {
             @Override
             public void Onselcted(Car_servece car_servece,int potions) {
-//////////////////////////////Init////////////////////////////////////
-//                service_for_basket=new Service_for_basket();
-//                for (Sub_service s:sub_servics
-//                ) {
-//                    s.setActive(false);
-//                }
-//Toast.makeText(mcontext,potions+"",Toast.LENGTH_LONG).show();
-//                size_adapter.item_select="";
-//                subCategories_adapter.notifyDataSetChanged();
-//                size_adapter.notifyDataSetChanged();
-//                //////////////////////////////////////////////////////////
-//
-//                i= potions;
-//                service_for_basket=carList.get(potions).getService_for_basket();
-//
-//                for (Sub_service sub:sub_servics
-//                     ) {
-//                    if (service_for_basket.getSub_serviceList().contains(sub)){
-//                        sub.setActive(true);
-//                    }
-//                }
-//                subCategories_adapter.notifyDataSetChanged();
-//
-//                size_adapter.item_select=service_for_basket.getSize().getSize_id();
-//                size_adapter.notifyDataSetChanged();
+
             }
 
             @Override
@@ -426,47 +389,6 @@ service_for_basket=new Service_for_basket();
                 });
 
 
-//                if (carList.size()==0){
-//                    Toast.makeText(mcontext,mcontext.getString(R.string.maste_select_one),Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
-//                Bascket_root root=new Bascket_root();
-//                Car_servece car_servece=new Car_servece();
-//                Log.d("service", car_servece.Order_JSON(prov_id, carList).toString());
-//
-//                root.PostService(mcontext, car_servece.Order_JSON(prov_id, carList), new Bascket_root.PostbasketListener() {
-//                    @Override
-//                    public void onSuccess(Result bascket) {
-//                        String msg="";
-//                        if (new User_info(mcontext).getLanguage().equals("en")) {
-//                            msg=bascket.getMessageEn();
-//                            Toast.makeText(mcontext, bascket.getMessageEn(), Toast.LENGTH_SHORT).show();
-//                        } else {
-//                            msg=bascket.getMessageAr();
-//                            Toast.makeText(mcontext, bascket.getMessageAr(), Toast.LENGTH_SHORT).show();
-//                        }
-//
-//                        Bundle bundle = new Bundle();
-//                        bundle.putInt("bascket_index",0);
-//                        Intent intent=new Intent(mcontext, OrderDetails_Create.class);
-//                        intent.putExtras(bundle);
-//                        mcontext.startActivity(intent);
-//
-//                        carList.clear();
-//                        car_adapter.notifyDataSetChanged();
-//                        Calculate_total(carList);
-//                        basket_count(mcontext);
-//                    }
-//                    @Override
-//                    public void onStart() {
-//
-//                    }
-//
-//                    @Override
-//                    public void onFailure(String msg) {
-//
-//                    }
-//                });
 
 
 

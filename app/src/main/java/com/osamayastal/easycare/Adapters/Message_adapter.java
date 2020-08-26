@@ -17,10 +17,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.marlonlom.utilities.timeago.TimeAgo;
 import com.github.marlonlom.utilities.timeago.TimeAgoMessages;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.osamayastal.easycare.Model.Classes.Categorie;
 import com.osamayastal.easycare.Model.Classes.Message.Message;
 import com.osamayastal.easycare.Model.Classes.Notification;
 import com.osamayastal.easycare.Model.Const.User_info;
+import com.osamayastal.easycare.Popups.AppPop;
 import com.osamayastal.easycare.R;
 import com.osamayastal.easycare.activities.Messages;
 import com.squareup.picasso.Picasso;
@@ -104,10 +108,58 @@ public class Message_adapter extends RecyclerView.Adapter<Message_adapter.ViewHo
 
                @Override
                public void onClick(View view) {
-                   listenner.Onselcted(mItems.get(position));
+                   if (mItems.get(position).getCan_open()){
+                       listenner.Onselcted(mItems.get(position));
+                   }else {
+                       AppPop pop=new AppPop();
+                       pop.Show_mssg_POP(mContext, mContext.getString(R.string.order_dane), new AppPop.goListenner() {
+                           @Override
+                           public void Go() {
+
+                           }
+
+                           @Override
+                           public void Cancel() {
+
+                           }
+                       });
+                   }
+
 
                }
            });
+
+        holder.delete.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                AppPop pop=new AppPop();
+                pop.Conferme_POP(mContext, mContext.getString(R.string.delet_convercition), new AppPop.goListenner() {
+                    @Override
+                    public void Go() {
+                        FirebaseDatabase database=FirebaseDatabase.getInstance();
+                        DatabaseReference reference=database.getReference().child("chat")
+                                .child(mItems.get(position).getOrder_id());
+                        reference.child("is_user_delete").setValue(true)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                mItems.remove(mItems.get(position));
+                                notifyDataSetChanged();
+                            }
+                        });
+
+
+                    }
+
+                    @Override
+                    public void Cancel() {
+
+                    }
+                });
+
+            }
+        });
 
 
     }
@@ -128,7 +180,7 @@ public class Message_adapter extends RecyclerView.Adapter<Message_adapter.ViewHo
 
     }
     public class ViewHolder extends RecyclerView.ViewHolder{
-
+                ImageButton delete;
       TextView main,date,name;
       ImageView image;
         ConstraintLayout container;
@@ -139,7 +191,7 @@ public class Message_adapter extends RecyclerView.Adapter<Message_adapter.ViewHo
           name= itemView.findViewById(R.id.user_name_tv);
           image= itemView.findViewById(R.id.user_img);
           container= itemView.findViewById(R.id.container);
-
+          delete = itemView.findViewById(R.id.delete_btn);
 
         }
     }

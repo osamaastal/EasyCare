@@ -95,7 +95,7 @@ public class Messages extends AppCompatActivity implements View.OnClickListener 
                   Log.d("dataSnapshot",dataSnapshot.toString());
                   Log.d("dataSnapshot",dataSnapshot.child("isRead_user").toString());
 
-                  if (messages.getUser().get_id().equals(new User_info(mcontext).getId())){
+                  if (messages.getUser().get_id().equals(new User_info(mcontext).getId()) && !messages.getIs_user_delete()){
                       findViewById(R.id.no_data).setVisibility(View.GONE);
                       messages.setRead_user(dataSnapshot.child("isRead_user").getValue(Boolean.class));
                       messages.setOrder_id(dataSnapshot.getKey());
@@ -109,6 +109,7 @@ public class Messages extends AppCompatActivity implements View.OnClickListener 
                               bundle.putSerializable("user",messages.getUser());
                               bundle.putSerializable("driver",messages.getDriver());
                               bundle.putString("order_id",messages.getOrder_id());
+                              bundle.putBoolean("is_driver_delete",messages.getIs_driver_delete());
                               Intent intent=new Intent(mcontext, Chat.class);
                               intent.putExtras(bundle);
                               startActivity(intent);

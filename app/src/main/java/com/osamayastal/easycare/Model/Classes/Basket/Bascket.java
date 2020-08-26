@@ -10,6 +10,7 @@ import com.osamayastal.easycare.Model.Classes.Employee;
 import com.osamayastal.easycare.Model.Classes.Payment;
 import com.osamayastal.easycare.Model.Classes.Product;
 import com.osamayastal.easycare.Model.Classes.Provider.Provider;
+import com.osamayastal.easycare.Model.Classes.Provider.ProviderSetting;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,7 +36,7 @@ private JSONObject mjsonObject=null;
     private Double total_price=0.0,total_discount=0.0,final_total=0.0,tax=0.0;
     private Employee employee_id;
     private Boolean isRate=false,isUpfront=false;
-
+    private List<ProviderSetting> providerSettingList;
     private Long dateLong;
     public Bascket() {
     }
@@ -46,6 +47,7 @@ private JSONObject mjsonObject=null;
             return;
         }
         mjsonObject=jsonObject;
+
         try {
             createAt=jsonObject.getString("createAt");
 //            dateLong= Instant.parse("2020-10-31T00:00:00Z").toEpochMilli();
@@ -55,6 +57,7 @@ private JSONObject mjsonObject=null;
         categories=new ArrayList<>();
         products=new ArrayList<>();
         payment_id=new ArrayList<>();
+        providerSettingList=new ArrayList<>();
 
        try {
            provider=new Provider(jsonObject);
@@ -93,6 +96,17 @@ private JSONObject mjsonObject=null;
             jsonArray3 = jsonObject.getJSONArray("payment_id");
             for(int i=0;i<jsonArray3.length();i++){
                 payment_id.add(new Payment(jsonArray3.getJSONObject(i)));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JSONArray jsonArray2= null;
+        try {
+            jsonArray2 = jsonObject.getJSONArray("providerSetting");
+
+            for (int i=0;i<jsonArray2.length();i++){
+                providerSettingList.add(new ProviderSetting(jsonArray2.getJSONObject(i)));
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -197,6 +211,25 @@ private JSONObject mjsonObject=null;
             e.printStackTrace();
         }
 
+        providerSettingList=new ArrayList<>();
+        JSONArray jsonArray2= null;
+        try {
+            jsonArray2 = jsonObject.getJSONArray("providerSetting");
+
+            for (int i=0;i<jsonArray2.length();i++){
+                providerSettingList.add(new ProviderSetting(jsonArray2.getJSONObject(i)));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<ProviderSetting> getProviderSettingList() {
+        return providerSettingList;
+    }
+
+    public void setProviderSettingList(List<ProviderSetting> providerSettingList) {
+        this.providerSettingList = providerSettingList;
     }
 
     public Boolean getRate() {
