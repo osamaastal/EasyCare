@@ -95,7 +95,8 @@ public class Messages extends AppCompatActivity implements View.OnClickListener 
                   Log.d("dataSnapshot",dataSnapshot.toString());
                   Log.d("dataSnapshot",dataSnapshot.child("isRead_user").toString());
 
-                  if (messages.getUser().get_id().equals(new User_info(mcontext).getId()) && !messages.getIs_user_delete()){
+                  if (messages.getUser().get_id().equals(new User_info(mcontext).getId())
+                          && !messages.getIs_user_delete()){
                       findViewById(R.id.no_data).setVisibility(View.GONE);
                       messages.setRead_user(dataSnapshot.child("isRead_user").getValue(Boolean.class));
                       messages.setOrder_id(dataSnapshot.getKey());
@@ -113,6 +114,16 @@ public class Messages extends AppCompatActivity implements View.OnClickListener 
                               Intent intent=new Intent(mcontext, Chat.class);
                               intent.putExtras(bundle);
                               startActivity(intent);
+                          }
+
+                          @Override
+                          public void ondelete(com.osamayastal.easycare.Model.Classes.Message.Messages messages) {
+                              String id=messages.getOrder_id();
+                            FirebaseDatabase  database=FirebaseDatabase.getInstance();
+                            DatabaseReference  reference=database.getReference().child("chat");
+                              reference.child(id).child("is_user_delete").setValue(true);
+                              messageList.remove(messages);
+                              adapter.notifyDataSetChanged();
                           }
                       });
                       RV.setAdapter(adapter);
@@ -146,7 +157,8 @@ public class Messages extends AppCompatActivity implements View.OnClickListener 
                     Log.d("dataSnapshot",dataSnapshot.toString());
                     Log.d("dataSnapshot",dataSnapshot.child("isRead_user").toString());
 
-                    if (messages.getUser().get_id().equals(new User_info(mcontext).getId())){
+                    if (messages.getUser().get_id().equals(new User_info(mcontext).getId())
+                            && !messages.getIs_user_delete()){
                         for (com.osamayastal.easycare.Model.Classes.Message.Messages m:messageList
                              ) {
                             if (m.getOrder_id().equals(dataSnapshot.getKey())){
@@ -167,6 +179,16 @@ public class Messages extends AppCompatActivity implements View.OnClickListener 
                                 Intent intent=new Intent(mcontext, Chat.class);
                                 intent.putExtras(bundle);
                                 startActivity(intent);
+                            }
+
+                            @Override
+                            public void ondelete(com.osamayastal.easycare.Model.Classes.Message.Messages messages) {
+                                String id=messages.getOrder_id();
+                                FirebaseDatabase  database=FirebaseDatabase.getInstance();
+                                DatabaseReference  reference=database.getReference().child("chat");
+                                reference.child(id).child("is_user_delete").setValue(true);
+                                messageList.remove(messages);
+                                adapter.notifyDataSetChanged();
                             }
                         });
                         RV.setAdapter(adapter);

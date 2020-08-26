@@ -11,13 +11,16 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.marlonlom.utilities.timeago.TimeAgo;
 import com.github.marlonlom.utilities.timeago.TimeAgoMessages;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.osamayastal.easycare.Model.Classes.Categorie;
@@ -33,6 +36,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.Executor;
 
 /**
  * Created by User on 26/02/2020.
@@ -48,13 +52,18 @@ public class Message_adapter extends RecyclerView.Adapter<Message_adapter.ViewHo
     private View mview;
     public interface Selected_item{
         void Onselcted(com.osamayastal.easycare.Model.Classes.Message.Messages messages);
+        void ondelete(com.osamayastal.easycare.Model.Classes.Message.Messages messages);
     }
    private int item_select=-1;
     Selected_item listenner;
+    FirebaseDatabase database;
+    DatabaseReference reference;
     public Message_adapter(Context context, List<com.osamayastal.easycare.Model.Classes.Message.Messages> names, Selected_item listenner) {
         mItems = names;
         mContext = context;
         this.listenner=listenner;
+
+
 
     }
 
@@ -137,18 +146,8 @@ public class Message_adapter extends RecyclerView.Adapter<Message_adapter.ViewHo
                 pop.Conferme_POP(mContext, mContext.getString(R.string.delet_convercition), new AppPop.goListenner() {
                     @Override
                     public void Go() {
-                        FirebaseDatabase database=FirebaseDatabase.getInstance();
-                        DatabaseReference reference=database.getReference().child("chat")
-                                .child(mItems.get(position).getOrder_id());
-                        reference.child("is_user_delete").setValue(true)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                mItems.remove(mItems.get(position));
-                                notifyDataSetChanged();
-                            }
-                        });
 
+                    listenner.ondelete(mItems.get(position));
 
                     }
 
