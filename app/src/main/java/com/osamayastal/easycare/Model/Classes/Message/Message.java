@@ -1,7 +1,7 @@
 package com.osamayastal.easycare.Model.Classes.Message;
 
 public class Message {
-        private String  content,uid;
+        private String  content,uid,_id;
         private Boolean is_driver=true;
         private Long time_long;
         public Message() {
@@ -12,6 +12,15 @@ public class Message {
         this.content = content;
         this.is_driver = false;
         this.time_long = long_time;
+    }
+
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
     public String getUid() {

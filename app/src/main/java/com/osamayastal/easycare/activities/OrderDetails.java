@@ -374,22 +374,12 @@ switch (view.getId()){
                         });
                     }
                 });
-//                pop.Conferme_POP(mcontext, getString(R.string.cancel_order_sure), new AppPop.goListenner() {
-//                    @Override
-//                    public void Go() {
-//
-//                    }
-//
-//                    @Override
-//                    public void Cancel() {
-//
-//                    }
-//                });
+
 
                 break;
             case 2://2- Accepted
             case 3:// 3- OnProgress
-
+// open conversation
                 final Messages messages=new Messages();
                 //driver
                 messages.setDriver(new User(order.getEmployee_id().get_id(),

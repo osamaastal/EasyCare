@@ -273,7 +273,9 @@ private void Driver_info(){
 
             reference.updateChildren(parameters);
         }
-        reference.child("conversation").push().setValue(message)
+        String id=reference.child("conversation").push().getKey();
+        message.set_id(id);
+        reference.child("conversation").child(id).setValue(message)
         .addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
