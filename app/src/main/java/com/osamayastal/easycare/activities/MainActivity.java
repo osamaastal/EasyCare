@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static int item_select;
     public static FrameLayout frameLayout;
     TextView user_name_tv,price;
-private  SlidingRootNav nav;
+    private  SlidingRootNav nav;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -267,7 +267,6 @@ private  SlidingRootNav nav;
                 });
 
     }
-
     private Boolean isGPS;
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -288,7 +287,6 @@ private  SlidingRootNav nav;
         price.setText(new User_info(mcontext).getWallet().toString()+" "+getString(R.string.RS_short));//String.format("%.2f",);
 
     }
-
     public void setLocale(Context context ){
             User_info user_info;
         user_info = new User_info(context);
@@ -301,13 +299,11 @@ private  SlidingRootNav nav;
                     getBaseContext().getResources().getDisplayMetrics());
 //        Toast.makeText(this, "Language: "+ Locale.getDefault().getLanguage() , Toast.LENGTH_SHORT).show();
         }
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         finishAffinity();
     }
-
     public static void SetVisibillty(int visibl) {
         toolbar.setVisibility(visibl);
         linear_bottom.setVisibility(visibl);
@@ -321,13 +317,10 @@ private  SlidingRootNav nav;
 
 
     }
-
-
     public void LoginAlert() {
         AppPop pop=new AppPop();
         pop.Login_POP(MainActivity.this);
     }
-
     public void switchFGM(Fragment fragment) {
         MainActivity.transaction = getSupportFragmentManager().beginTransaction();
         MainActivity.transaction.replace(R.id.mainContainer, fragment);
@@ -482,11 +475,9 @@ private  SlidingRootNav nav;
         nav.closeMenu();
 
     }
-
     public interface chang {
         void onSave(Boolean v);
     }
-
     public Boolean ChangeLanguge_pop(final String languge, final Context mcontext, final chang chang_) {
         final Boolean[] change = {false};
         final RoundedBottomSheetDialog mBottomSheetDialog = new RoundedBottomSheetDialog(mcontext);
@@ -521,8 +512,6 @@ private  SlidingRootNav nav;
 
         return change[0];
     }
-
-
     public void PostADDComplain_pop(final Context mcontext) {
 
         final RoundedBottomSheetDialog mBottomSheetDialog = new RoundedBottomSheetDialog(mcontext);
@@ -652,7 +641,6 @@ private  SlidingRootNav nav;
 
 
     }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
@@ -667,10 +655,8 @@ private  SlidingRootNav nav;
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
-
     ///Calling
     private String[] callPermissions = {Manifest.permission.CALL_PHONE};
-
     @SuppressLint("MissingPermission")
     private void Callpermissien() {
 
@@ -683,7 +669,6 @@ private  SlidingRootNav nav;
 
 
     }
-
     @SuppressLint("MissingPermission")
     private void make_call() {
         String posted_by = phone;
@@ -693,7 +678,6 @@ private  SlidingRootNav nav;
         intent.setData(Uri.parse(uri));
         startActivity(intent);
     }
-
     private void Get_all_categories(final List<City> cityArrayList, final City_adapter adaptercity) {
         City_root city_root=new City_root();
         city_root.GetComplain_type(this, new City_root.cityListener() {
@@ -755,7 +739,6 @@ private  SlidingRootNav nav;
             }
         });
     }
-
     private void getLanguge() {
         if (new User_info(this).getLanguage().equals("en")){
            langu.setText("En");

@@ -162,7 +162,7 @@ public interface goListenner{
 
 
     }
-       public void Conferme_POP(final Context mContext, String msg, final goListenner listenner ){
+    public void Conferme_POP(final Context mContext, String msg, final goListenner listenner ){
         final Dialog dialog=new Dialog(mContext);
         dialog.setContentView(R.layout.popup_conf);
         Button conf=dialog.findViewById(R.id.confBtn);
@@ -233,7 +233,6 @@ public interface goListenner{
         });
         dialog.show();
     }
-
     public ProgressDialog Loading_POP(final Context mContext, String msg){
         ProgressDialog dialog=new ProgressDialog(mContext);
         dialog.setMessage(msg);
